@@ -8,6 +8,7 @@
                                                    android:layout_height="@dimen/composer_input_height"
                                                    android:lineSpacingMultiplier="1.1"
                                                    android:inputType="textAutoCorrect|textCapSentences"
-                                                   android:hint="@string/composer_input_hint"/>
+                                                   android:hint="@string/composer_input_hint"
+                                                   android:textColor="@color/white"/>
 
 </RelativeLayout>
