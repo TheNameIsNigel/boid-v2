@@ -2,6 +2,7 @@ package com.teamboid.twitter;
 
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -72,5 +73,15 @@ public class MainActivity extends DrawerActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.compose:
+                startActivity(new Intent(this, ComposeActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
