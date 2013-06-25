@@ -7,5 +7,6 @@
     <dimen name="drawer_item_padding">15dp</dimen>
     <dimen name="feed_profile_pic">60dp</dimen>
     <dimen name="welcome_logo">70dp</dimen>
+    <dimen name="drawer_width">260dp</dimen>
 
 </resources>
