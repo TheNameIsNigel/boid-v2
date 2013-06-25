@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.teamboid.twitter.services.ComposerService;
 
 public class ComposeActivity extends Activity {
@@ -22,7 +23,7 @@ public class ComposeActivity extends Activity {
 
     private void setupInput() {
         EditText input = (EditText) findViewById(R.id.input);
-        final EditText counter = (EditText) findViewById(R.id.counter);
+        final TextView counter = (TextView) findViewById(R.id.counter);
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
