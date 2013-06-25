@@ -30,6 +30,7 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                         @Override
                         public void run() {
                             AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            setListShown(true);
                         }
                     });
                 }
