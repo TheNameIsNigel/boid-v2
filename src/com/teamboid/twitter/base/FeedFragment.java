@@ -17,6 +17,8 @@ public abstract class FeedFragment<T> extends BoidListFragment {
             public void run() {
                 try {
                     final T[] items = refresh();
+                    if (getActivity() == null)
+                        return;
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -26,6 +28,8 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                     });
                 } catch (final Exception e) {
                     e.printStackTrace();
+                    if (getActivity() == null)
+                        return;
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
