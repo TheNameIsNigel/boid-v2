@@ -3,6 +3,8 @@ package com.teamboid.twitter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -14,7 +16,27 @@ public class ComposeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.composer);
+        setupInput();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupInput() {
+        EditText input = (EditText) findViewById(R.id.input);
+        final EditText counter = (EditText) findViewById(R.id.counter);
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int before, int after, int count) {
+                counter.setText(count + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     @Override
