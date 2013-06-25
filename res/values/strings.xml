@@ -18,10 +18,12 @@
     <string name="timeline">Timeline</string>
     <string name="mentions">Mentions</string>
     <string name="messages">Messages</string>
+    <string name="trends">Trends</string>
 
     <string name="no_tweets">No tweets</string>
     <string name="no_mentions">No mentions</string>
     <string name="no_messages">No messages</string>
+    <string name="no_trends">No trends</string>
 
     <string name="retweeted_by">Retweeted by @{user}</string>
 

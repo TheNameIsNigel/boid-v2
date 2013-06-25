@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.teamboid.twitter.R;
 
@@ -22,7 +23,9 @@ public abstract class BoidListFragment<T> extends Fragment {
     public abstract void onItemClicked(int index);
 
     public final void setListShown(boolean shown) {
-        //TODO
+        mListView.setVisibility(shown ? View.VISIBLE : View.GONE);
+        mEmptyView.setVisibility(shown && getAdapter().getCount() == 0 ? View.VISIBLE : View.GONE);
+        mProgressView.setVisibility(shown ? View.GONE : View.VISIBLE);
     }
 
     public final void setListAdapter(BoidAdapter<T> adapter) {
@@ -36,14 +39,18 @@ public abstract class BoidListFragment<T> extends Fragment {
 
     private ListView mListView;
     private TextView mEmptyView;
+    private ProgressBar mProgressView;
 
     public void ensureViews() {
         if (getView() == null)
             return;
+        View v = getView();
         if (mListView == null)
-            mListView = (ListView) getView().findViewById(R.id.list);
+            mListView = (ListView) v.findViewById(R.id.list);
         if (mEmptyView == null)
-            mEmptyView = (TextView) getView().findViewById(R.id.empty);
+            mEmptyView = (TextView) v.findViewById(R.id.empty);
+        if (mProgressView == null)
+            mProgressView = (ProgressBar) v.findViewById(R.id.progress);
     }
 
 

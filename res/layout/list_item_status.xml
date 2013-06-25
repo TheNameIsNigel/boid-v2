@@ -12,16 +12,17 @@
 
     <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
                     android:layout_marginTop="5dp" android:layout_marginRight="7dp"
-                    android:layout_marginLeft="5dp" android:layout_marginBottom="7dp">
+                    android:layout_marginLeft="3dp" android:layout_marginBottom="7dp">
 
         <TextView android:id="@+id/userName" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:singleLine="true" android:textColor="@color/white" android:textSize="16sp"
+                  android:singleLine="true" android:textColor="@color/white" android:textSize="17sp"
                   android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/timestamp"/>
 
         <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/timestamp" android:layout_width="wrap_content"
                                                        android:layout_height="wrap_content"
                                                        android:singleLine="true"
-                                                       android:textSize="16sp"
+                                                       android:textSize="14sp"
+                                                       android:textColor="@color/white"
                                                        android:layout_alignParentRight="true"
                                                        android:layout_marginLeft="3dp"/>
 

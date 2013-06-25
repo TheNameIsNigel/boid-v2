@@ -7,6 +7,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.base.BoidAdapter;
+import com.teamboid.twitter.utilities.TimeUtils;
 import twitter4j.DirectMessage;
 
 public class MessageAdapter extends BoidAdapter<DirectMessage> {
@@ -25,12 +26,13 @@ public class MessageAdapter extends BoidAdapter<DirectMessage> {
         profilePic.setImageUrl(item.getSender().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
         ((TextView) view.findViewById(R.id.userName)).setText(item.getSender().getName());
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
+        ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
         return view;
     }
 
     @Override
     public int getLayout() {
-        return R.layout.list_item_message;
+        return R.layout.list_item_status;
     }
 }

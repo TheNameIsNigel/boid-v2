@@ -1,6 +1,7 @@
 package com.teamboid.twitter;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.teamboid.twitter.base.DrawerActivity;
 import com.teamboid.twitter.fragments.MentionsFragment;
 import com.teamboid.twitter.fragments.MessagesFragment;
 import com.teamboid.twitter.fragments.TimelineFragment;
+import com.teamboid.twitter.fragments.TrendsFragment;
 import twitter4j.User;
 
 public class MainActivity extends DrawerActivity {
@@ -18,6 +20,18 @@ public class MainActivity extends DrawerActivity {
     @Override
     public int getLayout() {
         return R.layout.main;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (BoidApp.get(this).hasAccount()) {
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, new TimelineFragment()).commit();
+            setupDrawer();
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
     }
 
     @Override
@@ -32,23 +46,15 @@ public class MainActivity extends DrawerActivity {
             case 2:  // Messages
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, new MessagesFragment()).commit();
                 break;
+            case 3:  // Trends
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, new TrendsFragment()).commit();
+                break;
         }
     }
 
     @Override
     public ArrayAdapter getDrawerListAdapter() {
         return new ArrayAdapter<String>(this, R.layout.drawer_item, getResources().getStringArray(R.array.main_drawer_items));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (BoidApp.get(this).hasAccount()) {
-            getFragmentManager().beginTransaction().replace(R.id.content_frame, new TimelineFragment()).commit();
-            setupDrawer();
-        } else {
-            startActivity(new Intent(this, LoginActivity.class));
-        }
     }
 
     private void setupDrawer() {
