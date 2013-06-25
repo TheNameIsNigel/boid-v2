@@ -26,6 +26,11 @@ public class MessagesFragment extends FeedFragment<DirectMessage> {
     }
 
     @Override
+    public void onItemClicked(int index) {
+        //TODO
+    }
+
+    @Override
     public DirectMessage[] refresh() throws Exception {
         Twitter cl = BoidApp.get(getActivity()).getClient();
         ResponseList<DirectMessage> msges = cl.getDirectMessages();

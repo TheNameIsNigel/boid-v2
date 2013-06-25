@@ -5,7 +5,6 @@ import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.base.FeedFragment;
-import twitter4j.Paging;
 import twitter4j.Status;
 
 public class MentionsFragment extends FeedFragment<Status> {
@@ -25,8 +24,13 @@ public class MentionsFragment extends FeedFragment<Status> {
     }
 
     @Override
+    public void onItemClicked(int index) {
+        //TODO
+    }
+
+    @Override
     public Status[] refresh() throws Exception {
-        return BoidApp.get(getActivity()).getClient().getMentionsTimeline(new Paging(100)).toArray(new Status[0]);
+        return BoidApp.get(getActivity()).getClient().getMentionsTimeline().toArray(new Status[0]);
     }
 
     @Override
