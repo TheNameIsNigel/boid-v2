@@ -33,5 +33,8 @@
     </string-array>
 
     <string name="composer_input_hint">What\'s happening?</string>
+    <string name="sending">Sending...</string>
+    <string name="send_error">Failed to send your tweet.</string>
+    <string name="error">Error</string>
 
 </resources>

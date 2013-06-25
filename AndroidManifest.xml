@@ -25,6 +25,8 @@
 
         <activity android:name="com.teamboid.twitter.ComposeActivity" android:label="@string/compose"/>
 
+        <service android:name="com.teamboid.twitter.services.ComposerService" android:label="@string/compose"/>
+
     </application>
 
 </manifest>
