@@ -16,9 +16,9 @@ public class ComposerNotify {
     public static String show(Context context, Bundle args) {
         String tag = System.currentTimeMillis() + "";
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setOngoing(true).setContentTitle(context.getString(R.string.sending))
+        builder.setOngoing(true).setContentTitle(context.getString(R.string.posting_tweet))
                 .setContentText(args.getString("content")).setSmallIcon(R.drawable.ic_status)
-                .setTicker(context.getString(R.string.sending));
+                .setTicker(context.getString(R.string.posting_tweet));
 
         Notification noti = builder.getNotification();
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
