@@ -1,7 +1,7 @@
 package com.teamboid.twitter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,13 +11,14 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.teamboid.twitter.base.ThemedActivity;
 import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class LoginActivity extends Activity {
+public class LoginActivity extends ThemedActivity {
 
     private void loadWeb() {
         final WebView view = (WebView) findViewById(R.id.webView);
@@ -107,6 +108,7 @@ public class LoginActivity extends Activity {
                                     login.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View view) {
+                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                             finish();
                                         }
                                     });

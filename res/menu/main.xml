@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/compose" android:title="@string/compose"
-          android:icon="@drawable/compose" android:showAsAction="ifRoom"/>
-    <item android:id="@+id/settings" android:title="@string/settings" />
+          android:icon="?composeIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/settings" android:title="@string/settings"/>
 
 </menu>

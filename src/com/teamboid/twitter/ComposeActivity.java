@@ -1,16 +1,16 @@
 package com.teamboid.twitter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.teamboid.twitter.base.ThemedActivity;
 import com.teamboid.twitter.services.ComposerService;
 import com.teamboid.twitter.views.CounterEditText;
 
-public class ComposeActivity extends Activity {
+public class ComposeActivity extends ThemedActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

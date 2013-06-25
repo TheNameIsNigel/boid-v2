@@ -5,4 +5,7 @@
     <attr name="contentTextColor" format="color"/>
     <attr name="navDrawerBackground" format="color"/>
 
+    <attr name="composeIcon" format="reference"/>
+    <attr name="sendIcon" format="reference"/>
+
 </resources>

@@ -1,6 +1,5 @@
 package com.teamboid.twitter.base;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.teamboid.twitter.R;
 
-public abstract class DrawerActivity extends Activity {
+public abstract class DrawerActivity extends ThemedActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;

@@ -87,6 +87,9 @@ public class MainActivity extends DrawerActivity {
             case R.id.compose:
                 startActivity(new Intent(this, ComposeActivity.class));
                 return true;
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
