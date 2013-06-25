@@ -12,9 +12,9 @@ public class ThemedActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mTheme = getBoidTheme();
         setTheme(mTheme);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

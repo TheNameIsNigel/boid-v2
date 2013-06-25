@@ -3,6 +3,6 @@
 
     <ListPreference android:key="boid_theme" android:title="@string/theme"
                     android:summary="@string/theme_desc" android:entries="@array/theme_names"
-                    android:entryValues="@array/theme_values"/>
+                    android:entryValues="@array/theme_values" android:persistent="true" android:defaultValue="0"/>
 
 </PreferenceScreen>
