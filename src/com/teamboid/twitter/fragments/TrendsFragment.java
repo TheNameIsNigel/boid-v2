@@ -29,6 +29,11 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
+    public void nullifyAdapter() {
+        adapter = null;
+    }
+
+    @Override
     public Trend[] refresh() throws Exception {
         // TODO implement location based trends
         return BoidApp.get(getActivity()).getClient().getPlaceTrends(1).getTrends();

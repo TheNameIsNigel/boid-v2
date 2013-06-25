@@ -1,5 +1,6 @@
 package com.teamboid.twitter.base;
 
+import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -52,6 +53,15 @@ public abstract class DrawerActivity extends ThemedActivity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public void recreate() {
+        // Recreating will happen after a theme change, so recreate the fragment's adapter
+        Fragment frag = getFragmentManager().findFragmentById(R.id.content_frame);
+        if (frag != null)
+            ((BoidListFragment) frag).nullifyAdapter();
+        super.recreate();
     }
 
     @Override

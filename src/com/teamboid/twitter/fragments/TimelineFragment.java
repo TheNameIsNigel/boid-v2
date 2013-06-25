@@ -29,6 +29,11 @@ public class TimelineFragment extends FeedFragment<Status> {
     }
 
     @Override
+    public void nullifyAdapter() {
+        adapter = null;
+    }
+
+    @Override
     public Status[] refresh() throws Exception {
         return BoidApp.get(getActivity()).getClient().getHomeTimeline().toArray(new Status[0]);
     }

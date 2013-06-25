@@ -29,6 +29,11 @@ public class MentionsFragment extends FeedFragment<Status> {
     }
 
     @Override
+    public void nullifyAdapter() {
+        adapter = null;
+    }
+
+    @Override
     public Status[] refresh() throws Exception {
         return BoidApp.get(getActivity()).getClient().getMentionsTimeline().toArray(new Status[0]);
     }
