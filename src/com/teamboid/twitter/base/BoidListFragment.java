@@ -22,11 +22,6 @@ public abstract class BoidListFragment<T> extends Fragment {
 
     public abstract void onItemClicked(int index);
 
-    /**
-     * Nullifies the adapter so that it will be recreated the next time getAdapter() is called.
-     */
-    public abstract void nullifyAdapter();
-
 
     public final void setListShown(boolean shown) {
         mListView.setVisibility(shown ? View.VISIBLE : View.GONE);
