@@ -3,13 +3,12 @@ package com.teamboid.twitter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.teamboid.twitter.services.ComposerService;
+import com.teamboid.twitter.views.CounterEditText;
 
 public class ComposeActivity extends Activity {
 
@@ -22,22 +21,8 @@ public class ComposeActivity extends Activity {
     }
 
     private void setupInput() {
-        final EditText input = (EditText) findViewById(R.id.input);
-        final TextView counter = (TextView) findViewById(R.id.counter);
-        input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int before, int after, int count) {
-                counter.setText(input.getText().toString().trim().length() + "");
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+        final CounterEditText input = (CounterEditText) findViewById(R.id.input);
+        input.setCounterView((TextView) findViewById(R.id.counter));
     }
 
     private void send(MenuItem item) {
