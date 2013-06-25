@@ -15,7 +15,7 @@
                                                        android:layout_height="wrap_content"
                                                        android:textSize="22sp"
                                                        android:text="@string/welcome_message"
-                                                       android:textColor="@color/white"
+                                                       android:textColor="?contentTextColor"
                                                        android:gravity="center_horizontal"
                                                        android:layout_marginLeft="20dp"
                                                        android:layout_marginRight="20dp"

@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="borderless_padding">7dp</dimen>
-    <dimen name="shadow">7dp</dimen>
+    <dimen name="shadow">14dp</dimen>
     <dimen name="empty_text">18sp</dimen>
     <dimen name="drawer_item_padding">15dp</dimen>
     <dimen name="feed_profile_pic">60dp</dimen>

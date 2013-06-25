@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="usernameTextColor" format="color"/>
+    <attr name="contentTextColor" format="color"/>
+    <attr name="navDrawerBackground" format="color"/>
+
+</resources>

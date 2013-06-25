@@ -12,13 +12,13 @@
                                                     android:lineSpacingMultiplier="1.1"
                                                     android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
                                                     android:hint="@string/composer_input_hint"
-                                                    android:textColor="@color/white"
+                                                    android:textColor="?contentTextColor"
                                                     android:gravity="top" android:minLines="4"/>
 
         <!--suppress AndroidLintHardcodedText -->
         <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/counter" android:layout_width="wrap_content"
                                                        android:layout_height="wrap_content"
-                                                       android:textColor="@color/white"
+                                                       android:textColor="?contentTextColor"
                                                        android:layout_alignRight="@+id/input" android:text="0"
                                                        android:layout_below="@+id/input"
                                                        android:layout_marginTop="3dp"/>

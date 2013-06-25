@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:paddingTop="5dp" android:paddingBottom="5dp" android:paddingRight="5dp">
 
     <com.android.volley.toolbox.NetworkImageView android:id="@+id/profilePic"
                                                  android:layout_width="@dimen/feed_profile_pic"
                                                  android:layout_height="@dimen/feed_profile_pic"
                                                  android:src="@drawable/ic_contact_picture"
-                                                 android:layout_margin="5dp"/>
+                                                 android:layout_marginRight="7dp"/>
 
-    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" android:layout_marginRight="7dp"
-                    android:layout_marginLeft="3dp" android:layout_marginBottom="7dp">
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
 
         <TextView android:id="@+id/userName" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                  android:singleLine="true" android:textColor="@color/white" android:textSize="17sp"
+                  android:singleLine="true" android:textColor="?usernameTextColor" android:textSize="17sp"
                   android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/timestamp"/>
 
         <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/timestamp" android:layout_width="wrap_content"
                                                        android:layout_height="wrap_content"
                                                        android:singleLine="true"
                                                        android:textSize="14sp"
-                                                       android:textColor="@color/white"
+                                                       android:textColor="?contentTextColor"
                                                        android:layout_alignParentRight="true"
                                                        android:layout_marginLeft="3dp"/>
 
         <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/content" android:layout_width="wrap_content"
                                                        android:layout_height="wrap_content"
                                                        android:lineSpacingMultiplier="1.1"
-                                                       android:textSize="15sp" android:textColor="@color/white"
+                                                       android:textSize="15sp" android:textColor="?contentTextColor"
                                                        android:layout_below="@+id/userName"/>
 
     </RelativeLayout>

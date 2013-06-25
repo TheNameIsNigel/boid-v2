@@ -1,6 +1,7 @@
 package com.teamboid.twitter.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.TextView;
 import com.teamboid.twitter.R;
@@ -9,13 +10,22 @@ public class CounterEditText extends RobotoThinEditText {
 
     public CounterEditText(Context context) {
         super(context);
+        initialize();
     }
 
     public CounterEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initialize();
+    }
+
+    private void initialize() {
+        TypedArray a = getContext().getTheme().obtainStyledAttributes(new int[]{R.attr.contentTextColor});
+        contentTextColor = a.getColor(0, 0);
     }
 
     private TextView counterView;
+
+    private int contentTextColor;
 
     public final static int CHARACTER_LIMIT = 140;
 
@@ -38,8 +48,7 @@ public class CounterEditText extends RobotoThinEditText {
             overLimit = true;
             textLength = 0 - (textLength - CHARACTER_LIMIT);
         }
-        counterView.setTextColor(overLimit ?
-                getResources().getColor(R.color.bright_red) : getResources().getColor(R.color.white));
+        counterView.setTextColor(overLimit ? getResources().getColor(R.color.bright_red) : contentTextColor);
         counterView.setText(textLength + "");
     }
 }
