@@ -22,7 +22,7 @@ public class ComposeActivity extends Activity {
     }
 
     private void setupInput() {
-        EditText input = (EditText) findViewById(R.id.input);
+        final EditText input = (EditText) findViewById(R.id.input);
         final TextView counter = (TextView) findViewById(R.id.counter);
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -31,13 +31,22 @@ public class ComposeActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int before, int after, int count) {
-                counter.setText(count + "");
+                counter.setText(input.getText().toString().trim().length() + "");
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
             }
         });
+    }
+
+    private void send(MenuItem item) {
+        final EditText input = (EditText) findViewById(R.id.input);
+        item.setEnabled(false);
+        input.setEnabled(false);
+        startService(new Intent(this, ComposerService.class)
+                .putExtra("content", input.getText().toString().trim()));
+        finish();
     }
 
     @Override
@@ -53,10 +62,7 @@ public class ComposeActivity extends Activity {
                 finish();
                 return true;
             case R.id.send:
-                item.setEnabled(false);
-                startService(new Intent(this, ComposerService.class)
-                        .putExtra("content", ((EditText) findViewById(R.id.input)).getText().toString()));
-                finish();
+                send(item);
                 return true;
         }
         return super.onOptionsItemSelected(item);
