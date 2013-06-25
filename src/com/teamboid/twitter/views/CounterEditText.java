@@ -39,7 +39,7 @@ public class CounterEditText extends RobotoThinEditText {
             textLength = 0 - (textLength - CHARACTER_LIMIT);
         }
         counterView.setTextColor(overLimit ?
-                getResources().getColor(R.color.red) : getResources().getColor(R.color.white));
+                getResources().getColor(R.color.bright_red) : getResources().getColor(R.color.white));
         counterView.setText(textLength + "");
     }
 }
