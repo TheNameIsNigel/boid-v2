@@ -35,6 +35,5 @@
     <string name="composer_input_hint">What\'s happening?</string>
     <string name="posting_tweet">Posting tweet…</string>
     <string name="send_error">Failed to post your tweet.</string>
-    <string name="error">Error</string>
 
 </resources>

@@ -31,8 +31,8 @@ public class ComposerNotify {
         Notification.Builder builder = new Notification.Builder(context);
         Intent onTap = new Intent(context, ComposeActivity.class).putExtras(args);
         builder.setAutoCancel(true)
-                .setContentTitle(context.getString(R.string.error))
-                .setContentText(context.getString(R.string.send_error))
+                .setContentTitle(context.getString(R.string.send_error))
+                .setContentText(args.getString("content"))
                 .setSmallIcon(R.drawable.ic_status)
                 .setTicker(context.getString(R.string.send_error))
                 .setContentIntent(PendingIntent.getActivity(context, ID, onTap, PendingIntent.FLAG_CANCEL_CURRENT));
