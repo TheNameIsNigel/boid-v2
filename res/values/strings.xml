@@ -40,5 +40,6 @@
     <string name="composer_input_hint">What\'s happening?</string>
     <string name="posting_tweet">Posting tweet…</string>
     <string name="send_error">Failed to post your tweet.</string>
+    <string name="rate_limit_error">Twitter\'s rate limit was exceeded, please try again in a second.</string>
 
 </resources>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
+import com.teamboid.twitter.R;
+import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
@@ -23,9 +25,9 @@ public abstract class FeedFragment<T> extends BoidListFragment {
         mPaginationEnabled = enabled;
     }
 
-    public abstract T[] refresh() throws Exception;
+    public abstract T[] refresh() throws TwitterException;
 
-    public abstract T[] paginate() throws Exception;
+    public abstract T[] paginate() throws TwitterException;
 
     private void performRefresh() {
         if (mRefreshing)
@@ -42,12 +44,16 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                             getAdapter().add(items, false);
                         }
                     });
-                } catch (final Exception e) {
+                } catch (final TwitterException e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            if (e.exceededRateLimitation()) {
+                                AppMsg.makeText(getActivity(), R.string.rate_limit_error, AppMsg.STYLE_ALERT).show();
+                            } else {
+                                AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            }
                         }
                     });
                 }

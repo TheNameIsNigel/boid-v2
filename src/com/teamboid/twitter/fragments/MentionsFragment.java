@@ -10,6 +10,7 @@ import com.teamboid.twitter.base.FeedFragment;
 import com.teamboid.twitter.utilities.Utils;
 import twitter4j.Paging;
 import twitter4j.Status;
+import twitter4j.TwitterException;
 
 /**
  * A feed fragment that displays the current user's mentions.
@@ -44,7 +45,7 @@ public class MentionsFragment extends FeedFragment<Status> {
     }
 
     @Override
-    public Status[] refresh() throws Exception {
+    public Status[] refresh() throws TwitterException {
         Paging paging = new Paging();
         if (getAdapter().getCount() > 0) {
             // Get tweets newer than the most recent tweet in the adapter
@@ -54,7 +55,7 @@ public class MentionsFragment extends FeedFragment<Status> {
     }
 
     @Override
-    public Status[] paginate() throws Exception {
+    public Status[] paginate() throws TwitterException {
         Paging paging = new Paging();
         BoidAdapter adapt = getAdapter();
         if (adapt.getCount() > 0) {

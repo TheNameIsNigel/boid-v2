@@ -6,6 +6,7 @@ import com.teamboid.twitter.adapters.TrendAdapter;
 import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.base.FeedFragment;
 import twitter4j.Trend;
+import twitter4j.TwitterException;
 
 /**
  * A feed fragment that displays Twitter trends.
@@ -38,13 +39,13 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
-    public Trend[] refresh() throws Exception {
+    public Trend[] refresh() throws TwitterException {
         // TODO implement location based trends
         return BoidApp.get(getActivity()).getClient().getPlaceTrends(1).getTrends();
     }
 
     @Override
-    public Trend[] paginate() throws Exception {
+    public Trend[] paginate() throws TwitterException {
         return null;
     }
 
