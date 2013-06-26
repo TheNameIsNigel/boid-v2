@@ -51,7 +51,7 @@
                                                            android:layout_height="wrap_content"
                                                            android:singleLine="true"
                                                            android:textColor="?contentTextColor"
-                                                           android:textSize="@dimen/contentText"
+                                                           android:textSize="@dimen/timestampText"
                                                            android:layout_marginLeft="5dp"/>
 
         </LinearLayout>

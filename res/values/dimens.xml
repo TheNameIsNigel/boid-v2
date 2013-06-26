@@ -2,12 +2,12 @@
 <resources>
 
     <dimen name="borderless_padding">7dp</dimen>
-    <dimen name="drawer_item_padding">10dp</dimen>
+    <dimen name="drawer_item_padding">7dp</dimen>
     <dimen name="feed_profile_pic">60dp</dimen>
     <dimen name="welcome_logo">70dp</dimen>
     <dimen name="drawer_width">260dp</dimen>
     <dimen name="drawer_item_icon">40dp</dimen>
-    <dimen name="retweet_indicator">25dp</dimen>
+    <dimen name="retweet_indicator">20dp</dimen>
 
     <dimen name="headerText">22sp</dimen>
     <dimen name="usernameText">17sp</dimen>
