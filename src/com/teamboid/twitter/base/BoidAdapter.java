@@ -23,7 +23,7 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
     }
 
     private Context context;
-    private List<T> items;
+    protected List<T> items;
 
     public abstract View fillView(int index, View view);
 

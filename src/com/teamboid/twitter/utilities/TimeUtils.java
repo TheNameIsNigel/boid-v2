@@ -93,9 +93,8 @@ public class TimeUtils {
                     if (totalDays < 7) {
                         // Less than a week ago, return days
                         return totalDays + "d";
-                    } else if (totalDays == 7) {
-                        // Exactly 1 week
-                        return "1w";
+                    } else if ((totalDays % 7) == 0) {
+                        return (totalDays / 7) + "w";
                     }
                     // Return both weeks and days
                     int weeks = totalDays / 7;
@@ -104,7 +103,7 @@ public class TimeUtils {
                 }
             } else {
                 // Different month, same year
-                return (now.get(Calendar.MONTH) - time.get(Calendar.MONTH)) + "y";
+                return (now.get(Calendar.MONTH) - time.get(Calendar.MONTH)) + "m";
             }
         } else {
             // Different year

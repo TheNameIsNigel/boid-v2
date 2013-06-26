@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.adapters.DrawerItemAdapter;
 import com.teamboid.twitter.base.DrawerActivity;
+import com.teamboid.twitter.fragments.ConversationFragment;
 import com.teamboid.twitter.fragments.MentionsFragment;
-import com.teamboid.twitter.fragments.MessagesFragment;
 import com.teamboid.twitter.fragments.TimelineFragment;
 import com.teamboid.twitter.fragments.TrendsFragment;
 import twitter4j.User;
@@ -50,7 +50,7 @@ public class MainActivity extends DrawerActivity {
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, new MentionsFragment()).commit();
                 break;
             case 2:  // Messages
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, new MessagesFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, new ConversationFragment()).commit();
                 break;
             case 3:  // Trends
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, new TrendsFragment()).commit();
