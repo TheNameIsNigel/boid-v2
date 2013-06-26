@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides a standardized base for most list adapters that are used in the app.
+ * Provides a standardized base for most list adapters that are used in the app. Doesn't allow duplicate IDs.
  *
  * @param <T> The class contained in the adapter, usually Status or DirectMessage.
  * @author Aidan Follestad (afollestad)
