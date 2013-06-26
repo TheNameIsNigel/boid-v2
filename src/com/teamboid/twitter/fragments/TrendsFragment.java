@@ -44,6 +44,11 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
+    public Trend[] paginate() throws Exception {
+        return null;
+    }
+
+    @Override
     public String getTitle() {
         return getString(R.string.trends);
     }

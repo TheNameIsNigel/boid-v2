@@ -1,5 +1,6 @@
 package com.teamboid.twitter.base;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,6 +48,13 @@ public abstract class BoidListFragment<T> extends Fragment {
 
     public final ListView getListView() {
         return mListView;
+    }
+
+    public final void runOnUiThread(Runnable runnable) {
+        Activity act = getActivity();
+        if (act == null)
+            return;
+        act.runOnUiThread(runnable);
     }
 
 

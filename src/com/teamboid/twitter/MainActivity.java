@@ -1,7 +1,9 @@
 package com.teamboid.twitter;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,8 @@ import twitter4j.User;
  */
 public class MainActivity extends DrawerActivity {
 
+    private int mPreviousFragment = -1;
+
     @Override
     public int getLayout() {
         return R.layout.main;
@@ -32,7 +36,11 @@ public class MainActivity extends DrawerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (BoidApp.get(this).hasAccount()) {
-            getFragmentManager().beginTransaction().replace(R.id.content_frame, new TimelineFragment()).commit();
+            // Restore the last viewed fragment
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            int index = prefs.getInt("recent_fragment_main", 0);
+            onDrawerItemClicked(index);
+            // Setup views in the navigation drawer
             setupDrawer();
         } else {
             startActivity(new Intent(this, LoginActivity.class));
@@ -55,6 +63,11 @@ public class MainActivity extends DrawerActivity {
             case 3:  // Trends
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, new TrendsFragment()).commit();
                 break;
+        }
+        if (index != mPreviousFragment) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            prefs.edit().putInt("recent_fragment_main", index).commit();
+            mPreviousFragment = index;
         }
     }
 

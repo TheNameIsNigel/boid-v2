@@ -3,7 +3,7 @@ package com.teamboid.twitter.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -16,7 +16,15 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
  */
 public abstract class FeedFragment<T> extends BoidListFragment {
 
+    private boolean mPaginationEnabled = true;
+
+    public final void setPaginationEnabled(boolean enabled) {
+        mPaginationEnabled = enabled;
+    }
+
     public abstract T[] refresh() throws Exception;
+
+    public abstract T[] paginate() throws Exception;
 
     private void performRefresh() {
         new Thread(new Runnable() {
@@ -24,9 +32,7 @@ public abstract class FeedFragment<T> extends BoidListFragment {
             public void run() {
                 try {
                     final T[] items = refresh();
-                    if (getActivity() == null)
-                        return;
-                    getActivity().runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             getAdapter().add(items, false);
@@ -34,18 +40,14 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                     });
                 } catch (final Exception e) {
                     e.printStackTrace();
-                    if (getActivity() == null)
-                        return;
-                    getActivity().runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
                         }
                     });
                 }
-                if (getActivity() == null)
-                    return;
-                getActivity().runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         setListShown(true);
@@ -58,9 +60,60 @@ public abstract class FeedFragment<T> extends BoidListFragment {
         }).start();
     }
 
+    private void performPaginate() {
+        Activity act = getActivity();
+        if (act instanceof DrawerActivity)
+            ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshing(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final T[] items = paginate();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            getAdapter().add(items, true);
+                        }
+                    });
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                        }
+                    });
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Activity act = getActivity();
+                        if (act instanceof DrawerActivity)
+                            ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshComplete();
+                    }
+                });
+            }
+        }).start();
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (mPaginationEnabled) {
+            getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView absListView, int i) {
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    if (visibleItemCount < totalItemCount && (firstVisibleItem + visibleItemCount) == totalItemCount) {
+                        performPaginate();
+                    }
+                }
+            });
+        }
 
         Activity act = getActivity();
         if (act instanceof DrawerActivity) {

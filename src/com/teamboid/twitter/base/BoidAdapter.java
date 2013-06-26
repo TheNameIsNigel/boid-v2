@@ -112,7 +112,7 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
 
     @Override
     public final long getItemId(int i) {
-        return i;
+        return getItemId(getItem(i));
     }
 
     @Override
