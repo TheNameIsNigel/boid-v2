@@ -21,6 +21,7 @@
     <orderEntry type="library" name="Boid" level="project" />
     <orderEntry type="module" module-name="volley" />
     <orderEntry type="module" module-name="appmsg" />
+    <orderEntry type="module" module-name="actionbar-ptr" />
   </component>
 </module>
 

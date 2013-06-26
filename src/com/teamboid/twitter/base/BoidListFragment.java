@@ -16,7 +16,6 @@ import com.teamboid.twitter.R;
  * Provides a standardized base for all fragments that contain a list.
  *
  * @param <T> The class contained in the fragment's {@link BoidAdapter}.
- *
  * @author Aidan Follestad (afollestad)
  */
 public abstract class BoidListFragment<T> extends Fragment {
@@ -32,7 +31,12 @@ public abstract class BoidListFragment<T> extends Fragment {
 
     public final void setListShown(boolean shown) {
         mListView.setVisibility(shown ? View.VISIBLE : View.GONE);
-        mEmptyView.setVisibility(shown && getAdapter().getCount() == 0 ? View.VISIBLE : View.GONE);
+        if (!shown) {
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            mListView.setEmptyView(mEmptyView);
+            getAdapter().notifyDataSetChanged();
+        }
         mProgressView.setVisibility(shown ? View.GONE : View.VISIBLE);
     }
 
@@ -76,7 +80,8 @@ public abstract class BoidListFragment<T> extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.boid_list_fragment, null);
+        View view = inflater.inflate(R.layout.boid_list_fragment, null);
+        return view;
     }
 
     @Override

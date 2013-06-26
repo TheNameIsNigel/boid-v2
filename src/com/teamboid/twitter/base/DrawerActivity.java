@@ -11,9 +11,10 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import com.teamboid.twitter.R;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
- * Provides a standardized base for activities that use the navigation drawer.
+ * Provides a standardized base for activities that use the navigation drawer and action bar pull to refresh.
  *
  * @author Aidan Follestad (afollestad)
  */
@@ -21,6 +22,7 @@ public abstract class DrawerActivity extends ThemedActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
+    private PullToRefreshAttacher mPullToRefreshAttacher;
 
     public abstract int getLayout();
 
@@ -33,6 +35,7 @@ public abstract class DrawerActivity extends ThemedActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
 
+        mPullToRefreshAttacher = new PullToRefreshAttacher(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.app_name, R.string.app_name) {
             public void onDrawerClosed(View view) {
@@ -79,5 +82,9 @@ public abstract class DrawerActivity extends ThemedActivity {
     public final void toggleDrawer() {
         if (mDrawerLayout.isDrawerOpen(Gravity.START))
             mDrawerLayout.closeDrawer(Gravity.START);
+    }
+
+    public final PullToRefreshAttacher getPullToRefreshAttacher() {
+        return mPullToRefreshAttacher;
     }
 }
