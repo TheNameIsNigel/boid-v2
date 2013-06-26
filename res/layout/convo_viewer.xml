@@ -28,7 +28,7 @@
     <RelativeLayout
             android:id="@+id/inputFrame" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_alignParentBottom="true"
-            android:background="@color/white" android:padding="5dp"
+            android:background="@color/white" android:padding="7dp"
             android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
 
         <com.teamboid.twitter.views.BorderlessEditText
@@ -45,7 +45,7 @@
                 android:id="@+id/sendButton" android:layout_width="@dimen/send_button"
                 android:layout_height="@dimen/send_button" android:layout_alignParentRight="true"
                 android:background="?android:attr/selectableItemBackground"
-                android:enabled="false" android:padding="5dp" android:scaleType="fitXY"
+                android:enabled="false" android:scaleType="fitXY"
                 android:src="?sendIcon" android:layout_centerVertical="true"/>
 
     </RelativeLayout>
