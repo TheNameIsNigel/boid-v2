@@ -3,6 +3,7 @@ package com.teamboid.twitter.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import com.devspark.appmsg.AppMsg;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -29,7 +30,6 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                         @Override
                         public void run() {
                             getAdapter().add(items);
-                            setListShown(true);
                         }
                     });
                 } catch (final Exception e) {
@@ -40,14 +40,20 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                         @Override
                         public void run() {
                             AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
-                            setListShown(true);
-
-                            Activity act = getActivity();
-                            if (act instanceof DrawerActivity)
-                                ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshComplete();
                         }
                     });
                 }
+                if (getActivity() == null)
+                    return;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setListShown(true);
+                        Activity act = getActivity();
+                        if (act instanceof DrawerActivity)
+                            ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshComplete();
+                    }
+                });
             }
         }).start();
     }
