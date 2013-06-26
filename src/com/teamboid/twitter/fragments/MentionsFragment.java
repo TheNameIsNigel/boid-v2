@@ -55,7 +55,7 @@ public class MentionsFragment extends FeedFragment<Status> {
 
     @Override
     public Status[] paginate() throws Exception {
-        Paging paging = new Paging(100);
+        Paging paging = new Paging();
         BoidAdapter adapt = getAdapter();
         if (adapt.getCount() > 0) {
             // Get tweets older than the oldest tweet in the adapter
