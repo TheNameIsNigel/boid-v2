@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
-import com.teamboid.twitter.R;
 import com.teamboid.twitter.DrawerActivity;
+import com.teamboid.twitter.R;
 import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -148,7 +148,7 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
     }
 
     @Override
-    public void onCacheEmpty() {
+    public final void onCacheEmpty() {
         // Refresh the list if the column cache is empty
         performRefresh();
     }

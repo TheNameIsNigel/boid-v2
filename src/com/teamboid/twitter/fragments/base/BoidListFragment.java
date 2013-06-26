@@ -115,6 +115,5 @@ public abstract class BoidListFragment<T> extends CacheableListFragment<T> {
     @Override
     public final void onCacheRead(T[] contents) {
         getAdapter().set(contents);
-        ;
     }
 }

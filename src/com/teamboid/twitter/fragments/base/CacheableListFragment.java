@@ -2,9 +2,7 @@ package com.teamboid.twitter.fragments.base;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -47,8 +45,8 @@ public abstract class CacheableListFragment<T> extends Fragment {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onResume() {
+        super.onResume();
         if (mCacheEnabled)
             readCache();
     }
@@ -76,8 +74,8 @@ public abstract class CacheableListFragment<T> extends Fragment {
                     }
                     objectInputStream.close();
                 } catch (Exception e) {
-                    Log.d("CacheableListFragment", title + " is empty or could not be read from...");
                 }
+                Log.d("CacheableListFragment", title + " is empty or could not be read from...");
                 onCacheEmpty();
             }
         }).start();

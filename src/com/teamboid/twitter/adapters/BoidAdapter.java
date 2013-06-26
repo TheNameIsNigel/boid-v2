@@ -78,8 +78,6 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
      */
     public final void set(T[] items) {
         this.items.clear();
-        if (items == null)
-            return;
         for (T item : items)
             this.items.add(item);
         notifyDataSetChanged();
