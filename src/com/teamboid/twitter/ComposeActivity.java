@@ -33,7 +33,7 @@ public class ComposeActivity extends ThemedActivity {
         Intent i = getIntent();
         input.setText("");
         if (i.hasExtra("mention"))
-            input.append("@" + i.getStringExtra("mention"));
+            input.append("@" + i.getStringExtra("mention") + " ");
         if (i.hasExtra("content"))
             input.append(i.getStringExtra("content"));
         if (i.hasExtra("reply_to"))
