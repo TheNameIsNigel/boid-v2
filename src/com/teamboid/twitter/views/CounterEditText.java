@@ -27,10 +27,15 @@ public class CounterEditText extends RobotoThinEditText {
     private void initialize() {
         TypedArray a = getContext().getTheme().obtainStyledAttributes(new int[]{R.attr.contentTextColor});
         contentTextColor = a.getColor(0, 0);
+        a.recycle();
+        a = getContext().getTheme().obtainStyledAttributes(new int[]{R.attr.errorTextColor});
+        errorTextColor = a.getColor(0, 0);
+        a.recycle();
     }
 
     private TextView counterView;
 
+    private int errorTextColor;
     private int contentTextColor;
 
     public final static int CHARACTER_LIMIT = 140;
@@ -54,7 +59,8 @@ public class CounterEditText extends RobotoThinEditText {
             overLimit = true;
             textLength = 0 - (textLength - CHARACTER_LIMIT);
         }
-        counterView.setTextColor(overLimit ? getResources().getColor(R.color.bright_red) : contentTextColor);
+
+        counterView.setTextColor(overLimit ? errorTextColor : contentTextColor);
         counterView.setText(textLength + "");
     }
 }

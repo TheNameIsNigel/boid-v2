@@ -15,6 +15,8 @@
         <item name="usernameTextColor">@color/white</item>
         <item name="contentTextColor">@color/white</item>
         <item name="navDrawerBackground">@color/drawer_background_dark</item>
+        <item name="errorTextColor">@color/bright_red</item>
+
         <item name="composeIcon">@drawable/compose</item>
         <item name="sendIcon">@drawable/send</item>
 
