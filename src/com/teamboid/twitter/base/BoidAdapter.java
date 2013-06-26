@@ -96,7 +96,7 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    public final T getItem(int i) {
+    public T getItem(int i) {
         return items.get(i);
     }
 
