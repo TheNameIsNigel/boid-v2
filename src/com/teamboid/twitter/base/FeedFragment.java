@@ -11,7 +11,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
  * Provides a standardized base for list fragments that retrieve and display a feed. Also handles
- * attaching to action bar refresh and caching contents.
+ * attaching to action bar refresh.
  *
  * @param <T> The class contained in the fragment's list adapter, usually Status or DirectMessage.
  * @author Aidan Follestad (afollestad)
@@ -115,12 +115,6 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
         }).start();
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        writeCache();
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

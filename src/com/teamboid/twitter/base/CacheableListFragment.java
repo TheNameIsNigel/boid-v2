@@ -11,13 +11,19 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * Provides a standardized base for list fragments that cache their contents to the disk to be loaded offline later.
+ *
+ * @param <T> The class contained in the fragment's list adapter, usually Status or DirectMessage.
+ * @author Aidan Follestad (afollestad)
+ */
 public abstract class CacheableListFragment<T> extends Fragment {
 
     public CacheableListFragment(boolean enableCaching) {
         mCacheEnabled = enableCaching;
     }
 
-    private boolean mCacheEnabled;
+    private boolean mCacheEnabled = true;
 
     /**
      * Gets the content that will be written to the cache.
@@ -77,7 +83,7 @@ public abstract class CacheableListFragment<T> extends Fragment {
         }).start();
     }
 
-    public final void writeCache() {
+    private void writeCache() {
         final T[] towrite = getCacheWriteables();
         final String title = getTitle().toLowerCase() + ".boid-cache";
         new Thread(new Runnable() {
