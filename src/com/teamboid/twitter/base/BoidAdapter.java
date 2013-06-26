@@ -121,4 +121,8 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(getLayout(i), null);
         return fillView(i, view);
     }
+
+    public T[] toArray() {
+        return (T[]) items.toArray();
+    }
 }

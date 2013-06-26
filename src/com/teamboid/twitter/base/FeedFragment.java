@@ -1,7 +1,9 @@
 package com.teamboid.twitter.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
@@ -9,27 +11,67 @@ import com.teamboid.twitter.R;
 import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  * Provides a standardized base for list fragments that retrieve and display a feed. Also handles
- * attaching to action bar refresh.
+ * attaching to action bar refresh and caching contents.
  *
  * @param <T> The class contained in the fragment's list adapter, usually Status or DirectMessage.
  * @author Aidan Follestad (afollestad)
  */
 public abstract class FeedFragment<T> extends BoidListFragment {
 
+    public FeedFragment(boolean paginationEnabled) {
+        mPaginationEnabled = paginationEnabled;
+    }
+
     private boolean mPaginationEnabled = true;
     private boolean mRefreshing;
 
     public final static int PAGE_LENGTH = 100;
 
-    public final void setPaginationEnabled(boolean enabled) {
-        mPaginationEnabled = enabled;
-    }
-
     public abstract T[] refresh() throws TwitterException;
 
     public abstract T[] paginate() throws TwitterException;
+
+
+    public final boolean readCache() {
+        setListShown(false);
+        try {
+            FileInputStream fileInputStream = getActivity().openFileInput(getTitle().toLowerCase() + ".boid-cache");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            T[] cache = (T[]) objectInputStream.readObject();
+            if (cache != null) {
+                Log.d("FeedFragment", "Read " + cache.length + " items from the " + getTitle().toLowerCase() + " cache");
+                getAdapter().set(cache);
+            }
+            objectInputStream.close();
+            setListShown(true);
+            return getAdapter().getCount() > 0;
+        } catch (Exception e) {
+            Log.d("FeedFragment", getTitle().toLowerCase() + " cache is empty, or could not be read.");
+        }
+        return false;
+    }
+
+    public final void writeCache() {
+        if (getAdapter().getCount() == 0)
+            return;
+        try {
+            FileOutputStream fileOutputStream = getActivity().openFileOutput(getTitle().toLowerCase() + ".boid-cache", Context.MODE_PRIVATE);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(getAdapter().toArray());
+            Log.d("FeedFragment", "Wrote " + getAdapter().getCount() + " items to the " + getTitle().toLowerCase() + " cache");
+            objectOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void performRefresh() {
         if (mRefreshing)
@@ -113,6 +155,13 @@ public abstract class FeedFragment<T> extends BoidListFragment {
         }).start();
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        writeCache();
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -142,7 +191,7 @@ public abstract class FeedFragment<T> extends BoidListFragment {
             });
         }
 
-        setListShown(false);
-        performRefresh();
+        if (!readCache())
+            performRefresh();
     }
 }

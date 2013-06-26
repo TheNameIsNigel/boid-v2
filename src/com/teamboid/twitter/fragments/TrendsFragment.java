@@ -13,6 +13,10 @@ import twitter4j.TwitterException;
  */
 public class TrendsFragment extends FeedFragment<Trend> {
 
+    public TrendsFragment() {
+        super(true);
+    }
+
     private TrendAdapter adapter;
 
     @Override

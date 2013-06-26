@@ -1,7 +1,6 @@
 package com.teamboid.twitter.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.ConversationActivity;
 import com.teamboid.twitter.R;
@@ -19,13 +18,11 @@ import twitter4j.TwitterException;
  */
 public class ConversationFragment extends FeedFragment<ConversationAdapter.Conversation> {
 
-    private ConversationAdapter adapter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        super.setPaginationEnabled(false);
+    public ConversationFragment() {
+        super(true);
     }
+
+    private ConversationAdapter adapter;
 
     @Override
     public int getEmptyText() {
