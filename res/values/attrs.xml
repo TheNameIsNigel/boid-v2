@@ -13,4 +13,6 @@
     <attr name="drawerMessages" format="reference"/>
     <attr name="drawerTrends" format="reference"/>
 
+    <attr name="retweetIndicator" format="reference"/>
+
 </resources>

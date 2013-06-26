@@ -23,6 +23,7 @@
         <item name="drawerMessages">@drawable/drawer_messages</item>
         <item name="drawerTrends">@drawable/drawer_trends</item>
 
+        <item name="retweetIndicator">@drawable/retweet</item>
     </style>
     <style name="ActionBar.Solid.Boid" parent="@android:style/Widget.Holo.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_boid</item>

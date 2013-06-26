@@ -13,7 +13,7 @@
         <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/loginMessage"
                                                        android:layout_width="wrap_content"
                                                        android:layout_height="wrap_content"
-                                                       android:textSize="22sp"
+                                                       android:textSize="@dimen/headerText"
                                                        android:text="@string/welcome_message"
                                                        android:textColor="?contentTextColor"
                                                        android:gravity="center_horizontal"

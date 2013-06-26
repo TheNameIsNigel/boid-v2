@@ -22,6 +22,8 @@
         <item name="drawerMentions">@drawable/drawer_mentions_dark</item>
         <item name="drawerMessages">@drawable/drawer_messages_dark</item>
         <item name="drawerTrends">@drawable/drawer_trends_dark</item>
+
+        <item name="retweetIndicator">@drawable/retweet_dark</item>
     </style>
 
     <style name="ActionBar.Solid.Boidlight" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">

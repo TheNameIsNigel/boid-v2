@@ -25,14 +25,15 @@ public class StatusAdapter extends BoidAdapter<Status> {
     public View fillView(int index, View view) {
         Status item = getItem(index);
 
-//        TextView retweetedBy = (TextView)view.findViewById(R.id.retweetedBy);
-//        if(item.isRetweet()) {
-//            retweetedBy.setVisibility(View.VISIBLE);
-//            retweetedBy.setText(getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName()));
-//            item = item.getRetweetedStatus();
-//        } else {
-//            retweetedBy.setVisibility(View.GONE);
-//        }
+        View retweetedBy = view.findViewById(R.id.retweetedBy);
+        if (item.isRetweet()) {
+            retweetedBy.setVisibility(View.VISIBLE);
+            TextView retweetedByTxt = (TextView) view.findViewById(R.id.retweetedByText);
+            retweetedByTxt.setText(getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName()));
+            item = item.getRetweetedStatus();
+        } else {
+            retweetedBy.setVisibility(View.GONE);
+        }
 
         NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
         profilePic.setErrorImageResId(R.drawable.ic_contact_picture);

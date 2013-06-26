@@ -25,14 +25,14 @@
 
             <TextView android:id="@+id/accountName" android:textIsSelectable="false" android:layout_width="wrap_content"
                       android:layout_height="wrap_content" android:singleLine="true"
-                      android:textSize="18sp" android:textColor="?usernameTextColor"/>
+                      android:textSize="@dimen/drawerItemText" android:textColor="?usernameTextColor"/>
 
             <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/accountScreenname"
                                                            android:textIsSelectable="false"
                                                            android:layout_width="wrap_content"
                                                            android:layout_height="wrap_content"
                                                            android:layout_marginTop="5dp" android:singleLine="true"
-                                                           android:textSize="15sp"
+                                                           android:textSize="@dimen/contentText"
                                                            android:textColor="?contentTextColor"/>
 
         </LinearLayout>
