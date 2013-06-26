@@ -39,37 +39,59 @@ public abstract class FeedFragment<T> extends BoidListFragment {
     public abstract T[] paginate() throws TwitterException;
 
 
-    public final boolean readCache() {
+    public final void readCache(final boolean refreshIfEmpty) {
         setListShown(false);
-        try {
-            FileInputStream fileInputStream = getActivity().openFileInput(getTitle().toLowerCase() + ".boid-cache");
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            T[] cache = (T[]) objectInputStream.readObject();
-            if (cache != null) {
-                Log.d("FeedFragment", "Read " + cache.length + " items from the " + getTitle().toLowerCase() + " cache");
-                getAdapter().set(cache);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FileInputStream fileInputStream = getActivity().openFileInput(getTitle().toLowerCase() + ".boid-cache");
+                    ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                    final T[] cache = (T[]) objectInputStream.readObject();
+                    if (cache != null) {
+                        Log.d("FeedFragment", "Read " + cache.length + " items from the " + getTitle().toLowerCase() + " cache");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                getAdapter().set(cache);
+                            }
+                        });
+                        return;
+                    }
+                    objectInputStream.close();
+                    setListShown(true);
+                } catch (Exception e) {
+                    Log.d("FeedFragment", getTitle().toLowerCase() + " cache is empty, or could not be read.");
+                }
+                if (refreshIfEmpty) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            performRefresh();
+                        }
+                    });
+                }
             }
-            objectInputStream.close();
-            setListShown(true);
-            return getAdapter().getCount() > 0;
-        } catch (Exception e) {
-            Log.d("FeedFragment", getTitle().toLowerCase() + " cache is empty, or could not be read.");
-        }
-        return false;
+        }).start();
     }
 
     public final void writeCache() {
         if (getAdapter().getCount() == 0)
             return;
-        try {
-            FileOutputStream fileOutputStream = getActivity().openFileOutput(getTitle().toLowerCase() + ".boid-cache", Context.MODE_PRIVATE);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(getAdapter().toArray());
-            Log.d("FeedFragment", "Wrote " + getAdapter().getCount() + " items to the " + getTitle().toLowerCase() + " cache");
-            objectOutputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FileOutputStream fileOutputStream = getActivity().openFileOutput(getTitle().toLowerCase() + ".boid-cache", Context.MODE_PRIVATE);
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                    objectOutputStream.writeObject(getAdapter().toArray());
+                    Log.d("FeedFragment", "Wrote " + getAdapter().getCount() + " items to the " + getTitle().toLowerCase() + " cache");
+                    objectOutputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
 
@@ -190,8 +212,6 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                 }
             });
         }
-
-        if (!readCache())
-            performRefresh();
+        readCache(true);
     }
 }
