@@ -21,6 +21,8 @@ public abstract class FeedFragment<T> extends BoidListFragment {
     private boolean mPaginationEnabled = true;
     private boolean mRefreshing;
 
+    public final static int PAGE_LENGTH = 100;
+
     public final void setPaginationEnabled(boolean enabled) {
         mPaginationEnabled = enabled;
     }

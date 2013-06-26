@@ -47,6 +47,7 @@ public class TimelineFragment extends FeedFragment<Status> {
     @Override
     public Status[] refresh() throws TwitterException {
         Paging paging = new Paging();
+        paging.setCount(PAGE_LENGTH);
         if (getAdapter().getCount() > 0) {
             // Get tweets newer than the most recent tweet in the adapter
             paging.setSinceId(getAdapter().getItemId(0));
@@ -57,10 +58,11 @@ public class TimelineFragment extends FeedFragment<Status> {
     @Override
     public Status[] paginate() throws TwitterException {
         Paging paging = new Paging();
+        paging.setCount(PAGE_LENGTH);
         BoidAdapter adapt = getAdapter();
         if (adapt.getCount() > 0) {
             // Get tweets older than the oldest tweet in the adapter
-            paging.setMaxId(adapt.getItemId(adapt.getCount() - 1));
+            paging.setMaxId(adapt.getItemId(adapt.getCount() - 1) - 1);
         }
         return BoidApp.get(getActivity()).getClient().getHomeTimeline(paging).toArray(new Status[0]);
     }
