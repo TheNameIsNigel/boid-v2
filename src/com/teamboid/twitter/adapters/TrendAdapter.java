@@ -7,6 +7,11 @@ import com.teamboid.twitter.R;
 import com.teamboid.twitter.base.BoidAdapter;
 import twitter4j.Trend;
 
+/**
+ * A list adapter that displays trends.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class TrendAdapter extends BoidAdapter<Trend> {
 
     public TrendAdapter(Context context) {

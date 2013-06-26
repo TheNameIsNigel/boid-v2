@@ -10,6 +10,11 @@ import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.utilities.TimeUtils;
 import twitter4j.DirectMessage;
 
+/**
+ * A list adapter that displays direct messages.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class MessageAdapter extends BoidAdapter<DirectMessage> {
 
     public MessageAdapter(Context context) {

@@ -7,6 +7,9 @@ import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.base.FeedFragment;
 import twitter4j.Status;
 
+/**
+ * A feed fragment that displays the current user's mentions.
+ */
 public class MentionsFragment extends FeedFragment<Status> {
 
     private StatusAdapter adapter;

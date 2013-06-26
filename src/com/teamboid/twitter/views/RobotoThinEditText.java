@@ -5,6 +5,11 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+/**
+ * An {@link EditText} that automatically sets its typeface to Roboto Light.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class RobotoThinEditText extends EditText {
 
     public RobotoThinEditText(Context context) {

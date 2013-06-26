@@ -8,10 +8,15 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import com.teamboid.twitter.R;
 
+/**
+ * Provides a standardized base for activities that use the navigation drawer.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public abstract class DrawerActivity extends ThemedActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -21,7 +26,7 @@ public abstract class DrawerActivity extends ThemedActivity {
 
     public abstract void onDrawerItemClicked(int index);
 
-    public abstract ArrayAdapter getDrawerListAdapter();
+    public abstract BaseAdapter getDrawerListAdapter();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,9 +73,7 @@ public abstract class DrawerActivity extends ThemedActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item))
-            return true;
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item);
     }
 
     public final void toggleDrawer() {

@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.teamboid.twitter.R;
 
+/**
+ * Provides a standardized base for all activities that automatically theme themselves based on
+ * the application's theme setting; this is basically every activity in the app.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class ThemedActivity extends Activity {
 
     private int mTheme;

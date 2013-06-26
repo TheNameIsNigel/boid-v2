@@ -15,15 +15,17 @@ import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 
+/**
+ * Variables and methods kept in memory throughout the life of the app.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class BoidApp extends Application {
 
-    private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private Twitter client;
 
-    private static int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;
     private static Bitmap.CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = Bitmap.CompressFormat.PNG;
-    private static int DISK_IMAGECACHE_QUALITY = 100;  //PNG is lossless so quality is ignored but must be provided
 
     public final static String CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
     public final static String CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
@@ -32,7 +34,9 @@ public class BoidApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mRequestQueue = Volley.newRequestQueue(this);
+        RequestQueue mRequestQueue = Volley.newRequestQueue(this);
+        int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;
+        int DISK_IMAGECACHE_QUALITY = 100;
         mImageLoader = new ImageLoader(mRequestQueue, new ImageCacheManager(this,
                 getPackageCodePath(), DISK_IMAGECACHE_SIZE, DISK_IMAGECACHE_COMPRESS_FORMAT,
                 DISK_IMAGECACHE_QUALITY, ImageCacheManager.CacheType.DISK));

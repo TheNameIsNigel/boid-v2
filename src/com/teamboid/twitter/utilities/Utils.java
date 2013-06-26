@@ -4,6 +4,11 @@ import android.util.Base64;
 
 import java.io.*;
 
+/**
+ * Various utility methods.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class Utils {
 
     public static Object deserializeObject(String input) {

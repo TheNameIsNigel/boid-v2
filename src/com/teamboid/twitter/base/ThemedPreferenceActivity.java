@@ -6,6 +6,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import com.teamboid.twitter.R;
 
+/**
+ * Same as {@link ThemedActivity}, but used by the {@link com.teamboid.twitter.SettingsActivity}.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class ThemedPreferenceActivity extends PreferenceActivity {
 
     private int mTheme;

@@ -5,6 +5,11 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/**
+ * An {@link android.widget.TextView} that automatically sets its typeface to Roboto Light.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class RobotoThinTextView extends TextView {
 
     public RobotoThinTextView(Context context) {

@@ -3,6 +3,11 @@ package com.teamboid.twitter.utilities;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Utilities for getting human readable time strings.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class TimeUtils {
 
     public static String getFriendlyTimeLong(Date time) {
@@ -63,14 +68,6 @@ public class TimeUtils {
 
     public static String getFriendlyTime(Calendar time) {
         Calendar now = Calendar.getInstance();
-        String am_pm = "AM";
-        if (time.get(Calendar.AM_PM) == Calendar.PM)
-            am_pm = "PM";
-        String day = Integer.toString(time.get(Calendar.DAY_OF_MONTH));
-        if (day.length() == 1) {
-            // Add a zero before the day if it's below 10 (1 character in length)
-            day = ("0" + day);
-        }
         if (now.get(Calendar.YEAR) == time.get(Calendar.YEAR)) {
             // Same year
             if (now.get(Calendar.MONTH) == time.get(Calendar.MONTH)) {

@@ -12,6 +12,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.teamboid.twitter.R;
 
+/**
+ * Provides a standardized base for all fragments that contain a list.
+ *
+ * @param <T> The class contained in the fragment's {@link BoidAdapter}.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public abstract class BoidListFragment<T> extends Fragment {
 
     public abstract int getTitle();

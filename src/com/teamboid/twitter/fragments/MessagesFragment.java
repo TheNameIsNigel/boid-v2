@@ -9,6 +9,9 @@ import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
 
+/**
+ * A feed fragment that displays the current user's messages.
+ */
 public class MessagesFragment extends FeedFragment<DirectMessage> {
 
     private MessageAdapter adapter;

@@ -7,6 +7,9 @@ import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.base.FeedFragment;
 import twitter4j.Trend;
 
+/**
+ * A feed fragment that displays Twitter trends.
+ */
 public class TrendsFragment extends FeedFragment<Trend> {
 
     private TrendAdapter adapter;

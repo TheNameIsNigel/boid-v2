@@ -1,6 +1,5 @@
 package com.teamboid.twitter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,7 +16,11 @@ import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
-@SuppressLint("SetJavaScriptEnabled")
+/**
+ * The login UI.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class LoginActivity extends ThemedActivity {
 
     private void loadWeb() {

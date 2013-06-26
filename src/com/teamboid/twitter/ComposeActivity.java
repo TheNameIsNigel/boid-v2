@@ -10,6 +10,11 @@ import com.teamboid.twitter.base.ThemedActivity;
 import com.teamboid.twitter.services.ComposerService;
 import com.teamboid.twitter.views.CounterEditText;
 
+/**
+ * The tweet composition UI.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class ComposeActivity extends ThemedActivity {
 
     @Override

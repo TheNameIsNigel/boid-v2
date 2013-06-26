@@ -6,6 +6,11 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import com.teamboid.twitter.R;
 
+/**
+ * The 'look and feel' preference category.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class LookAndFeelFragment extends PreferenceFragment {
 
     @Override

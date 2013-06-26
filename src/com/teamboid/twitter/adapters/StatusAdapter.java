@@ -10,6 +10,11 @@ import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.utilities.TimeUtils;
 import twitter4j.Status;
 
+/**
+ * A list adapter that displays statuses (tweets).
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class StatusAdapter extends BoidAdapter<Status> {
 
     public StatusAdapter(Context context) {

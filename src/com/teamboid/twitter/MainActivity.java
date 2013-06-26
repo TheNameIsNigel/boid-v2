@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
+import com.teamboid.twitter.adapters.DrawerItemAdapter;
 import com.teamboid.twitter.base.DrawerActivity;
 import com.teamboid.twitter.fragments.MentionsFragment;
 import com.teamboid.twitter.fragments.MessagesFragment;
@@ -15,6 +16,11 @@ import com.teamboid.twitter.fragments.TimelineFragment;
 import com.teamboid.twitter.fragments.TrendsFragment;
 import twitter4j.User;
 
+/**
+ * The main app UI.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class MainActivity extends DrawerActivity {
 
     @Override
@@ -53,8 +59,8 @@ public class MainActivity extends DrawerActivity {
     }
 
     @Override
-    public ArrayAdapter getDrawerListAdapter() {
-        return new ArrayAdapter<String>(this, R.layout.drawer_item, getResources().getStringArray(R.array.main_drawer_items));
+    public BaseAdapter getDrawerListAdapter() {
+        return new DrawerItemAdapter(this);
     }
 
     private void setupDrawer() {

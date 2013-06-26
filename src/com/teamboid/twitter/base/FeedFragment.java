@@ -4,6 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import com.devspark.appmsg.AppMsg;
 
+/**
+ * Provides a standardized base for list fragments that retrieve and display a feed.
+ *
+ * @param <T> The class contained in the fragment's list adapter, usually Status or DirectMessage.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public abstract class FeedFragment<T> extends BoidListFragment {
 
     public abstract T[] refresh() throws Exception;

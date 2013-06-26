@@ -6,6 +6,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import com.teamboid.twitter.R;
 
+/**
+ * A shadow view that supports left/right/up/down using the 'Shadow' styleable in styles.xml.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class Shadow extends View {
 
     public Shadow(Context context, AttributeSet attrs) {

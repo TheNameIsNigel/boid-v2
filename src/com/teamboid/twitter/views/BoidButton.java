@@ -5,6 +5,11 @@ import android.util.AttributeSet;
 import android.widget.Button;
 import com.teamboid.twitter.R;
 
+/**
+ * A customized holographic blue Button.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class BoidButton extends Button {
 
     public BoidButton(Context context) {

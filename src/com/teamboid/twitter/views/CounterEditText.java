@@ -6,6 +6,12 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import com.teamboid.twitter.R;
 
+/**
+ * An edit text connects to and displays its length on a {@link TextView} automatically. Shows a red negative value
+ * if the character count goes over {@value #CHARACTER_LIMIT}.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public class CounterEditText extends RobotoThinEditText {
 
     public CounterEditText(Context context) {

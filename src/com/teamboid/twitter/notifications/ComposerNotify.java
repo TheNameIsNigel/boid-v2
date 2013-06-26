@@ -9,6 +9,10 @@ import android.os.Bundle;
 import com.teamboid.twitter.ComposeActivity;
 import com.teamboid.twitter.R;
 
+/**
+ * Convenience methods for displaying 'sending' or 'failed to send' notifications for tweets. Used by the
+ * {@link com.teamboid.twitter.services.ComposerService}.
+ */
 public class ComposerNotify {
 
     public final static int ID = 100;

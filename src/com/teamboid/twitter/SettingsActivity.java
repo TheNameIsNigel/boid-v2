@@ -7,7 +7,9 @@ import com.teamboid.twitter.base.ThemedPreferenceActivity;
 import java.util.List;
 
 /**
- * Displays the app's settings, accessed via the {@link MainActivity} overflow menu.
+ * The settings UI, accessed via the {@link MainActivity} overflow menu.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class SettingsActivity extends ThemedPreferenceActivity {
 
