@@ -12,6 +12,7 @@ import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 
 /**
  * A feed fragment that displays the current user's message conversations.
@@ -52,7 +53,7 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
     }
 
     @Override
-    public ConversationAdapter.Conversation[] refresh() throws Exception {
+    public ConversationAdapter.Conversation[] refresh() throws TwitterException {
         Twitter cl = BoidApp.get(getActivity()).getClient();
         ConversationAdapter.ConversationOrganizer organizer = new ConversationAdapter.ConversationOrganizer(getActivity());
         ResponseList<DirectMessage> msges = cl.getDirectMessages();
@@ -65,7 +66,7 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
     }
 
     @Override
-    public ConversationAdapter.Conversation[] paginate() throws Exception {
+    public ConversationAdapter.Conversation[] paginate() throws TwitterException {
         return null;
     }
 
