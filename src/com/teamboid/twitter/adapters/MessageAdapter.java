@@ -61,6 +61,6 @@ public class MessageAdapter extends BoidAdapter<DirectMessage> {
     @Override
     public int getItemViewType(int position) {
         DirectMessage msg = getItem(position);
-        return (me.getId() == msg.getSenderId()) ? 1 : 2;
+        return (me.getId() == msg.getSenderId()) ? 0 : 1;
     }
 }

@@ -28,7 +28,7 @@
     <RelativeLayout
             android:id="@+id/inputFrame" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_alignParentBottom="true"
-            android:background="@color/white" android:padding="7dp"
+            android:background="@color/white" android:padding="5dp"
             android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
 
         <com.teamboid.twitter.views.BorderlessEditText
