@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="about">About</string>
+    <string name="about_desc">View information about the Boid OSP and its creators.</string>
+
+    <string name="version">Version</string>
+    <string name="build">Build</string>
+    <string name="developers">Developers</string>
+    <string name="developers_desc">Developed by Aidan Follestad, icons by Graham Macphee. Original version included
+        Philip Oakley and Joe Simpson.
+    </string>
+    <string name="libraries">Libraries</string>
+    <string name="libraries_desc">ActionBar-PullToRefresh (Chris Banes), Android-AppMsg (Evgeny Shishkin), volley
+        (Google).
+    </string>
+
     <string name="look_feel">Look and feel</string>
     <string name="look_feel_desc">Change the look and feel of Boid to your liking.</string>
 

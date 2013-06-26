@@ -17,6 +17,7 @@ public class SettingsActivity extends ThemedPreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override

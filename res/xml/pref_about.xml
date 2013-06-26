@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference android:key="app_version" android:title="@string/version"/>
+
+    <Preference android:key="app_build" android:title="@string/build"/>
+
+    <Preference android:key="developers" android:title="@string/developers" android:summary="@string/developers_desc"/>
+
+    <Preference android:key="libraries" android:title="@string/libraries" android:summary="@string/libraries_desc"/>
+
+</PreferenceScreen>
