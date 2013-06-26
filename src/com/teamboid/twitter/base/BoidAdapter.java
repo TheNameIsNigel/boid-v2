@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import twitter4j.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,15 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
 
     public final Context getContext() {
         return context;
+    }
+
+    public final String getDisplayName(User user, boolean realName) {
+        if (realName) {
+            String toreturn = user.getName();
+            if (!toreturn.trim().isEmpty())
+                return toreturn;
+        }
+        return "@" + user.getScreenName();
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.teamboid.twitter.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
@@ -112,7 +114,11 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
 
     public ConversationAdapter(Context context) {
         super(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mDisplayRealNames = prefs.getBoolean("display_realname", true);
     }
+
+    private boolean mDisplayRealNames;
 
     @Override
     public View fillView(int index, View view) {
@@ -123,7 +129,7 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
         profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
         profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
         profilePic.setImageUrl(convo.getEndUser().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
-        ((TextView) view.findViewById(R.id.userName)).setText(convo.getEndUser().getName());
+        ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(convo.getEndUser(), mDisplayRealNames));
         ((TextView) view.findViewById(R.id.content)).setText(message.getText());
         ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
 

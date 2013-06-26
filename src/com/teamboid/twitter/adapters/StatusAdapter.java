@@ -1,6 +1,8 @@
 package com.teamboid.twitter.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
@@ -19,7 +21,11 @@ public class StatusAdapter extends BoidAdapter<Status> {
 
     public StatusAdapter(Context context) {
         super(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mDisplayRealNames = prefs.getBoolean("display_realname", true);
     }
+
+    private boolean mDisplayRealNames;
 
     @Override
     public View fillView(int index, View view) {
@@ -40,7 +46,7 @@ public class StatusAdapter extends BoidAdapter<Status> {
         profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
         profilePic.setImageUrl(item.getUser().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
 
-        ((TextView) view.findViewById(R.id.userName)).setText(item.getUser().getName());
+        ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(item.getUser(), mDisplayRealNames));
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
         ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 

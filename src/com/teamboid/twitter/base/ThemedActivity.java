@@ -15,10 +15,19 @@ import com.teamboid.twitter.R;
 public class ThemedActivity extends Activity {
 
     private int mTheme;
+    private boolean mDisplayRealNames;
+
+    public final boolean shouldRecreate() {
+        int currentTheme = getBoidTheme();
+        boolean displayRealNames = shouldDisplayRealNames();
+        return currentTheme != mTheme || displayRealNames != mDisplayRealNames;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme();
+        mDisplayRealNames = shouldDisplayRealNames();
         setTheme(mTheme);
         super.onCreate(savedInstanceState);
     }
@@ -26,14 +35,16 @@ public class ThemedActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        int currentTheme = getBoidTheme();
-        if (currentTheme != mTheme) {
-            // The theme has changed since the activity was started, recreate the activity now
+        if (shouldRecreate())
             recreate();
-        }
     }
 
-    public int getBoidTheme() {
+    public final boolean shouldDisplayRealNames() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getBoolean("display_realname", true);
+    }
+
+    public final int getBoidTheme() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int theme = Integer.parseInt(prefs.getString("boid_theme", "0"));
         switch (theme) {

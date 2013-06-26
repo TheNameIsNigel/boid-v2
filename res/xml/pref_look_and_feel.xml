@@ -5,4 +5,8 @@
                     android:summary="@string/theme_desc" android:entries="@array/theme_names"
                     android:entryValues="@array/theme_values" android:persistent="true" android:defaultValue="0"/>
 
+    <CheckBoxPreference android:key="display_realname" android:title="@string/display_realname"
+                        android:summary="@string/display_realname_desc" android:defaultValue="true"
+                        android:persistent="true"/>
+
 </PreferenceScreen>
