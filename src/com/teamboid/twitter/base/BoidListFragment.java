@@ -28,6 +28,8 @@ public abstract class BoidListFragment<T> extends Fragment {
 
     public abstract void onItemClicked(int index);
 
+    public abstract boolean onItemLongClicked(int index);
+
 
     public final void setListShown(boolean shown) {
         mListView.setVisibility(shown ? View.VISIBLE : View.GONE);
@@ -93,6 +95,12 @@ public abstract class BoidListFragment<T> extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onItemClicked(i);
+            }
+        });
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                return onItemLongClicked(i);
             }
         });
         mListView.setEmptyView(mEmptyView);

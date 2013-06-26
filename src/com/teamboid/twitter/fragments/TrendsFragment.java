@@ -32,6 +32,12 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
+    public boolean onItemLongClicked(int index) {
+        //TODO
+        return false;
+    }
+
+    @Override
     public Trend[] refresh() throws Exception {
         // TODO implement location based trends
         return BoidApp.get(getActivity()).getClient().getPlaceTrends(1).getTrends();

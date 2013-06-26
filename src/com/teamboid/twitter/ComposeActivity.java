@@ -17,12 +17,27 @@ import com.teamboid.twitter.views.CounterEditText;
  */
 public class ComposeActivity extends ThemedActivity {
 
+    private long mReplyTo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.composer);
         setupInput();
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        processIntent();
+    }
+
+    private void processIntent() {
+        EditText input = (EditText) findViewById(R.id.input);
+        Intent i = getIntent();
+        input.setText("");
+        if (i.hasExtra("mention"))
+            input.append("@" + i.getStringExtra("mention"));
+        if (i.hasExtra("content"))
+            input.append(i.getStringExtra("content"));
+        if (i.hasExtra("reply_to"))
+            mReplyTo = i.getLongExtra("reply_to", 0l);
     }
 
     private void setupInput() {
@@ -35,7 +50,8 @@ public class ComposeActivity extends ThemedActivity {
         item.setEnabled(false);
         input.setEnabled(false);
         startService(new Intent(this, ComposerService.class)
-                .putExtra("content", input.getText().toString().trim()));
+                .putExtra("content", input.getText().toString().trim())
+                .putExtra("reply_to", mReplyTo));
         finish();
     }
 

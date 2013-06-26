@@ -1,6 +1,8 @@
 package com.teamboid.twitter.fragments;
 
+import android.content.Intent;
 import com.teamboid.twitter.BoidApp;
+import com.teamboid.twitter.ComposeActivity;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.base.BoidAdapter;
@@ -29,6 +31,15 @@ public class TimelineFragment extends FeedFragment<Status> {
     @Override
     public void onItemClicked(int index) {
         //TODO
+    }
+
+    @Override
+    public boolean onItemLongClicked(int index) {
+        Status status = adapter.getItem(index);
+        startActivity(new Intent(getActivity(), ComposeActivity.class)
+                .putExtra("mention", status.getUser().getScreenName())
+                .putExtra("reply_to", status.getId()));
+        return true;
     }
 
     @Override
