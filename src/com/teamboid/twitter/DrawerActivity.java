@@ -1,4 +1,4 @@
-package com.teamboid.twitter.base;
+package com.teamboid.twitter;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

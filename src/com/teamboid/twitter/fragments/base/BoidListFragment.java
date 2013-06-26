@@ -1,4 +1,4 @@
-package com.teamboid.twitter.base;
+package com.teamboid.twitter.fragments.base;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,11 +10,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.teamboid.twitter.R;
+import com.teamboid.twitter.adapters.BoidAdapter;
 
 /**
  * Provides a standardized base for all fragments that contain a list.
  *
- * @param <T> The class contained in the fragment's {@link BoidAdapter}.
+ * @param <T> The class contained in the fragment's {@link com.teamboid.twitter.adapters.BoidAdapter}.
  * @author Aidan Follestad (afollestad)
  */
 public abstract class BoidListFragment<T> extends CacheableListFragment<T> {

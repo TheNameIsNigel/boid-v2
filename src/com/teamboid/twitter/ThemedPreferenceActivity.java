@@ -1,18 +1,17 @@
-package com.teamboid.twitter.base;
+package com.teamboid.twitter;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import com.teamboid.twitter.R;
 
 /**
- * Provides a standardized base for all activities that automatically theme themselves based on
- * the application's theme setting; this is basically every activity in the app.
+ * Same as {@link ThemedActivity}, but used by the {@link com.teamboid.twitter.SettingsActivity}.
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ThemedActivity extends Activity {
+public class ThemedPreferenceActivity extends PreferenceActivity {
 
     private int mTheme;
     private boolean mDisplayRealNames;

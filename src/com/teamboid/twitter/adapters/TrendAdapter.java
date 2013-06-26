@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.base.BoidAdapter;
 import twitter4j.Trend;
 
 /**

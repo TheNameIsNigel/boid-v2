@@ -1,4 +1,4 @@
-package com.teamboid.twitter.base;
+package com.teamboid.twitter.fragments.base;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.R;
+import com.teamboid.twitter.DrawerActivity;
 import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 

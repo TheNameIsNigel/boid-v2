@@ -2,7 +2,7 @@ package com.teamboid.twitter;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import com.teamboid.twitter.base.ThemedPreferenceActivity;
+import com.teamboid.twitter.ThemedPreferenceActivity;
 
 import java.util.List;
 

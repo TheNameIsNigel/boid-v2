@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.utilities.TimeUtils;
 import twitter4j.DirectMessage;
 import twitter4j.User;

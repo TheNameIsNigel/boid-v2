@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.adapters.DrawerItemAdapter;
-import com.teamboid.twitter.base.DrawerActivity;
+import com.teamboid.twitter.DrawerActivity;
 import com.teamboid.twitter.fragments.ConversationFragment;
 import com.teamboid.twitter.fragments.MentionsFragment;
 import com.teamboid.twitter.fragments.TimelineFragment;

@@ -2,7 +2,7 @@ package com.teamboid.twitter;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import com.teamboid.twitter.base.ThemedActivity;
+import com.teamboid.twitter.ThemedActivity;
 import com.teamboid.twitter.fragments.MessagesFragment;
 
 /**

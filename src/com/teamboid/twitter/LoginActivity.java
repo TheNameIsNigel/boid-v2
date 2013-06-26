@@ -10,7 +10,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.teamboid.twitter.base.ThemedActivity;
+import com.teamboid.twitter.ThemedActivity;
 import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;

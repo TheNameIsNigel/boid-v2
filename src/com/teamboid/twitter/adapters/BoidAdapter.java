@@ -1,4 +1,4 @@
-package com.teamboid.twitter.base;
+package com.teamboid.twitter.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.teamboid.twitter.base;
+package com.teamboid.twitter.fragments.base;
 
 import android.app.Fragment;
 import android.content.Context;

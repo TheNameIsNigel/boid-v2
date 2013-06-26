@@ -3,8 +3,8 @@ package com.teamboid.twitter.fragments;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.TrendAdapter;
-import com.teamboid.twitter.base.BoidAdapter;
-import com.teamboid.twitter.base.FeedFragment;
+import com.teamboid.twitter.adapters.BoidAdapter;
+import com.teamboid.twitter.fragments.base.FeedFragment;
 import twitter4j.Trend;
 import twitter4j.TwitterException;
 
