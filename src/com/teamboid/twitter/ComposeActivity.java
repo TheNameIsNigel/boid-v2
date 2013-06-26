@@ -36,8 +36,12 @@ public class ComposeActivity extends ThemedActivity {
             input.append("@" + i.getStringExtra("mention") + " ");
         if (i.hasExtra("content"))
             input.append(i.getStringExtra("content"));
-        if (i.hasExtra("reply_to"))
+        if (i.hasExtra("reply_to")) {
             mReplyTo = i.getLongExtra("reply_to", 0l);
+            setTitle(R.string.reply);
+        } else {
+            setTitle(R.string.compose);
+        }
     }
 
     private void setupInput() {
