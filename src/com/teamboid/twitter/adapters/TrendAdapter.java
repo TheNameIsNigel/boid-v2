@@ -29,4 +29,9 @@ public class TrendAdapter extends BoidAdapter<Trend> {
     public int getLayout() {
         return R.layout.list_item_trend;
     }
+
+    @Override
+    public long getItemId(Trend item) {
+        return -1l;
+    }
 }

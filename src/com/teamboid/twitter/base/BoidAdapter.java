@@ -13,7 +13,6 @@ import java.util.List;
  * Provides a standardized base for most list adapters that are used in the app.
  *
  * @param <T> The class contained in the adapter, usually Status or DirectMessage.
- *
  * @author Aidan Follestad (afollestad)
  */
 public abstract class BoidAdapter<T> extends BaseAdapter {
@@ -30,42 +29,84 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
 
     public abstract int getLayout();
 
+    public abstract long getItemId(T item);
+
     public final Context getContext() {
         return context;
     }
 
-    public final void add(T toadd) {
+    /**
+     * Adds an array of objects to the adapter.
+     *
+     * @param toadd the array of objects to add.
+     * @param end   whether or not the items will be appended to the end of the list. False puts them at the beginning.
+     */
+    public final void add(T[] toadd, boolean end) {
         if (toadd == null)
             return;
-        items.add(toadd);
+        if (!end) {
+            int index = 0;
+            for (T item : toadd) {
+                if (contains(item)) {
+                    // Assume we've reached the end of tweets that aren't already in the list
+                    break;
+                }
+                items.add(index, item);
+                index++;
+            }
+        } else {
+            for (T item : toadd)
+                items.add(item);
+        }
         notifyDataSetChanged();
     }
 
-    public final void add(T[] toadd) {
-        if (toadd == null)
+    /**
+     * Sets the contents of the adapter, and claers out any old items.
+     *
+     * @param items The items to fill the adapter with after clearing it.
+     */
+    public final void set(T[] items) {
+        this.items.clear();
+        if (items == null)
             return;
-        for (T item : toadd)
-            items.add(item);
+        for (T item : items)
+            this.items.add(item);
         notifyDataSetChanged();
+    }
+
+    /**
+     * Checks whether or not the adapter contains an item of type T; searches based on IDs.
+     */
+    public final boolean contains(T item) {
+        long itemId = getItemId(item);
+        if (itemId == -1l)
+            return false;
+        for (int i = 0; i < this.items.size(); i++) {
+            long curId = getItemId(this.items.get(i));
+            if (curId == itemId)
+                return true;
+        }
+        return false;
     }
 
     @Override
-    public int getCount() {
+    public final int getCount() {
         return items.size();
     }
 
     @Override
-    public T getItem(int i) {
+    public final T getItem(int i) {
         return items.get(i);
     }
 
     @Override
-    public long getItemId(int i) {
+    public final long getItemId(int i) {
         return i;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public final View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
             view = LayoutInflater.from(context).inflate(getLayout(), null);
         return fillView(i, view);

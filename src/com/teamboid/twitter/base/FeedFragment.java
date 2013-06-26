@@ -29,7 +29,7 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            getAdapter().add(items);
+                            getAdapter().add(items, false);
                         }
                     });
                 } catch (final Exception e) {

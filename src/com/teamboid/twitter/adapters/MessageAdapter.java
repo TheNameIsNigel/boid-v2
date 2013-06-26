@@ -40,4 +40,9 @@ public class MessageAdapter extends BoidAdapter<DirectMessage> {
     public int getLayout() {
         return R.layout.list_item_status;
     }
+
+    @Override
+    public long getItemId(DirectMessage item) {
+        return item.getId();
+    }
 }
