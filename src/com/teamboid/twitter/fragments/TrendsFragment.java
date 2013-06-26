@@ -44,7 +44,7 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
-    public int getTitle() {
-        return R.string.trends;
+    public String getTitle() {
+        return getString(R.string.trends);
     }
 }

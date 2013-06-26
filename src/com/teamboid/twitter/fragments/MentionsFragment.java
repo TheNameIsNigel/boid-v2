@@ -48,7 +48,7 @@ public class MentionsFragment extends FeedFragment<Status> {
     }
 
     @Override
-    public int getTitle() {
-        return R.string.mentions;
+    public String getTitle() {
+        return getString(R.string.mentions);
     }
 }

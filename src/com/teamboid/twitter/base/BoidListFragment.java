@@ -1,6 +1,5 @@
 package com.teamboid.twitter.base;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import com.teamboid.twitter.R;
  */
 public abstract class BoidListFragment<T> extends Fragment {
 
-    public abstract int getTitle();
+    public abstract String getTitle();
 
     public abstract int getEmptyText();
 
@@ -72,12 +71,7 @@ public abstract class BoidListFragment<T> extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        activity.setTitle(getTitle());
+        getActivity().setTitle(getTitle());
     }
 
     @Override

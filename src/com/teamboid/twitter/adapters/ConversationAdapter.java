@@ -11,6 +11,7 @@ import com.teamboid.twitter.utilities.TimeUtils;
 import twitter4j.DirectMessage;
 import twitter4j.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
     /**
      * Represents a conversation, or a collection of messages sent and received from the same end user.
      */
-    public static class Conversation {
+    public static class Conversation implements Serializable {
 
         public Conversation(User endUser, DirectMessage msg) {
             this.endUser = endUser;
@@ -49,6 +50,10 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
 
         public DirectMessage getRecentMessage() {
             return messages.get(0);
+        }
+
+        public List<DirectMessage> getMessages() {
+            return messages;
         }
     }
 
@@ -121,5 +126,4 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
     public long getItemId(Conversation item) {
         return item.getEndUser().getId();
     }
-
 }

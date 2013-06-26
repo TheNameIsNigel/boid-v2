@@ -1,10 +1,13 @@
 package com.teamboid.twitter.fragments;
 
+import android.content.Intent;
 import com.teamboid.twitter.BoidApp;
+import com.teamboid.twitter.ConversationActivity;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.ConversationAdapter;
 import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.base.FeedFragment;
+import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
@@ -30,7 +33,9 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
 
     @Override
     public void onItemClicked(int index) {
-        //TODO
+        ConversationAdapter.Conversation convo = adapter.getItem(index);
+        startActivity(new Intent(getActivity(), ConversationActivity.class)
+                .putExtra("conversation", Utils.serializeObject(convo)));
     }
 
     @Override
@@ -53,7 +58,7 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
     }
 
     @Override
-    public int getTitle() {
-        return R.string.messages;
+    public String getTitle() {
+        return getString(R.string.messages);
     }
 }

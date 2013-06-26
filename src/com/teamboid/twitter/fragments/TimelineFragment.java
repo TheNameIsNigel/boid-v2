@@ -48,7 +48,7 @@ public class TimelineFragment extends FeedFragment<Status> {
     }
 
     @Override
-    public int getTitle() {
-        return R.string.timeline;
+    public String getTitle() {
+        return getString(R.string.timeline);
     }
 }

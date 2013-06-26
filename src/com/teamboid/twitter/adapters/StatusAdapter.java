@@ -40,10 +40,7 @@ public class StatusAdapter extends BoidAdapter<Status> {
         profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
         profilePic.setImageUrl(item.getUser().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
 
-        String displayName = item.getUser().getName();
-        if (displayName.trim().isEmpty())
-            displayName = "@" + item.getUser().getScreenName();
-        ((TextView) view.findViewById(R.id.userName)).setText(displayName);
+        ((TextView) view.findViewById(R.id.userName)).setText(item.getUser().getName());
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
         ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
