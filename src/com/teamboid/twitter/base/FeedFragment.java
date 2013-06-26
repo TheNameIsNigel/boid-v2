@@ -17,6 +17,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 public abstract class FeedFragment<T> extends BoidListFragment {
 
     private boolean mPaginationEnabled = true;
+    private boolean mRefreshing;
 
     public final void setPaginationEnabled(boolean enabled) {
         mPaginationEnabled = enabled;
@@ -27,6 +28,9 @@ public abstract class FeedFragment<T> extends BoidListFragment {
     public abstract T[] paginate() throws Exception;
 
     private void performRefresh() {
+        if (mRefreshing)
+            return;
+        mRefreshing = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -50,6 +54,7 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mRefreshing = false;
                         setListShown(true);
                         Activity act = getActivity();
                         if (act instanceof DrawerActivity)
@@ -61,6 +66,9 @@ public abstract class FeedFragment<T> extends BoidListFragment {
     }
 
     private void performPaginate() {
+        if (mRefreshing)
+            return;
+        mRefreshing = true;
         Activity act = getActivity();
         if (act instanceof DrawerActivity)
             ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshing(true);
@@ -87,6 +95,7 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        mRefreshing = false;
                         Activity act = getActivity();
                         if (act instanceof DrawerActivity)
                             ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshComplete();
