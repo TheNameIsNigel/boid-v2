@@ -1,7 +1,6 @@
 package com.teamboid.twitter.base;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +17,11 @@ import com.teamboid.twitter.R;
  * @param <T> The class contained in the fragment's {@link BoidAdapter}.
  * @author Aidan Follestad (afollestad)
  */
-public abstract class BoidListFragment<T> extends Fragment {
+public abstract class BoidListFragment<T> extends CacheableListFragment<T> {
 
-    public abstract String getTitle();
+    public BoidListFragment(boolean cachingEnabled) {
+        super(cachingEnabled);
+    }
 
     public abstract int getEmptyText();
 
@@ -40,10 +41,6 @@ public abstract class BoidListFragment<T> extends Fragment {
             getAdapter().notifyDataSetChanged();
         }
         mProgressView.setVisibility(shown ? View.GONE : View.VISIBLE);
-    }
-
-    public final void setListAdapter(BoidAdapter<T> adapter) {
-        mListView.setAdapter(adapter);
     }
 
     public final ListView getListView() {
@@ -106,5 +103,17 @@ public abstract class BoidListFragment<T> extends Fragment {
         });
         mListView.setEmptyView(mEmptyView);
         mEmptyView.setText(getString(getEmptyText()));
+    }
+
+
+    @Override
+    public final T[] getCacheWriteables() {
+        return getAdapter().toArray();
+    }
+
+    @Override
+    public final void onCacheRead(T[] contents) {
+        getAdapter().set(contents);
+        ;
     }
 }

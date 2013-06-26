@@ -14,7 +14,7 @@ import twitter4j.TwitterException;
 public class TrendsFragment extends FeedFragment<Trend> {
 
     public TrendsFragment() {
-        super(true);
+        super(false, true);
     }
 
     private TrendAdapter adapter;

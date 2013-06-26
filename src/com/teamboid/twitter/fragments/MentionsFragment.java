@@ -18,7 +18,7 @@ import twitter4j.TwitterException;
 public class MentionsFragment extends FeedFragment<Status> {
 
     public MentionsFragment() {
-        super(true);
+        super(true, true);
     }
 
     private StatusAdapter adapter;

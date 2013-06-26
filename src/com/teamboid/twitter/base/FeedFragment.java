@@ -1,20 +1,13 @@
 package com.teamboid.twitter.base;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.R;
 import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
-
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  * Provides a standardized base for list fragments that retrieve and display a feed. Also handles
@@ -23,9 +16,10 @@ import java.io.ObjectOutputStream;
  * @param <T> The class contained in the fragment's list adapter, usually Status or DirectMessage.
  * @author Aidan Follestad (afollestad)
  */
-public abstract class FeedFragment<T> extends BoidListFragment {
+public abstract class FeedFragment<T> extends BoidListFragment<T> {
 
-    public FeedFragment(boolean paginationEnabled) {
+    public FeedFragment(boolean paginationEnabled, boolean cachingEnabled) {
+        super(cachingEnabled);
         mPaginationEnabled = paginationEnabled;
     }
 
@@ -37,62 +31,6 @@ public abstract class FeedFragment<T> extends BoidListFragment {
     public abstract T[] refresh() throws TwitterException;
 
     public abstract T[] paginate() throws TwitterException;
-
-
-    public final void readCache(final boolean refreshIfEmpty) {
-        setListShown(false);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    FileInputStream fileInputStream = getActivity().openFileInput(getTitle().toLowerCase() + ".boid-cache");
-                    ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-                    final T[] cache = (T[]) objectInputStream.readObject();
-                    if (cache != null) {
-                        Log.d("FeedFragment", "Read " + cache.length + " items from the " + getTitle().toLowerCase() + " cache");
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                getAdapter().set(cache);
-                            }
-                        });
-                        return;
-                    }
-                    objectInputStream.close();
-                    setListShown(true);
-                } catch (Exception e) {
-                    Log.d("FeedFragment", getTitle().toLowerCase() + " cache is empty, or could not be read.");
-                }
-                if (refreshIfEmpty) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            performRefresh();
-                        }
-                    });
-                }
-            }
-        }).start();
-    }
-
-    public final void writeCache() {
-        if (getAdapter().getCount() == 0)
-            return;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    FileOutputStream fileOutputStream = getActivity().openFileOutput(getTitle().toLowerCase() + ".boid-cache", Context.MODE_PRIVATE);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-                    objectOutputStream.writeObject(getAdapter().toArray());
-                    Log.d("FeedFragment", "Wrote " + getAdapter().getCount() + " items to the " + getTitle().toLowerCase() + " cache");
-                    objectOutputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
 
     private void performRefresh() {
@@ -212,6 +150,11 @@ public abstract class FeedFragment<T> extends BoidListFragment {
                 }
             });
         }
-        readCache(true);
+    }
+
+    @Override
+    public void onCacheEmpty() {
+        // Refresh the list if the column cache is empty
+        performRefresh();
     }
 }

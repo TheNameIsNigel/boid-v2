@@ -18,7 +18,7 @@ import twitter4j.TwitterException;
 public class TimelineFragment extends FeedFragment<Status> {
 
     public TimelineFragment() {
-        super(true);
+        super(true, true);
     }
 
     private StatusAdapter adapter;

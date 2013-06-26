@@ -19,7 +19,7 @@ import twitter4j.TwitterException;
 public class ConversationFragment extends FeedFragment<ConversationAdapter.Conversation> {
 
     public ConversationFragment() {
-        super(true);
+        super(false, true);
     }
 
     private ConversationAdapter adapter;
