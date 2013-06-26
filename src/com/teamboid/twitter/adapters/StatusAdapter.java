@@ -59,12 +59,4 @@ public class StatusAdapter extends BoidAdapter<Status> {
     public long getItemId(Status item) {
         return item.getId();
     }
-
-    @Override
-    public Status getItem(int i) {
-        Status item = super.getItem(i);
-        if (item.isRetweet())
-            item = item.getRetweetedStatus();
-        return item;
-    }
 }

@@ -7,6 +7,7 @@ import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.base.BoidAdapter;
 import com.teamboid.twitter.base.FeedFragment;
+import com.teamboid.twitter.utilities.Utils;
 import twitter4j.Status;
 
 /**
@@ -37,8 +38,7 @@ public class TimelineFragment extends FeedFragment<Status> {
     public boolean onItemLongClicked(int index) {
         Status status = adapter.getItem(index);
         startActivity(new Intent(getActivity(), ComposeActivity.class)
-                .putExtra("mention", status.getUser().getScreenName())
-                .putExtra("reply_to", status.getId()));
+                .putExtra("reply_to", Utils.serializeObject(status)));
         return true;
     }
 

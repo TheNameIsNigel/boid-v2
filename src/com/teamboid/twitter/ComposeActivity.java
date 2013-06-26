@@ -8,7 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.teamboid.twitter.base.ThemedActivity;
 import com.teamboid.twitter.services.ComposerService;
+import com.teamboid.twitter.utilities.Utils;
 import com.teamboid.twitter.views.CounterEditText;
+import twitter4j.Status;
 
 /**
  * The tweet composition UI.
@@ -17,7 +19,7 @@ import com.teamboid.twitter.views.CounterEditText;
  */
 public class ComposeActivity extends ThemedActivity {
 
-    private long mReplyTo;
+    private Status mReplyTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,10 @@ public class ComposeActivity extends ThemedActivity {
         if (i.hasExtra("content"))
             input.append(i.getStringExtra("content"));
         if (i.hasExtra("reply_to")) {
-            mReplyTo = i.getLongExtra("reply_to", 0l);
+            mReplyTo = (Status) Utils.deserializeObject(i.getStringExtra("reply_to"));
+            if (mReplyTo.isRetweet())
+                mReplyTo = mReplyTo.getRetweetedStatus();
+            input.append("@" + mReplyTo.getUser().getScreenName() + " ");
             setTitle(R.string.reply);
         } else {
             setTitle(R.string.compose);
