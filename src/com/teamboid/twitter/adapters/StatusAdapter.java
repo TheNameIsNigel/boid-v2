@@ -48,7 +48,7 @@ public class StatusAdapter extends BoidAdapter<Status> {
     }
 
     @Override
-    public int getLayout() {
+    public int getLayout(int pos) {
         return R.layout.list_item_status;
     }
 

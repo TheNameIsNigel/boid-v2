@@ -13,6 +13,8 @@ import twitter4j.User;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -42,18 +44,22 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
 
         public boolean add(DirectMessage msg, User me) {
             boolean sent = (me.getId() == msg.getSenderId());
-            if ((sent && endUser.getId() != msg.getRecipientId()) || endUser.getId() != msg.getSenderId())
+            if ((sent && endUser.getId() != msg.getRecipientId()) || (!sent && endUser.getId() != msg.getSenderId()))
                 return false;
-            this.messages.add(msg);
+            this.messages.add(0, msg);
             return true;
         }
 
         public DirectMessage getRecentMessage() {
-            return messages.get(0);
+            return messages.get(messages.size() - 1);
         }
 
         public List<DirectMessage> getMessages() {
             return messages;
+        }
+
+        public void sort() {
+            Collections.sort(this.messages, new MessageComparator());
         }
     }
 
@@ -70,7 +76,7 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
         private List<Conversation> items;
         private User me;
 
-        public void add(DirectMessage msg) {
+        private void add(DirectMessage msg) {
             boolean found = false;
             for (int i = 0; i < items.size(); i++) {
                 Conversation convo = items.get(i);
@@ -97,6 +103,13 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
         }
     }
 
+    public static class MessageComparator implements Comparator<DirectMessage> {
+        @Override
+        public int compare(DirectMessage one, DirectMessage two) {
+            return one.getCreatedAt().compareTo(two.getCreatedAt());
+        }
+    }
+
     public ConversationAdapter(Context context) {
         super(context);
     }
@@ -118,7 +131,7 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
     }
 
     @Override
-    public int getLayout() {
+    public int getLayout(int pos) {
         return R.layout.list_item_status;
     }
 

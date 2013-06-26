@@ -10,7 +10,7 @@
 
     <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/empty" android:layout_width="wrap_content"
                                                    android:layout_height="wrap_content"
-                                                   android:textSize="18sp" android:textColor="@color/white"/>
+                                                   android:textSize="18sp" android:textColor="?contentTextColor"/>
 
     <ProgressBar android:id="@+id/progress"
                  android:layout_width="wrap_content" android:layout_height="wrap_content"

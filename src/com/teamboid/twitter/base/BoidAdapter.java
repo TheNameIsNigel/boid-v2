@@ -27,7 +27,7 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
 
     public abstract View fillView(int index, View view);
 
-    public abstract int getLayout();
+    public abstract int getLayout(int pos);
 
     public abstract long getItemId(T item);
 
@@ -108,7 +108,7 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
     @Override
     public final View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
-            view = LayoutInflater.from(context).inflate(getLayout(), null);
+            view = LayoutInflater.from(context).inflate(getLayout(i), null);
         return fillView(i, view);
     }
 }

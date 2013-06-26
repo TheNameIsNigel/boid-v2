@@ -26,7 +26,7 @@
 
         <activity android:name="com.teamboid.twitter.SettingsActivity" android:label="@string/settings"/>
 
-        <activity android:name="com.teamboid.twitter.ConversationActivity"/>
+        <activity android:name="com.teamboid.twitter.ConversationActivity" android:windowSoftInputMode="adjustResize"/>
 
         <service android:name="com.teamboid.twitter.services.ComposerService" android:label="@string/compose"/>
 

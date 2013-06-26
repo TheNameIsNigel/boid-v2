@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res/com.teamboid.twitter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_above="@+id/inputFrame">
+
+        <ListView android:id="@+id/list" android:layout_width="fill_parent" android:layout_height="fill_parent"
+                  android:paddingTop="3dp" android:stackFromBottom="true" android:transcriptMode="alwaysScroll"/>
+
+        <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/empty" android:layout_width="wrap_content"
+                                                       android:layout_height="wrap_content"
+                                                       android:textSize="18sp" android:textColor="?contentTextColor"
+                                                       android:text="@string/no_messages"/>
+
+    </LinearLayout>
+
+    <com.teamboid.twitter.views.Shadow android:id="@+id/shadow" android:layout_width="fill_parent"
+                                       android:layout_height="@dimen/shadow" app:direction="up"
+                                       android:layout_above="@+id/inputFrame"/>
+
+    <RelativeLayout
+            android:id="@+id/inputFrame" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+            android:background="@color/white" android:padding="5dp"
+            android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
+
+        <com.teamboid.twitter.views.BorderlessEditText
+                android:id="@+id/messageInput"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/sendButton"
+                android:hint="@string/composer_input_hint"
+                android:imeOptions="actionSend|flagNoEnterAction"
+                android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
+                android:maxLength="140" android:maxLines="2" android:layout_centerVertical="true"/>
+
+        <ImageButton
+                android:id="@+id/sendButton" android:layout_width="@dimen/send_button"
+                android:layout_height="@dimen/send_button" android:layout_alignParentRight="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:enabled="false" android:padding="5dp" android:scaleType="fitXY"
+                android:src="?sendIcon" android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
