@@ -84,6 +84,10 @@ public abstract class CacheableFragment<T> extends Fragment {
     private void writeCache() {
         final T[] towrite = getCacheWriteables();
         final String title = getTitle().toLowerCase() + ".boid-cache";
+        if (towrite.length == 0) {
+            Log.d("CacheableListFragment", "No items available to be written to " + title);
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {

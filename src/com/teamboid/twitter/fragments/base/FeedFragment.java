@@ -1,6 +1,7 @@
 package com.teamboid.twitter.fragments.base;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
@@ -38,6 +39,7 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
         if (mRefreshing)
             return;
         mRefreshing = true;
+        Log.d("CacheableListFragment", "performRefresh()");
         new Thread(new Runnable() {
             @Override
             public void run() {

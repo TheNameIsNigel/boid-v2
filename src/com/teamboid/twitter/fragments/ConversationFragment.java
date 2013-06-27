@@ -28,7 +28,7 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
     }
 
     @Override
-    public BoidAdapter<ConversationAdapter.Conversation> getAdapter() {
+    public BoidAdapter<ConversationAdapter.Conversation> initializeAdapter() {
         return new ConversationAdapter(getActivity());
     }
 

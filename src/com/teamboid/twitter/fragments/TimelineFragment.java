@@ -27,7 +27,7 @@ public class TimelineFragment extends FeedFragment<Status> {
     }
 
     @Override
-    public BoidAdapter<Status> getAdapter() {
+    public BoidAdapter<Status> initializeAdapter() {
         return new StatusAdapter(getActivity());
     }
 

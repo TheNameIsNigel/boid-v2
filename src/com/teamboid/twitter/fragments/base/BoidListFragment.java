@@ -26,7 +26,7 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
 
     public abstract int getEmptyText();
 
-    public abstract BoidAdapter<T> getAdapter();
+    public abstract BoidAdapter<T> initializeAdapter();
 
     public abstract void onItemClicked(int index, T item);
 
@@ -98,11 +98,15 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
 
     @Override
     public final T[] getCacheWriteables() {
-        return getAdapter().toArray();
+        return mAdapter.toArray();
     }
 
     @Override
     public final void onCacheRead(T[] contents) {
-        getAdapter().set(contents);
+        mAdapter.set(contents);
+    }
+
+    public final BoidAdapter<T> getAdapter() {
+        return mAdapter;
     }
 }

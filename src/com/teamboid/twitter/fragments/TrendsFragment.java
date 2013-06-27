@@ -23,7 +23,7 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
-    public BoidAdapter<Trend> getAdapter() {
+    public BoidAdapter<Trend> initializeAdapter() {
         return new TrendAdapter(getActivity());
     }
 
