@@ -67,7 +67,7 @@ public abstract class CacheableFragment<T> extends Fragment {
                     FileInputStream fileInputStream = getActivity().openFileInput(title);
                     ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
                     final T[] cache = (T[]) objectInputStream.readObject();
-                    if (cache != null) {
+                    if (cache != null && cache.length > 0) {
                         Log.d("CacheableListFragment", "Read " + cache.length + " items from " + title);
                         onCacheRead(cache);
                         return;
