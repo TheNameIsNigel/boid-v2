@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
@@ -23,9 +24,11 @@ public class StatusAdapter extends BoidAdapter<Status> {
         super(context);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mDisplayRealNames = prefs.getBoolean("display_realname", true);
+        mImageLoader = BoidApp.get(context).getImageLoader();
     }
 
     private boolean mDisplayRealNames;
+    private ImageLoader mImageLoader;
 
     @Override
     public View fillView(int index, View view) {
@@ -44,7 +47,7 @@ public class StatusAdapter extends BoidAdapter<Status> {
         NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
         profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
         profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
-        profilePic.setImageUrl(item.getUser().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
+        profilePic.setImageUrl(item.getUser().getProfileImageURL(), mImageLoader);
 
         ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(item.getUser(), mDisplayRealNames));
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
@@ -54,7 +57,7 @@ public class StatusAdapter extends BoidAdapter<Status> {
         MediaEntity[] mediaEnts = item.getMediaEntities();
         if (mediaEnts != null && mediaEnts.length > 0) {
             media.setVisibility(View.VISIBLE);
-            media.setImageUrl(mediaEnts[0].getExpandedURL(), BoidApp.get(getContext()).getImageLoader());
+            media.setImageUrl(mediaEnts[0].getExpandedURL(), mImageLoader);
         } else {
             media.setVisibility(View.GONE);
         }

@@ -3,6 +3,7 @@ package com.teamboid.twitter.adapters;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
@@ -20,9 +21,11 @@ public class MessageAdapter extends BoidAdapter<DirectMessage> {
     public MessageAdapter(Context context) {
         super(context);
         me = BoidApp.get(context).getProfile();
+        mImageLoader = BoidApp.get(context).getImageLoader();
     }
 
     private User me;
+    private ImageLoader mImageLoader;
 
     @Override
     public View fillView(int index, View view) {
@@ -31,7 +34,7 @@ public class MessageAdapter extends BoidAdapter<DirectMessage> {
         NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
         profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
         profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
-        profilePic.setImageUrl(item.getSender().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
+        profilePic.setImageUrl(item.getSender().getProfileImageURL(), mImageLoader);
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
         ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 

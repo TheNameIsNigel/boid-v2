@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
@@ -115,9 +116,11 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
         super(context);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mDisplayRealNames = prefs.getBoolean("display_realname", true);
+        mImageLoader = BoidApp.get(context).getImageLoader();
     }
 
     private boolean mDisplayRealNames;
+    private ImageLoader mImageLoader;
 
     @Override
     public View fillView(int index, View view) {
@@ -127,7 +130,7 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
         NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
         profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
         profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
-        profilePic.setImageUrl(convo.getEndUser().getProfileImageURL(), BoidApp.get(getContext()).getImageLoader());
+        profilePic.setImageUrl(convo.getEndUser().getProfileImageURL(), mImageLoader);
         ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(convo.getEndUser(), mDisplayRealNames));
         ((TextView) view.findViewById(R.id.content)).setText(message.getText());
         ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
