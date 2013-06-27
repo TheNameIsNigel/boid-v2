@@ -69,7 +69,14 @@ public abstract class CacheableFragment<T> extends Fragment {
                     final T[] cache = (T[]) objectInputStream.readObject();
                     if (cache != null && cache.length > 0) {
                         Log.d("CacheableListFragment", "Read " + cache.length + " items from " + title);
-                        onCacheRead(cache);
+                        if (getActivity() == null)
+                            return;
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onCacheRead(cache);
+                            }
+                        });
                         return;
                     } else {
                         Log.d("CacheableListFragment", title + " is empty.");

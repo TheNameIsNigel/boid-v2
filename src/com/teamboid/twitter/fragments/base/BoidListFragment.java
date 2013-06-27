@@ -111,12 +111,7 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
     @Override
     public final void onCacheRead(T[] contents) {
         mAdapter.set(contents);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setListShown(true);
-            }
-        });
+        setListShown(true);
     }
 
     public final BoidAdapter<T> getAdapter() {
