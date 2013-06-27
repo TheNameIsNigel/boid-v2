@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import twitter4j.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,29 +47,30 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
     }
 
     /**
-     * Adds an array of objects to the adapter.
+     * Adds an array of objects to the adapter. Returns number of items added.
      *
      * @param toadd the array of objects to add.
      * @param end   whether or not the items will be appended to the end of the list. False puts them at the beginning.
      */
-    public final void add(T[] toadd, boolean end) {
+    public final int add(T[] toadd, boolean end) {
         if (toadd == null)
-            return;
-        if (!end) {
-            int index = 0;
-            for (T item : toadd) {
-                if (contains(item)) {
-                    // Assume we've reached the end of tweets that aren't already in the list
+            return 0;
+        int count = 0;
+        for (T item : toadd) {
+            if (contains(item)) {
+                if (!end) {
+                    // While inserting into the beginning, assume we've reached the end of tweets that aren't already in the list
                     break;
-                }
-                items.add(index, item);
-                index++;
+                } else continue;
             }
-        } else {
-            for (T item : toadd)
+            if (!end) {
+                items.add(count, item);
+            } else {
                 items.add(item);
+            }
+            count++;
         }
-        notifyDataSetChanged();
+        return count;
     }
 
     /**
@@ -76,11 +78,16 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
      *
      * @param items The items to fill the adapter with after clearing it.
      */
+
     public final void set(T[] items) {
         this.items.clear();
         for (T item : items)
             this.items.add(item);
         notifyDataSetChanged();
+    }
+
+    public final void clear() {
+        this.items.clear();
     }
 
     /**
@@ -120,7 +127,11 @@ public abstract class BoidAdapter<T> extends BaseAdapter {
         return fillView(i, view);
     }
 
-    public T[] toArray() {
-        return (T[]) items.toArray();
+    public T[] toArray(int limit) {
+        T[] toreturn = (T[]) items.toArray();
+        if (limit > 0 && toreturn.length > limit) {
+            toreturn = Arrays.copyOfRange(toreturn, 0, limit);
+        }
+        return toreturn;
     }
 }

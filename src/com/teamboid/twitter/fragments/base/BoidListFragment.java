@@ -1,7 +1,9 @@
 package com.teamboid.twitter.fragments.base;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,9 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
     public BoidListFragment(boolean cachingEnabled) {
         super(cachingEnabled);
     }
+
+    public final static int CACHE_LIMIT = 1000;
+
 
     public abstract int getEmptyText();
 
@@ -105,16 +110,44 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
 
     @Override
     public final T[] getCacheWriteables() {
-        return mAdapter.toArray();
+        // Save the scroll position right before the fragment caches itself
+        saveScrollPos();
+        return mAdapter.toArray(CACHE_LIMIT);
     }
 
     @Override
     public final void onCacheRead(T[] contents) {
         mAdapter.set(contents);
         setListShown(true);
+        // Restore the previously cached scroll position, if possible
+        restoreScrollPos(0);
     }
 
     public final BoidAdapter<T> getAdapter() {
         return mAdapter;
+    }
+
+    public final void saveScrollPos() {
+        int mSavedIndex = mListView.getFirstVisiblePosition();
+        View v = mListView.getChildAt(0);
+        int mSavedFromTop = (v == null) ? 0 : v.getTop();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putInt("saved_index", mSavedIndex).putInt("saved_top", mSavedFromTop).commit();
+    }
+
+    public final void restoreScrollPos(int addedCount) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int mSavedIndex = prefs.getInt("saved_index", -1);
+        if (mSavedIndex == -1)
+            return;
+        else if (mSavedIndex > getAdapter().getCount() - 1) {
+            // The saved scroll position is out of date with the cache
+            prefs.edit().remove("saved_index").remove("saved_top").commit();
+            return;
+        }
+        int mSavedFromTop = prefs.getInt("saved_top", 0);
+        mListView.clearFocus();
+        mListView.setSelectionFromTop(mSavedIndex + addedCount, mSavedFromTop);
+        mListView.requestFocus();
     }
 }

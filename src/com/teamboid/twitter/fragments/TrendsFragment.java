@@ -6,6 +6,7 @@ import com.teamboid.twitter.adapters.BoidAdapter;
 import com.teamboid.twitter.adapters.TrendAdapter;
 import com.teamboid.twitter.fragments.base.FeedFragment;
 import twitter4j.Trend;
+import twitter4j.Trends;
 import twitter4j.TwitterException;
 
 /**
@@ -41,7 +42,9 @@ public class TrendsFragment extends FeedFragment<Trend> {
     @Override
     public Trend[] refresh() throws TwitterException {
         // TODO implement location based trends
-        return BoidApp.get(getActivity()).getClient().getPlaceTrends(1).getTrends();
+        Trends trends = BoidApp.get(getActivity()).getClient().getPlaceTrends(1);
+        getAdapter().clear();
+        return trends.getTrends();
     }
 
     @Override

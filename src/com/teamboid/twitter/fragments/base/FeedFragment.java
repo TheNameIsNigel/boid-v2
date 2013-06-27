@@ -27,8 +27,7 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
     private boolean mPaginationEnabled = true;
     private boolean mRefreshing;
 
-    public final static int PAGE_LENGTH = 100;
-
+    public final static int PAGE_LENGTH = 200;
 
     public abstract T[] refresh() throws TwitterException;
 
@@ -39,6 +38,10 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
         if (mRefreshing)
             return;
         mRefreshing = true;
+
+        // Saves the scroll position so tweets can be added above the current scroll position for the user to scroll up to
+        saveScrollPos();
+
         Log.d("CacheableListFragment", "performRefresh()");
         new Thread(new Runnable() {
             @Override
@@ -48,7 +51,9 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            getAdapter().add(items, false);
+                            int added = getAdapter().add(items, false);
+                            // Restore to the scroll position saved before the thread was started
+                            restoreScrollPos(added);
                         }
                     });
                 } catch (final TwitterException e) {
@@ -96,12 +101,16 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
                             getAdapter().add(items, true);
                         }
                     });
-                } catch (final Exception e) {
+                } catch (final TwitterException e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            if (e.exceededRateLimitation()) {
+                                AppMsg.makeText(getActivity(), R.string.rate_limit_error, AppMsg.STYLE_ALERT).show();
+                            } else {
+                                AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            }
                         }
                     });
                 }
