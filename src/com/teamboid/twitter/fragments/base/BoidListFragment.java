@@ -65,9 +65,16 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAdapter = getAdapter();
+        mAdapter = initializeAdapter();
         setRetainInstance(true);
         getActivity().setTitle(getTitle());
+    }
+
+    @Override
+    public void onResume() {
+        // Prepare for cache to be read or full refresh
+        setListShown(false);
+        super.onResume();
     }
 
     @Override
@@ -104,6 +111,12 @@ public abstract class BoidListFragment<T> extends CacheableFragment<T> {
     @Override
     public final void onCacheRead(T[] contents) {
         mAdapter.set(contents);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setListShown(true);
+            }
+        });
     }
 
     public final BoidAdapter<T> getAdapter() {

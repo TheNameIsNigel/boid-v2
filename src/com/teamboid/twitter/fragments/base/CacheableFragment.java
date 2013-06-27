@@ -71,11 +71,13 @@ public abstract class CacheableFragment<T> extends Fragment {
                         Log.d("CacheableListFragment", "Read " + cache.length + " items from " + title);
                         onCacheRead(cache);
                         return;
+                    } else {
+                        Log.d("CacheableListFragment", title + " is empty.");
                     }
                     objectInputStream.close();
                 } catch (Exception e) {
+                    Log.d("CacheableListFragment", "Failed to read from " + title + ": " + e.getMessage());
                 }
-                Log.d("CacheableListFragment", title + " is empty or could not be read from...");
                 onCacheEmpty();
             }
         }).start();
@@ -98,7 +100,7 @@ public abstract class CacheableFragment<T> extends Fragment {
                     Log.d("CacheableListFragment", "Wrote " + towrite.length + " items to " + title);
                     objectOutputStream.close();
                 } catch (Exception e) {
-                    Log.d("CacheableListFragment", "Failed to write to " + title + "...");
+                    Log.d("CacheableListFragment", "Failed to write to " + title + ": " + e.getMessage());
                 }
             }
         }).start();
