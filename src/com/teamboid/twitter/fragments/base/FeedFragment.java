@@ -1,7 +1,6 @@
 package com.teamboid.twitter.fragments.base;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import com.devspark.appmsg.AppMsg;
@@ -28,6 +27,7 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
     private boolean mRefreshing;
 
     public final static int PAGE_LENGTH = 100;
+
 
     public abstract T[] refresh() throws TwitterException;
 
@@ -118,9 +118,10 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
 
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
 
+        // If pagination is enabled, listen for scroll events in the list view
         if (mPaginationEnabled) {
             getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
                 @Override
@@ -136,6 +137,7 @@ public abstract class FeedFragment<T> extends BoidListFragment<T> {
             });
         }
 
+        // Attach to action bar pull to refresh
         Activity act = getActivity();
         if (act instanceof DrawerActivity) {
             ((DrawerActivity) act).getPullToRefreshAttacher().setRefreshableView(getListView(), new PullToRefreshAttacher.OnRefreshListener() {

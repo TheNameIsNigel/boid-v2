@@ -2,8 +2,8 @@ package com.teamboid.twitter.fragments;
 
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.adapters.TrendAdapter;
 import com.teamboid.twitter.adapters.BoidAdapter;
+import com.teamboid.twitter.adapters.TrendAdapter;
 import com.teamboid.twitter.fragments.base.FeedFragment;
 import twitter4j.Trend;
 import twitter4j.TwitterException;
@@ -17,8 +17,6 @@ public class TrendsFragment extends FeedFragment<Trend> {
         super(false, true);
     }
 
-    private TrendAdapter adapter;
-
     @Override
     public int getEmptyText() {
         return R.string.no_trends;
@@ -26,18 +24,16 @@ public class TrendsFragment extends FeedFragment<Trend> {
 
     @Override
     public BoidAdapter<Trend> getAdapter() {
-        if (adapter == null)
-            adapter = new TrendAdapter(getActivity());
-        return adapter;
+        return new TrendAdapter(getActivity());
     }
 
     @Override
-    public void onItemClicked(int index) {
+    public void onItemClicked(int index, Trend item) {
         //TODO
     }
 
     @Override
-    public boolean onItemLongClicked(int index) {
+    public boolean onItemLongClicked(int index, Trend item) {
         //TODO
         return false;
     }

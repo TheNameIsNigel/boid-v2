@@ -15,9 +15,9 @@ import java.io.ObjectOutputStream;
  * @param <T> The class contained in the fragment's list adapter, usually Status or DirectMessage.
  * @author Aidan Follestad (afollestad)
  */
-public abstract class CacheableListFragment<T> extends Fragment {
+public abstract class CacheableFragment<T> extends Fragment {
 
-    public CacheableListFragment(boolean enableCaching) {
+    public CacheableFragment(boolean enableCaching) {
         mCacheEnabled = enableCaching;
     }
 

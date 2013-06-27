@@ -18,7 +18,7 @@ import com.teamboid.twitter.adapters.BoidAdapter;
  * @param <T> The class contained in the fragment's {@link com.teamboid.twitter.adapters.BoidAdapter}.
  * @author Aidan Follestad (afollestad)
  */
-public abstract class BoidListFragment<T> extends CacheableListFragment<T> {
+public abstract class BoidListFragment<T> extends CacheableFragment<T> {
 
     public BoidListFragment(boolean cachingEnabled) {
         super(cachingEnabled);
@@ -28,9 +28,9 @@ public abstract class BoidListFragment<T> extends CacheableListFragment<T> {
 
     public abstract BoidAdapter<T> getAdapter();
 
-    public abstract void onItemClicked(int index);
+    public abstract void onItemClicked(int index, T item);
 
-    public abstract boolean onItemLongClicked(int index);
+    public abstract boolean onItemLongClicked(int index, T item);
 
 
     public final void setListShown(boolean shown) {
@@ -59,53 +59,42 @@ public abstract class BoidListFragment<T> extends CacheableListFragment<T> {
     private ListView mListView;
     private TextView mEmptyView;
     private ProgressBar mProgressView;
-
-    public void ensureViews() {
-        if (getView() == null)
-            return;
-        View v = getView();
-        if (mListView == null)
-            mListView = (ListView) v.findViewById(R.id.list);
-        if (mEmptyView == null)
-            mEmptyView = (TextView) v.findViewById(R.id.empty);
-        if (mProgressView == null)
-            mProgressView = (ProgressBar) v.findViewById(R.id.progress);
-    }
+    private BoidAdapter<T> mAdapter;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAdapter = getAdapter();
         setRetainInstance(true);
         getActivity().setTitle(getTitle());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.boid_list_fragment, null);
-    }
+        View view = inflater.inflate(R.layout.boid_list_fragment, null);
+        mListView = (ListView) view.findViewById(R.id.list);
+        mEmptyView = (TextView) view.findViewById(R.id.empty);
+        mProgressView = (ProgressBar) view.findViewById(R.id.progress);
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ensureViews();
         mListView.setAdapter(getAdapter());
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onItemClicked(i);
+                onItemClicked(i, mAdapter.getItem(i));
             }
         });
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                return onItemLongClicked(i);
+                return onItemLongClicked(i, mAdapter.getItem(i));
             }
         });
         mListView.setEmptyView(mEmptyView);
         mEmptyView.setText(getString(getEmptyText()));
-    }
 
+        return view;
+    }
 
     @Override
     public final T[] getCacheWriteables() {

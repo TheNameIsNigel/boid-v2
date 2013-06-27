@@ -4,8 +4,8 @@ import android.content.Intent;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.ConversationActivity;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.adapters.ConversationAdapter;
 import com.teamboid.twitter.adapters.BoidAdapter;
+import com.teamboid.twitter.adapters.ConversationAdapter;
 import com.teamboid.twitter.fragments.base.FeedFragment;
 import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
@@ -22,8 +22,6 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
         super(false, true);
     }
 
-    private ConversationAdapter adapter;
-
     @Override
     public int getEmptyText() {
         return R.string.no_conversations;
@@ -31,20 +29,17 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
 
     @Override
     public BoidAdapter<ConversationAdapter.Conversation> getAdapter() {
-        if (adapter == null)
-            adapter = new ConversationAdapter(getActivity());
-        return adapter;
+        return new ConversationAdapter(getActivity());
     }
 
     @Override
-    public void onItemClicked(int index) {
-        ConversationAdapter.Conversation convo = adapter.getItem(index);
+    public void onItemClicked(int index, ConversationAdapter.Conversation convo) {
         startActivity(new Intent(getActivity(), ConversationActivity.class)
                 .putExtra("conversation", Utils.serializeObject(convo)));
     }
 
     @Override
-    public boolean onItemLongClicked(int index) {
+    public boolean onItemLongClicked(int index, ConversationAdapter.Conversation convo) {
         //TODO
         return false;
     }

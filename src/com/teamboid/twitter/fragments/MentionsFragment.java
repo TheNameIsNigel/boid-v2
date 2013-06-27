@@ -4,8 +4,8 @@ import android.content.Intent;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.ComposeActivity;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.adapters.BoidAdapter;
+import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.fragments.base.FeedFragment;
 import com.teamboid.twitter.utilities.Utils;
 import twitter4j.Paging;
@@ -21,8 +21,6 @@ public class MentionsFragment extends FeedFragment<Status> {
         super(true, true);
     }
 
-    private StatusAdapter adapter;
-
     @Override
     public int getEmptyText() {
         return R.string.no_mentions;
@@ -30,19 +28,16 @@ public class MentionsFragment extends FeedFragment<Status> {
 
     @Override
     public BoidAdapter<Status> getAdapter() {
-        if (adapter == null)
-            adapter = new StatusAdapter(getActivity());
-        return adapter;
+        return new StatusAdapter(getActivity());
     }
 
     @Override
-    public void onItemClicked(int index) {
+    public void onItemClicked(int index, Status status) {
         //TODO
     }
 
     @Override
-    public boolean onItemLongClicked(int index) {
-        Status status = adapter.getItem(index);
+    public boolean onItemLongClicked(int index, Status status) {
         startActivity(new Intent(getActivity(), ComposeActivity.class)
                 .putExtra("reply_to", Utils.serializeObject(status)));
         return true;
