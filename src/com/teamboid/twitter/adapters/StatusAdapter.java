@@ -9,6 +9,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.TimeUtils;
+import twitter4j.MediaEntity;
 import twitter4j.Status;
 
 /**
@@ -48,6 +49,15 @@ public class StatusAdapter extends BoidAdapter<Status> {
         ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(item.getUser(), mDisplayRealNames));
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
         ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
+
+        NetworkImageView media = (NetworkImageView) view.findViewById(R.id.media);
+        MediaEntity[] mediaEnts = item.getMediaEntities();
+        if (mediaEnts != null && mediaEnts.length > 0) {
+            media.setVisibility(View.VISIBLE);
+            media.setImageUrl(mediaEnts[0].getExpandedURL(), BoidApp.get(getContext()).getImageLoader());
+        } else {
+            media.setVisibility(View.GONE);
+        }
 
         return view;
     }

@@ -56,6 +56,11 @@
 
         </LinearLayout>
 
+        <com.android.volley.toolbox.NetworkImageView android:id="@+id/media" android:layout_width="fill_parent"
+                                                     android:layout_height="@dimen/inline_media"
+                                                     android:layout_marginTop="7dp" android:visibility="gone"
+                                                     android:scaleType="centerCrop"/>
+
     </LinearLayout>
 
 </LinearLayout>

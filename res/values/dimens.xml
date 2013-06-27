@@ -18,4 +18,6 @@
     <dimen name="drawerItemText">18sp</dimen>
     <dimen name="convoMessageText">17sp</dimen>
 
+    <dimen name="inline_media">120dp</dimen>
+
 </resources>
