@@ -11,14 +11,12 @@
 # generated files
 bin/
 gen/
-idea/
+.idea
 
 # Local configuration file (sdk path, etc)
 local.properties
 
-project.properties
-.idea
-.settings
-out
-/localSpark.yaml
-.settings
+# Eclipse project files
+.classpath
+.project
+
