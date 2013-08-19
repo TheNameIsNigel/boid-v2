@@ -19,6 +19,7 @@
 
         <item name="composeIcon">@drawable/compose_dark</item>
         <item name="sendIcon">@drawable/send_dark</item>
+        <item name="refreshIcon">@drawable/refresh_dark</item>
 
         <item name="retweetIndicator">@drawable/retweet_dark</item>
 
