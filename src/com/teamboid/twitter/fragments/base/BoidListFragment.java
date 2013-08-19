@@ -1,6 +1,7 @@
 package com.teamboid.twitter.fragments.base;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
@@ -16,6 +17,12 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         super(cacheTitle, BoidApp.getSilkCache());
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     public final int getPageLength() {
         //TODO configurable setting
         return 200;
@@ -28,7 +35,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     @Override
     public boolean getShouldShowLastUpdated() {
-        return true;
+        return getLastUpdatedTime() != null;
     }
 
     @Override

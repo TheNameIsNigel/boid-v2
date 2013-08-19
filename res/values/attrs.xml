@@ -9,7 +9,6 @@
     <attr name="composeIcon" format="reference"/>
     <attr name="sendIcon" format="reference"/>
     <attr name="refreshIcon" format="reference"/>
-
     <attr name="retweetIndicator" format="reference"/>
 
 </resources>

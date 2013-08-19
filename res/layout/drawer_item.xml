@@ -5,7 +5,8 @@
               android:layout_height="match_parent"
               android:paddingLeft="@dimen/drawer_item_hor_padding"
               android:paddingTop="@dimen/drawer_item_vert_padding"
-              android:paddingBottom="@dimen/drawer_item_vert_padding">
+              android:paddingBottom="@dimen/drawer_item_vert_padding"
+              android:background="?android:actionBarItemBackground">
 
     <com.afollestad.silk.views.text.SilkTextView android:id="@+id/title"
                                                  android:layout_width="wrap_content"

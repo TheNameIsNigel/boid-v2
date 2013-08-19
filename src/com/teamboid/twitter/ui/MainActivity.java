@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,10 +14,7 @@ import android.widget.ListView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.DrawerItemAdapter;
-import com.teamboid.twitter.fragments.ConversationFragment;
-import com.teamboid.twitter.fragments.MentionsFragment;
-import com.teamboid.twitter.fragments.TimelineFragment;
-import com.teamboid.twitter.fragments.TrendsFragment;
+import com.teamboid.twitter.adapters.MainPagerAdapter;
 
 /**
  * The main app UI.
@@ -25,7 +23,8 @@ import com.teamboid.twitter.fragments.TrendsFragment;
  */
 public class MainActivity extends ThemedDrawerActivity {
 
-    private int mPreviousFragment = -1;
+    private ViewPager mPager;
+    private ListView drawerList;
 
     @Override
     public int getDrawerIndicatorRes() {
@@ -55,6 +54,20 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
+        mPager.setOffscreenPageLimit(5);
+
+        drawerList = (ListView) findViewById(R.id.drawer_list);
+        drawerList.setAdapter(new DrawerItemAdapter(this));
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onDrawerItemClicked(position);
+            }
+        });
+
         if (BoidApp.get(this).hasAccount()) {
             // Restore the last viewed fragment
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -64,40 +77,21 @@ public class MainActivity extends ThemedDrawerActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
-
-        ListView drawerList = (ListView) findViewById(R.id.drawer_list);
-        drawerList.setAdapter(new DrawerItemAdapter(this));
-        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onDrawerItemClicked(position);
-            }
-        });
     }
 
     private void onDrawerItemClicked(int index) {
         getDrawerLayout().closeDrawers();
-        switch (index) {
-            case 0:  // Profile
-                //TODO
-                break;
-            case 1:  // Timeline
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, new TimelineFragment()).commit();
-                break;
-            case 2:  // Mentions
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, new MentionsFragment()).commit();
-                break;
-            case 3:  // Messages
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, new ConversationFragment()).commit();
-                break;
-            case 4:  // Trends
-                getFragmentManager().beginTransaction().replace(R.id.content_frame, new TrendsFragment()).commit();
-                break;
+        if (index == 0) {
+            //Profile viewer
+            //TODO
+            return;
         }
-        if (index != mPreviousFragment) {
+        drawerList.setItemChecked(index, true);
+        int previous = mPager.getCurrentItem();
+        mPager.setCurrentItem(index - 1);
+        if ((index - 1) != previous) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             prefs.edit().putInt("recent_fragment_main", index).commit();
-            mPreviousFragment = index;
         }
     }
 
