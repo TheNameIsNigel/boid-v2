@@ -3,6 +3,7 @@ package com.teamboid.twitter.adapters;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+import com.afollestad.silk.adapters.SilkAdapter;
 import com.teamboid.twitter.R;
 import twitter4j.Trend;
 
@@ -11,26 +12,20 @@ import twitter4j.Trend;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class TrendAdapter extends BoidAdapter<Trend> {
+public class TrendAdapter extends SilkAdapter<Trend> {
 
     public TrendAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public View fillView(int index, View view) {
-        Trend item = getItem(index);
-        ((TextView) view).setText(item.getName());
-        return view;
-    }
-
-    @Override
-    public int getLayout(int pos) {
+    public int getLayout(int index, int type) {
         return R.layout.list_item_trend;
     }
 
     @Override
-    public long getItemId(Trend item) {
-        return -1l;
+    public View onViewCreated(int index, View view, Trend item) {
+        ((TextView) view).setText(item.getName());
+        return view;
     }
 }

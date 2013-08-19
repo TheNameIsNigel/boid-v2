@@ -1,4 +1,4 @@
-package com.teamboid.twitter;
+package com.teamboid.twitter.ui;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

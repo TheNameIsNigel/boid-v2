@@ -1,12 +1,14 @@
 package com.teamboid.twitter.fragments;
 
 import android.content.Intent;
+import android.view.View;
+import com.afollestad.silk.adapters.SilkAdapter;
+import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
-import com.teamboid.twitter.ConversationActivity;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.adapters.BoidAdapter;
 import com.teamboid.twitter.adapters.ConversationAdapter;
-import com.teamboid.twitter.fragments.base.FeedFragment;
+import com.teamboid.twitter.fragments.base.BoidListFragment;
+import com.teamboid.twitter.ui.ConversationActivity;
 import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
@@ -16,10 +18,10 @@ import twitter4j.TwitterException;
 /**
  * A feed fragment that displays the current user's message conversations.
  */
-public class ConversationFragment extends FeedFragment<ConversationAdapter.Conversation> {
+public class ConversationFragment extends BoidListFragment<ConversationAdapter.Conversation> {
 
     public ConversationFragment() {
-        super(false, true);
+        super("conversations");
     }
 
     @Override
@@ -28,19 +30,18 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
     }
 
     @Override
-    public BoidAdapter<ConversationAdapter.Conversation> initializeAdapter() {
+    public SilkAdapter<ConversationAdapter.Conversation> initializeAdapter() {
         return new ConversationAdapter(getActivity());
     }
 
     @Override
-    public void onItemClicked(int index, ConversationAdapter.Conversation convo) {
+    public void onItemTapped(int index, ConversationAdapter.Conversation convo, View view) {
         startActivity(new Intent(getActivity(), ConversationActivity.class)
                 .putExtra("conversation", Utils.serializeObject(convo)));
     }
 
     @Override
-    public boolean onItemLongClicked(int index, ConversationAdapter.Conversation convo) {
-        //TODO
+    public boolean onItemLongTapped(int index, ConversationAdapter.Conversation convo, View view) {
         return false;
     }
 
@@ -55,11 +56,6 @@ public class ConversationFragment extends FeedFragment<ConversationAdapter.Conve
         if (msges.size() > 0)
             organizer.add(msges.toArray(new DirectMessage[0]));
         return organizer.toArray();
-    }
-
-    @Override
-    public ConversationAdapter.Conversation[] paginate() throws TwitterException {
-        return null;
     }
 
     @Override

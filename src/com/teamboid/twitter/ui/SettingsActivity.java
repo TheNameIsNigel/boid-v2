@@ -1,8 +1,8 @@
-package com.teamboid.twitter;
+package com.teamboid.twitter.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import com.teamboid.twitter.ThemedPreferenceActivity;
+import com.teamboid.twitter.R;
 
 import java.util.List;
 

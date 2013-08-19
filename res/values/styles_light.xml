@@ -20,12 +20,11 @@
         <item name="composeIcon">@drawable/compose_dark</item>
         <item name="sendIcon">@drawable/send_dark</item>
 
-        <item name="drawerHome">@drawable/drawer_home_dark</item>
-        <item name="drawerMentions">@drawable/drawer_mentions_dark</item>
-        <item name="drawerMessages">@drawable/drawer_messages_dark</item>
-        <item name="drawerTrends">@drawable/drawer_trends_dark</item>
-
         <item name="retweetIndicator">@drawable/retweet_dark</item>
+
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+
     </style>
 
     <style name="ActionBar.Solid.Boidlight" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">

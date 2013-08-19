@@ -37,7 +37,7 @@ public class MessagesFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MessageAdapter(getActivity());
-        adapter.add(mConvo.getMessages().toArray(new DirectMessage[0]), true);
+        adapter.add(mConvo.getMessages().toArray(new DirectMessage[mConvo.getMessages().size()]));
         ListView list = (ListView) view.findViewById(R.id.list);
         list.setEmptyView(view.findViewById(R.id.empty));
         list.setAdapter(adapter);

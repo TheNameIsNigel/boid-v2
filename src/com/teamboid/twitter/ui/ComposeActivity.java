@@ -1,4 +1,4 @@
-package com.teamboid.twitter;
+package com.teamboid.twitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.teamboid.twitter.ThemedActivity;
+import com.teamboid.twitter.R;
 import com.teamboid.twitter.services.ComposerService;
 import com.teamboid.twitter.utilities.Utils;
 import com.teamboid.twitter.views.CounterEditText;

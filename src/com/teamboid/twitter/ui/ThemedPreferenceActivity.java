@@ -1,4 +1,4 @@
-package com.teamboid.twitter;
+package com.teamboid.twitter.ui;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import com.teamboid.twitter.R;
 
 /**
- * Same as {@link ThemedActivity}, but used by the {@link com.teamboid.twitter.SettingsActivity}.
+ * Same as {@link ThemedActivity}, but used by the {@link SettingsActivity}.
  *
  * @author Aidan Follestad (afollestad)
  */

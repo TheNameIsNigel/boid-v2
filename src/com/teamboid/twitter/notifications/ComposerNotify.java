@@ -6,7 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.teamboid.twitter.ComposeActivity;
+import com.teamboid.twitter.ui.ComposeActivity;
 import com.teamboid.twitter.R;
 
 /**

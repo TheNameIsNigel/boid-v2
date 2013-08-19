@@ -9,24 +9,25 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application android:name="com.teamboid.twitter.BoidApp" android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher" android:theme="@style/Theme.Boidlight">
 
-        <activity android:name="com.teamboid.twitter.MainActivity" android:label="@string/app_name">
+        <activity android:name=".ui.MainActivity" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name="com.teamboid.twitter.LoginActivity" android:label="@string/welcome"/>
+        <activity android:name=".ui.LoginActivity" android:label="@string/welcome"/>
 
-        <activity android:name="com.teamboid.twitter.ComposeActivity" android:label="@string/compose"/>
+        <activity android:name=".ui.ComposeActivity" android:label="@string/compose"/>
 
-        <activity android:name="com.teamboid.twitter.SettingsActivity" android:label="@string/settings"/>
+        <activity android:name=".ui.SettingsActivity" android:label="@string/settings"/>
 
-        <activity android:name="com.teamboid.twitter.ConversationActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.ConversationActivity" android:windowSoftInputMode="adjustResize"/>
 
         <service android:name="com.teamboid.twitter.services.ComposerService" android:label="@string/compose"/>
 

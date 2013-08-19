@@ -1,4 +1,4 @@
-package com.teamboid.twitter;
+package com.teamboid.twitter.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,7 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.teamboid.twitter.ThemedActivity;
+import com.teamboid.twitter.BoidApp;
+import com.teamboid.twitter.R;
 import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;

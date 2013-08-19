@@ -9,11 +9,6 @@
     <attr name="composeIcon" format="reference"/>
     <attr name="sendIcon" format="reference"/>
 
-    <attr name="drawerHome" format="reference"/>
-    <attr name="drawerMentions" format="reference"/>
-    <attr name="drawerMessages" format="reference"/>
-    <attr name="drawerTrends" format="reference"/>
-
     <attr name="retweetIndicator" format="reference"/>
 
 </resources>

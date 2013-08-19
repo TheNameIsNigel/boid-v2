@@ -5,15 +5,17 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.afollestad.silk.adapters.SilkAdapter;
+import com.afollestad.silk.cache.SilkComparable;
+import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.silk.views.image.SilkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.TimeUtils;
+import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
 import twitter4j.User;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,12 +26,22 @@ import java.util.List;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Conversation> {
+public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Conversation> {
+
+    private boolean mDisplayRealNames;
+    private SilkImageManager mImageLoader;
+
+    public ConversationAdapter(Context context) {
+        super(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mDisplayRealNames = prefs.getBoolean("display_realname", true);
+        mImageLoader = BoidApp.get(context).getImageLoader();
+    }
 
     /**
      * Represents a conversation, or a collection of messages sent and received from the same end user.
      */
-    public static class Conversation implements Serializable {
+    public static class Conversation implements SilkComparable<Conversation> {
 
         public Conversation(User endUser, DirectMessage msg) {
             this.endUser = endUser;
@@ -62,6 +74,16 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
 
         public void sort() {
             Collections.sort(this.messages, new MessageComparator());
+        }
+
+        @Override
+        public boolean isSameAs(Conversation another) {
+            return getEndUser().getId() == another.getEndUser().getId();
+        }
+
+        @Override
+        public boolean shouldIgnore() {
+            return false;
         }
     }
 
@@ -112,39 +134,19 @@ public class ConversationAdapter extends BoidAdapter<ConversationAdapter.Convers
         }
     }
 
-    public ConversationAdapter(Context context) {
-        super(context);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        mDisplayRealNames = prefs.getBoolean("display_realname", true);
-        mImageLoader = BoidApp.get(context).getImageLoader();
-    }
-
-    private boolean mDisplayRealNames;
-    private ImageLoader mImageLoader;
-
     @Override
-    public View fillView(int index, View view) {
-        Conversation convo = getItem(index);
-        DirectMessage message = convo.getRecentMessage();
-
-        NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
-        profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
-        profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
-        profilePic.setImageUrl(convo.getEndUser().getProfileImageURL(), mImageLoader);
-        ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(convo.getEndUser(), mDisplayRealNames));
-        ((TextView) view.findViewById(R.id.content)).setText(message.getText());
-        ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
-
-        return view;
-    }
-
-    @Override
-    public int getLayout(int pos) {
+    public int getLayout(int index, int type) {
         return R.layout.list_item_status;
     }
 
     @Override
-    public long getItemId(Conversation item) {
-        return item.getEndUser().getId();
+    public View onViewCreated(int index, View recycled, Conversation item) {
+        DirectMessage message = item.getRecentMessage();
+        SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
+        profilePic.setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
+        ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getEndUser(), mDisplayRealNames));
+        ((TextView) recycled.findViewById(R.id.content)).setText(message.getText());
+        ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
+        return recycled;
     }
 }

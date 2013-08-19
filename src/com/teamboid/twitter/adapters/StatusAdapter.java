@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.afollestad.silk.adapters.SilkAdapter;
+import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.silk.views.image.SilkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.TimeUtils;
+import com.teamboid.twitter.utilities.Utils;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
 
@@ -18,7 +20,7 @@ import twitter4j.Status;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class StatusAdapter extends BoidAdapter<Status> {
+public class StatusAdapter extends SilkAdapter<Status> {
 
     public StatusAdapter(Context context) {
         super(context);
@@ -28,50 +30,41 @@ public class StatusAdapter extends BoidAdapter<Status> {
     }
 
     private boolean mDisplayRealNames;
-    private ImageLoader mImageLoader;
+    private SilkImageManager mImageLoader;
 
     @Override
-    public View fillView(int index, View view) {
-        Status item = getItem(index);
+    public int getLayout(int index, int type) {
+        return R.layout.list_item_status;
+    }
 
-        View retweetedBy = view.findViewById(R.id.retweetedBy);
+    @Override
+    public View onViewCreated(int index, View recycled, Status item) {
+        View retweetedBy = recycled.findViewById(R.id.retweetedBy);
         if (item.isRetweet()) {
             retweetedBy.setVisibility(View.VISIBLE);
-            TextView retweetedByTxt = (TextView) view.findViewById(R.id.retweetedByText);
+            TextView retweetedByTxt = (TextView) recycled.findViewById(R.id.retweetedByText);
             retweetedByTxt.setText(getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName()));
             item = item.getRetweetedStatus();
         } else {
             retweetedBy.setVisibility(View.GONE);
         }
 
-        NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
-        profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
-        profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
-        profilePic.setImageUrl(item.getUser().getProfileImageURL(), mImageLoader);
+        SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
+        profilePic.setImageURL(mImageLoader, item.getUser().getProfileImageURL());
 
-        ((TextView) view.findViewById(R.id.userName)).setText(getDisplayName(item.getUser(), mDisplayRealNames));
-        ((TextView) view.findViewById(R.id.content)).setText(item.getText());
-        ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
+        ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getUser(), mDisplayRealNames));
+        ((TextView) recycled.findViewById(R.id.content)).setText(item.getText());
+        ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
-        NetworkImageView media = (NetworkImageView) view.findViewById(R.id.media);
+        SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);
         MediaEntity[] mediaEnts = item.getMediaEntities();
         if (mediaEnts != null && mediaEnts.length > 0) {
             media.setVisibility(View.VISIBLE);
-            media.setImageUrl(mediaEnts[0].getExpandedURL(), mImageLoader);
+            media.setImageURL(mImageLoader, mediaEnts[0].getExpandedURL());
         } else {
             media.setVisibility(View.GONE);
         }
 
-        return view;
-    }
-
-    @Override
-    public int getLayout(int pos) {
-        return R.layout.list_item_status;
-    }
-
-    @Override
-    public long getItemId(Status item) {
-        return item.getId();
+        return recycled;
     }
 }

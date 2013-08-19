@@ -3,11 +3,11 @@ package com.teamboid.twitter.adapters;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
+import com.afollestad.silk.adapters.SilkAdapter;
+import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.silk.views.image.SilkImageView;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.utilities.TimeUtils;
 import twitter4j.DirectMessage;
 import twitter4j.User;
 
@@ -16,7 +16,7 @@ import twitter4j.User;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class MessageAdapter extends BoidAdapter<DirectMessage> {
+public class MessageAdapter extends SilkAdapter<DirectMessage> {
 
     public MessageAdapter(Context context) {
         super(context);
@@ -25,34 +25,22 @@ public class MessageAdapter extends BoidAdapter<DirectMessage> {
     }
 
     private User me;
-    private ImageLoader mImageLoader;
+    private SilkImageManager mImageLoader;
 
     @Override
-    public View fillView(int index, View view) {
-        DirectMessage item = getItem(index);
-
-        NetworkImageView profilePic = (NetworkImageView) view.findViewById(R.id.profilePic);
-        profilePic.setErrorImageResId(R.drawable.ic_contact_picture);
-        profilePic.setDefaultImageResId(R.drawable.ic_contact_picture);
-        profilePic.setImageUrl(item.getSender().getProfileImageURL(), mImageLoader);
-        ((TextView) view.findViewById(R.id.content)).setText(item.getText());
-        ((TextView) view.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
-
-        return view;
-    }
-
-    @Override
-    public int getLayout(int pos) {
-        DirectMessage msg = getItem(pos);
+    public int getLayout(int index, int type) {
+        DirectMessage msg = getItem(index);
         if (me.getId() == msg.getSenderId())
             return R.layout.list_item_message_sent;
-        else
-            return R.layout.list_item_message_recv;
+        else return R.layout.list_item_message_recv;
     }
 
     @Override
-    public long getItemId(DirectMessage item) {
-        return item.getId();
+    public View onViewCreated(int index, View view, DirectMessage item) {
+        SilkImageView profilePic = (SilkImageView) view.findViewById(R.id.profilePic);
+        profilePic.setImageURL(mImageLoader, item.getSender().getProfileImageURL());
+        ((TextView) view.findViewById(R.id.content)).setText(item.getText());
+        return view;
     }
 
     @Override

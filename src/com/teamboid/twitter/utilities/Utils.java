@@ -1,6 +1,7 @@
 package com.teamboid.twitter.utilities;
 
 import android.util.Base64;
+import twitter4j.User;
 
 import java.io.*;
 
@@ -35,5 +36,14 @@ public class Utils {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public static String getDisplayName(User user, boolean realName) {
+        if (realName) {
+            String toreturn = user.getName();
+            if (!toreturn.trim().isEmpty())
+                return toreturn;
+        }
+        return "@" + user.getScreenName();
     }
 }

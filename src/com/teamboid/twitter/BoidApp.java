@@ -3,17 +3,16 @@ package com.teamboid.twitter;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
+import android.os.Environment;
 import android.preference.PreferenceManager;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
-import com.teamboid.twitter.images.ImageCacheManager;
+import com.afollestad.silk.images.SilkImageManager;
 import com.teamboid.twitter.utilities.Utils;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
+
+import java.io.File;
 
 /**
  * Variables and methods kept in memory throughout the life of the app.
@@ -22,28 +21,26 @@ import twitter4j.auth.AccessToken;
  */
 public class BoidApp extends Application {
 
-    private ImageLoader mImageLoader;
     private Twitter client;
-
-    private static Bitmap.CompressFormat DISK_IMAGECACHE_COMPRESS_FORMAT = Bitmap.CompressFormat.PNG;
+    private SilkImageManager mImageLoader;
 
     public final static String CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
     public final static String CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
     public final static String CALLBACK_URL = "boid://auth";
 
+    public static File getSilkCache() {
+        return new File(Environment.getExternalStorageDirectory(), "Boid");
+    }
+
+    public SilkImageManager getImageLoader() {
+        return mImageLoader;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        RequestQueue mRequestQueue = Volley.newRequestQueue(this);
-        int DISK_IMAGECACHE_SIZE = 1024 * 1024 * 10;
-        int DISK_IMAGECACHE_QUALITY = 100;
-        mImageLoader = new ImageLoader(mRequestQueue, new ImageCacheManager(this,
-                getPackageCodePath(), DISK_IMAGECACHE_SIZE, DISK_IMAGECACHE_COMPRESS_FORMAT,
-                DISK_IMAGECACHE_QUALITY, ImageCacheManager.CacheType.DISK));
-    }
-
-    public ImageLoader getImageLoader() {
-        return mImageLoader;
+        mImageLoader = new SilkImageManager(this)
+                .setFallbackImage(R.drawable.ic_contact_picture);
     }
 
     public static BoidApp get(Context context) {

@@ -1,6 +1,6 @@
 Dependencies
 =====================
-* Volley (https://android.googlesource.com/platform/frameworks/volley)
+* Silk (https://github.com/afollestad/Silk)
 * ActionBar-PullToRefresh (https://github.com/chrisbanes/ActionBar-PullToRefresh)
 * Android-AppMsg (https://github.com/johnkil/Android-AppMsg)
 

@@ -9,27 +9,27 @@
                   android:orientation="vertical" android:gravity="center_vertical|right">
 
 
-        <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/content" android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:lineSpacingMultiplier="1.1"
-                                                       android:textSize="@dimen/convoMessageText"
-                                                       android:textColor="?contentTextColor"/>
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content" android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:lineSpacingMultiplier="1.1"
+                                                     android:textSize="@dimen/convoMessageText"
+                                                     android:textColor="?contentTextColor"/>
 
-        <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/timestamp"
-                                                       android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:singleLine="true"
-                                                       android:textSize="@dimen/timestampText"
-                                                       android:textColor="?contentTextColor"
-                                                       android:layout_marginTop="3dp"/>
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/timestamp"
+                                                     android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:singleLine="true"
+                                                     android:textSize="@dimen/timestampText"
+                                                     android:textColor="?contentTextColor"
+                                                     android:layout_marginTop="3dp"/>
 
     </LinearLayout>
 
-    <com.android.volley.toolbox.NetworkImageView android:id="@+id/profilePic"
-                                                 android:layout_width="@dimen/feed_profile_pic"
-                                                 android:layout_height="@dimen/feed_profile_pic"
-                                                 android:src="@drawable/ic_contact_picture"
-                                                 android:layout_marginLeft="10dp"/>
+    <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
+                                                   android:layout_width="@dimen/feed_profile_pic"
+                                                   android:layout_height="@dimen/feed_profile_pic"
+                                                   android:src="@drawable/ic_contact_picture"
+                                                   android:layout_marginLeft="10dp"/>
 
 
 </LinearLayout>

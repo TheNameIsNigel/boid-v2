@@ -4,10 +4,17 @@
                                         android:layout_height="match_parent">
 
     <!--  The main content view  -->
-    <FrameLayout android:id="@+id/content_frame" android:layout_width="match_parent"
+    <FrameLayout android:id="@+id/content_frame"
+                 android:layout_width="match_parent"
                  android:layout_height="match_parent"/>
 
     <!--  Left navigation drawer  -->
-    <include layout="@layout/main_drawer" />
+    <ListView android:id="@+id/drawer_list"
+              android:layout_width="@dimen/drawer_width"
+              android:layout_height="fill_parent"
+              android:divider="@null"
+              android:dividerHeight="0dp"
+              android:background="?navDrawerBackground"
+              android:layout_gravity="start"/>
 
 </android.support.v4.widget.DrawerLayout>

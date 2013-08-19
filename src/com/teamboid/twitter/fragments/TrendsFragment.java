@@ -1,10 +1,11 @@
 package com.teamboid.twitter.fragments;
 
+import android.view.View;
+import com.afollestad.silk.adapters.SilkAdapter;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.adapters.BoidAdapter;
 import com.teamboid.twitter.adapters.TrendAdapter;
-import com.teamboid.twitter.fragments.base.FeedFragment;
+import com.teamboid.twitter.fragments.base.BoidListFragment;
 import twitter4j.Trend;
 import twitter4j.Trends;
 import twitter4j.TwitterException;
@@ -12,10 +13,10 @@ import twitter4j.TwitterException;
 /**
  * A feed fragment that displays Twitter trends.
  */
-public class TrendsFragment extends FeedFragment<Trend> {
+public class TrendsFragment extends BoidListFragment<Trend> {
 
     public TrendsFragment() {
-        super(false, true);
+        super("trends");
     }
 
     @Override
@@ -24,17 +25,17 @@ public class TrendsFragment extends FeedFragment<Trend> {
     }
 
     @Override
-    public BoidAdapter<Trend> initializeAdapter() {
+    public SilkAdapter<Trend> initializeAdapter() {
         return new TrendAdapter(getActivity());
     }
 
     @Override
-    public void onItemClicked(int index, Trend item) {
+    public void onItemTapped(int index, Trend item, View view) {
         //TODO
     }
 
     @Override
-    public boolean onItemLongClicked(int index, Trend item) {
+    public boolean onItemLongTapped(int index, Trend item, View view) {
         //TODO
         return false;
     }
@@ -45,11 +46,6 @@ public class TrendsFragment extends FeedFragment<Trend> {
         Trends trends = BoidApp.get(getActivity()).getClient().getPlaceTrends(1);
         getAdapter().clear();
         return trends.getTrends();
-    }
-
-    @Override
-    public Trend[] paginate() throws TwitterException {
-        return null;
     }
 
     @Override
