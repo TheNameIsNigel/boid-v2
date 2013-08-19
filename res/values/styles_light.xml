@@ -23,9 +23,6 @@
 
         <item name="retweetIndicator">@drawable/retweet_dark</item>
 
-        <item name="android:windowBackground">@color/white</item>
-        <item name="android:colorBackground">@color/white</item>
-
     </style>
 
     <style name="ActionBar.Solid.Boidlight" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
