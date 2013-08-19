@@ -93,12 +93,14 @@ public class MainActivity extends ThemedDrawerActivity {
             //TODO
             return;
         }
-        int previous = mPager.getCurrentItem();
         mPager.setCurrentItem(index - 1);
-        if ((index - 1) != previous) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putInt("recent_fragment_main", index).commit();
-        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putInt("recent_fragment_main", mPager.getCurrentItem()).commit();
     }
 
     @Override
