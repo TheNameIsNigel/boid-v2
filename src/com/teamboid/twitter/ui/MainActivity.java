@@ -58,6 +58,13 @@ public class MainActivity extends ThemedDrawerActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
         mPager.setOffscreenPageLimit(5);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                drawerList.setItemChecked(position + 1, true);
+            }
+        });
 
         drawerList = (ListView) findViewById(R.id.drawer_list);
         drawerList.setAdapter(new DrawerItemAdapter(this));
@@ -86,7 +93,6 @@ public class MainActivity extends ThemedDrawerActivity {
             //TODO
             return;
         }
-        drawerList.setItemChecked(index, true);
         int previous = mPager.getCurrentItem();
         mPager.setCurrentItem(index - 1);
         if ((index - 1) != previous) {
