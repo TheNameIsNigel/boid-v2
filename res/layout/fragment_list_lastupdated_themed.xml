@@ -12,7 +12,8 @@
                                                      android:textSize="@dimen/last_updated_text"
                                                      android:layout_centerVertical="true"
                                                      android:layout_alignParentLeft="true"
-                                                     android:layout_toLeftOf="@+id/verticalDivider"/>
+                                                     android:layout_toLeftOf="@+id/verticalDivider"
+                                                     android:textColor="?contentTextColor"/>
 
         <View android:id="@+id/verticalDivider" android:layout_width="1dp" android:layout_height="wrap_content"
               android:background="?android:dividerVertical" android:layout_centerVertical="true"

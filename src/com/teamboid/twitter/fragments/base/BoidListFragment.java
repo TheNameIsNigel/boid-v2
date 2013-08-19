@@ -8,6 +8,7 @@ import com.afollestad.silk.cache.SilkComparable;
 import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
 import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
+import com.teamboid.twitter.R;
 
 public abstract class BoidListFragment<T extends SilkComparable> extends SilkLastUpdatedFragment<T> {
 
@@ -23,6 +24,16 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     @Override
     public void onError(String message) {
         AppMsg.makeText(getActivity(), message, AppMsg.STYLE_ALERT).show();
+    }
+
+    @Override
+    public boolean getShouldShowLastUpdated() {
+        return true;
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_list_lastupdated_themed;
     }
 
     public final void saveScrollPos() {
