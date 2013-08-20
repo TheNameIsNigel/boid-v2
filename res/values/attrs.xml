@@ -10,5 +10,6 @@
     <attr name="sendIcon" format="reference"/>
     <attr name="refreshIcon" format="reference"/>
     <attr name="retweetIndicator" format="reference"/>
+    <attr name="sendButton" format="reference"/>
 
 </resources>

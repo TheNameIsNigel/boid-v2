@@ -25,11 +25,10 @@
                                        android:layout_height="@dimen/shadow" app:direction="up"
                                        android:layout_above="@+id/inputFrame"/>
 
-    <RelativeLayout
-            android:id="@+id/inputFrame" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_alignParentBottom="true"
-            android:background="@color/white" android:padding="5dp"
-            android:layout_marginLeft="5dp" android:layout_marginRight="5dp">
+    <RelativeLayout android:id="@+id/inputFrame" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+                    android:background="@color/white" android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
 
         <com.teamboid.twitter.views.BorderlessEditText
                 android:id="@+id/messageInput"
@@ -41,12 +40,12 @@
                 android:inputType="textShortMessage|textAutoCorrect|textCapSentences|textMultiLine"
                 android:maxLength="140" android:maxLines="2" android:layout_centerVertical="true"/>
 
-        <ImageButton
-                android:id="@+id/sendButton" android:layout_width="@dimen/send_button"
-                android:layout_height="@dimen/send_button" android:layout_alignParentRight="true"
-                android:background="?android:attr/selectableItemBackground"
-                android:enabled="false" android:scaleType="fitXY"
-                android:src="?sendIcon" android:layout_centerVertical="true"/>
+        <!--suppress AndroidLintContentDescription -->
+        <ImageButton android:id="@+id/sendButton" android:layout_width="@dimen/send_button"
+                     android:layout_height="@dimen/send_button" android:layout_alignParentRight="true"
+                     android:background="?android:attr/selectableItemBackground"
+                     android:enabled="false" android:scaleType="fitXY"
+                     android:src="?sendButton" android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 

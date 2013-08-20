@@ -20,6 +20,7 @@
         <item name="composeIcon">@drawable/compose</item>
         <item name="sendIcon">@drawable/send</item>
         <item name="refreshIcon">@drawable/refresh_light</item>
+        <item name="sendButton">@drawable/send_button_light</item>
 
         <item name="retweetIndicator">@drawable/retweet</item>
     </style>
