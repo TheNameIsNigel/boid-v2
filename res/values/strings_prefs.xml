@@ -15,12 +15,12 @@
     <string name="version">Version</string>
     <string name="build">Build</string>
     <string name="developers">Developers</string>
-    <string name="developers_desc">Developed by Aidan Follestad, icons by Graham Macphee. Original version included
-        Philip Oakley and Joe Simpson.
+    <string name="developers_desc">Developed by Aidan Follestad. The original Boid included Graham MacPhee, Joe Simpson,
+        and Philip Oakley.
     </string>
     <string name="libraries">Libraries</string>
-    <string name="libraries_desc">ActionBar-PullToRefresh (Chris Banes), Android-AppMsg (Evgeny Shishkin), volley
-        (Google).
+    <string name="libraries_desc">ActionBar-PullToRefresh (Chris Banes), Android-AppMsg (Evgeny Shishkin), Silk (Aidan
+        Follestad), and modified twitter4j.
     </string>
 
     <!-- Look and feel preference category -->
