@@ -33,11 +33,6 @@ public class MainActivity extends ThemedDrawerActivity {
     }
 
     @Override
-    public int getDrawerIndicatorRes() {
-        return R.drawable.ic_drawer;
-    }
-
-    @Override
     public int getDrawerShadowRes() {
         return R.drawable.drawer_shadow;
     }

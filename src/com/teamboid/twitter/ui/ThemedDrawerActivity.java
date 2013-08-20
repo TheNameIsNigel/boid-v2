@@ -52,4 +52,11 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
                 return R.style.Theme_Boid;
         }
     }
+
+    @Override
+    public int getDrawerIndicatorRes() {
+        if (getBoidTheme() == R.style.Theme_Boid)
+            return R.drawable.ic_navigation_drawer_light;
+        return R.drawable.ic_navigation_drawer_dark;
+    }
 }
