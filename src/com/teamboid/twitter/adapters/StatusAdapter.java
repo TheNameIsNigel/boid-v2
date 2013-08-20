@@ -71,7 +71,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
-            profilePic.setImageURL(mImageLoader, item.getUser().getProfileImageURL());
+            profilePic.setFitView(false).setImageURL(mImageLoader, item.getUser().getProfileImageURL());
         }
 
         ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getUser(), mDisplayRealNames));

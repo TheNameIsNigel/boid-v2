@@ -42,7 +42,7 @@ public class MessageAdapter extends SilkAdapter<DirectMessage> {
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
-            profilePic.setImageURL(mImageLoader, item.getSender().getProfileImageURL());
+            profilePic.setFitView(false).setImageURL(mImageLoader, item.getSender().getProfileImageURL());
         }
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
         return view;

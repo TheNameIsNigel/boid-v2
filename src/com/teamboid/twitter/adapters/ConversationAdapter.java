@@ -147,7 +147,7 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
-            profilePic.setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
+            profilePic.setFitView(false).setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
         }
         ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getEndUser(), mDisplayRealNames));
         ((TextView) recycled.findViewById(R.id.content)).setText(message.getText());
