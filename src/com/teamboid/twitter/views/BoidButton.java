@@ -28,7 +28,7 @@ public class BoidButton extends Button {
     }
 
     private void init() {
-        setTextColor(getResources().getColor(R.color.white));
+        setTextColor(getResources().getColor(android.R.color.white));
         setBackgroundResource(R.drawable.boid_button);
         int padding = getResources().getDimensionPixelSize(R.dimen.borderless_padding);
         setPadding(padding, padding, padding, padding);

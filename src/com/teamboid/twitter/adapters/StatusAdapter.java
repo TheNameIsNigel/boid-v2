@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.images.SilkImageManager;
@@ -67,7 +68,11 @@ public class StatusAdapter extends SilkAdapter<Status> {
         }
 
         SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
-        profilePic.setImageURL(mImageLoader, item.getUser().getProfileImageURL());
+        if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+            profilePic.setImageResource(R.drawable.ic_contact_picture);
+        } else {
+            profilePic.setImageURL(mImageLoader, item.getUser().getProfileImageURL());
+        }
 
         ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getUser(), mDisplayRealNames));
         Utils.linkifyText((TextView) recycled.findViewById(R.id.content), item.getText());

@@ -2,6 +2,7 @@ package com.teamboid.twitter.adapters;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.images.SilkImageManager;
@@ -38,7 +39,11 @@ public class MessageAdapter extends SilkAdapter<DirectMessage> {
     @Override
     public View onViewCreated(int index, View view, DirectMessage item) {
         SilkImageView profilePic = (SilkImageView) view.findViewById(R.id.profilePic);
-        profilePic.setImageURL(mImageLoader, item.getSender().getProfileImageURL());
+        if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+            profilePic.setImageResource(R.drawable.ic_contact_picture);
+        } else {
+            profilePic.setImageURL(mImageLoader, item.getSender().getProfileImageURL());
+        }
         ((TextView) view.findViewById(R.id.content)).setText(item.getText());
         return view;
     }

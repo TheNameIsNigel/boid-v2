@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.cache.SilkComparable;
@@ -123,7 +124,7 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         }
 
         public Conversation[] toArray() {
-            return items.toArray(new Conversation[0]);
+            return items.toArray(new Conversation[items.size()]);
         }
     }
 
@@ -143,7 +144,11 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
     public View onViewCreated(int index, View recycled, Conversation item) {
         DirectMessage message = item.getRecentMessage();
         SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
-        profilePic.setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
+        if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+            profilePic.setImageResource(R.drawable.ic_contact_picture);
+        } else {
+            profilePic.setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
+        }
         ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getEndUser(), mDisplayRealNames));
         ((TextView) recycled.findViewById(R.id.content)).setText(message.getText());
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
