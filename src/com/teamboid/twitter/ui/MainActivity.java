@@ -82,6 +82,7 @@ public class MainActivity extends ThemedDrawerActivity {
             // Restore the last viewed fragment
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             int index = prefs.getInt("recent_fragment_main", 0);
+            drawerList.setItemChecked(index + 1, true);
             onDrawerItemClicked(index);
         } else {
             startActivity(new Intent(this, LoginActivity.class));
