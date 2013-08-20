@@ -67,4 +67,9 @@ public class StatusAdapter extends SilkAdapter<Status> {
 
         return recycled;
     }
+
+    @Override
+    public long getItemId(int i) {
+        return getItem(i).getId();
+    }
 }

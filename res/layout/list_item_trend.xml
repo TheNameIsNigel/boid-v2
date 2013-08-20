@@ -4,6 +4,6 @@
                                              android:layout_height="wrap_content"
                                              android:paddingTop="20dp" android:paddingBottom="20dp"
                                              android:paddingLeft="20dp" android:paddingRight="20dp"
-                                             android:textSize="@dimen/drawerItemText"
+                                             android:textSize="@dimen/trendText"
                                              android:textColor="?contentTextColor"
                                              android:singleLine="true"/>

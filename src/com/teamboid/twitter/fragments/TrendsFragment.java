@@ -44,7 +44,12 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     public Trend[] refresh() throws TwitterException {
         // TODO implement location based trends
         Trends trends = BoidApp.get(getActivity()).getClient().getPlaceTrends(1);
-        getAdapter().clear();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getAdapter().clear();
+            }
+        });
         return trends.getTrends();
     }
 

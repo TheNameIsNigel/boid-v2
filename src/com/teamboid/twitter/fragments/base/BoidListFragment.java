@@ -30,7 +30,8 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     @Override
     public void onError(String message) {
-        AppMsg.makeText(getActivity(), message, AppMsg.STYLE_ALERT).show();
+        AppMsg.makeText(getActivity(), message, new AppMsg.Style(AppMsg.LENGTH_LONG,
+                android.R.color.holo_blue_dark), R.layout.app_msg_themed).show();
     }
 
     @Override
