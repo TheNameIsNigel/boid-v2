@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import com.afollestad.silk.cache.SilkComparable;
-import com.afollestad.silk.fragments.SilkFeedFragment;
 import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
 import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
@@ -33,8 +32,6 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         return 200;
     }
 
-    public abstract boolean shouldAddToTop();
-
     @Override
     public void onError(String message) {
         AppMsg.makeText(getActivity(), message, new AppMsg.Style(AppMsg.LENGTH_LONG,
@@ -55,25 +52,6 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     public void onUserRefresh() {
         mPullToRefreshAttacher.setRefreshing(true);
         super.onUserRefresh();
-    }
-
-    /**
-     * Overridden to only add items to the beginning of the list, when necessary.
-     */
-    @Override
-    protected void onPostLoad(final T[] results) {
-        if (!shouldAddToTop()) {
-            super.onPostLoad(results);
-            return;
-        }
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < results.length; i++) {
-                    getAdapter().add(i, results[i]);
-                }
-            }
-        });
     }
 
     @Override

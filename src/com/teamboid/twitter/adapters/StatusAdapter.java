@@ -15,6 +15,8 @@ import com.teamboid.twitter.utilities.Utils;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
 
+import java.util.List;
+
 /**
  * A list adapter that displays statuses (tweets).
  *
@@ -31,6 +33,21 @@ public class StatusAdapter extends SilkAdapter<Status> {
 
     private boolean mDisplayRealNames;
     private SilkImageManager mImageLoader;
+
+    @Override
+    public void set(List<Status> toSet) {
+        if (getCount() == 0) {
+            super.set(toSet);
+            return;
+        }
+        markChanged();
+        int index = 0;
+        for (Status item : toSet) {
+            this.add(index, item);
+            index++;
+        }
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getLayout(int index, int type) {
