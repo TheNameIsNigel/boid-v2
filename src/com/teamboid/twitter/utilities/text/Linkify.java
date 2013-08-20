@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * created.
  */
 
-public class Linkify {
+class Linkify {
     /**
      * Bit field indicating that web URLs should be matched in methods that
      * take an options mask

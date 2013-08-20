@@ -19,7 +19,7 @@ package com.teamboid.twitter.utilities.text;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Regex {
+class Regex {
     /**
      * Regular expression pattern to match all IANA top-level domains.
      * List accurate as of 2007/06/15.  List taken from:
