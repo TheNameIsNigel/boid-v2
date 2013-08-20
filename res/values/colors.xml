@@ -5,7 +5,7 @@
     <color name="red">#CC0000</color>
     <color name="boid_button_pressed">#950099CC</color>
 
-    <color name="drawer_background_dark">#2d2d2d</color>
+    <color name="drawer_background_dark">#3A3A3C</color>
     <color name="drawer_background_light">#FFFFFF</color>
 
     <color name="pressed_boidlight">#CC33B5E5</color>
