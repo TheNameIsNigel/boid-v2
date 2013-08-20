@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import twitter4j.TwitterException;
@@ -26,11 +26,12 @@ public class LoginActivity extends ThemedActivity {
 
     private void loadWeb() {
         final WebView view = (WebView) findViewById(R.id.webView);
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final RequestToken token = BoidApp.get(LoginActivity.this).getClient().getOAuthRequestToken(BoidApp.CALLBACK_URL);
+                    final RequestToken token = BoidApp.get(LoginActivity.this).getClient()
+                            .getOAuthRequestToken(BoidApp.CALLBACK_URL);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -50,7 +51,9 @@ public class LoginActivity extends ThemedActivity {
                     });
                 }
             }
-        }).start();
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
     }
 
     @Override
@@ -80,54 +83,14 @@ public class LoginActivity extends ThemedActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, final String url) {
                 if (url.startsWith("boid://")) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                AccessToken token = BoidApp.get(LoginActivity.this).getClient().getOAuthAccessToken(Uri.parse(url).getQueryParameter("oauth_verifier"));
-                                User me = BoidApp.get(LoginActivity.this).getClient().verifyCredentials();
-                                BoidApp.get(LoginActivity.this).storeToken(token).storeProfile(me);
-                            } catch (final TwitterException e) {
-                                e.printStackTrace();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        BoidApp.get(LoginActivity.this).clearAccount();
-                                        findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
-                                        findViewById(R.id.webFrame).setVisibility(View.GONE);
-                                        ((TextView) findViewById(R.id.loginMessage)).setText(R.string.failed_login);
-                                        ((Button) findViewById(R.id.login)).setText(R.string.retry);
-                                    }
-                                });
-                                return;
-                            }
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
-                                    findViewById(R.id.webFrame).setVisibility(View.GONE);
-                                    ((TextView) findViewById(R.id.loginMessage)).setText(R.string.logged_in);
-                                    Button login = (Button) findViewById(R.id.login);
-                                    login.setText(R.string.finish);
-                                    login.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                            finish();
-                                        }
-                                    });
-
-                                }
-                            });
-                        }
-                    }).start();
+                    processVerifier(url);
                     return true;
                 } else return false;
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(getApplicationContext(), description, Toast.LENGTH_LONG).show();
+                AppMsg.makeText(LoginActivity.this, description, AppMsg.STYLE_ALERT).show();
             }
 
             @Override
@@ -142,5 +105,52 @@ public class LoginActivity extends ThemedActivity {
                 findViewById(R.id.webProgress).setVisibility(View.GONE);
             }
         });
+    }
+
+    private void processVerifier(final String url) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    AccessToken token = BoidApp.get(LoginActivity.this).getClient()
+                            .getOAuthAccessToken(Uri.parse(url).getQueryParameter("oauth_verifier"));
+                    User me = BoidApp.get(LoginActivity.this).getClient().verifyCredentials();
+                    BoidApp.get(LoginActivity.this).storeToken(token).storeProfile(me);
+                } catch (final TwitterException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BoidApp.get(LoginActivity.this).clearAccount();
+                            findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
+                            findViewById(R.id.webFrame).setVisibility(View.GONE);
+                            ((TextView) findViewById(R.id.loginMessage)).setText(R.string.failed_login);
+                            ((Button) findViewById(R.id.login)).setText(R.string.retry);
+                        }
+                    });
+                    return;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
+                        findViewById(R.id.webFrame).setVisibility(View.GONE);
+                        ((TextView) findViewById(R.id.loginMessage)).setText(R.string.logged_in);
+                        Button login = (Button) findViewById(R.id.login);
+                        login.setText(R.string.finish);
+                        login.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
     }
 }

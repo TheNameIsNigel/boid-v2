@@ -23,7 +23,6 @@ public class ThemedActivity extends Activity {
         return currentTheme != mTheme || displayRealNames != mDisplayRealNames;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme();
@@ -35,8 +34,7 @@ public class ThemedActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (shouldRecreate())
-            recreate();
+        if (shouldRecreate()) recreate();
     }
 
     public final boolean shouldDisplayRealNames() {

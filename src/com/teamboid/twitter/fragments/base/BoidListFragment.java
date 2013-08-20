@@ -6,12 +6,17 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import com.afollestad.silk.cache.SilkComparable;
+import com.afollestad.silk.fragments.SilkFeedFragment;
 import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
 import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
+import com.teamboid.twitter.ui.MainActivity;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public abstract class BoidListFragment<T extends SilkComparable> extends SilkLastUpdatedFragment<T> {
+
+    private PullToRefreshAttacher mPullToRefreshAttacher;
 
     public BoidListFragment(String cacheTitle) {
         super(cacheTitle, BoidApp.getSilkCache());
@@ -28,6 +33,8 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         return 200;
     }
 
+    public abstract boolean shouldAddToTop();
+
     @Override
     public void onError(String message) {
         AppMsg.makeText(getActivity(), message, new AppMsg.Style(AppMsg.LENGTH_LONG,
@@ -42,6 +49,49 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     @Override
     public int getLayout() {
         return R.layout.fragment_list_lastupdated_themed;
+    }
+
+    @Override
+    public void onUserRefresh() {
+        mPullToRefreshAttacher.setRefreshing(true);
+        super.onUserRefresh();
+    }
+
+    /**
+     * Overridden to only add items to the beginning of the list, when necessary.
+     */
+    @Override
+    protected void onPostLoad(final T[] results) {
+        if (!shouldAddToTop()) {
+            super.onPostLoad(results);
+            return;
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < results.length; i++) {
+                    getAdapter().add(i, results[i]);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPullToRefreshAttacher = ((MainActivity) getActivity()).getPullToRefreshAttacher();
+        mPullToRefreshAttacher.addRefreshableView(getListView(), new PullToRefreshAttacher.OnRefreshListener() {
+            @Override
+            public void onRefreshStarted(View view) {
+                performRefresh(false);
+            }
+        });
+    }
+
+    @Override
+    public void setLoadComplete(boolean error) {
+        super.setLoadComplete(error);
+        mPullToRefreshAttacher.setRefreshComplete();
     }
 
     public final void saveScrollPos() {

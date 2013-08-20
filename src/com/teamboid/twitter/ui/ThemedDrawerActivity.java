@@ -23,7 +23,6 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
         return currentTheme != mTheme || displayRealNames != mDisplayRealNames;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme();
@@ -35,8 +34,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (shouldRecreate())
-            recreate();
+        if (shouldRecreate()) recreate();
     }
 
     public final boolean shouldDisplayRealNames() {

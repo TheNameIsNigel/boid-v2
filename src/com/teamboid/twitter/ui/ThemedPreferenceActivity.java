@@ -22,7 +22,6 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
         return currentTheme != mTheme || displayRealNames != mDisplayRealNames;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme();

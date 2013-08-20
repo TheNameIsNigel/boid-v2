@@ -15,6 +15,7 @@ import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.DrawerItemAdapter;
 import com.teamboid.twitter.adapters.MainPagerAdapter;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
  * The main app UI.
@@ -25,6 +26,11 @@ public class MainActivity extends ThemedDrawerActivity {
 
     private ViewPager mPager;
     private ListView drawerList;
+    private PullToRefreshAttacher mPullToRefreshAttacher;
+
+    public PullToRefreshAttacher getPullToRefreshAttacher() {
+        return mPullToRefreshAttacher;
+    }
 
     @Override
     public int getDrawerIndicatorRes() {
@@ -54,6 +60,8 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
