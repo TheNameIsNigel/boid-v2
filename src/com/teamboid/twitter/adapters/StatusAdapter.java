@@ -70,7 +70,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
         profilePic.setImageURL(mImageLoader, item.getUser().getProfileImageURL());
 
         ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getUser(), mDisplayRealNames));
-        ((TextView) recycled.findViewById(R.id.content)).setText(item.getText());
+        Utils.linkifyText((TextView) recycled.findViewById(R.id.content), item.getText());
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
         SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);

@@ -1,9 +1,14 @@
 package com.teamboid.twitter.utilities;
 
 import android.util.Base64;
+import android.util.Patterns;
+import android.widget.TextView;
+import com.teamboid.twitter.utilities.text.Linkify;
 import twitter4j.User;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Various utility methods.
@@ -45,5 +50,26 @@ public class Utils {
                 return toreturn;
         }
         return "@" + user.getScreenName();
+    }
+
+    public static void linkifyText(TextView textView, String tweet) {
+        Linkify.TransformFilter filter = new Linkify.TransformFilter() {
+            public final String transformUrl(final Matcher match, String url) {
+                return match.group();
+            }
+        };
+
+        textView.setText(tweet);
+
+        Pattern mentionPattern = Pattern.compile("@([A-Za-z0-9_-]+)");
+        String mentionScheme = "http://www.twitter.com/";
+        Linkify.addLinks(textView, mentionPattern, mentionScheme, null, filter);
+
+        Pattern hashtagPattern = Pattern.compile("#([A-Za-z0-9_-]+)");
+        String hashtagScheme = "http://www.twitter.com/search/";
+        Linkify.addLinks(textView, hashtagPattern, hashtagScheme, null, filter);
+
+        Pattern urlPattern = Patterns.WEB_URL;
+        Linkify.addLinks(textView, urlPattern, null, null, filter);
     }
 }
