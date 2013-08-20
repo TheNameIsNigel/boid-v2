@@ -21,12 +21,6 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         super(cacheTitle, BoidApp.getSilkCache());
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
     public final int getPageLength() {
         //TODO configurable setting
         return 200;
