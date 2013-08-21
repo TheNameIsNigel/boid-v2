@@ -12,6 +12,7 @@ import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.ui.MainActivity;
+import com.teamboid.twitter.ui.SearchActivity;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 public abstract class BoidListFragment<T extends SilkComparable> extends SilkLastUpdatedFragment<T> {
@@ -52,7 +53,9 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPullToRefreshAttacher = ((MainActivity) getActivity()).getPullToRefreshAttacher();
+        if (getActivity() instanceof MainActivity)
+            mPullToRefreshAttacher = ((MainActivity) getActivity()).getPullToRefreshAttacher();
+        else mPullToRefreshAttacher = ((SearchActivity) getActivity()).getPullToRefreshAttacher();
         mPullToRefreshAttacher.addRefreshableView(getListView(), new PullToRefreshAttacher.OnRefreshListener() {
             @Override
             public void onRefreshStarted(View view) {
