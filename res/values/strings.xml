@@ -51,4 +51,6 @@
     <string name="share">Share</string>
     <string name="delete">Delete</string>
 
+    <string name="open_with">Open with…</string>
+
 </resources>

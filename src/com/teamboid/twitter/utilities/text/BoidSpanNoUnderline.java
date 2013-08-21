@@ -1,11 +1,14 @@
 package com.teamboid.twitter.utilities.text;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+import com.teamboid.twitter.R;
+import com.teamboid.twitter.ui.SearchActivity;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -22,7 +25,14 @@ public class BoidSpanNoUnderline extends ClickableSpan {
 
     @Override
     public void onClick(View widget) {
-        Toast.makeText(mContext, mValue, Toast.LENGTH_LONG).show();
+        if (mValue.startsWith("@")) {
+            Toast.makeText(mContext, mValue, Toast.LENGTH_LONG).show();
+        } else if (mValue.startsWith("#")) {
+            mContext.startActivity(new Intent(mContext, SearchActivity.class).putExtra("query", mValue));
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mValue));
+            mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.open_with)));
+        }
     }
 
     @Override
