@@ -1,67 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:paddingTop="5dp" android:paddingBottom="5dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:paddingTop="5dp" android:paddingBottom="5dp">
 
-    <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
-                                                   android:layout_width="@dimen/feed_profile_pic"
-                                                   android:layout_height="@dimen/feed_profile_pic"
-                                                   android:src="@drawable/ic_contact_picture"
-                                                   android:layout_marginRight="10dp"
-                                                   android:layout_marginLeft="10dp"/>
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
 
-    <LinearLayout android:id="@+id/contentFrame"
-                  android:layout_toRightOf="@+id/profilePic"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
+        <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
+                                                       android:layout_width="@dimen/feed_profile_pic"
+                                                       android:layout_height="@dimen/feed_profile_pic"
+                                                       android:src="@drawable/ic_contact_picture"
+                                                       android:layout_marginRight="10dp"
+                                                       android:layout_marginLeft="10dp"/>
 
-        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
-
-            <TextView android:id="@+id/username" android:layout_width="wrap_content"
+        <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:singleLine="true" android:textColor="?usernameTextColor"
-                      android:textSize="@dimen/usernameText"
-                      android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/timestamp"/>
+                      android:orientation="vertical">
 
-            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/timestamp"
-                                                         android:layout_width="wrap_content"
+            <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+                <TextView android:id="@+id/username" android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:singleLine="true" android:textColor="?usernameTextColor"
+                          android:textSize="@dimen/usernameText"
+                          android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/timestamp"/>
+
+                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/timestamp"
+                                                             android:layout_width="wrap_content"
+                                                             android:layout_height="wrap_content"
+                                                             android:singleLine="true"
+                                                             android:textSize="@dimen/timestampText"
+                                                             android:textColor="?contentTextColor"
+                                                             android:layout_alignParentRight="true"
+                                                             android:layout_marginLeft="3dp"
+                                                             android:layout_marginRight="20dp"/>
+
+            </RelativeLayout>
+
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content" android:layout_width="wrap_content"
                                                          android:layout_height="wrap_content"
-                                                         android:singleLine="true"
-                                                         android:textSize="@dimen/timestampText"
+                                                         android:lineSpacingMultiplier="1.1"
+                                                         android:textSize="@dimen/contentText"
                                                          android:textColor="?contentTextColor"
-                                                         android:layout_alignParentRight="true"
-                                                         android:layout_marginLeft="3dp"
                                                          android:layout_marginRight="20dp"/>
 
-        </RelativeLayout>
+            <LinearLayout android:id="@+id/retweetedBy" android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="3dp" android:layout_marginBottom="3dp"
+                          android:layout_marginRight="20dp"
+                          android:orientation="horizontal" android:visibility="gone"
+                          android:gravity="center_vertical">
 
-        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content" android:layout_width="wrap_content"
-                                                     android:layout_height="wrap_content"
-                                                     android:lineSpacingMultiplier="1.1"
-                                                     android:textSize="@dimen/contentText"
-                                                     android:textColor="?contentTextColor"
-                                                     android:layout_marginRight="20dp"/>
+                <!--suppress AndroidLintContentDescription -->
+                <ImageView android:layout_width="@dimen/retweet_indicator"
+                           android:layout_height="@dimen/retweet_indicator"
+                           android:scaleType="fitXY" android:src="?retweetIndicator"/>
 
-        <LinearLayout android:id="@+id/retweetedBy" android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="3dp" android:layout_marginBottom="3dp"
-                      android:layout_marginRight="20dp"
-                      android:orientation="horizontal" android:visibility="gone"
-                      android:gravity="center_vertical">
+                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/retweetedByText"
+                                                             android:layout_width="wrap_content"
+                                                             android:layout_height="wrap_content"
+                                                             android:singleLine="true"
+                                                             android:textColor="?contentTextColor"
+                                                             android:textSize="@dimen/timestampText"
+                                                             android:layout_marginLeft="5dp"/>
 
-            <!--suppress AndroidLintContentDescription -->
-            <ImageView android:layout_width="@dimen/retweet_indicator"
-                       android:layout_height="@dimen/retweet_indicator"
-                       android:scaleType="fitXY" android:src="?retweetIndicator"/>
-
-            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/retweetedByText"
-                                                         android:layout_width="wrap_content"
-                                                         android:layout_height="wrap_content"
-                                                         android:singleLine="true"
-                                                         android:textColor="?contentTextColor"
-                                                         android:textSize="@dimen/timestampText"
-                                                         android:layout_marginLeft="5dp"/>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -73,7 +77,6 @@
                                                    android:layout_marginTop="10dp"
                                                    android:layout_marginBottom="3dp"
                                                    android:visibility="gone"
-                                                   android:scaleType="centerCrop"
-                                                   android:layout_below="@+id/contentFrame"/>
+                                                   android:scaleType="centerCrop"/>
 
-</RelativeLayout>
+</LinearLayout>

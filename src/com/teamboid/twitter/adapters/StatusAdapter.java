@@ -85,12 +85,17 @@ public class StatusAdapter extends SilkAdapter<Status> {
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
         SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);
-        MediaEntity[] mediaEnts = item.getMediaEntities();
-        if (mediaEnts != null && mediaEnts.length > 0) {
+        if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             media.setVisibility(View.VISIBLE);
-            media.setImageURL(mImageLoader, mediaEnts[0].getMediaURL());
+            media.setImageBitmap(null);
         } else {
-            media.setVisibility(View.GONE);
+            MediaEntity[] mediaEnts = item.getMediaEntities();
+            if (mediaEnts != null && mediaEnts.length > 0) {
+                media.setVisibility(View.VISIBLE);
+                media.setImageURL(mImageLoader, mediaEnts[0].getMediaURL());
+            } else {
+                media.setVisibility(View.GONE);
+            }
         }
 
         return recycled;
