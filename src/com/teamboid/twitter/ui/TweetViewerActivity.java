@@ -31,6 +31,8 @@ public class TweetViewerActivity extends ThemedActivity {
 
     private void processIntent() {
         mTweet = (Status) getIntent().getSerializableExtra("tweet");
+        if(mTweet.isRetweet())
+            mTweet = mTweet.getRetweetedStatus();
         SilkImageView profilePic = (SilkImageView) findViewById(R.id.profilePic);
         profilePic.setFitView(false).setImageURL(BoidApp.get(this).getImageLoader(), mTweet.getUser().getProfileImageURL());
         ((TextView) findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
