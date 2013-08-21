@@ -1,6 +1,7 @@
 package com.teamboid.twitter.ui;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -54,6 +55,19 @@ public class TweetViewerActivity extends ThemedActivity {
         getMenuInflater().inflate(R.menu.activity_tweet_viewer, menu);
         User me = BoidApp.get(this).getProfile();
         menu.findItem(R.id.delete).setVisible(me.getId() == mTweet.getUser().getId());
+        MenuItem favorite = menu.findItem(R.id.favorite);
+        int favIcon;
+        if (mTweet.isFavorited()) {
+            favorite.setTitle(R.string.unfavorite);
+            favIcon = R.attr.favoritedIcon;
+        } else {
+            favorite.setTitle(R.string.favorite);
+            favIcon = R.attr.unfavoritedIcon;
+        }
+        TypedArray ta = obtainStyledAttributes(new int[]{favIcon});
+        favIcon = ta.getResourceId(0, 0);
+        ta.recycle();
+        favorite.setIcon(favIcon);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -65,6 +79,12 @@ public class TweetViewerActivity extends ThemedActivity {
                 return true;
             case R.id.reply:
                 startActivity(new Intent(this, ComposeActivity.class).putExtra("reply_to", mTweet));
+                return true;
+            case R.id.retweet:
+                return true;
+            case R.id.favorite:
+                return true;
+            case R.id.share:
                 return true;
         }
         return super.onOptionsItemSelected(item);
