@@ -17,11 +17,13 @@
 
         <!--suppress AndroidLintHardcodedText -->
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/counter" android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:textColor="?contentTextColor"
-                                                       android:layout_alignRight="@+id/input" android:text="0"
-                                                       android:layout_below="@+id/input"
-                                                       android:layout_marginTop="3dp"/>
+                                                     android:layout_height="wrap_content"
+                                                     android:textColor="?contentTextColor"
+                                                     android:layout_alignRight="@+id/input"
+                                                     android:text="0"
+                                                     android:layout_below="@+id/input"
+                                                     android:layout_marginTop="3dp"
+                                                     android:layout_marginRight="3dp"/>
 
     </RelativeLayout>
 

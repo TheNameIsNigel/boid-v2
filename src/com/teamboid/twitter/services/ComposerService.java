@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.notifications.ComposerNotify;
+import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -30,8 +31,9 @@ public class ComposerService extends IntentService {
         Twitter cl = BoidApp.get(this).getClient();
         StatusUpdate update = new StatusUpdate(intent.getStringExtra("content"));
 
-        if (intent.getLongExtra("reply_to", 0l) > 0) {
-            update.setInReplyToStatusId(intent.getLongExtra("reply_to", 0l));
+        if (intent.hasExtra("reply")) {
+            Status replyTo = (Status) intent.getSerializableExtra("reply_to");
+            update.setInReplyToStatusId(replyTo.getId());
         }
 
         try {
