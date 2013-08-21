@@ -9,10 +9,10 @@ import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.ComposeActivity;
 import com.teamboid.twitter.ui.TweetViewerActivity;
-import twitter4j.Paging;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.TwitterException;
+import twitter4j.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A feed fragment that displays the current user's home timeline.
@@ -44,18 +44,6 @@ public class TimelineFragment extends BoidListFragment<Status> {
         return true;
     }
 
-    @Override
-    public Status[] refresh() throws TwitterException {
-        Paging paging = new Paging();
-        paging.setCount(getPageLength());
-        if (getAdapter().getCount() > 0) {
-            // Get tweets newer than the most recent tweet in the adapter
-            paging.setSinceId(getAdapter().getItemId(0));
-        }
-        ResponseList<Status> response = BoidApp.get(getActivity()).getClient().getHomeTimeline(paging);
-        return response.toArray(new Status[response.size()]);
-    }
-
 //    @Override
 //    public Status[] paginate() throws TwitterException {
 //        Paging paging = new Paging();
@@ -71,5 +59,20 @@ public class TimelineFragment extends BoidListFragment<Status> {
     @Override
     public String getTitle() {
         return getString(R.string.timeline);
+    }
+
+    @Override
+    protected List<Status> load(Twitter client, Paging paging) throws Exception {
+        return client.getHomeTimeline(paging);
+    }
+
+    @Override
+    protected long getItemId(Status item) {
+        return item.getId();
+    }
+
+    @Override
+    protected boolean isPaginationEnabled() {
+        return true;
     }
 }

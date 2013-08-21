@@ -8,9 +8,13 @@ import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.TrendAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.SearchActivity;
+import twitter4j.Paging;
 import twitter4j.Trend;
 import twitter4j.Trends;
-import twitter4j.TwitterException;
+import twitter4j.Twitter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A feed fragment that displays Twitter trends.
@@ -49,8 +53,7 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     }
 
     @Override
-    public Trend[] refresh() throws TwitterException {
-        // TODO implement location based trends
+    protected List<Trend> load(Twitter client, Paging paging) throws Exception {
         Trends trends = BoidApp.get(getActivity()).getClient().getPlaceTrends(1);
         runOnUiThread(new Runnable() {
             @Override
@@ -58,7 +61,17 @@ public class TrendsFragment extends BoidListFragment<Trend> {
                 getAdapter().clear();
             }
         });
-        return trends.getTrends();
+        return Arrays.asList(trends.getTrends());
+    }
+
+    @Override
+    protected long getItemId(Trend item) {
+        return 0;
+    }
+
+    @Override
+    protected boolean isPaginationEnabled() {
+        return false;
     }
 
     @Override

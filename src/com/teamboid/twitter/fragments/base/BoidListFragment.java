@@ -12,7 +12,12 @@ import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.ui.MainActivity;
 import com.teamboid.twitter.ui.SearchActivity;
+import twitter4j.Paging;
+import twitter4j.Twitter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BoidListFragment<T extends SilkComparable> extends SilkLastUpdatedFragment<T> {
 
@@ -78,6 +83,39 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
             restoreScrollPos(results.length);
         }
     }
+
+    @Override
+    protected final List<T> refresh() throws Exception {
+        if (!isPaginationEnabled()) {
+            return load(BoidApp.get(getActivity()).getClient(), null);
+        }
+        Paging paging = new Paging();
+        paging.setCount(getPageLength());
+        if (getAdapter().getCount() > 0) {
+            // Get tweets newer than the most recent tweet in the adapter
+            paging.setSinceId(getAdapter().getItemId(0));
+            // Refresh in a loop to fill gaps until all tweets are retrieved
+            List<T> results = new ArrayList<T>();
+            while (true) {
+                List<T> temp = load(BoidApp.get(getActivity()).getClient(), paging);
+                if (temp == null || temp.size() == 0) break;
+                int index = 0;
+                for (T item : temp) {
+                    results.add(index, item);
+                    index++;
+                }
+                paging.setSinceId(getItemId(temp.get(0)));
+            }
+            return results;
+        }
+        return load(BoidApp.get(getActivity()).getClient(), paging);
+    }
+
+    protected abstract List<T> load(Twitter client, Paging paging) throws Exception;
+
+    protected abstract long getItemId(T item);
+
+    protected abstract boolean isPaginationEnabled();
 
     public final void saveScrollPos() {
         int mSavedIndex = getListView().getFirstVisiblePosition();

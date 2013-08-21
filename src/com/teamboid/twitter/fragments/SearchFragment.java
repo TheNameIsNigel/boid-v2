@@ -1,16 +1,19 @@
 package com.teamboid.twitter.fragments;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
-import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.ComposeActivity;
 import com.teamboid.twitter.ui.TweetViewerActivity;
-import twitter4j.*;
+import twitter4j.Paging;
+import twitter4j.Query;
+import twitter4j.Status;
+import twitter4j.Twitter;
+
+import java.util.List;
 
 /**
  * A feed fragment that displays tweet search results.
@@ -45,20 +48,6 @@ public class SearchFragment extends BoidListFragment<Status> {
         return true;
     }
 
-    @Override
-    public Status[] refresh() throws TwitterException {
-        Paging paging = new Paging();
-        paging.setCount(getPageLength());
-        if (getAdapter().getCount() > 0) {
-            // Get tweets newer than the most recent tweet in the adapter
-            paging.setSinceId(getAdapter().getItemId(0));
-        }
-        Query q = new Query(mQuery);
-        q.setCount(200);
-        QueryResult response = BoidApp.get(getActivity()).getClient().search(q);
-        return response.getTweets().toArray(new Status[response.getTweets().size()]);
-    }
-
 //    @Override
 //    public Status[] paginate() throws TwitterException {
 //        Paging paging = new Paging();
@@ -74,5 +63,26 @@ public class SearchFragment extends BoidListFragment<Status> {
     @Override
     public String getTitle() {
         return mQuery;
+    }
+
+    @Override
+    protected List<Status> load(Twitter client, Paging paging) throws Exception {
+        Query q = new Query(mQuery);
+        if (paging != null) {
+            q.setCount(paging.getCount());
+            q.setSinceId(paging.getSinceId());
+            q.setMaxId(paging.getMaxId());
+        }
+        return client.search(q).getTweets();
+    }
+
+    @Override
+    protected long getItemId(Status item) {
+        return item.getId();
+    }
+
+    @Override
+    protected boolean isPaginationEnabled() {
+        return true;
     }
 }

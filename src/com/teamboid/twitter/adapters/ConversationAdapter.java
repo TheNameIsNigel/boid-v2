@@ -123,8 +123,8 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
                 add(msg);
         }
 
-        public Conversation[] toArray() {
-            return items.toArray(new Conversation[items.size()]);
+        public List<Conversation> getConversations() {
+            return items;
         }
     }
 

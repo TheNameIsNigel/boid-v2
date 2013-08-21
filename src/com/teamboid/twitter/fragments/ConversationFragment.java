@@ -3,15 +3,16 @@ package com.teamboid.twitter.fragments;
 import android.content.Intent;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
-import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.ConversationAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.ConversationActivity;
 import twitter4j.DirectMessage;
+import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
+
+import java.util.List;
 
 /**
  * A feed fragment that displays the current user's message conversations.
@@ -43,16 +44,25 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
     }
 
     @Override
-    public ConversationAdapter.Conversation[] refresh() throws TwitterException {
-        Twitter cl = BoidApp.get(getActivity()).getClient();
+    protected List<ConversationAdapter.Conversation> load(Twitter client, Paging paging) throws Exception {
         ConversationAdapter.ConversationOrganizer organizer = new ConversationAdapter.ConversationOrganizer(getActivity());
-        ResponseList<DirectMessage> msges = cl.getDirectMessages();
+        ResponseList<DirectMessage> msges = client.getDirectMessages();
         if (msges.size() > 0)
-            organizer.add(msges.toArray(new DirectMessage[0]));
-        msges = cl.getSentDirectMessages();
+            organizer.add(msges.toArray(new DirectMessage[msges.size()]));
+        msges = client.getSentDirectMessages();
         if (msges.size() > 0)
-            organizer.add(msges.toArray(new DirectMessage[0]));
-        return organizer.toArray();
+            organizer.add(msges.toArray(new DirectMessage[msges.size()]));
+        return organizer.getConversations();
+    }
+
+    @Override
+    protected long getItemId(ConversationAdapter.Conversation item) {
+        return 0;
+    }
+
+    @Override
+    protected boolean isPaginationEnabled() {
+        return false;
     }
 
     @Override
