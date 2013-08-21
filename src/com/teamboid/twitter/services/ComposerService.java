@@ -31,7 +31,7 @@ public class ComposerService extends IntentService {
         Twitter cl = BoidApp.get(this).getClient();
         StatusUpdate update = new StatusUpdate(intent.getStringExtra("content"));
 
-        if (intent.hasExtra("reply")) {
+        if (intent.hasExtra("reply_to")) {
             Status replyTo = (Status) intent.getSerializableExtra("reply_to");
             update.setInReplyToStatusId(replyTo.getId());
         }
