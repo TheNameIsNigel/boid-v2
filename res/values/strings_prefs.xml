@@ -9,7 +9,6 @@
     <string name="look_feel">Look and Feel</string>
     <string name="look_feel_desc">Change the look and feel of Boid to your liking.</string>
 
-
     <!-- About preference category -->
 
     <string name="version">Version</string>
@@ -29,8 +28,8 @@
     <string name="theme_desc">The overall look and feel of Boid.</string>
 
     <string-array name="theme_names">
-        <item>Light (Default)</item>
-        <item>Dark</item>
+        <item>Dark (Default)</item>
+        <item>Light</item>
     </string-array>
     <string-array name="theme_values">
         <item>0</item>
