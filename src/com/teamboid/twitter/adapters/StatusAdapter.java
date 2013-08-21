@@ -88,7 +88,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
         MediaEntity[] mediaEnts = item.getMediaEntities();
         if (mediaEnts != null && mediaEnts.length > 0) {
             media.setVisibility(View.VISIBLE);
-            media.setImageURL(mImageLoader, mediaEnts[0].getExpandedURL());
+            media.setImageURL(mImageLoader, mediaEnts[0].getMediaURL());
         } else {
             media.setVisibility(View.GONE);
         }
