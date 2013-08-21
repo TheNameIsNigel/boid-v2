@@ -39,7 +39,6 @@ public class TweetViewerActivity extends ThemedActivity {
         ((TextView) findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
         ((TextView) findViewById(R.id.username)).setText("@" + mTweet.getUser().getScreenName());
         TextView content = (TextView) findViewById(R.id.content);
-        content.setMovementMethod(LinkMovementMethod.getInstance());
         TextUtils.linkifyText(content, mTweet, true, true);
     }
 
