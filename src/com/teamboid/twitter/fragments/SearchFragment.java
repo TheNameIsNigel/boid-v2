@@ -25,12 +25,6 @@ public class SearchFragment extends BoidListFragment<Status> {
     private String mQuery;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
-
-    @Override
     public int getEmptyText() {
         return R.string.no_tweets;
     }
