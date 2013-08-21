@@ -8,6 +8,7 @@ import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.ComposeActivity;
+import com.teamboid.twitter.ui.TweetViewerActivity;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -34,7 +35,7 @@ public class MentionsFragment extends BoidListFragment<Status> {
 
     @Override
     public void onItemTapped(int index, Status status, View view) {
-        //TODO
+        startActivity(new Intent(getActivity(), TweetViewerActivity.class).putExtra("tweet", status));
     }
 
     @Override
