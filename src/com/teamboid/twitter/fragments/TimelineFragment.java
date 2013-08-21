@@ -9,7 +9,6 @@ import com.teamboid.twitter.adapters.StatusAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.ComposeActivity;
 import com.teamboid.twitter.ui.TweetViewerActivity;
-import com.teamboid.twitter.utilities.Utils;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -41,8 +40,7 @@ public class TimelineFragment extends BoidListFragment<Status> {
 
     @Override
     public boolean onItemLongTapped(int index, Status status, View view) {
-        startActivity(new Intent(getActivity(), ComposeActivity.class)
-                .putExtra("reply_to", Utils.serializeObject(status)));
+        startActivity(new Intent(getActivity(), ComposeActivity.class).putExtra("reply_to", status));
         return true;
     }
 

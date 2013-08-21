@@ -1,5 +1,6 @@
 package com.teamboid.twitter.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,6 +51,9 @@ public class TweetViewerActivity extends ThemedActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.reply:
+                startActivity(new Intent(this, ComposeActivity.class).putExtra("reply_to", mTweet));
                 return true;
         }
         return super.onOptionsItemSelected(item);

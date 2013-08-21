@@ -3,6 +3,8 @@ package com.teamboid.twitter.adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.TimeUtils;
 import com.teamboid.twitter.utilities.Utils;
 import com.teamboid.twitter.utilities.text.TextUtils;
+import com.teamboid.twitter.utilities.text.URLSpanNoUnderline;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
 
@@ -61,8 +64,10 @@ public class StatusAdapter extends SilkAdapter<Status> {
         View retweetedBy = recycled.findViewById(R.id.retweetedBy);
         if (item.isRetweet()) {
             retweetedBy.setVisibility(View.VISIBLE);
-            TextView retweetedByTxt = (TextView) recycled.findViewById(R.id.retweetedByText);
-            retweetedByTxt.setText(getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName()));
+            String retweetedTxt = getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName());
+            SpannableString retweetedSpan = new SpannableString(retweetedTxt);
+            retweetedSpan.setSpan(new URLSpanNoUnderline(""), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ((TextView) recycled.findViewById(R.id.retweetedByText)).setText(retweetedSpan);
             item = item.getRetweetedStatus();
         } else {
             retweetedBy.setVisibility(View.GONE);

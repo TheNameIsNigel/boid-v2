@@ -9,7 +9,6 @@ import android.widget.ListView;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.ConversationAdapter;
 import com.teamboid.twitter.adapters.MessageAdapter;
-import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
 
 /**
@@ -23,7 +22,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mConvo = (ConversationAdapter.Conversation) Utils.deserializeObject(getArguments().getString("conversation"));
+        mConvo = (ConversationAdapter.Conversation) getArguments().getSerializable("conversation");
         mConvo.sort();
         getActivity().setTitle(mConvo.getEndUser().getName());
     }

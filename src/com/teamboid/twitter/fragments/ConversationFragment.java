@@ -3,13 +3,11 @@ package com.teamboid.twitter.fragments;
 import android.content.Intent;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
-import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.ConversationAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
 import com.teamboid.twitter.ui.ConversationActivity;
-import com.teamboid.twitter.utilities.Utils;
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
@@ -36,8 +34,7 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
 
     @Override
     public void onItemTapped(int index, ConversationAdapter.Conversation convo, View view) {
-        startActivity(new Intent(getActivity(), ConversationActivity.class)
-                .putExtra("conversation", Utils.serializeObject(convo)));
+        startActivity(new Intent(getActivity(), ConversationActivity.class).putExtra("conversation", convo));
     }
 
     @Override
