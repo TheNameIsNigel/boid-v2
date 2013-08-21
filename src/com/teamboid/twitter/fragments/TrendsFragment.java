@@ -23,7 +23,7 @@ public class TrendsFragment extends BoidListFragment<Trend> {
 
     @Override
     public boolean getShouldShowLastUpdated() {
-        return true;
+        return getLastUpdatedTime() != null;
     }
 
     @Override
