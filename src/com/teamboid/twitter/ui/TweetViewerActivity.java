@@ -9,6 +9,7 @@ import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
+import twitter4j.User;
 
 /**
  * The tweet composition UI.
@@ -39,6 +40,8 @@ public class TweetViewerActivity extends ThemedActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_tweet_viewer, menu);
+        User me = BoidApp.get(this).getProfile();
+        menu.findItem(R.id.delete).setVisible(me.getId() == mTweet.getUser().getId());
         return super.onCreateOptionsMenu(menu);
     }
 
