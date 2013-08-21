@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.teamboid.twitter.BoidApp;
@@ -39,6 +40,12 @@ public class TweetViewerActivity extends ThemedActivity {
         ((TextView) findViewById(R.id.username)).setText("@" + mTweet.getUser().getScreenName());
         TextView content = (TextView) findViewById(R.id.content);
         TextUtils.linkifyText(this, content, mTweet, true, true);
+
+        SilkImageView media = (SilkImageView) findViewById(R.id.media);
+        if (mTweet.getMediaEntities() != null && mTweet.getMediaEntities().length > 0) {
+            media.setVisibility(View.VISIBLE);
+            media.setImageURL(BoidApp.get(this).getImageLoader(), mTweet.getMediaEntities()[0].getMediaURL());
+        } else media.setVisibility(View.GONE);
     }
 
     @Override
