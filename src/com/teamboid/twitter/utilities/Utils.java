@@ -1,7 +1,9 @@
 package com.teamboid.twitter.utilities;
 
 import android.util.Base64;
+import twitter4j.Status;
 import twitter4j.User;
+import twitter4j.UserMentionEntity;
 
 import java.io.*;
 
@@ -45,5 +47,17 @@ public class Utils {
                 return toreturn;
         }
         return "@" + user.getScreenName();
+    }
+
+    public static String getReplyAll(Status tweet) {
+        String toReturn = "@" + tweet.getUser().getScreenName() + " ";
+        UserMentionEntity[] mentions = tweet.getUserMentionEntities();
+        if (mentions != null) {
+            for (UserMentionEntity mention : mentions) {
+                if (mention.getId() == tweet.getUser().getId()) continue;
+                toReturn += "@" + mention.getScreenName() + " ";
+            }
+        }
+        return toReturn;
     }
 }

@@ -32,12 +32,11 @@
                           android:textColor="?usernameTextColor"
                           android:singleLine="true"/>
 
-                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/username"
+                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/source"
                                                              android:layout_width="match_parent"
                                                              android:layout_height="wrap_content"
-                                                             android:textSize="@dimen/usernameText"
-                                                             android:textColor="?contentTextColor"
-                                                             android:singleLine="true"/>
+                                                             android:textSize="@dimen/contentText"
+                                                             android:textColor="?contentTextColor"/>
 
             </LinearLayout>
 
