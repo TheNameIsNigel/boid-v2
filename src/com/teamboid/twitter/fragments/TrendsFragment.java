@@ -22,6 +22,11 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     }
 
     @Override
+    public boolean getShouldShowLastUpdated() {
+        return true;
+    }
+
+    @Override
     public int getEmptyText() {
         return R.string.no_trends;
     }
