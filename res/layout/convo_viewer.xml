@@ -12,12 +12,12 @@
             android:layout_above="@+id/inputFrame">
 
         <ListView android:id="@+id/list" android:layout_width="fill_parent" android:layout_height="fill_parent"
-                  android:paddingTop="3dp" android:stackFromBottom="true" android:transcriptMode="alwaysScroll"/>
+                  android:stackFromBottom="true" android:transcriptMode="alwaysScroll"/>
 
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/empty" android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:textSize="18sp" android:textColor="?contentTextColor"
-                                                       android:text="@string/no_messages"/>
+                                                     android:layout_height="wrap_content"
+                                                     android:textSize="18sp" android:textColor="?contentTextColor"
+                                                     android:text="@string/no_messages"/>
 
     </LinearLayout>
 
@@ -27,8 +27,8 @@
 
     <RelativeLayout android:id="@+id/inputFrame" android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:layout_alignParentBottom="true"
-                    android:background="@android:color/white" android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:paddingLeft="10dp" android:paddingRight="5dp"
+                    android:background="?inputFrameBackground">
 
         <com.teamboid.twitter.views.BorderlessEditText
                 android:id="@+id/messageInput"
@@ -43,7 +43,7 @@
         <!--suppress AndroidLintContentDescription -->
         <ImageButton android:id="@+id/sendButton" android:layout_width="@dimen/send_button"
                      android:layout_height="@dimen/send_button" android:layout_alignParentRight="true"
-                     android:background="?android:attr/selectableItemBackground"
+                     android:padding="5dp" android:background="?android:attr/selectableItemBackground"
                      android:enabled="false" android:scaleType="fitXY"
                      android:src="?sendButton" android:layout_centerVertical="true"/>
 

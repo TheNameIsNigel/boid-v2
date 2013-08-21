@@ -12,6 +12,7 @@
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_boid</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Boid</item>
 
+        <item name="inputFrameBackground">@drawable/ab_solid_boid</item>
         <item name="usernameTextColor">@android:color/white</item>
         <item name="contentTextColor">@android:color/white</item>
         <item name="navDrawerBackground">@color/drawer_background_dark</item>
