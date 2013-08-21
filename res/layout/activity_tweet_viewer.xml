@@ -25,17 +25,17 @@
                           android:layout_width="match_parent"
                           android:layout_height="wrap_content">
 
-                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/fullname"
-                                                             android:layout_width="match_parent"
-                                                             android:layout_height="wrap_content"
-                                                             android:textSize="@dimen/tweetViewerUsername"
-                                                             android:textColor="?usernameTextColor"
-                                                             android:singleLine="true"/>
+                <TextView android:id="@+id/fullname"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="@dimen/tweetViewerUsername"
+                          android:textColor="?usernameTextColor"
+                          android:singleLine="true"/>
 
                 <com.afollestad.silk.views.text.SilkTextView android:id="@+id/username"
                                                              android:layout_width="match_parent"
                                                              android:layout_height="wrap_content"
-                                                             android:textSize="@dimen/tweetViewerContent"
+                                                             android:textSize="@dimen/usernameText"
                                                              android:textColor="?contentTextColor"
                                                              android:singleLine="true"/>
 
