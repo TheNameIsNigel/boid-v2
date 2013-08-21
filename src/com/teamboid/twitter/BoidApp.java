@@ -95,4 +95,15 @@ public class BoidApp extends Application {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         return prefs.contains("token");
     }
+
+    public void logout() {
+        // Remove the stored authentication token
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().remove("token").commit();
+        // Wipe the Silk cache
+        File cacheDir = getSilkCache();
+        for (File fi : cacheDir.listFiles())
+            fi.delete();
+        cacheDir.delete();
+    }
 }

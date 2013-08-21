@@ -1,5 +1,7 @@
 package com.teamboid.twitter.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -122,7 +124,30 @@ public class MainActivity extends ThemedDrawerActivity {
             case R.id.settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
+            case R.id.logout:
+                confirmLogout();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void confirmLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.logout)
+                .setMessage(R.string.confirm_logout)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        BoidApp.get(MainActivity.this).logout();
+                        finish();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 }

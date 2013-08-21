@@ -1,6 +1,8 @@
 package com.teamboid.twitter.ui;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -84,6 +86,7 @@ public class TweetViewerActivity extends ThemedActivity {
                 startActivity(new Intent(this, ComposeActivity.class).putExtra("reply_to", mTweet));
                 return true;
             case R.id.retweet:
+                showRetweetDialog();
                 return true;
             case R.id.favorite:
                 toggleFavorite();
@@ -118,6 +121,55 @@ public class TweetViewerActivity extends ThemedActivity {
                             invalidateOptionsMenu();
                         }
                     });
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppMsg.makeText(TweetViewerActivity.this, e.getMessage(), AppMsg.STYLE_ALERT).show();
+                        }
+                    });
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+    }
+
+    private void showRetweetDialog() {
+        new AlertDialog.Builder(this).setItems(R.array.retweet_options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    default:
+                        performRetweet();
+                    case 1:
+                        startActivity(new Intent(TweetViewerActivity.this, ComposeActivity.class)
+                                .putExtra("content", "\"@" + mTweet.getUser().getScreenName() + ": " + mTweet.getText() + "\" "));
+                        break;
+                }
+            }
+        }).show();
+    }
+
+    private void performRetweet() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.please_wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Twitter cl = BoidApp.get(TweetViewerActivity.this).getClient();
+                    cl.retweetStatus(mTweet.getId());
                 } catch (final Exception e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
