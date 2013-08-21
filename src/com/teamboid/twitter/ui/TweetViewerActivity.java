@@ -2,6 +2,7 @@ package com.teamboid.twitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -31,13 +32,15 @@ public class TweetViewerActivity extends ThemedActivity {
 
     private void processIntent() {
         mTweet = (Status) getIntent().getSerializableExtra("tweet");
-        if(mTweet.isRetweet())
+        if (mTweet.isRetweet())
             mTweet = mTweet.getRetweetedStatus();
         SilkImageView profilePic = (SilkImageView) findViewById(R.id.profilePic);
         profilePic.setFitView(false).setImageURL(BoidApp.get(this).getImageLoader(), mTweet.getUser().getProfileImageURL());
         ((TextView) findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
         ((TextView) findViewById(R.id.username)).setText("@" + mTweet.getUser().getScreenName());
-        TextUtils.linkifyText((TextView) findViewById(R.id.content), mTweet, true, true);
+        TextView content = (TextView) findViewById(R.id.content);
+        content.setMovementMethod(LinkMovementMethod.getInstance());
+        TextUtils.linkifyText(content, mTweet, true, true);
     }
 
     @Override
