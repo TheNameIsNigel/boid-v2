@@ -1,5 +1,6 @@
 package com.teamboid.twitter.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.afollestad.silk.views.image.SilkImageView;
+import com.devspark.appmsg.AppMsg;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
+import twitter4j.Twitter;
 import twitter4j.User;
 
 /**
@@ -83,10 +86,56 @@ public class TweetViewerActivity extends ThemedActivity {
             case R.id.retweet:
                 return true;
             case R.id.favorite:
+                toggleFavorite();
                 return true;
             case R.id.share:
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleFavorite() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage(getString(R.string.please_wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Twitter cl = BoidApp.get(TweetViewerActivity.this).getClient();
+                    if (mTweet.isFavorited()) {
+                        cl.destroyFavorite(mTweet.getId());
+                        mTweet.setIsFavorited(false);
+                    } else {
+                        cl.createFavorite(mTweet.getId());
+                        mTweet.setIsFavorited(true);
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            invalidateOptionsMenu();
+                        }
+                    });
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppMsg.makeText(TweetViewerActivity.this, e.getMessage(), AppMsg.STYLE_ALERT).show();
+                        }
+                    });
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
     }
 }

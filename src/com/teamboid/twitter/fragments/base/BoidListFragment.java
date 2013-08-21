@@ -76,11 +76,11 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     }
 
     @Override
-    protected void onPostLoad(T[] results) {
+    protected void onPostLoad(List<T> results) {
         super.onPostLoad(results);
-        if (getAdapter().getCount() > results.length) {
+        if (getAdapter().getCount() > results.size()) {
             // Items were added to the top of the list instead of overwriting the adapter, restore scroll position
-            restoreScrollPos(results.length);
+            restoreScrollPos(results.size());
         }
     }
 
