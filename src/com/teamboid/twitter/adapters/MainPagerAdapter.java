@@ -26,7 +26,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
             case 3:
                 return new TrendsFragment();
             case 4:
-                return new SearchFragment("#Boid");
+                return new SearchFragment("#Boid", true);
         }
     }
 

@@ -17,8 +17,8 @@ import twitter4j.*;
  */
 public class SearchFragment extends BoidListFragment<Status> {
 
-    public SearchFragment(String query) {
-        super(query + "_search");
+    public SearchFragment(String query, boolean cache) {
+        super(cache ? query + "_search" : null);
         mQuery = query;
     }
 
