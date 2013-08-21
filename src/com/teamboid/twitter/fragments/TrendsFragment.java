@@ -1,11 +1,13 @@
 package com.teamboid.twitter.fragments;
 
+import android.content.Intent;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.adapters.TrendAdapter;
 import com.teamboid.twitter.fragments.base.BoidListFragment;
+import com.teamboid.twitter.ui.SearchActivity;
 import twitter4j.Trend;
 import twitter4j.Trends;
 import twitter4j.TwitterException;
@@ -31,7 +33,8 @@ public class TrendsFragment extends BoidListFragment<Trend> {
 
     @Override
     public void onItemTapped(int index, Trend item, View view) {
-        //TODO
+        startActivity(new Intent(getActivity(), SearchActivity.class)
+                .putExtra("query", item.getName()));
     }
 
     @Override

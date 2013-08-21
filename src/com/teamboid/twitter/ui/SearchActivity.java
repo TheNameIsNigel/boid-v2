@@ -3,14 +3,12 @@ package com.teamboid.twitter.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.teamboid.twitter.R;
-import com.teamboid.twitter.fragments.MessagesFragment;
+import com.teamboid.twitter.fragments.SearchFragment;
 
 /**
- * The direct message conversation viewer UI, just displays a {@link MessagesFragment} on phones.
- *
  * @author Aidan Follestad (afollestad)
  */
-public class ConversationActivity extends ThemedActivity {
+public class SearchActivity extends ThemedActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -18,10 +16,7 @@ public class ConversationActivity extends ThemedActivity {
         setContentView(R.layout.activity_fragment);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Bundle args = new Bundle();
-        args.putAll(getIntent().getExtras());
-        MessagesFragment frag = new MessagesFragment();
-        frag.setArguments(args);
+        SearchFragment frag = new SearchFragment(getIntent().getStringExtra("query"));
         getFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
     }
 

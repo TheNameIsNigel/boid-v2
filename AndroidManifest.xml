@@ -14,25 +14,35 @@
     <application android:name="com.teamboid.twitter.BoidApp" android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher" android:theme="@style/Theme.Boidlight">
 
-        <activity android:name=".ui.MainActivity" android:label="@string/app_name">
+        <activity android:name=".ui.MainActivity" android:label="@string/app_name"
+                  android:configChanges="screenSize|orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.LoginActivity" android:label="@string/welcome"/>
+        <activity android:name=".ui.LoginActivity" android:label="@string/welcome"
+                  android:configChanges="screenSize|orientation|keyboardHidden"/>
 
-        <activity android:name=".ui.ComposeActivity" android:label="@string/compose"/>
+        <activity android:name=".ui.ComposeActivity" android:label="@string/compose"
+                  android:configChanges="screenSize|orientation|keyboardHidden"/>
 
         <activity android:name=".ui.TweetViewerActivity" android:label="@string/tweet"
+                  android:configChanges="screenSize|orientation|keyboardHidden"
                   android:uiOptions="splitActionBarWhenNarrow"/>
 
-        <activity android:name=".ui.SettingsActivity" android:label="@string/settings"/>
+        <activity android:name=".ui.SearchActivity" android:label="@string/compose"
+                  android:configChanges="screenSize|orientation|keyboardHidden"/>
 
-        <activity android:name=".ui.ConversationActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.SettingsActivity" android:label="@string/settings"
+                  android:configChanges="screenSize|orientation|keyboardHidden"/>
 
-        <service android:name="com.teamboid.twitter.services.ComposerService" android:label="@string/compose"/>
+        <activity android:name=".ui.ConversationActivity" android:windowSoftInputMode="adjustResize"
+                  android:configChanges="screenSize|orientation|keyboardHidden"/>
+
+        <service android:name="com.teamboid.twitter.services.ComposerService" android:label="@string/compose"
+                 android:configChanges="screenSize|orientation|keyboardHidden"/>
 
     </application>
 

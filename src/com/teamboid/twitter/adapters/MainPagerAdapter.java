@@ -3,10 +3,7 @@ package com.teamboid.twitter.adapters;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import com.teamboid.twitter.fragments.ConversationFragment;
-import com.teamboid.twitter.fragments.MentionsFragment;
-import com.teamboid.twitter.fragments.TimelineFragment;
-import com.teamboid.twitter.fragments.TrendsFragment;
+import com.teamboid.twitter.fragments.*;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -28,11 +25,13 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
                 return new ConversationFragment();
             case 3:
                 return new TrendsFragment();
+            case 4:
+                return new SearchFragment("#Boid");
         }
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 }
