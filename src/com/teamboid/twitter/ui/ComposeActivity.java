@@ -24,7 +24,7 @@ public class ComposeActivity extends ThemedActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.composer);
+        setContentView(R.layout.activity_composer);
         setupInput();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         processIntent();
@@ -66,7 +66,7 @@ public class ComposeActivity extends ThemedActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.composer, menu);
+        getMenuInflater().inflate(R.menu.activity_composer, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

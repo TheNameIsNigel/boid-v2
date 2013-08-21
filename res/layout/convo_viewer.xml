@@ -14,7 +14,7 @@
         <ListView android:id="@+id/list" android:layout_width="fill_parent" android:layout_height="fill_parent"
                   android:paddingTop="3dp" android:stackFromBottom="true" android:transcriptMode="alwaysScroll"/>
 
-        <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/empty" android:layout_width="wrap_content"
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/empty" android:layout_width="wrap_content"
                                                        android:layout_height="wrap_content"
                                                        android:textSize="18sp" android:textColor="?contentTextColor"
                                                        android:text="@string/no_messages"/>

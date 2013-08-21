@@ -41,7 +41,7 @@ public class DrawerItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
-            view = LayoutInflater.from(context).inflate(R.layout.drawer_item, null);
+            view = LayoutInflater.from(context).inflate(R.layout.list_item_drawer, null);
         TextView content = (TextView) view.findViewById(R.id.title);
         content.setText(items[i]);
         return view;

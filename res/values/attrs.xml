@@ -12,4 +12,11 @@
     <attr name="retweetIndicator" format="reference"/>
     <attr name="sendButton" format="reference"/>
 
+    <attr name="replyIcon" format="reference"/>
+    <attr name="retweetIcon" format="reference"/>
+    <attr name="favoritedIcon" format="reference"/>
+    <attr name="unfavoritedIcon" format="reference"/>
+    <attr name="shareIcon" format="reference"/>
+    <attr name="deleteIcon" format="reference"/>
+
 </resources>

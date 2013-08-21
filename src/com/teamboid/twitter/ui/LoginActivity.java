@@ -59,7 +59,7 @@ public class LoginActivity extends ThemedActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.activity_login);
         setupWebView();
 
         findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.TextView;
+import com.afollestad.silk.views.text.SilkEditText;
 import com.teamboid.twitter.R;
 
 /**
@@ -12,7 +13,7 @@ import com.teamboid.twitter.R;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class CounterEditText extends RobotoThinEditText {
+public class CounterEditText extends SilkEditText {
 
     public CounterEditText(Context context) {
         super(context);

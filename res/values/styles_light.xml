@@ -17,12 +17,18 @@
         <item name="navDrawerBackground">@color/drawer_background_light</item>
         <item name="errorTextColor">@color/red</item>
 
-        <item name="composeIcon">@drawable/compose_dark</item>
-        <item name="sendIcon">@drawable/send_dark</item>
-        <item name="refreshIcon">@drawable/refresh_dark</item>
+        <item name="composeIcon">@drawable/ic_compose_dark</item>
+        <item name="sendIcon">@drawable/ic_send_dark</item>
+        <item name="refreshIcon">@drawable/ic_refresh_dark</item>
         <item name="sendButton">@drawable/send_button_dark</item>
+        <item name="retweetIndicator">@drawable/ic_retweet_dark</item>
 
-        <item name="retweetIndicator">@drawable/retweet_dark</item>
+        <item name="replyIcon">@drawable/ic_reply_dark</item>
+        <item name="retweetIcon">@drawable/ic_retweet_dark</item>
+        <item name="favoritedIcon">@drawable/ic_favorited</item>
+        <item name="unfavoritedIcon">@drawable/ic_unfavorited_dark</item>
+        <item name="shareIcon">@drawable/ic_share_dark</item>
+        <item name="deleteIcon">@drawable/ic_delete_dark</item>
 
     </style>
 

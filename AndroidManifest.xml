@@ -25,6 +25,9 @@
 
         <activity android:name=".ui.ComposeActivity" android:label="@string/compose"/>
 
+        <activity android:name=".ui.TweetViewerActivity" android:label="@string/tweet"
+                  android:uiOptions="splitActionBarWhenNarrow"/>
+
         <activity android:name=".ui.SettingsActivity" android:label="@string/settings"/>
 
         <activity android:name=".ui.ConversationActivity" android:windowSoftInputMode="adjustResize"/>

@@ -16,7 +16,7 @@
 
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-            <TextView android:id="@+id/userName" android:layout_width="wrap_content"
+            <TextView android:id="@+id/username" android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:singleLine="true" android:textColor="?usernameTextColor"
                       android:textSize="@dimen/usernameText"
@@ -33,27 +33,29 @@
 
         </RelativeLayout>
 
-        <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/content" android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:lineSpacingMultiplier="1.1"
-                                                       android:textSize="@dimen/contentText"
-                                                       android:textColor="?contentTextColor"/>
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content" android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:lineSpacingMultiplier="1.1"
+                                                     android:textSize="@dimen/contentText"
+                                                     android:textColor="?contentTextColor"/>
 
         <LinearLayout android:id="@+id/retweetedBy" android:layout_width="fill_parent"
                       android:layout_height="wrap_content" android:layout_marginTop="3dp"
                       android:orientation="horizontal" android:visibility="gone"
                       android:gravity="center_vertical">
 
-            <ImageView android:layout_width="@dimen/retweet_indicator" android:layout_height="@dimen/retweet_indicator"
+            <!--suppress AndroidLintContentDescription -->
+            <ImageView android:layout_width="@dimen/retweet_indicator"
+                       android:layout_height="@dimen/retweet_indicator"
                        android:scaleType="fitXY" android:src="?retweetIndicator"/>
 
-            <com.teamboid.twitter.views.RobotoThinTextView android:id="@+id/retweetedByText"
-                                                           android:layout_width="wrap_content"
-                                                           android:layout_height="wrap_content"
-                                                           android:singleLine="true"
-                                                           android:textColor="?contentTextColor"
-                                                           android:textSize="@dimen/timestampText"
-                                                           android:layout_marginLeft="5dp"/>
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/retweetedByText"
+                                                         android:layout_width="wrap_content"
+                                                         android:layout_height="wrap_content"
+                                                         android:singleLine="true"
+                                                         android:textColor="?contentTextColor"
+                                                         android:textSize="@dimen/timestampText"
+                                                         android:layout_marginLeft="5dp"/>
 
         </LinearLayout>
 

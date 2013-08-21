@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout android:id="@+id/welcomeFrame" android:layout_width="fill_parent"
+                  android:layout_height="fill_parent" android:orientation="vertical"
+                  android:gravity="center">
+
+        <!--suppress AndroidLintContentDescription -->
+        <ImageView android:id="@+id/logo" android:layout_width="@dimen/welcome_logo"
+                   android:layout_height="@dimen/welcome_logo"
+                   android:src="@drawable/ic_launcher" android:scaleType="fitXY"/>
+
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/loginMessage"
+                                                       android:layout_width="wrap_content"
+                                                       android:layout_height="wrap_content"
+                                                       android:textSize="@dimen/headerText"
+                                                       android:text="@string/welcome_message"
+                                                       android:textColor="?contentTextColor"
+                                                       android:gravity="center_horizontal"
+                                                       android:layout_marginLeft="20dp"
+                                                       android:layout_marginRight="20dp"
+                                                       android:layout_marginTop="60dp"/>
+
+        <com.teamboid.twitter.views.BoidButton android:id="@+id/login"
+                                               android:layout_width="fill_parent"
+                                               android:layout_height="wrap_content"
+                                               android:text="@string/login"
+                                               android:layout_marginTop="60dp"
+                                               android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/webFrame" android:layout_width="fill_parent"
+                  android:layout_height="fill_parent" android:orientation="vertical"
+                  android:gravity="center" android:visibility="gone">
+
+        <WebView android:id="@+id/webView" android:layout_width="fill_parent"
+                 android:visibility="gone" android:layout_height="fill_parent"/>
+
+        <ProgressBar android:id="@+id/webProgress"
+                     android:layout_width="wrap_content" android:layout_height="wrap_content"
+                     style="@android:style/Widget.Holo.ProgressBar.Large"
+                     android:indeterminateOnly="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

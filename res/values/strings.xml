@@ -12,7 +12,6 @@
     <string name="retry">Retry</string>
 
     <string name="compose">Compose</string>
-    <string name="reply">Reply</string>
     <string name="settings">Settings</string>
     <string name="send">Send</string>
 
@@ -42,5 +41,13 @@
     <string name="posting_tweet">Posting tweet…</string>
     <string name="send_error">Failed to post your tweet.</string>
     <string name="rate_limit_error">Twitter\'s rate limit was exceeded, please try again in a minute.</string>
+
+    <string name="tweet">Tweet</string>
+    <string name="reply">Reply</string>
+    <string name="retweet">Retweet</string>
+    <string name="favorite">Favorite</string>
+    <string name="unfavorite">Unfavorite</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
 
 </resources>

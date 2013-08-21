@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/reply" android:title="@string/reply"
+          android:icon="?replyIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/retweet" android:title="@string/retweet"
+          android:icon="?retweetIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/favorite" android:title="@string/favorite"
+          android:icon="?unfavoritedIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/share" android:title="@string/share"
+          android:icon="?shareIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/delete" android:title="@string/delete"
+          android:icon="?deleteIcon" android:showAsAction="ifRoom"/>
+
+</menu>

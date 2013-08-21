@@ -15,7 +15,7 @@ public class ConversationActivity extends ThemedActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.conversation_activity);
+        setContentView(R.layout.activity_conversation);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle args = new Bundle();

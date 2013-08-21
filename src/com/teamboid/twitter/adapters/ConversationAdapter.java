@@ -149,7 +149,7 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         } else {
             profilePic.setFitView(false).setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
         }
-        ((TextView) recycled.findViewById(R.id.userName)).setText(Utils.getDisplayName(item.getEndUser(), mDisplayRealNames));
+        ((TextView) recycled.findViewById(R.id.username)).setText(Utils.getDisplayName(item.getEndUser(), mDisplayRealNames));
         ((TextView) recycled.findViewById(R.id.content)).setText(message.getText());
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
         return recycled;

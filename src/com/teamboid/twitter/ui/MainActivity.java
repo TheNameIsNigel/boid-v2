@@ -18,7 +18,7 @@ import com.teamboid.twitter.adapters.MainPagerAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
- * The main app UI.
+ * The activity_main app UI.
  *
  * @author Aidan Follestad (afollestad)
  */
@@ -39,7 +39,7 @@ public class MainActivity extends ThemedDrawerActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.main;
+        return R.layout.activity_main;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class MainActivity extends ThemedDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

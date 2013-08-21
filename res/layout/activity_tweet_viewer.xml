@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:paddingLeft="25dp" android:paddingRight="25dp">
+
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center_vertical"
+                      android:layout_marginTop="15dp">
+
+            <!--suppress AndroidLintUselessParent -->
+            <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
+                                                           android:layout_width="@dimen/feed_profile_pic_big"
+                                                           android:layout_height="@dimen/feed_profile_pic_big"
+                                                           android:scaleType="fitXY"
+                                                           android:layout_marginRight="20dp"/>
+
+            <LinearLayout android:orientation="vertical"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
+
+                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/fullname"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:textSize="@dimen/tweetViewerUsername"
+                                                             android:textColor="?usernameTextColor"
+                                                             android:singleLine="true"/>
+
+                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/username"
+                                                             android:layout_width="match_parent"
+                                                             android:layout_height="wrap_content"
+                                                             android:textSize="@dimen/tweetViewerContent"
+                                                             android:textColor="?contentTextColor"
+                                                             android:singleLine="true"
+                                                             android:layout_marginTop="3dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="wrap_content"
+                                                     android:textSize="@dimen/tweetViewerContent"
+                                                     android:textColor="?contentTextColor"
+                                                     android:layout_marginTop="20dp"
+                                                     android:lineSpacingMultiplier="1.2"/>
+
+    </LinearLayout>
+
+</ScrollView>
