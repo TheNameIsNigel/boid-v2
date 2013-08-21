@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.afollestad.silk.cache.SilkComparable;
 import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
 import com.devspark.appmsg.AppMsg;
@@ -32,11 +31,6 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     public void onError(String message) {
         AppMsg.makeText(getActivity(), message, new AppMsg.Style(AppMsg.LENGTH_LONG,
                 android.R.color.holo_blue_dark), R.layout.app_msg_themed).show();
-    }
-
-    @Override
-    public boolean getShouldShowLastUpdated() {
-        return getLastUpdatedTime() != null;
     }
 
     @Override
