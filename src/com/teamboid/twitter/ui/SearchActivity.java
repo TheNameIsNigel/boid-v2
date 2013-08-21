@@ -45,7 +45,7 @@ public class SearchActivity extends ThemedActivity {
                 return true;
             case R.id.compose:
                 startActivity(new Intent(this, ComposeActivity.class)
-                        .putExtra("content", getIntent().getStringExtra("query")));
+                        .putExtra("content", getIntent().getStringExtra("query") + " "));
                 return true;
         }
         return super.onOptionsItemSelected(item);
