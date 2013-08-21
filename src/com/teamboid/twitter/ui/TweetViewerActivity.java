@@ -2,7 +2,6 @@ package com.teamboid.twitter.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -39,7 +38,7 @@ public class TweetViewerActivity extends ThemedActivity {
         ((TextView) findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
         ((TextView) findViewById(R.id.username)).setText("@" + mTweet.getUser().getScreenName());
         TextView content = (TextView) findViewById(R.id.content);
-        TextUtils.linkifyText(content, mTweet, true, true);
+        TextUtils.linkifyText(this, content, mTweet, true, true);
     }
 
     @Override

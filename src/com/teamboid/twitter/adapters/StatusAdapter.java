@@ -15,8 +15,8 @@ import com.teamboid.twitter.BoidApp;
 import com.teamboid.twitter.R;
 import com.teamboid.twitter.utilities.TimeUtils;
 import com.teamboid.twitter.utilities.Utils;
+import com.teamboid.twitter.utilities.text.BoidSpanNoUnderline;
 import com.teamboid.twitter.utilities.text.TextUtils;
-import com.teamboid.twitter.utilities.text.URLSpanNoUnderline;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
 
@@ -66,7 +66,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
             retweetedBy.setVisibility(View.VISIBLE);
             String retweetedTxt = getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName());
             SpannableString retweetedSpan = new SpannableString(retweetedTxt);
-            retweetedSpan.setSpan(new URLSpanNoUnderline(""), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            retweetedSpan.setSpan(new BoidSpanNoUnderline(getContext(), null), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ((TextView) recycled.findViewById(R.id.retweetedByText)).setText(retweetedSpan);
             item = item.getRetweetedStatus();
         } else {
@@ -81,7 +81,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
         }
 
         ((TextView) recycled.findViewById(R.id.username)).setText(Utils.getDisplayName(item.getUser(), mDisplayRealNames));
-        TextUtils.linkifyText((TextView) recycled.findViewById(R.id.content), item, false, false);
+        TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), item, false, false);
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
         SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);

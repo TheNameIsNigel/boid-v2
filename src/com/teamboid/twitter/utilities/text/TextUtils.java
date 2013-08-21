@@ -1,5 +1,6 @@
 package com.teamboid.twitter.utilities.text;
 
+import android.content.Context;
 import android.util.Patterns;
 import android.widget.TextView;
 import twitter4j.Status;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public class TextUtils {
 
-    public static void linkifyText(TextView textView, String tweet, boolean clickable, boolean expandUrls, URLEntity[] urls) {
+    public static void linkifyText(Context context, TextView textView, String tweet, boolean clickable, boolean expandUrls, URLEntity[] urls) {
         for (URLEntity url : urls) {
             String toReplace = url.getDisplayURL();
             if (expandUrls) toReplace = url.getExpandedURL();
@@ -30,18 +31,16 @@ public class TextUtils {
         textView.setLinksClickable(clickable);
 
         Pattern mentionPattern = Pattern.compile("@([A-Za-z0-9_-]+)");
-        String mentionScheme = "http://www.twitter.com/";
-        Linkify.addLinks(textView, mentionPattern, mentionScheme, null, filter);
+        Linkify.addLinks(context, textView, mentionPattern, null, filter);
 
         Pattern hashtagPattern = Pattern.compile("#([A-Za-z0-9_-]+)");
-        String hashtagScheme = "http://www.twitter.com/search/";
-        Linkify.addLinks(textView, hashtagPattern, hashtagScheme, null, filter);
+        Linkify.addLinks(context, textView, hashtagPattern, null, filter);
 
         Pattern urlPattern = Patterns.WEB_URL;
-        Linkify.addLinks(textView, urlPattern, null, null, filter);
+        Linkify.addLinks(context, textView, urlPattern, null, filter);
     }
 
-    public static void linkifyText(TextView textView, Status tweet, boolean clickable, boolean expandUrls) {
-        linkifyText(textView, tweet.getText(), clickable, expandUrls, tweet.getURLEntities());
+    public static void linkifyText(Context context, TextView textView, Status tweet, boolean clickable, boolean expandUrls) {
+        linkifyText(context, textView, tweet.getText(), clickable, expandUrls, tweet.getURLEntities());
     }
 }

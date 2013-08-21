@@ -21,7 +21,7 @@
     <dimen name="drawerItemText">21sp</dimen>
     <dimen name="convoMessageText">17sp</dimen>
     <dimen name="tweetViewerUsername">21sp</dimen>
-    <dimen name="tweetViewerContent">19sp</dimen>
+    <dimen name="tweetViewerContent">20sp</dimen>
 
     <dimen name="inline_media">120dp</dimen>
 

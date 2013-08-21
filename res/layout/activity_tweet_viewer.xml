@@ -37,8 +37,7 @@
                                                              android:layout_height="wrap_content"
                                                              android:textSize="@dimen/tweetViewerContent"
                                                              android:textColor="?contentTextColor"
-                                                             android:singleLine="true"
-                                                             android:layout_marginTop="3dp"/>
+                                                             android:singleLine="true"/>
 
             </LinearLayout>
 
@@ -50,7 +49,7 @@
                                                      android:textSize="@dimen/tweetViewerContent"
                                                      android:textColor="?contentTextColor"
                                                      android:layout_marginTop="20dp"
-                                                     android:lineSpacingMultiplier="1.2"/>
+                                                     android:lineSpacingMultiplier="1.3"/>
 
     </LinearLayout>
 

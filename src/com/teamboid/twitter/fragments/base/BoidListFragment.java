@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.afollestad.silk.cache.SilkComparable;
 import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
 import com.devspark.appmsg.AppMsg;
@@ -77,8 +78,8 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         super.onPostLoad(results);
         if (getAdapter().getCount() > results.length) {
             // Items were added to the top of the list instead of overwriting the adapter, restore scroll position
-            int added = getAdapter().getCount() - results.length;
-            restoreScrollPos(added);
+            restoreScrollPos(results.length);
+            Toast.makeText(getActivity(), "Added " + results.length + " items", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -87,21 +88,23 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         View v = getListView().getChildAt(0);
         int mSavedFromTop = (v == null) ? 0 : v.getTop();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putInt("saved_index", mSavedIndex).putInt("saved_top", mSavedFromTop).commit();
+        prefs.edit().putInt(getCacheTitle() + "_saved_index", mSavedIndex)
+                .putInt(getCacheTitle() + "_saved_top", mSavedFromTop).commit();
     }
 
     public final void restoreScrollPos(int addedCount) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int mSavedIndex = prefs.getInt("saved_index", -1);
+        int mSavedIndex = prefs.getInt(getCacheTitle() + "_saved_index", -1);
         if (mSavedIndex == -1) return;
         else if (mSavedIndex > getAdapter().getCount() - 1) {
             // The saved scroll position is out of date with the cache
-            prefs.edit().remove("saved_index").remove("saved_top").commit();
+            prefs.edit().remove(getCacheTitle() + "_saved_index").remove(getCacheTitle() + "_saved_top").commit();
             return;
         }
-        int mSavedFromTop = prefs.getInt("saved_top", 0);
+        int mSavedFromTop = prefs.getInt(getCacheTitle() + "_saved_top", 0);
         getListView().clearFocus();
         ((ListView) getListView()).setSelectionFromTop(mSavedIndex + addedCount, mSavedFromTop);
         getListView().requestFocus();
+        getListView().requestFocusFromTouch();
     }
 }

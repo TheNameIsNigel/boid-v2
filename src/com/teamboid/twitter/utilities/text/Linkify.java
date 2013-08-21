@@ -1,5 +1,6 @@
 package com.teamboid.twitter.utilities.text;
 
+import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -17,23 +18,7 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Linkify take a piece of text and a regular expression and turns all of the
- * regex matches in the text into clickable links.  This is particularly
- * useful for matching things like email addresses, web urls, etc. and making
- * them actionable.
- * <p/>
- * Alone with the pattern that is to be matched, a url scheme prefix is also
- * required.  Any pattern match that does not begin with the supplied scheme
- * will have the scheme prepended to the matched text when the clickable url
- * is created.  For instance, if you are matching web urls you would supply
- * the scheme <code>http://</code>.  If the pattern matches example.com, which
- * does not have a url scheme prefix, the supplied scheme will be prepended to
- * create <code>http://example.com</code> when the clickable url link is
- * created.
- */
-
-class Linkify {
+public class Linkify {
     /**
      * Bit field indicating that web URLs should be matched in methods that
      * take an options mask
@@ -175,7 +160,7 @@ class Linkify {
      * attached to the Spannable, to avoid problems if you call it
      * repeatedly on the same text.
      */
-    public static final boolean addLinks(Spannable text, int mask) {
+    public static final boolean addLinks(Context context, Spannable text, int mask) {
         if (mask == 0) {
             return false;
         }
@@ -189,21 +174,15 @@ class Linkify {
         ArrayList<LinkSpec> links = new ArrayList<LinkSpec>();
 
         if ((mask & WEB_URLS) != 0) {
-            gatherLinks(links, text, Regex.WEB_URL_PATTERN,
-                    new String[]{"http://", "https://", "rtsp://"},
-                    sUrlMatchFilter, null);
+            gatherLinks(links, text, Regex.WEB_URL_PATTERN, sUrlMatchFilter, null);
         }
 
         if ((mask & EMAIL_ADDRESSES) != 0) {
-            gatherLinks(links, text, Regex.EMAIL_ADDRESS_PATTERN,
-                    new String[]{"mailto:"},
-                    null, null);
+            gatherLinks(links, text, Regex.EMAIL_ADDRESS_PATTERN, null, null);
         }
 
         if ((mask & PHONE_NUMBERS) != 0) {
-            gatherLinks(links, text, Regex.PHONE_PATTERN,
-                    new String[]{"tel:"},
-                    sPhoneNumberMatchFilter, sPhoneNumberTransformFilter);
+            gatherLinks(links, text, Regex.PHONE_PATTERN, sPhoneNumberMatchFilter, sPhoneNumberTransformFilter);
         }
 
         if ((mask & MAP_ADDRESSES) != 0) {
@@ -217,7 +196,7 @@ class Linkify {
         }
 
         for (LinkSpec link : links) {
-            applyLink(link.url, link.start, link.end, text);
+            applyLink(context, link.url, link.start, link.end, text);
         }
 
         return true;
@@ -229,7 +208,7 @@ class Linkify {
      * are found the movement method for the TextView is set to
      * LinkMovementMethod.
      */
-    public static final boolean addLinks(TextView text, int mask) {
+    public static final boolean addLinks(Context context, TextView text, int mask) {
         if (mask == 0) {
             return false;
         }
@@ -237,7 +216,7 @@ class Linkify {
         CharSequence t = text.getText();
 
         if (t instanceof Spannable) {
-            if (addLinks((Spannable) t, mask)) {
+            if (addLinks(context, (Spannable) t, mask)) {
                 addLinkMovementMethod(text);
                 return true;
             }
@@ -246,7 +225,7 @@ class Linkify {
         } else {
             SpannableString s = SpannableString.valueOf(t);
 
-            if (addLinks(s, mask)) {
+            if (addLinks(context, s, mask)) {
                 addLinkMovementMethod(text);
                 text.setText(s);
 
@@ -275,12 +254,9 @@ class Linkify {
      *
      * @param text    TextView whose text is to be marked-up with links
      * @param pattern Regex pattern to be used for finding links
-     * @param scheme  Url scheme string (eg <code>http://</code> to be
-     *                prepended to the url of links that do not have
-     *                a scheme specified in the link text
      */
-    public static final void addLinks(TextView text, Pattern pattern, String scheme) {
-        addLinks(text, pattern, scheme, null, null);
+    public static final void addLinks(Context context, TextView text, Pattern pattern) {
+        addLinks(context, text, pattern, null, null);
     }
 
     /**
@@ -291,18 +267,15 @@ class Linkify {
      *
      * @param text        TextView whose text is to be marked-up with links
      * @param p           Regex pattern to be used for finding links
-     * @param scheme      Url scheme string (eg <code>http://</code> to be
-     *                    prepended to the url of links that do not have
-     *                    a scheme specified in the link text
      * @param matchFilter The filter that is used to allow the client code
      *                    additional control over which pattern matches are
      *                    to be converted into links.
      */
-    public static final void addLinks(TextView text, Pattern p, String scheme,
+    public static final void addLinks(Context context, TextView text, Pattern p,
                                       MatchFilter matchFilter, TransformFilter transformFilter) {
         SpannableString s = SpannableString.valueOf(text.getText());
 
-        if (addLinks(s, p, scheme, matchFilter, transformFilter)) {
+        if (addLinks(context, s, p, matchFilter, transformFilter)) {
             text.setText(s);
             addLinkMovementMethod(text);
         }
@@ -315,12 +288,9 @@ class Linkify {
      * @param text    Spannable whose text is to be marked-up with
      *                links
      * @param pattern Regex pattern to be used for finding links
-     * @param scheme  Url scheme string (eg <code>http://</code> to be
-     *                prepended to the url of links that do not have
-     *                a scheme specified in the link text
      */
-    public static final boolean addLinks(Spannable text, Pattern pattern, String scheme) {
-        return addLinks(text, pattern, scheme, null, null);
+    public static final boolean addLinks(Context context, Spannable text, Pattern pattern) {
+        return addLinks(context, text, pattern, null, null);
     }
 
     /**
@@ -330,18 +300,14 @@ class Linkify {
      * @param s           Spannable whose text is to be marked-up with
      *                    links
      * @param p           Regex pattern to be used for finding links
-     * @param scheme      Url scheme string (eg <code>http://</code> to be
-     *                    prepended to the url of links that do not have
-     *                    a scheme specified in the link text
      * @param matchFilter The filter that is used to allow the client code
      *                    additional control over which pattern matches are
      *                    to be converted into links.
      */
-    public static final boolean addLinks(Spannable s, Pattern p,
-                                         String scheme, MatchFilter matchFilter,
+    public static final boolean addLinks(Context context, Spannable s, Pattern p,
+                                         MatchFilter matchFilter,
                                          TransformFilter transformFilter) {
         boolean hasMatches = false;
-        String prefix = (scheme == null) ? "" : scheme.toLowerCase();
         Matcher m = p.matcher(s);
 
         while (m.find()) {
@@ -354,10 +320,9 @@ class Linkify {
             }
 
             if (allowed) {
-                String url = makeUrl(m.group(0), new String[]{prefix},
-                        m, transformFilter);
+                String url = makeUrl(m.group(0), m, transformFilter);
 
-                applyLink(url, start, end, s);
+                applyLink(context, url, start, end, s);
                 hasMatches = true;
             }
         }
@@ -365,43 +330,20 @@ class Linkify {
         return hasMatches;
     }
 
-    private static final void applyLink(String url, int start, int end, Spannable text) {
-        URLSpanNoUnderline span = new URLSpanNoUnderline(url);
+    private static final void applyLink(Context context, String url, int start, int end, Spannable text) {
+        BoidSpanNoUnderline span = new BoidSpanNoUnderline(context, url);
         text.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    private static final String makeUrl(String url, String[] prefixes,
-                                        Matcher m, TransformFilter filter) {
+    private static final String makeUrl(String url, Matcher m, TransformFilter filter) {
         if (filter != null) {
             url = filter.transformUrl(m, url);
         }
-
-        boolean hasPrefix = false;
-
-        for (int i = 0; i < prefixes.length; i++) {
-            if (url.regionMatches(true, 0, prefixes[i], 0,
-                    prefixes[i].length())) {
-                hasPrefix = true;
-
-                // Fix capitalization if necessary
-                if (!url.regionMatches(false, 0, prefixes[i], 0,
-                        prefixes[i].length())) {
-                    url = prefixes[i] + url.substring(prefixes[i].length());
-                }
-
-                break;
-            }
-        }
-
-        if (!hasPrefix) {
-            url = prefixes[0] + url;
-        }
-
         return url;
     }
 
     private static final void gatherLinks(ArrayList<LinkSpec> links,
-                                          Spannable s, Pattern pattern, String[] schemes,
+                                          Spannable s, Pattern pattern,
                                           MatchFilter matchFilter, TransformFilter transformFilter) {
         Matcher m = pattern.matcher(s);
 
@@ -411,7 +353,7 @@ class Linkify {
 
             if (matchFilter == null || matchFilter.acceptMatch(s, start, end)) {
                 LinkSpec spec = new LinkSpec();
-                String url = makeUrl(m.group(0), schemes, m, transformFilter);
+                String url = makeUrl(m.group(0), m, transformFilter);
 
                 spec.url = url;
                 spec.start = start;
