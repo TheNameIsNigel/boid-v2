@@ -82,7 +82,6 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
         if (getAdapter().getCount() > results.length) {
             // Items were added to the top of the list instead of overwriting the adapter, restore scroll position
             restoreScrollPos(results.length);
-            Toast.makeText(getActivity(), "Added " + results.length + " items", Toast.LENGTH_LONG).show();
         }
     }
 
