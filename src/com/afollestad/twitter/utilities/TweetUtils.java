@@ -41,6 +41,11 @@ public class TweetUtils {
                     String mu = url.getExpandedURL();
                     if (!mu.endsWith("/")) mu += "/";
                     return mu + "media/?size=" + (larger ? "l" : "m");
+                } else if (url.getDisplayURL().startsWith("twitpic.com")) {
+                    String mu = url.getExpandedURL();
+                    if (mu.endsWith("/")) mu = mu.substring(0, mu.length() - 1);
+                    mu = mu.substring(mu.lastIndexOf('/') + 1);
+                    return "http://twitpic.com/show/full/" + mu;
                 }
             }
         }
