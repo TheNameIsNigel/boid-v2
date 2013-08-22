@@ -53,6 +53,7 @@
 
     <string name="open_with">Open with…</string>
     <string name="please_wait">Please wait…</string>
+    <string name="share_using">Share using…</string>
 
     <string-array name="retweet_options">
         <item>Retweet</item>

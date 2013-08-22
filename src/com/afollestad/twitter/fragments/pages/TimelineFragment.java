@@ -1,4 +1,4 @@
-package com.afollestad.twitter.fragments;
+package com.afollestad.twitter.fragments.pages;
 
 import android.content.Intent;
 import android.view.View;
@@ -8,24 +8,22 @@ import com.afollestad.twitter.adapters.StatusAdapter;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.Twitter;
+import twitter4j.*;
 
 import java.util.List;
 
 /**
- * A feed fragment that displays the current user's mentions.
+ * A feed fragment that displays the current user's home timeline.
  */
-public class MentionsFragment extends BoidListFragment<Status> {
+public class TimelineFragment extends BoidListFragment<Status> {
 
-    public MentionsFragment() {
-        super("mentions");
+    public TimelineFragment() {
+        super("timeline");
     }
 
     @Override
     public int getEmptyText() {
-        return R.string.no_mentions;
+        return R.string.no_tweets;
     }
 
     @Override
@@ -53,17 +51,17 @@ public class MentionsFragment extends BoidListFragment<Status> {
 //            // Get tweets older than the oldest tweet in the adapter
 //            paging.setMaxId(adapt.getItemId(adapt.getCount() - 1) - 1);
 //        }
-//        return BoidApp.get(getActivity()).getClient().getMentionsTimeline(paging).toArray(new Status[0]);
+//        return BoidApp.get(getActivity()).getClient().getHomeTimeline(paging).toArray(new Status[0]);
 //    }
 
     @Override
     public String getTitle() {
-        return getString(R.string.mentions);
+        return getString(R.string.timeline);
     }
 
     @Override
     protected List<Status> load(Twitter client, Paging paging) throws Exception {
-        return client.getMentionsTimeline(paging);
+        return client.getHomeTimeline(paging);
     }
 
     @Override

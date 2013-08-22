@@ -3,7 +3,7 @@ package com.afollestad.twitter.adapters;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import com.afollestad.twitter.fragments.*;
+import com.afollestad.twitter.fragments.pages.*;
 
 /**
  * @author Aidan Follestad (afollestad)

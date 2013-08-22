@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.fragments.SearchFragment;
+import com.afollestad.twitter.fragments.pages.SearchFragment;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**

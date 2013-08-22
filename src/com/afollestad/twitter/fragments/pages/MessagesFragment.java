@@ -1,4 +1,4 @@
-package com.afollestad.twitter.fragments;
+package com.afollestad.twitter.fragments.pages;
 
 import android.app.Fragment;
 import android.os.Bundle;

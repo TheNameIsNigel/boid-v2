@@ -3,7 +3,7 @@ package com.afollestad.twitter.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.fragments.MessagesFragment;
+import com.afollestad.twitter.fragments.pages.MessagesFragment;
 
 /**
  * The direct message conversation viewer UI, just displays a {@link MessagesFragment} on phones.
