@@ -18,7 +18,6 @@
     <string name="timeline">Timeline</string>
     <string name="mentions">Mentions</string>
     <string name="messages">Messages</string>
-    <string name="Messaging">Messaging</string>
     <string name="trends">Trends</string>
 
     <string name="no_tweets">No tweets</string>
@@ -42,6 +41,7 @@
     <string name="posting_tweet">Posting tweet…</string>
     <string name="send_error">Failed to post your tweet.</string>
     <string name="rate_limit_error">Twitter\'s rate limit was exceeded, please try again in a minute.</string>
+    <string name="network_error">An error occurred while contacting Twitter.</string>
 
     <string name="tweet">Tweet</string>
     <string name="reply">Reply</string>

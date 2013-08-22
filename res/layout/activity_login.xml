@@ -22,7 +22,7 @@
                                                        android:layout_marginRight="20dp"
                                                        android:layout_marginTop="60dp"/>
 
-        <com.teamboid.twitter.views.BoidButton android:id="@+id/login"
+        <com.afollestad.twitter.views.BoidButton android:id="@+id/login"
                                                android:layout_width="fill_parent"
                                                android:layout_height="wrap_content"
                                                android:text="@string/login"
