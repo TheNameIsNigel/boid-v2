@@ -15,7 +15,7 @@
 
     <dimen name="headerText">22sp</dimen>
     <dimen name="usernameText">17sp</dimen>
-    <dimen name="contentText">15sp</dimen>
+    <dimen name="contentText">16sp</dimen>
     <dimen name="timestampText">14sp</dimen>
     <dimen name="trendText">19sp</dimen>
     <dimen name="drawerItemText">21sp</dimen>
