@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
+import com.afollestad.silk.cache.SilkCacheManager;
 import com.afollestad.silk.cache.SilkComparable;
+import com.afollestad.silk.cache.TrimMode;
 import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
@@ -33,6 +35,12 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     @Override
     protected final File getCacheDirectory() {
         return BoidApp.getSilkCache();
+    }
+
+    @Override
+    protected SilkCacheManager<T> onCacheInitialized(SilkCacheManager<T> cache) {
+        cache.setSizeLimit(750, TrimMode.BOTTOM);
+        return cache;
     }
 
     @Override
