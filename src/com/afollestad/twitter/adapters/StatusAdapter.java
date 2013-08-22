@@ -29,15 +29,21 @@ import java.util.List;
  */
 public class StatusAdapter extends SilkAdapter<Status> {
 
-    public StatusAdapter(Context context) {
+    public StatusAdapter(Context context, boolean convertRetweets) {
         super(context);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mDisplayRealNames = prefs.getBoolean("display_realname", true);
         mImageLoader = BoidApp.get(context).getImageLoader();
+        mConvertRetweets = convertRetweets;
+    }
+
+    public StatusAdapter(Context context) {
+        this(context, true);
     }
 
     private final boolean mDisplayRealNames;
     private final SilkImageManager mImageLoader;
+    private boolean mConvertRetweets;
 
     @Override
     public void set(List<Status> toSet) {
@@ -62,7 +68,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
     @Override
     public View onViewCreated(int index, View recycled, Status item) {
         View retweetedBy = recycled.findViewById(R.id.retweetedBy);
-        if (item.isRetweet()) {
+        if (item.isRetweet() && mConvertRetweets) {
             retweetedBy.setVisibility(View.VISIBLE);
             String retweetedTxt = getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName());
             SpannableString retweetedSpan = new SpannableString(retweetedTxt);
