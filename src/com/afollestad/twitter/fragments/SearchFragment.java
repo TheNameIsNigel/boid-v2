@@ -34,7 +34,7 @@ public class SearchFragment extends BoidListFragment<Status> {
 
     @Override
     public SilkAdapter<Status> initializeAdapter() {
-        return new StatusAdapter(getActivity());
+        return new StatusAdapter(getActivity(), false);
     }
 
     @Override
