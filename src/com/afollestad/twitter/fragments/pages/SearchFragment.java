@@ -1,6 +1,7 @@
 package com.afollestad.twitter.fragments.pages;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
@@ -17,15 +18,32 @@ import java.util.List;
 
 /**
  * A feed fragment that displays tweet search results.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class SearchFragment extends BoidListFragment<Status> {
 
-    public SearchFragment(String query, boolean cache) {
-        super(cache ? query + "_search" : null);
-        mQuery = query;
+    private String mQuery;
+
+    @Override
+    public String getCacheTitle() {
+        return getCacheEnabled() ? mQuery + "_search" : null;
     }
 
-    private String mQuery;
+    @Override
+    public boolean getShouldShowLastUpdated() {
+        return getCacheEnabled() && super.getShouldShowLastUpdated();
+    }
+
+    protected boolean getCacheEnabled() {
+        return false;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mQuery = getArguments().getString("query");
+    }
 
     @Override
     public int getEmptyText() {

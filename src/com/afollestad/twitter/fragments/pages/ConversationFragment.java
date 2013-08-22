@@ -19,8 +19,9 @@ import java.util.List;
  */
 public class ConversationFragment extends BoidListFragment<ConversationAdapter.Conversation> {
 
-    public ConversationFragment() {
-        super("conversations");
+    @Override
+    public String getCacheTitle() {
+        return "conversations";
     }
 
     @Override

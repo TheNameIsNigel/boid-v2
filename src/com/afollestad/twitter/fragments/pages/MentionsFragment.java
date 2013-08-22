@@ -19,8 +19,9 @@ import java.util.List;
  */
 public class MentionsFragment extends BoidListFragment<Status> {
 
-    public MentionsFragment() {
-        super("mentions");
+    @Override
+    public String getCacheTitle() {
+        return "mentions";
     }
 
     @Override

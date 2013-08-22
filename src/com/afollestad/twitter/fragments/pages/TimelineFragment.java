@@ -17,8 +17,9 @@ import java.util.List;
  */
 public class TimelineFragment extends BoidListFragment<Status> {
 
-    public TimelineFragment() {
-        super("timeline");
+    @Override
+    public String getCacheTitle() {
+        return "timeline";
     }
 
     @Override

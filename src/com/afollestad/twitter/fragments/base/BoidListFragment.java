@@ -17,6 +17,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +25,14 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
-    public BoidListFragment(String cacheTitle) {
-        super(cacheTitle, BoidApp.getSilkCache());
-    }
-
     public final int getPageLength() {
         //TODO configurable setting
         return 200;
+    }
+
+    @Override
+    protected final File getCacheDirectory() {
+        return BoidApp.getSilkCache();
     }
 
     @Override

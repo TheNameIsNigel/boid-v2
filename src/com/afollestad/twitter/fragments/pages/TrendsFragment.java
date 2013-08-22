@@ -21,8 +21,9 @@ import java.util.List;
  */
 public class TrendsFragment extends BoidListFragment<Trend> {
 
-    public TrendsFragment() {
-        super("trends");
+    @Override
+    public String getCacheTitle() {
+        return "trends";
     }
 
     @Override

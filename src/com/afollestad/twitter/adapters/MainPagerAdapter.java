@@ -2,6 +2,7 @@ package com.afollestad.twitter.adapters;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import com.afollestad.twitter.fragments.pages.*;
 
@@ -26,7 +27,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
             case 3:
                 return new TrendsFragment();
             case 4:
-                return new SearchFragment("#Boid", true);
+                SavedSearchFragment frag = new SavedSearchFragment();
+                Bundle args = new Bundle();
+                args.putString("query", "#Boid");
+                frag.setArguments(args);
+                return frag;
         }
     }
 

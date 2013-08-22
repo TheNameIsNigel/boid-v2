@@ -27,7 +27,8 @@ public class SearchActivity extends ThemedActivity {
 
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
-        SearchFragment frag = new SearchFragment(getIntent().getStringExtra("query"), false);
+        SearchFragment frag = new SearchFragment();
+        frag.setArguments(getIntent().getExtras());
         getFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
     }
 
