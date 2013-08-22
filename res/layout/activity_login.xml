@@ -12,22 +12,22 @@
                    android:src="@drawable/ic_launcher" android:scaleType="fitXY"/>
 
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/loginMessage"
-                                                       android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:textSize="@dimen/headerText"
-                                                       android:text="@string/welcome_message"
-                                                       android:textColor="?contentTextColor"
-                                                       android:gravity="center_horizontal"
-                                                       android:layout_marginLeft="20dp"
-                                                       android:layout_marginRight="20dp"
-                                                       android:layout_marginTop="60dp"/>
+                                                     android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:textSize="@dimen/headerText"
+                                                     android:text="@string/welcome_message"
+                                                     android:textColor="?contentTextColor"
+                                                     android:gravity="center_horizontal"
+                                                     android:layout_marginLeft="20dp"
+                                                     android:layout_marginRight="20dp"
+                                                     android:layout_marginTop="60dp"/>
 
         <com.afollestad.twitter.views.BoidButton android:id="@+id/login"
-                                               android:layout_width="fill_parent"
-                                               android:layout_height="wrap_content"
-                                               android:text="@string/login"
-                                               android:layout_marginTop="60dp"
-                                               android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+                                                 android:layout_width="fill_parent"
+                                                 android:layout_height="wrap_content"
+                                                 android:text="@string/login"
+                                                 android:layout_marginTop="60dp"
+                                                 android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
 
     </LinearLayout>
 
@@ -39,8 +39,8 @@
                  android:visibility="gone" android:layout_height="fill_parent"/>
 
         <ProgressBar android:id="@+id/webProgress"
-                     android:layout_width="wrap_content" android:layout_height="wrap_content"
-                     style="@android:style/Widget.Holo.ProgressBar.Large"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
                      android:indeterminateOnly="true"/>
 
     </LinearLayout>
