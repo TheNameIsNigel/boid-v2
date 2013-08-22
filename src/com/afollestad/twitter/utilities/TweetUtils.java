@@ -47,7 +47,7 @@ public class TweetUtils {
                     mu = mu.substring(mu.lastIndexOf('/') + 1);
                     return "http://twitpic.com/show/full/" + mu;
                 } else if (url.getDisplayURL().startsWith("yfrog")) {
-                    return "http://" + url.getDisplayURL() + ":medium";
+                    return "http://" + url.getDisplayURL() + (larger ? ":medium" : ":iphone");
                 }
             }
         }
