@@ -49,7 +49,7 @@ public class BoidApp extends Application {
 
     public Twitter getClient() {
         if (client == null) {
-            client = TwitterFactory.getSingleton();
+            client = new TwitterFactory().getInstance();
             client.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
             AccessToken token = getToken();
             if (token != null)
