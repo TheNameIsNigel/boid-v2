@@ -95,6 +95,7 @@ public class StatusAdapter extends SilkAdapter<Status> {
             media.setVisibility(View.VISIBLE);
             if (getScrollState() != AbsListView.OnScrollListener.SCROLL_STATE_FLING)
                 media.setImageURL(mImageLoader, mediaUrl);
+            else media.setImageBitmap(null);
         } else {
             media.setVisibility(View.GONE);
         }
