@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.services.ComposerService;
-import com.afollestad.twitter.utilities.Utils;
+import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.views.CounterEditText;
 import twitter4j.Status;
 
@@ -42,7 +42,7 @@ public class ComposeActivity extends ThemedActivity {
             mReplyTo = (Status) i.getSerializableExtra("reply_to");
             if (mReplyTo.isRetweet())
                 mReplyTo = mReplyTo.getRetweetedStatus();
-            input.append(Utils.getReplyAll(mReplyTo));
+            input.append(TweetUtils.getReplyAll(mReplyTo));
             setTitle(R.string.reply);
         } else {
             setTitle(R.string.compose);

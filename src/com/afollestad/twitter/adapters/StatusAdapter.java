@@ -14,10 +14,9 @@ import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.utilities.TimeUtils;
-import com.afollestad.twitter.utilities.Utils;
+import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.BoidSpanNoUnderline;
 import com.afollestad.twitter.utilities.text.TextUtils;
-import twitter4j.MediaEntity;
 import twitter4j.Status;
 
 import java.util.List;
@@ -86,16 +85,16 @@ public class StatusAdapter extends SilkAdapter<Status> {
             profilePic.setFitView(false).setImageURL(mImageLoader, item.getUser().getProfileImageURL());
         }
 
-        ((TextView) recycled.findViewById(R.id.username)).setText(Utils.getDisplayName(item.getUser(), mDisplayRealNames));
+        ((TextView) recycled.findViewById(R.id.username)).setText(TweetUtils.getDisplayName(item.getUser(), mDisplayRealNames));
         TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), item, false, false);
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
 
         SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);
-        MediaEntity[] mediaEnts = item.getMediaEntities();
-        if (mediaEnts != null && mediaEnts.length > 0) {
+        String mediaUrl = TweetUtils.getTweetMediaURL(item, false);
+        if (mediaUrl != null) {
             media.setVisibility(View.VISIBLE);
             if (getScrollState() != AbsListView.OnScrollListener.SCROLL_STATE_FLING)
-                media.setImageURL(mImageLoader, mediaEnts[0].getMediaURL());
+                media.setImageURL(mImageLoader, mediaUrl);
         } else {
             media.setVisibility(View.GONE);
         }

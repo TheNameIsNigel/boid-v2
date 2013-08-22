@@ -17,6 +17,7 @@ import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ComposeActivity;
+import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.devspark.appmsg.AppMsg;
 import twitter4j.Status;
@@ -58,9 +59,10 @@ public class TweetViewerFragment extends SilkFragment {
         TextUtils.linkifyText(getActivity(), content, mTweet, true, true);
 
         SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
-        if (mTweet.getMediaEntities() != null && mTweet.getMediaEntities().length > 0) {
+        String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
+        if (mediaUrl != null) {
             media.setVisibility(View.VISIBLE);
-            media.setImageURL(BoidApp.get(getActivity()).getImageLoader(), mTweet.getMediaEntities()[0].getMediaURL());
+            media.setImageURL(BoidApp.get(getActivity()).getImageLoader(), mediaUrl);
         } else media.setVisibility(View.GONE);
     }
 
