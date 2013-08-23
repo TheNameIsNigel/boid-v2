@@ -66,13 +66,13 @@ public class StatusAdapter extends SilkAdapter<Status> {
 
     @Override
     public View onViewCreated(int index, View recycled, Status item) {
-        View retweetedBy = recycled.findViewById(R.id.retweetedBy);
+        TextView retweetedBy = (TextView) recycled.findViewById(R.id.retweetedIndicator);
         if (item.isRetweet() && mConvertRetweets) {
             retweetedBy.setVisibility(View.VISIBLE);
             String retweetedTxt = getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName());
             SpannableString retweetedSpan = new SpannableString(retweetedTxt);
             retweetedSpan.setSpan(new BoidSpanNoUnderline(getContext(), null), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ((TextView) recycled.findViewById(R.id.retweetedByText)).setText(retweetedSpan);
+            retweetedBy.setText(retweetedSpan);
             item = item.getRetweetedStatus();
         } else {
             retweetedBy.setVisibility(View.GONE);
@@ -88,6 +88,8 @@ public class StatusAdapter extends SilkAdapter<Status> {
         ((TextView) recycled.findViewById(R.id.username)).setText(TweetUtils.getDisplayName(item.getUser(), mDisplayRealNames));
         TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), item, false, false);
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
+
+        recycled.findViewById(R.id.favoritedIndicator).setVisibility(item.isFavorited() ? View.VISIBLE : View.INVISIBLE);
 
         SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);
         String mediaUrl = TweetUtils.getTweetMediaURL(item, false);

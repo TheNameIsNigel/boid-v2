@@ -24,5 +24,6 @@
     <dimen name="tweetViewerContent">20sp</dimen>
 
     <dimen name="inline_media">120dp</dimen>
+    <dimen name="favorited_indicator">15dp</dimen>
 
 </resources>
