@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import com.afollestad.silk.cache.SilkCacheManager;
 import com.afollestad.silk.fragments.SilkFragment;
 import com.afollestad.silk.images.Dimension;
 import com.afollestad.silk.images.SilkImageManager;
@@ -118,6 +119,24 @@ public class TweetViewerFragment extends SilkFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private void updateCaches() {
+        //TODO other columns that contain tweets, like custom search columns.
+        String[] columnNames = new String[]{"timeline", "mentions"};
+        for (String col : columnNames) {
+            new SilkCacheManager<Status>(col, BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
+                @Override
+                public void onInitialized(SilkCacheManager<Status> manager) {
+                    manager.update(mTweet, false).commitAsync(new SilkCacheManager.SimpleCommitCallback() {
+                        @Override
+                        public void onError(Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     private void toggleFavorite() {
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setMessage(getString(R.string.please_wait));
@@ -140,6 +159,7 @@ public class TweetViewerFragment extends SilkFragment {
                         @Override
                         public void run() {
                             getActivity().invalidateOptionsMenu();
+                            updateCaches();
                         }
                     });
                 } catch (final Exception e) {
