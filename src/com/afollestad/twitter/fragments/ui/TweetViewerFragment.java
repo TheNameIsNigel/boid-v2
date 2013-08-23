@@ -17,6 +17,7 @@ import com.afollestad.silk.cache.SilkCacheManager;
 import com.afollestad.silk.fragments.SilkFragment;
 import com.afollestad.silk.images.Dimension;
 import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.silk.utilities.TimeUtils;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
@@ -27,6 +28,9 @@ import com.devspark.appmsg.AppMsg;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.User;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * The tweet viewer fragment.
@@ -61,6 +65,10 @@ public class TweetViewerFragment extends SilkFragment {
         ((TextView) v.findViewById(R.id.source)).setText("via " + Html.fromHtml(mTweet.getSource()).toString());
         TextView content = (TextView) v.findViewById(R.id.content);
         TextUtils.linkifyText(getActivity(), content, mTweet, true, true);
+
+        Calendar time = new GregorianCalendar();
+        time.setTime(mTweet.getCreatedAt());
+        ((TextView) v.findViewById(R.id.timestamp)).setText(TimeUtils.toString(time, true, false));
 
         final SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
         final String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
