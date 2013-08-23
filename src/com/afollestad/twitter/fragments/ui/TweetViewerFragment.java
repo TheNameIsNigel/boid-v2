@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.afollestad.silk.fragments.SilkFragment;
+import com.afollestad.silk.images.Dimension;
+import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
@@ -58,12 +61,21 @@ public class TweetViewerFragment extends SilkFragment {
         TextView content = (TextView) v.findViewById(R.id.content);
         TextUtils.linkifyText(getActivity(), content, mTweet, true, true);
 
-        SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
-        String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
+        final SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
+        final String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
         if (mediaUrl != null) {
             media.setVisibility(View.VISIBLE);
             media.setImageURL(BoidApp.get(getActivity()).getImageLoader(), mediaUrl);
         } else media.setVisibility(View.GONE);
+
+        media.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SilkImageManager image = BoidApp.get(getActivity()).getImageLoader();
+                Uri uri = Uri.fromFile(image.getCacheFile(mediaUrl, new Dimension(v)));
+                startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "image/*"));
+            }
+        });
     }
 
     @Override
