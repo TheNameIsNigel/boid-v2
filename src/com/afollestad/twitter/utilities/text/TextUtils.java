@@ -15,22 +15,26 @@ import java.util.regex.Pattern;
  */
 public class TextUtils {
 
-    public static void linkifyText(Context context, TextView textView, String tweet, boolean clickable, boolean expandUrls, URLEntity[] urls, MediaEntity[] media) {
+    public static String expandURLs(String tweet, boolean longer, URLEntity[] urls, MediaEntity[] media) {
         if (urls != null) {
             for (URLEntity url : urls) {
                 String toReplace = url.getDisplayURL();
-                if (expandUrls) toReplace = url.getExpandedURL();
+                if (longer) toReplace = url.getExpandedURL();
                 tweet = tweet.replace(url.getURL(), toReplace);
             }
         }
         if (media != null) {
             for (MediaEntity pic : media) {
                 String toReplace = pic.getDisplayURL();
-                if (expandUrls) toReplace = pic.getExpandedURL();
+                if (longer) toReplace = pic.getExpandedURL();
                 tweet = tweet.replace(pic.getURL(), toReplace);
             }
         }
+        return tweet;
+    }
 
+    public static void linkifyText(Context context, TextView textView, String tweet, boolean clickable, boolean expandUrls, URLEntity[] urls, MediaEntity[] media) {
+        tweet = expandURLs(tweet, expandUrls, urls, media);
         Linkify.TransformFilter filter = new Linkify.TransformFilter() {
             public final String transformUrl(final Matcher match, String url) {
                 return match.group();
