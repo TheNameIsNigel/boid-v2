@@ -33,14 +33,11 @@ public class BoidApp extends Application {
     }
 
     public SilkImageManager getImageLoader() {
+        if (mImageLoader == null) {
+            mImageLoader = new SilkImageManager(getApplicationContext())
+                    .setFallbackImage(R.drawable.ic_contact_picture);
+        }
         return mImageLoader;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mImageLoader = new SilkImageManager(this)
-                .setFallbackImage(R.drawable.ic_contact_picture);
     }
 
     public static BoidApp get(Context context) {

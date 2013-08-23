@@ -83,7 +83,7 @@ public class MainActivity extends ThemedDrawerActivity {
         if (BoidApp.get(this).hasAccount()) {
             // Restore the last viewed fragment
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            int index = prefs.getInt("recent_fragment_main", 0);
+            int index = prefs.getInt("recent_fragment_main", 1);
             drawerList.setItemChecked(index + 1, true);
             onDrawerItemClicked(index);
         } else {
@@ -95,8 +95,8 @@ public class MainActivity extends ThemedDrawerActivity {
     private void onDrawerItemClicked(int index) {
         getDrawerLayout().closeDrawers();
         if (index == 0) {
-            //Profile viewer
-            //TODO
+            startActivity(new Intent(this, ProfileActivity.class)
+                    .putExtra("user", BoidApp.get(this).getProfile()));
             return;
         }
         mPager.setCurrentItem(index - 1);
@@ -130,6 +130,7 @@ public class MainActivity extends ThemedDrawerActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private void confirmLogout() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.logout)

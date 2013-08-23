@@ -36,10 +36,13 @@
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
 
         <activity android:name=".ui.SettingsActivity" android:label="@string/settings"
+                  android:windowSoftInputMode="adjustResize"
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
 
         <activity android:name=".ui.ConversationActivity" android:windowSoftInputMode="adjustResize"
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
+
+        <activity android:name=".ui.ProfileActivity" android:configChanges="screenSize|orientation|keyboardHidden"/>
 
         <service android:name="com.afollestad.twitter.services.ComposerService" android:label="@string/compose"
                  android:configChanges="screenSize|orientation|keyboardHidden"/>

@@ -26,4 +26,7 @@
     <dimen name="inline_media">120dp</dimen>
     <dimen name="favorited_indicator">15dp</dimen>
 
+    <dimen name="profile_header">160dp</dimen>
+    <dimen name="profile_header_padding">15dp</dimen>
+
 </resources>

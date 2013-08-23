@@ -20,4 +20,6 @@
     <attr name="shareIcon" format="reference"/>
     <attr name="deleteIcon" format="reference"/>
 
+    <attr name="mentionIcon" format="reference"/>
+
 </resources>

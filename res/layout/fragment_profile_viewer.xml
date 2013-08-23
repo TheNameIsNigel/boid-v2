@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="@dimen/profile_header">
+
+            <com.afollestad.silk.views.image.SilkImageView android:id="@+id/headerImage"
+                                                           android:layout_width="match_parent"
+                                                           android:layout_height="match_parent"
+                                                           android:scaleType="centerCrop"/>
+
+            <!--suppress AndroidLintUselessParent -->
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent_black"
+                            android:padding="10dp"
+                            android:layout_margin="@dimen/profile_header_padding">
+
+                <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
+                                                               android:layout_width="@dimen/feed_profile_pic_big"
+                                                               android:layout_height="@dimen/feed_profile_pic_big"
+                                                               android:scaleType="fitXY"
+                                                               android:layout_marginRight="15dp"/>
+
+                <LinearLayout android:id="@+id/infoFrame"
+                              android:orientation="vertical"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_toRightOf="@+id/profilePic">
+
+                    <TextView android:id="@+id/username"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textColor="?usernameTextColor"
+                              android:textSize="@dimen/usernameText"
+                              android:shadowColor="@color/shadow_color"
+                              android:shadowDx="2"
+                              android:shadowDy="2"
+                              android:shadowRadius="3"/>
+
+                    <com.afollestad.silk.views.text.SilkTextView android:id="@+id/description"
+                                                                 android:layout_width="wrap_content"
+                                                                 android:layout_height="wrap_content"
+                                                                 android:textColor="?contentTextColor"
+                                                                 android:textSize="@dimen/contentText"
+                                                                 android:shadowColor="@color/shadow_color"
+                                                                 android:shadowDx="2"
+                                                                 android:shadowDy="2"
+                                                                 android:shadowRadius="3"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <com.afollestad.twitter.views.BoidButton android:id="@+id/follow"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="wrap_content"
+                                                 android:textSize="@dimen/contentText"
+                                                 android:text="@string/follows_you_follow"/>
+
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+        <com.afollestad.silk.views.list.SilkListView android:id="@android:id/list"
+                                                     android:layout_width="fill_parent"
+                                                     android:layout_height="fill_parent"/>
+
+        <com.afollestad.silk.views.text.SilkTextView android:id="@android:id/empty" android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:textSize="@dimen/empty_text_size"
+                                                     android:layout_centerInParent="true"/>
+
+        <ProgressBar android:id="@android:id/progress"
+                     android:layout_width="wrap_content" android:layout_height="wrap_content"
+                     android:indeterminateOnly="true" android:visibility="gone"
+                     android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

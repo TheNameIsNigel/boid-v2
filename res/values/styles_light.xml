@@ -31,6 +31,8 @@
         <item name="shareIcon">@drawable/ic_share_dark</item>
         <item name="deleteIcon">@drawable/ic_delete_dark</item>
 
+        <item name="mentionIcon">@drawable/ic_mention_dark</item>
+
     </style>
 
     <style name="ActionBar.Solid.Boidlight" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">

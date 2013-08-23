@@ -11,6 +11,7 @@ import com.afollestad.twitter.services.ComposerService;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.views.CounterEditText;
 import twitter4j.Status;
+import twitter4j.User;
 
 /**
  * The tweet composition UI.
@@ -34,8 +35,10 @@ public class ComposeActivity extends ThemedActivity {
         EditText input = (EditText) findViewById(R.id.input);
         Intent i = getIntent();
         input.setText("");
-        if (i.hasExtra("mention"))
-            input.append("@" + i.getStringExtra("mention") + " ");
+        if (i.hasExtra("mention")) {
+            User mention = (User) i.getSerializableExtra("mention");
+            input.append("@" + mention.getScreenName() + " ");
+        }
         if (i.hasExtra("content"))
             input.append(i.getStringExtra("content"));
         if (i.hasExtra("reply_to")) {
