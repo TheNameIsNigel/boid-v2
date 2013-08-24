@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import com.afollestad.silk.Silk;
 import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.twitter.utilities.Utils;
 import twitter4j.Twitter;
@@ -97,6 +98,8 @@ public class BoidApp extends Application {
         // Remove the stored authentication token
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("token").commit();
+        // Clear persisted preferences and stuff for Silk.
+        Silk.clearPersistence(this);
         // Wipe the Silk cache
         File cacheDir = getSilkCache();
         for (File fi : cacheDir.listFiles())
