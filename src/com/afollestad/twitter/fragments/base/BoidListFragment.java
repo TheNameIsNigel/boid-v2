@@ -21,6 +21,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public abstract class BoidListFragment<T extends SilkComparable> extends SilkLastUpdatedFragment<T> {
@@ -39,7 +40,12 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     @Override
     protected SilkCacheManager<T> onCacheInitialized(SilkCacheManager<T> cache) {
-        cache.setLimiter(new CacheLimiter(750, CacheLimiter.TrimMode.BOTTOM));
+        // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
+        cache.setLimiter(new CacheLimiter(700, CacheLimiter.TrimMode.BOTTOM));
+        if (!cache.hasExpiration()) {
+            // Caches expire after 5 days
+            cache.setExpiration(Calendar.getInstance().getTimeInMillis() + (1000 * 60 * 60 * 24 * 5));
+        }
         return cache;
     }
 
