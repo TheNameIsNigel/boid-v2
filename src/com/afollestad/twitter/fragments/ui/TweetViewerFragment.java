@@ -131,7 +131,7 @@ public class TweetViewerFragment extends SilkFragment {
         //TODO other columns that contain tweets, like custom search columns.
         String[] columnNames = new String[]{"timeline", "mentions"};
         for (String col : columnNames) {
-            new SilkCacheManager<Status>(col, BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
+            new SilkCacheManager<Status>(getActivity(), col, BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
                 @Override
                 public void onInitialized(SilkCacheManager<Status> manager) {
                     manager.update(mTweet, false).commitAsync(new SilkCacheManager.SimpleCommitCallback() {

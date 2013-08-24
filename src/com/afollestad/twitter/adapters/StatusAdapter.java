@@ -66,13 +66,13 @@ public class StatusAdapter extends SilkAdapter<Status> {
 
     @Override
     public View onViewCreated(int index, View recycled, Status item) {
-        TextView retweetedBy = (TextView) recycled.findViewById(R.id.retweetedIndicator);
+        View retweetedBy = recycled.findViewById(R.id.retweetedBy);
         if (item.isRetweet() && mConvertRetweets) {
             retweetedBy.setVisibility(View.VISIBLE);
             String retweetedTxt = getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName());
             SpannableString retweetedSpan = new SpannableString(retweetedTxt);
             retweetedSpan.setSpan(new BoidSpanNoUnderline(getContext(), null), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            retweetedBy.setText(retweetedSpan);
+            ((TextView) recycled.findViewById(R.id.retweetedByText)).setText(retweetedSpan);
             item = item.getRetweetedStatus();
         } else {
             retweetedBy.setVisibility(View.GONE);
