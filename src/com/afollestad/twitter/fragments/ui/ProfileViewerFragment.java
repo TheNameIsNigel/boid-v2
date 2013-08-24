@@ -68,7 +68,9 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     @Override
     protected List<Status> refresh() throws Exception {
-        return BoidApp.get(getActivity()).getClient().getUserTimeline(mUser.getId(), new Paging(100));
+        Paging paging = new Paging();
+        paging.setCount(200);
+        return BoidApp.get(getActivity()).getClient().getUserTimeline(mUser.getId(), paging);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.afollestad.twitter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
@@ -13,11 +14,13 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TimeUtils;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.BoidSpanNoUnderline;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
+import twitter4j.User;
 
 import java.util.List;
 
@@ -26,7 +29,7 @@ import java.util.List;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class StatusAdapter extends SilkAdapter<Status> {
+public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickListener {
 
     public StatusAdapter(Context context, boolean convertRetweets) {
         super(context);
@@ -79,6 +82,8 @@ public class StatusAdapter extends SilkAdapter<Status> {
         }
 
         SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
+        profilePic.setTag(item.getUser());
+        profilePic.setOnClickListener(this);
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
@@ -108,5 +113,11 @@ public class StatusAdapter extends SilkAdapter<Status> {
     @Override
     public long getItemId(int i) {
         return getItem(i).getId();
+    }
+
+    @Override
+    public void onClick(View v) {
+        getContext().startActivity(new Intent(getContext(), ProfileActivity.class)
+                .putExtra("user", (User) v.getTag()));
     }
 }
