@@ -62,7 +62,6 @@
     <string name="logout">Logout</string>
     <string name="confirm_logout">Are you sure you want to logout?</string>
 
-    <string name="profile">Profile</string>
     <string name="follow">follow</string>
     <string name="unfollow">unfollow</string>
     <string name="follows_you_follow">follows you, follow</string>

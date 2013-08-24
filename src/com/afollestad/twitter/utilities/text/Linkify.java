@@ -65,11 +65,8 @@ public class Linkify {
                 return true;
             }
 
-            if (s.charAt(start - 1) == '@') {
-                return false;
-            }
+            return s.charAt(start - 1) != '@';
 
-            return true;
         }
     };
 
@@ -160,7 +157,7 @@ public class Linkify {
      * attached to the Spannable, to avoid problems if you call it
      * repeatedly on the same text.
      */
-    public static final boolean addLinks(Context context, Spannable text, int mask) {
+    public static boolean addLinks(Context context, Spannable text, int mask) {
         if (mask == 0) {
             return false;
         }
@@ -208,7 +205,7 @@ public class Linkify {
      * are found the movement method for the TextView is set to
      * LinkMovementMethod.
      */
-    public static final boolean addLinks(Context context, TextView text, int mask) {
+    public static boolean addLinks(Context context, TextView text, int mask) {
         if (mask == 0) {
             return false;
         }
@@ -255,7 +252,7 @@ public class Linkify {
      * @param text    TextView whose text is to be marked-up with links
      * @param pattern Regex pattern to be used for finding links
      */
-    public static final void addLinks(Context context, TextView text, Pattern pattern) {
+    public static void addLinks(Context context, TextView text, Pattern pattern) {
         addLinks(context, text, pattern, null, null);
     }
 
@@ -271,8 +268,8 @@ public class Linkify {
      *                    additional control over which pattern matches are
      *                    to be converted into links.
      */
-    public static final void addLinks(Context context, TextView text, Pattern p,
-                                      MatchFilter matchFilter, TransformFilter transformFilter) {
+    public static void addLinks(Context context, TextView text, Pattern p,
+                                MatchFilter matchFilter, TransformFilter transformFilter) {
         SpannableString s = SpannableString.valueOf(text.getText());
 
         if (addLinks(context, s, p, matchFilter, transformFilter)) {
@@ -289,7 +286,7 @@ public class Linkify {
      *                links
      * @param pattern Regex pattern to be used for finding links
      */
-    public static final boolean addLinks(Context context, Spannable text, Pattern pattern) {
+    public static boolean addLinks(Context context, Spannable text, Pattern pattern) {
         return addLinks(context, text, pattern, null, null);
     }
 
@@ -304,9 +301,9 @@ public class Linkify {
      *                    additional control over which pattern matches are
      *                    to be converted into links.
      */
-    public static final boolean addLinks(Context context, Spannable s, Pattern p,
-                                         MatchFilter matchFilter,
-                                         TransformFilter transformFilter) {
+    public static boolean addLinks(Context context, Spannable s, Pattern p,
+                                   MatchFilter matchFilter,
+                                   TransformFilter transformFilter) {
         boolean hasMatches = false;
         Matcher m = p.matcher(s);
 
@@ -343,8 +340,8 @@ public class Linkify {
     }
 
     private static void gatherLinks(ArrayList<LinkSpec> links,
-                                          Spannable s, Pattern pattern,
-                                          MatchFilter matchFilter, TransformFilter transformFilter) {
+                                    Spannable s, Pattern pattern,
+                                    MatchFilter matchFilter, TransformFilter transformFilter) {
         Matcher m = pattern.matcher(s);
 
         while (m.find()) {
