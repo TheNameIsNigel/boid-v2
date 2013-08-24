@@ -19,12 +19,13 @@ public class TweetUtils {
         return "@" + user.getScreenName();
     }
 
-    public static String getReplyAll(Status tweet) {
+    public static String getReplyAll(User me, Status tweet) {
         String toReturn = "@" + tweet.getUser().getScreenName() + " ";
         UserMentionEntity[] mentions = tweet.getUserMentionEntities();
         if (mentions != null) {
             for (UserMentionEntity mention : mentions) {
                 if (mention.getId() == tweet.getUser().getId()) continue;
+                else if(mention.getId() == me.getId()) continue;
                 toReturn += "@" + mention.getScreenName() + " ";
             }
         }

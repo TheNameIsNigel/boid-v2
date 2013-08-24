@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.services.ComposerService;
 import com.afollestad.twitter.utilities.TweetUtils;
@@ -45,7 +46,7 @@ public class ComposeActivity extends ThemedActivity {
             mReplyTo = (Status) i.getSerializableExtra("reply_to");
             if (mReplyTo.isRetweet())
                 mReplyTo = mReplyTo.getRetweetedStatus();
-            input.append(TweetUtils.getReplyAll(mReplyTo));
+            input.append(TweetUtils.getReplyAll(BoidApp.get(this).getProfile(), mReplyTo));
             setTitle(R.string.reply);
         } else {
             setTitle(R.string.compose);
