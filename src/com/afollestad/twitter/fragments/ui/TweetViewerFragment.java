@@ -22,6 +22,7 @@ import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ComposeActivity;
+import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.devspark.appmsg.AppMsg;
@@ -61,6 +62,13 @@ public class TweetViewerFragment extends SilkFragment {
         if (v == null) return;
         SilkImageView profilePic = (SilkImageView) v.findViewById(R.id.profilePic);
         profilePic.setFitView(false).setImageURL(BoidApp.get(getActivity()).getImageLoader(), mTweet.getUser().getProfileImageURL());
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ProfileActivity.class)
+                        .putExtra("user", mTweet.getUser()));
+            }
+        });
         ((TextView) v.findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
         ((TextView) v.findViewById(R.id.source)).setText("via " + Html.fromHtml(mTweet.getSource()).toString());
         TextView content = (TextView) v.findViewById(R.id.content);

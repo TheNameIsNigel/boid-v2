@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.adapters.SilkAdapter;
@@ -17,10 +18,9 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.StatusAdapter;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
+import com.afollestad.twitter.utilities.Utils;
 import com.devspark.appmsg.AppMsg;
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.User;
+import twitter4j.*;
 
 import java.util.List;
 
@@ -30,6 +30,8 @@ import java.util.List;
 public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     private User mUser;
+    private boolean mFollowingThem;
+    private boolean mFollowedBy;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,98 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                 Silk.isTablet(getActivity()) ? mUser.getProfileBannerIPadRetinaURL() : mUser.getProfileBannerMobileRetinaURL());
         ((TextView) view.findViewById(R.id.username)).setText(mUser.getName());
         ((TextView) view.findViewById(R.id.description)).setText(mUser.getDescription());
+        loadFollowButton((Button) view.findViewById(R.id.follow));
+    }
+
+    private void loadFollowButton(final Button button) {
+        button.setText(R.string.loading);
+        button.setEnabled(false);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Twitter client = BoidApp.get(getActivity()).getClient();
+                User me = BoidApp.get(getActivity()).getProfile();
+                try {
+                    final Relationship friendship = client.showFriendship(me.getId(), mUser.getId());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mFollowingThem = friendship.isSourceFollowingTarget();
+                            mFollowedBy = friendship.isTargetFollowingSource();
+                            invalidateFollowButton();
+                        }
+                    });
+                } catch (final TwitterException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            button.setText(R.string.error);
+                            AppMsg.makeText(getActivity(), Utils.processTwitterException(getActivity(), e), AppMsg.STYLE_ALERT).show();
+                        }
+                    });
+                }
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                performFollowAction();
+            }
+        });
+    }
+
+    private void performFollowAction() {
+        final Button button = (Button) getView().findViewById(R.id.follow);
+        button.setText(R.string.please_wait);
+        button.setEnabled(false);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Twitter client = BoidApp.get(getActivity()).getClient();
+                try {
+                    if (mFollowingThem) {
+                        client.destroyFriendship(mUser.getId());
+                        mFollowingThem = false;
+                    } else {
+                        client.createFriendship(mUser.getId());
+                        mFollowingThem = true;
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            invalidateFollowButton();
+                        }
+                    });
+                } catch (final TwitterException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppMsg.makeText(getActivity(), Utils.processTwitterException(getActivity(), e), AppMsg.STYLE_ALERT).show();
+                        }
+                    });
+                }
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+    }
+
+    private void invalidateFollowButton() {
+        if (getView() == null) return;
+        Button button = (Button) getView().findViewById(R.id.follow);
+        button.setEnabled(true);
+        if (mFollowingThem && mFollowedBy)
+            button.setText(R.string.follows_you_unfollow);
+        else if (mFollowingThem)
+            button.setText(R.string.unfollow);
+        else if (mFollowedBy)
+            button.setText(R.string.follows_you_follow_back);
+        else button.setText(R.string.follow);
     }
 
     @Override

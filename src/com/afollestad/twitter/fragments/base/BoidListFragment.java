@@ -13,6 +13,7 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.MainActivity;
 import com.afollestad.twitter.ui.SearchActivity;
+import com.afollestad.twitter.utilities.Utils;
 import com.devspark.appmsg.AppMsg;
 import twitter4j.Paging;
 import twitter4j.Twitter;
@@ -40,9 +41,10 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     @Override
     protected SilkCacheManager<T> onCacheInitialized(SilkCacheManager<T> cache) {
-        // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
-        if (!cache.hasLimiter())
+        if (!cache.hasLimiter()) {
+            // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
             cache.setLimiter(new CacheLimiter(700, CacheLimiter.TrimMode.BOTTOM));
+        }
         if (!cache.hasExpiration()) {
             // Caches expire after 5 days
             cache.setExpiration(Calendar.getInstance().getTimeInMillis() + (1000 * 60 * 60 * 24 * 5));
@@ -54,13 +56,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     public void onError(Exception e) {
         String msg = e.getMessage();
         if (e instanceof TwitterException) {
-            TwitterException te = (TwitterException) e;
-            if (te.exceededRateLimitation())
-                msg = getString(R.string.rate_limit_error);
-            else if (te.isCausedByNetworkIssue())
-                msg = getString(R.string.network_error);
-            else if (te.isErrorMessageAvailable())
-                msg = te.getErrorMessage();
+            msg = Utils.processTwitterException(getActivity(), (TwitterException) e);
         }
         AppMsg.makeText(getActivity(), msg, new AppMsg.Style(AppMsg.LENGTH_LONG,
                 android.R.color.holo_blue_dark), R.layout.app_msg_themed).show();

@@ -63,8 +63,10 @@
     <string name="confirm_logout">Are you sure you want to logout?</string>
 
     <string name="follow">follow</string>
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
     <string name="unfollow">unfollow</string>
-    <string name="follows_you_follow">follows you, follow</string>
+    <string name="follows_you_follow_back">follows you, follow back</string>
     <string name="follows_you_unfollow">follows you, unfollow</string>
     <string name="mention">Mention</string>
     <string name="send_dm">Send DM</string>

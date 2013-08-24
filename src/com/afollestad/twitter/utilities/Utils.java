@@ -1,6 +1,9 @@
 package com.afollestad.twitter.utilities;
 
+import android.content.Context;
 import android.util.Base64;
+import com.afollestad.twitter.R;
+import twitter4j.TwitterException;
 
 import java.io.*;
 
@@ -35,5 +38,17 @@ public class Utils {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public static String processTwitterException(Context context, TwitterException te) {
+        String msg;
+        if (te.exceededRateLimitation())
+            msg = context.getString(R.string.rate_limit_error);
+        else if (te.isCausedByNetworkIssue())
+            msg = context.getString(R.string.network_error);
+        else if (te.isErrorMessageAvailable())
+            msg = te.getErrorMessage();
+        else msg = te.getMessage();
+        return msg;
     }
 }
