@@ -2,9 +2,7 @@ package com.afollestad.twitter.fragments.pages;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ListView;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.ConversationAdapter;
@@ -21,6 +19,7 @@ public class MessagesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mConvo = (ConversationAdapter.Conversation) getArguments().getSerializable("conversation");
         mConvo.sort();
         getActivity().setTitle(mConvo.getEndUser().getName());

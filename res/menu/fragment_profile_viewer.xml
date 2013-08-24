@@ -3,5 +3,10 @@
 
     <item android:id="@+id/mention" android:title="@string/mention"
           android:icon="?mentionIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/send_dm" android:title="@string/send_dm"
+          android:icon="?newDmIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/add_to_list" android:title="@string/add_to_list"/>
+    <item android:id="@+id/block" android:title="@string/block"/>
+    <item android:id="@+id/report" android:title="@string/report"/>
 
 </menu>

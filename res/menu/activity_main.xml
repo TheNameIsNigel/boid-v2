@@ -3,6 +3,8 @@
 
     <item android:id="@+id/compose" android:title="@string/compose"
           android:icon="?composeIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/compose_dm" android:title="@string/compose_dm"
+          android:icon="?newDmIcon" android:showAsAction="ifRoom"/>
     <item android:id="@+id/settings" android:title="@string/settings"/>
     <item android:id="@+id/logout" android:title="@string/logout"/>
 

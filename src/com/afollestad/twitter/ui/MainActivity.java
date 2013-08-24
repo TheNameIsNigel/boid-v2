@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
@@ -69,6 +70,7 @@ public class MainActivity extends ThemedDrawerActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 drawerList.setItemChecked(position + 1, true);
+                invalidateOptionsMenu();
             }
         });
 
@@ -115,6 +117,7 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
+        menu.findItem(R.id.compose_dm).setVisible(mPager.getCurrentItem() == 2);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -123,6 +126,10 @@ public class MainActivity extends ThemedDrawerActivity {
         switch (item.getItemId()) {
             case R.id.compose:
                 startActivity(new Intent(this, ComposeActivity.class));
+                return true;
+            case R.id.compose_dm:
+                //TODO
+                Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.settings:
                 startActivity(new Intent(this, SettingsActivity.class));
