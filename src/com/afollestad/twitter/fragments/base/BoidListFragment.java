@@ -41,7 +41,8 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     @Override
     protected SilkCacheManager<T> onCacheInitialized(SilkCacheManager<T> cache) {
         // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
-        cache.setLimiter(new CacheLimiter(700, CacheLimiter.TrimMode.BOTTOM));
+        if (!cache.hasLimiter())
+            cache.setLimiter(new CacheLimiter(700, CacheLimiter.TrimMode.BOTTOM));
         if (!cache.hasExpiration()) {
             // Caches expire after 5 days
             cache.setExpiration(Calendar.getInstance().getTimeInMillis() + (1000 * 60 * 60 * 24 * 5));
