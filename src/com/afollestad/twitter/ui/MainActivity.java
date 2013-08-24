@@ -29,6 +29,7 @@ public class MainActivity extends ThemedDrawerActivity {
     private ViewPager mPager;
     private ListView drawerList;
     private PullToRefreshAttacher mPullToRefreshAttacher;
+    private int mLastChecked = 1;
 
     public PullToRefreshAttacher getPullToRefreshAttacher() {
         return mPullToRefreshAttacher;
@@ -95,10 +96,12 @@ public class MainActivity extends ThemedDrawerActivity {
     private void onDrawerItemClicked(int index) {
         getDrawerLayout().closeDrawers();
         if (index == 0) {
+            drawerList.setItemChecked(mLastChecked, true);
             startActivity(new Intent(this, ProfileActivity.class)
                     .putExtra("user", BoidApp.get(this).getProfile()));
             return;
         }
+        mLastChecked = index;
         mPager.setCurrentItem(index - 1);
     }
 
@@ -106,7 +109,7 @@ public class MainActivity extends ThemedDrawerActivity {
     protected void onPause() {
         super.onPause();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putInt("recent_fragment_main", mPager.getCurrentItem()).commit();
+        prefs.edit().putInt("recent_fragment_main", mPager.getCurrentItem() + 1).commit();
     }
 
     @Override
