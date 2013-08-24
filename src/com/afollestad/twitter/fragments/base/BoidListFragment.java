@@ -28,6 +28,11 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
+    @Override
+    protected boolean shouldRecreateCacheOnResume() {
+        return true;
+    }
+
     public final int getPageLength() {
         //TODO configurable setting
         return 200;
