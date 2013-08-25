@@ -29,7 +29,6 @@
     <string name="retweeted_by">Retweeted by @{user}</string>
 
     <string-array name="main_drawer_items">
-        <item>Profile</item>
         <item>Timeline</item>
         <item>Mentions</item>
         <item>Messages</item>

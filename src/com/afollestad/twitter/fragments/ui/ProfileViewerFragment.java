@@ -15,7 +15,7 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.adapters.StatusAdapter;
+import com.afollestad.twitter.adapters.ProfileAdapter;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import com.afollestad.twitter.utilities.Utils;
@@ -70,13 +70,18 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     private void loadFollowButton(final Button button) {
+        final User me = BoidApp.get(getActivity()).getProfile();
+        if (me.getId() == mUser.getId()) {
+            button.setVisibility(View.GONE);
+            return;
+        }
+        button.setVisibility(View.VISIBLE);
         button.setText(R.string.loading);
         button.setEnabled(false);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 Twitter client = BoidApp.get(getActivity()).getClient();
-                User me = BoidApp.get(getActivity()).getProfile();
                 try {
                     final Relationship friendship = client.showFriendship(me.getId(), mUser.getId());
                     runOnUiThread(new Runnable() {
@@ -184,7 +189,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     @Override
     protected SilkAdapter<Status> initializeAdapter() {
-        return new StatusAdapter(getActivity());
+        return new ProfileAdapter(getActivity());
     }
 
     @Override

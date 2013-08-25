@@ -75,7 +75,7 @@ public class MainActivity extends ThemedDrawerActivity {
         });
 
         drawerList = (ListView) findViewById(R.id.drawer_list);
-        drawerList.setAdapter(new DrawerItemAdapter(this));
+        drawerList.setAdapter(new DrawerItemAdapter(this, BoidApp.get(this).getProfile()));
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

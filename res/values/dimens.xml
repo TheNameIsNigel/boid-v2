@@ -5,6 +5,9 @@
     <dimen name="drawer_item_vert_padding">18dp</dimen>
     <dimen name="drawer_item_hor_padding">25dp</dimen>
 
+    <dimen name="status_item_padding">5dp</dimen>
+    <dimen name="status_item_padding_bigger">10dp</dimen>
+
     <dimen name="feed_profile_pic">60dp</dimen>
     <dimen name="feed_profile_pic_big">80dp</dimen>
     <dimen name="welcome_logo">70dp</dimen>
