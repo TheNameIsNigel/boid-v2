@@ -33,7 +33,7 @@ public class ComposerService extends IntentService {
 
         if (intent.hasExtra("reply_to")) {
             Status replyTo = (Status) intent.getSerializableExtra("reply_to");
-            update.setInReplyToStatusId(replyTo.getId());
+            if (replyTo != null) update.setInReplyToStatusId(replyTo.getId());
         }
 
         try {
