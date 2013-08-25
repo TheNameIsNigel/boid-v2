@@ -2,7 +2,9 @@ package com.afollestad.twitter.fragments.pages;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.ConversationAdapter;

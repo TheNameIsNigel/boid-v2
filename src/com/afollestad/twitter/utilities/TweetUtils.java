@@ -1,9 +1,6 @@
 package com.afollestad.twitter.utilities;
 
-import twitter4j.Status;
-import twitter4j.URLEntity;
-import twitter4j.User;
-import twitter4j.UserMentionEntity;
+import twitter4j.*;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -25,7 +22,7 @@ public class TweetUtils {
         if (mentions != null) {
             for (UserMentionEntity mention : mentions) {
                 if (mention.getId() == tweet.getUser().getId()) continue;
-                else if(mention.getId() == me.getId()) continue;
+                else if (mention.getId() == me.getId()) continue;
                 toReturn += "@" + mention.getScreenName() + " ";
             }
         }
@@ -33,10 +30,13 @@ public class TweetUtils {
     }
 
     public static String getTweetMediaURL(Status tweet, boolean larger) {
-        if (tweet.getMediaEntities() != null && tweet.getMediaEntities().length > 0) {
-            return tweet.getMediaEntities()[0].getMediaURL();
-        } else if (tweet.getURLEntities() != null && tweet.getURLEntities().length > 0) {
-            URLEntity[] urls = tweet.getURLEntities();
+        return getMediaURL(tweet.getMediaEntities(), tweet.getURLEntities(), larger);
+    }
+
+    public static String getMediaURL(MediaEntity[] media, URLEntity[] urls, boolean larger) {
+        if (media != null && media.length > 0) {
+            return media[0].getMediaURL();
+        } else if (urls != null && urls.length > 0) {
             for (URLEntity url : urls) {
                 if (url.getDisplayURL().startsWith("instagram.com")) {
                     String mu = url.getExpandedURL();

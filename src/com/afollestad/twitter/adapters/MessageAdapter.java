@@ -9,6 +9,7 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.DirectMessage;
 import twitter4j.User;
 
@@ -44,7 +45,7 @@ public class MessageAdapter extends SilkAdapter<DirectMessage> {
         } else {
             profilePic.setFitView(false).setImageURL(mImageLoader, item.getSender().getProfileImageURL());
         }
-        ((TextView) view.findViewById(R.id.content)).setText(item.getText());
+        TextUtils.linkifyText(getContext(), (TextView) view.findViewById(R.id.content), item, false, true);
         return view;
     }
 

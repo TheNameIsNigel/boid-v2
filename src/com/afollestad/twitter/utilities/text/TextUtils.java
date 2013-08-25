@@ -3,6 +3,7 @@ package com.afollestad.twitter.utilities.text;
 import android.content.Context;
 import android.util.Patterns;
 import android.widget.TextView;
+import twitter4j.DirectMessage;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.URLEntity;
@@ -56,5 +57,9 @@ public class TextUtils {
 
     public static void linkifyText(Context context, TextView textView, Status tweet, boolean clickable, boolean expandUrls) {
         linkifyText(context, textView, tweet.getText(), clickable, expandUrls, tweet.getURLEntities(), tweet.getMediaEntities());
+    }
+
+    public static void linkifyText(Context context, TextView textView, DirectMessage msg, boolean clickable, boolean expandUrls) {
+        linkifyText(context, textView, msg.getText(), clickable, expandUrls, msg.getURLEntities(), msg.getMediaEntities());
     }
 }
