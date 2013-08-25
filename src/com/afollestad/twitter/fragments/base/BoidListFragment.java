@@ -37,11 +37,6 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
     }
 
     @Override
-    protected boolean shouldRecreateCacheOnResume() {
-        return true;
-    }
-
-    @Override
     protected SilkCacheManager<T> onCacheInitialized(SilkCacheManager<T> cache) {
         if (!cache.hasLimiter()) {
             // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
