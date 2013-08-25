@@ -28,6 +28,7 @@ import java.util.List;
 public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     private User mUser;
+    private User mProfile;
     private boolean mFollowingThem;
     private boolean mFollowedBy;
 
@@ -36,11 +37,15 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mUser = (User) getArguments().getSerializable("user");
+        mProfile = BoidApp.get(getActivity()).getProfile();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_profile_viewer, menu);
+        int res = R.menu.fragment_profile_viewer;
+        if(mUser.getId() == mProfile.getId())
+            res = R.menu.fragment_profile_viewer_me;
+        inflater.inflate(res, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -68,8 +73,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     private void loadFollowButton(final Button button) {
-        final User me = BoidApp.get(getActivity()).getProfile();
-        if (me.getId() == mUser.getId()) {
+        if (mProfile.getId() == mUser.getId()) {
             button.setVisibility(View.GONE);
             return;
         }
@@ -81,7 +85,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
             public void run() {
                 Twitter client = BoidApp.get(getActivity()).getClient();
                 try {
-                    final Relationship friendship = client.showFriendship(me.getId(), mUser.getId());
+                    final Relationship friendship = client.showFriendship(mProfile.getId(), mUser.getId());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

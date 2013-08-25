@@ -68,6 +68,7 @@
     <string name="follows_you_follow_back">follows you, follow back</string>
     <string name="follows_you_unfollow">follows you, unfollow</string>
     <string name="mention">Mention</string>
+    <string name="edit">Edit</string>
     <string name="send_dm">Send DM</string>
     <string name="compose_dm">Compose DM</string>
     <string name="add_to_list">Add to List</string>
