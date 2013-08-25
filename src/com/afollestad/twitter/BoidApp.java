@@ -78,7 +78,7 @@ public class BoidApp extends Application {
 
     public BoidApp storeProfile(User profile) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putString("profile", Utils.serializeObject(profile)).commit();
+        prefs.edit().putString("profile", Silk.serializeObject(profile)).commit();
         return this;
     }
 
@@ -93,7 +93,7 @@ public class BoidApp extends Application {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!prefs.contains("profile"))
             return null;
-        return (User) Utils.deserializeObject(prefs.getString("profile", null));
+        return (User) Silk.deserializeObject(prefs.getString("profile", null));
     }
 
     public AccessToken getToken() {
