@@ -2,6 +2,7 @@ package com.afollestad.twitter.utilities;
 
 import android.content.Context;
 import android.util.Base64;
+import android.widget.Toast;
 import com.afollestad.twitter.R;
 import twitter4j.TwitterException;
 

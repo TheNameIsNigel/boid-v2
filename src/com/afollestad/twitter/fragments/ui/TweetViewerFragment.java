@@ -183,7 +183,7 @@ public class TweetViewerFragment extends SilkFragment {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            BoidApp.showAppMsgError(getActivity(), e);
                         }
                     });
                 }
@@ -232,7 +232,7 @@ public class TweetViewerFragment extends SilkFragment {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AppMsg.makeText(getActivity(), e.getMessage(), AppMsg.STYLE_ALERT).show();
+                            BoidApp.showAppMsgError(getActivity(), e);
                         }
                     });
                 }

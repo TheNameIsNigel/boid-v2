@@ -18,8 +18,6 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.ProfileAdapter;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
-import com.afollestad.twitter.utilities.Utils;
-import com.devspark.appmsg.AppMsg;
 import twitter4j.*;
 
 import java.util.List;
@@ -98,7 +96,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                         @Override
                         public void run() {
                             button.setText(R.string.error);
-                            AppMsg.makeText(getActivity(), Utils.processTwitterException(getActivity(), e), AppMsg.STYLE_ALERT).show();
+                            BoidApp.showAppMsgError(getActivity(), e);
                         }
                     });
                 }
@@ -142,7 +140,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            AppMsg.makeText(getActivity(), Utils.processTwitterException(getActivity(), e), AppMsg.STYLE_ALERT).show();
+                            BoidApp.showAppMsgError(getActivity(), e);
                         }
                     });
                 }
@@ -174,7 +172,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     @Override
     protected void onError(Exception message) {
-        AppMsg.makeText(getActivity(), message.getMessage(), AppMsg.STYLE_ALERT).show();
+        BoidApp.showAppMsgError(getActivity(), message);
     }
 
     @Override

@@ -9,7 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import com.devspark.appmsg.AppMsg;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import twitter4j.TwitterException;
@@ -90,7 +89,7 @@ public class LoginActivity extends ThemedActivity {
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                AppMsg.makeText(LoginActivity.this, description, AppMsg.STYLE_ALERT).show();
+                BoidApp.showAppMsgError(LoginActivity.this, new Exception(description));
             }
 
             @Override

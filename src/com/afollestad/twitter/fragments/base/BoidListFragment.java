@@ -13,11 +13,8 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.MainActivity;
 import com.afollestad.twitter.ui.SearchActivity;
-import com.afollestad.twitter.utilities.Utils;
-import com.devspark.appmsg.AppMsg;
 import twitter4j.Paging;
 import twitter4j.Twitter;
-import twitter4j.TwitterException;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 import java.io.File;
@@ -54,12 +51,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     @Override
     public void onError(Exception e) {
-        String msg = e.getMessage();
-        if (e instanceof TwitterException) {
-            msg = Utils.processTwitterException(getActivity(), (TwitterException) e);
-        }
-        AppMsg.makeText(getActivity(), msg, new AppMsg.Style(AppMsg.LENGTH_LONG,
-                android.R.color.holo_blue_dark), R.layout.app_msg_themed).show();
+        BoidApp.showAppMsgError(getActivity(), e);
     }
 
     @Override

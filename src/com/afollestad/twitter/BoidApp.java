@@ -1,5 +1,6 @@
 package com.afollestad.twitter;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,7 +9,9 @@ import android.preference.PreferenceManager;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.twitter.utilities.Utils;
+import com.devspark.appmsg.AppMsg;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
@@ -28,6 +31,17 @@ public class BoidApp extends Application {
     public final static String CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
     public final static String CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
     public final static String CALLBACK_URL = "boid://auth";
+
+    public static void showAppMsgError(Activity activity, Exception e) {
+        String msg = e.getMessage();
+        if (e instanceof TwitterException)
+            msg = Utils.processTwitterException(activity, (TwitterException) e);
+        AppMsg.makeText(activity, msg, new AppMsg.Style(AppMsg.LENGTH_LONG, R.color.app_msg_red), R.layout.app_msg_themed).show();
+    }
+
+    public static void showAppMsg(Activity activity, String msg) {
+        AppMsg.makeText(activity, msg, new AppMsg.Style(AppMsg.LENGTH_LONG, R.color.app_msg_blue)).show();
+    }
 
     public static File getSilkCache() {
         return new File(Environment.getExternalStorageDirectory(), "Boid");

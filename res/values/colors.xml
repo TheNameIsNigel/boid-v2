@@ -5,6 +5,9 @@
     <color name="red">#CC0000</color>
     <color name="boid_button_pressed">#950099CC</color>
 
+    <color name="app_msg_blue">#AF0099CC</color>
+    <color name="app_msg_red">#AFCC0000</color>
+
     <color name="drawer_background_dark">#3A3A3C</color>
     <color name="drawer_background_light">#FFFFFF</color>
 
