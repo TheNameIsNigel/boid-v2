@@ -25,7 +25,6 @@ import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
-import com.devspark.appmsg.AppMsg;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.User;
@@ -76,7 +75,7 @@ public class TweetViewerFragment extends SilkFragment {
 
         Calendar time = new GregorianCalendar();
         time.setTime(mTweet.getCreatedAt());
-        ((TextView) v.findViewById(R.id.timestamp)).setText(TimeUtils.toString(time, true, false));
+        ((TextView) v.findViewById(R.id.timestamp)).setText(TimeUtils.toStringLong(time));
 
         final SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
         final String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
