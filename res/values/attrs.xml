@@ -22,5 +22,7 @@
 
     <attr name="mentionIcon" format="reference"/>
     <attr name="editIcon" format="reference"/>
+    <attr name="searchIcon" format="reference"/>
+    <attr name="pinIcon" format="reference"/>
 
 </resources>

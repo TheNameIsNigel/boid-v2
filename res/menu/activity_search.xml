@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/compose" android:title="@string/compose"
+    <item android:id="@+id/pin" android:title="@string/pin_as_column"
+          android:icon="?pinIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/compose" android:title="@string/tweet_with_query"
           android:icon="?composeIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/save" android:title="@string/save_search"/>
 
 </menu>

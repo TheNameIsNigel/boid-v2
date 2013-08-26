@@ -33,6 +33,8 @@
 
         <item name="mentionIcon">@drawable/ic_mention_light</item>
         <item name="editIcon">@drawable/ic_edit_light</item>
+        <item name="searchIcon">@drawable/ic_search_light</item>
+        <item name="pinIcon">@drawable/ic_pin_light</item>
 
     </style>
     <style name="ActionBar.Solid.Boid" parent="@android:style/Widget.Holo.ActionBar.Solid">

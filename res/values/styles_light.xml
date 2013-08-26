@@ -33,6 +33,8 @@
 
         <item name="mentionIcon">@drawable/ic_mention_dark</item>
         <item name="editIcon">@drawable/ic_edit_dark</item>
+        <item name="searchIcon">@drawable/ic_search_dark</item>
+        <item name="pinIcon">@drawable/ic_pin_dark</item>
 
     </style>
 
