@@ -1,6 +1,7 @@
 package com.afollestad.twitter.fragments.ui;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.fragments.SilkFeedFragment;
@@ -38,7 +40,8 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mUser = (User) getArguments().getSerializable("user");
+        if (getArguments().containsKey("screen_name")) loadUser();
+        else mUser = (User) getArguments().getSerializable("user");
         mProfile = BoidApp.get(getActivity()).getProfile();
     }
 
@@ -65,6 +68,51 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setupViews();
+    }
+
+    private void loadUser() {
+        final String screenName = getArguments().getString("screen_name");
+        final ProgressDialog mDialog = new ProgressDialog(getActivity());
+        mDialog.setMessage(getString(R.string.please_wait));
+        mDialog.setIndeterminate(true);
+        mDialog.setCancelable(false);
+        mDialog.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Twitter client = BoidApp.get(getActivity()).getClient();
+                try {
+                    mUser = client.showUser(screenName);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setupViews();
+                        }
+                    });
+                } catch (final TwitterException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            getActivity().finish();
+                        }
+                    });
+                } finally {
+                    mDialog.dismiss();
+                }
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+    }
+
+    private void setupViews() {
+        if (mUser == null) return;
+        View view = getView();
+        if (view == null) return;
         SilkImageManager loader = BoidApp.get(getActivity()).getImageLoader();
         ((SilkImageView) view.findViewById(R.id.profilePic)).setImageURL(loader, mUser.getBiggerProfileImageURL());
         ((SilkImageView) view.findViewById(R.id.headerImage)).setImageURL(loader,

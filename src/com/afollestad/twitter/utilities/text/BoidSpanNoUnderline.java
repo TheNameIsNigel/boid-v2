@@ -6,8 +6,8 @@ import android.net.Uri;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.Toast;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.ui.SearchActivity;
 
 /**
@@ -26,7 +26,7 @@ public class BoidSpanNoUnderline extends ClickableSpan {
     @Override
     public void onClick(View widget) {
         if (mValue.startsWith("@")) {
-            Toast.makeText(mContext, mValue, Toast.LENGTH_LONG).show();
+            mContext.startActivity(new Intent(mContext, ProfileActivity.class).putExtra("screen_name", mValue.substring(1)));
         } else if (mValue.startsWith("#")) {
             mContext.startActivity(new Intent(mContext, SearchActivity.class).putExtra("query", mValue));
         } else {
