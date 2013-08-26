@@ -15,11 +15,11 @@
                       android:layout_marginTop="20dp">
 
             <!--suppress AndroidLintUselessParent -->
-            <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
-                                                           android:layout_width="@dimen/feed_profile_pic"
-                                                           android:layout_height="@dimen/feed_profile_pic"
-                                                           android:scaleType="fitXY"
-                                                           android:layout_marginRight="20dp"/>
+            <com.afollestad.silk.views.image.SilkRoundedImageView android:id="@+id/profilePic"
+                                                                  android:layout_width="@dimen/feed_profile_pic"
+                                                                  android:layout_height="@dimen/feed_profile_pic"
+                                                                  android:scaleType="fitXY"
+                                                                  android:layout_marginRight="20dp"/>
 
             <LinearLayout android:orientation="vertical"
                           android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.afollestad.twitter.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TimeUtils;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
@@ -28,7 +30,7 @@ import java.util.List;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Conversation> {
+public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Conversation> implements View.OnClickListener {
 
     private final boolean mDisplayRealNames;
     private final SilkImageManager mImageLoader;
@@ -145,6 +147,8 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
     public View onViewCreated(int index, View recycled, Conversation item) {
         DirectMessage message = item.getRecentMessage();
         SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
+        profilePic.setTag(item.getEndUser());
+        profilePic.setOnClickListener(this);
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
@@ -154,5 +158,11 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), message, false, false);
         ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
         return recycled;
+    }
+
+    @Override
+    public void onClick(View v) {
+        getContext().startActivity(new Intent(getContext(), ProfileActivity.class)
+                .putExtra("user", (User) v.getTag()));
     }
 }
