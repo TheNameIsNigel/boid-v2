@@ -88,6 +88,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
                             setupViews();
                         }
                     });
@@ -287,6 +288,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     @Override
     public String getTitle() {
+        if (mUser == null) return getString(R.string.profile);
         return "@" + mUser.getScreenName();
     }
 }

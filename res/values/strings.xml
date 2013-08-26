@@ -78,5 +78,6 @@
 
     <string name="confirm_unfollow_title">Unfollow</string>
     <string name="confirm_unfollow">Are you sure you want to unfollow @{screenname}?</string>
+    <string name="profile">Profile</string>
 
 </resources>
