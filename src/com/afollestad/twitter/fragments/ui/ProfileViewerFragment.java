@@ -24,6 +24,7 @@ import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,6 +92,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                             getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
                             getActivity().invalidateOptionsMenu();
                             setupViews();
+                            performRefresh(true);
                         }
                     });
                 } catch (final TwitterException e) {
@@ -248,6 +250,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     @Override
     protected List<Status> refresh() throws Exception {
+        if (mUser == null) return new ArrayList<Status>();
         Paging paging = new Paging();
         paging.setCount(200);
         return BoidApp.get(getActivity()).getClient().getUserTimeline(mUser.getId(), paging);
