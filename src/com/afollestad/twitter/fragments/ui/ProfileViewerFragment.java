@@ -121,9 +121,6 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
     private void performFollowAction(boolean confirmed) {
         final Button button = (Button) getView().findViewById(R.id.follow);
-        button.setText(R.string.please_wait);
-        button.setEnabled(false);
-
         if (!confirmed && mFollowingThem) {
             new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.confirm_unfollow_title)
@@ -144,6 +141,8 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
             return;
         }
 
+        button.setText(R.string.please_wait);
+        button.setEnabled(false);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
