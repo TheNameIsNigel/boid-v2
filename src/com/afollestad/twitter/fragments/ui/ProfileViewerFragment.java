@@ -48,7 +48,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         int res = R.menu.fragment_profile_viewer;
-        if (mUser.getId() == mProfile.getId())
+        if (mUser != null && mUser.getId() == mProfile.getId())
             res = R.menu.fragment_profile_viewer_me;
         inflater.inflate(res, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -89,6 +89,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                         @Override
                         public void run() {
                             getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
+                            getActivity().invalidateOptionsMenu();
                             setupViews();
                         }
                     });
