@@ -1,5 +1,7 @@
 package com.afollestad.twitter.fragments.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -43,7 +45,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         int res = R.menu.fragment_profile_viewer;
-        if(mUser.getId() == mProfile.getId())
+        if (mUser.getId() == mProfile.getId())
             res = R.menu.fragment_profile_viewer_me;
         inflater.inflate(res, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -112,15 +114,36 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performFollowAction();
+                performFollowAction(false);
             }
         });
     }
 
-    private void performFollowAction() {
+    private void performFollowAction(boolean confirmed) {
         final Button button = (Button) getView().findViewById(R.id.follow);
         button.setText(R.string.please_wait);
         button.setEnabled(false);
+
+        if (!confirmed && mFollowingThem) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.confirm_unfollow_title)
+                    .setMessage(getString(R.string.confirm_unfollow).replace("{screenname}", mUser.getScreenName()))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            performFollowAction(true);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+            return;
+        }
+
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -133,6 +156,8 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                         client.createFriendship(mUser.getId());
                         mFollowingThem = true;
                     }
+                    if (mUser.isProtected())
+                        mUser = client.showUser(mUser.getId());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -157,6 +182,11 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     private void invalidateFollowButton() {
         if (getView() == null) return;
         Button button = (Button) getView().findViewById(R.id.follow);
+        if (mUser.isFollowRequestSent()) {
+            button.setText(R.string.request_sent);
+            button.setEnabled(false);
+            return;
+        }
         button.setEnabled(true);
         if (mFollowingThem && mFollowedBy)
             button.setText(R.string.follows_you_unfollow);

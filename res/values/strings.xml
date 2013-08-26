@@ -65,6 +65,7 @@
     <string name="loading">Loading…</string>
     <string name="error">Error</string>
     <string name="unfollow">unfollow</string>
+    <string name="request_sent">request sent</string>
     <string name="follows_you_follow_back">follows you, follow back</string>
     <string name="follows_you_unfollow">follows you, unfollow</string>
     <string name="mention">Mention</string>
@@ -74,5 +75,8 @@
     <string name="add_to_list">Add to List</string>
     <string name="block">Block</string>
     <string name="report">Report</string>
+
+    <string name="confirm_unfollow_title">Unfollow</string>
+    <string name="confirm_unfollow">Are you sure you want to unfollow @{screenname}?</string>
 
 </resources>
