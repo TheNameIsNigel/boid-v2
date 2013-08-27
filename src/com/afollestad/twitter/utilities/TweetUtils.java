@@ -2,6 +2,8 @@ package com.afollestad.twitter.utilities;
 
 import twitter4j.*;
 
+import java.util.Locale;
+
 /**
  * @author Aidan Follestad (afollestad)
  */
@@ -38,16 +40,17 @@ public class TweetUtils {
             return media[0].getMediaURL();
         } else if (urls != null && urls.length > 0) {
             for (URLEntity url : urls) {
-                if (url.getDisplayURL().startsWith("instagram.com")) {
+                String du = url.getDisplayURL().toLowerCase(Locale.getDefault());
+                if (du.startsWith("instagram.com")) {
                     String mu = url.getExpandedURL();
                     if (!mu.endsWith("/")) mu += "/";
                     return mu + "media/?size=" + (larger ? "l" : "m");
-                } else if (url.getDisplayURL().startsWith("twitpic.com")) {
+                } else if (du.startsWith("twitpic.com")) {
                     String mu = url.getExpandedURL();
                     if (mu.endsWith("/")) mu = mu.substring(0, mu.length() - 1);
                     mu = mu.substring(mu.lastIndexOf('/') + 1);
                     return "http://twitpic.com/show/full/" + mu;
-                } else if (url.getDisplayURL().startsWith("yfrog")) {
+                } else if (du.startsWith("yfrog")) {
                     return "http://" + url.getDisplayURL() + (larger ? ":medium" : ":iphone");
                 }
             }
