@@ -130,6 +130,9 @@ public class TweetViewerFragment extends SilkFragment {
             case R.id.share:
                 performShare();
                 return true;
+            case R.id.delete:
+                performDelete();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -253,6 +256,42 @@ public class TweetViewerFragment extends SilkFragment {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND)
                 .setType("text/plain").putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+    }
+
+    private void performDelete() {
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage(getString(R.string.please_wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Twitter cl = BoidApp.get(getActivity()).getClient();
+                    cl.destroyStatus(mTweet.getId());
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.dismiss();
+                            BoidApp.showAppMsgError(getActivity(), e);
+                        }
+                    });
+                    return;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                });
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
     }
 
     @Override
