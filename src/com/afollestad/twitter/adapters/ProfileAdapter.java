@@ -58,7 +58,6 @@ public class ProfileAdapter extends StatusAdapter {
     public void setFollowing(FollowingType outward, FollowingType inward) {
         this.outward = outward;
         this.inward = inward;
-        addHeaderViews();
     }
 
     @Override

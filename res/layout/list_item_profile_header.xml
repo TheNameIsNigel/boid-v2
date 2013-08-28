@@ -7,50 +7,56 @@
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    android:scaleType="centerCrop"
-                                                   android:layout_alignBottom="@+id/headerFrame"/>
+                                                   android:layout_alignBottom="@+id/headerFrameOuter"/>
 
-    <!--suppress AndroidLintUselessParent -->
-    <RelativeLayout android:id="@+id/headerFrame"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent_black"
-                    android:padding="10dp"
-                    android:layout_margin="@dimen/profile_header_padding">
+    <LinearLayout android:id="@+id/headerFrameOuter"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
 
-        <com.afollestad.silk.views.image.SilkRoundedImageView android:id="@+id/profilePic"
-                                                              android:layout_width="@dimen/feed_profile_pic"
-                                                              android:layout_height="@dimen/feed_profile_pic"
-                                                              android:scaleType="fitXY"
-                                                              android:layout_marginRight="10dp"/>
+        <!--suppress AndroidLintUselessParent -->
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent_black"
+                        android:padding="10dp"
+                        android:layout_margin="@dimen/profile_header_padding">
 
-        <LinearLayout android:id="@+id/infoFrame"
-                      android:orientation="vertical"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_toRightOf="@+id/profilePic">
+            <com.afollestad.silk.views.image.SilkRoundedImageView android:id="@+id/profilePic"
+                                                                  android:layout_width="@dimen/feed_profile_pic"
+                                                                  android:layout_height="@dimen/feed_profile_pic"
+                                                                  android:scaleType="fitXY"
+                                                                  android:layout_marginRight="10dp"/>
 
-            <TextView android:id="@+id/username"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textColor="@android:color/white"
-                      android:textSize="@dimen/usernameText"
-                      android:shadowColor="@color/shadow_color"
-                      android:shadowDx="2"
-                      android:shadowDy="2"
-                      android:shadowRadius="3"/>
+            <LinearLayout android:id="@+id/infoFrame"
+                          android:orientation="vertical"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_toRightOf="@+id/profilePic">
 
-            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/description"
-                                                         android:layout_width="wrap_content"
-                                                         android:layout_height="wrap_content"
-                                                         android:textColor="@android:color/white"
-                                                         android:textSize="@dimen/contentText"
-                                                         android:shadowColor="@color/shadow_color"
-                                                         android:shadowDx="2"
-                                                         android:shadowDy="2"
-                                                         android:shadowRadius="3"/>
+                <TextView android:id="@+id/username"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textColor="@android:color/white"
+                          android:textSize="@dimen/usernameText"
+                          android:shadowColor="@color/shadow_color"
+                          android:shadowDx="2"
+                          android:shadowDy="2"
+                          android:shadowRadius="3"/>
 
-        </LinearLayout>
+                <com.afollestad.silk.views.text.SilkTextView android:id="@+id/description"
+                                                             android:layout_width="wrap_content"
+                                                             android:layout_height="wrap_content"
+                                                             android:textColor="@android:color/white"
+                                                             android:textSize="@dimen/contentText"
+                                                             android:shadowColor="@color/shadow_color"
+                                                             android:shadowDx="2"
+                                                             android:shadowDy="2"
+                                                             android:shadowRadius="3"/>
 
-    </RelativeLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
