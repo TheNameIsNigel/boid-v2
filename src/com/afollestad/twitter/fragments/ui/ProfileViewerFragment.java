@@ -1,13 +1,11 @@
 package com.afollestad.twitter.fragments.ui;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.fragments.SilkFeedFragment;
 import com.afollestad.twitter.BoidApp;
@@ -32,8 +30,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments().containsKey("screen_name")) loadUser();
-        else mUser = (User) getArguments().getSerializable("user");
+        mUser = (User) getArguments().getSerializable("user");
         mProfile = BoidApp.get(getActivity()).getProfile();
     }
 
@@ -57,52 +54,18 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadUser() {
-        final String screenName = getArguments().getString("screen_name");
-        final ProgressDialog mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage(getString(R.string.please_wait));
-        mDialog.setIndeterminate(true);
-        mDialog.setCancelable(false);
-        mDialog.show();
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Twitter client = BoidApp.get(getActivity()).getClient();
-                try {
-                    mUser = client.showUser(screenName);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
-                            getActivity().invalidateOptionsMenu();
-                            performRefresh(true);
-                        }
-                    });
-                } catch (final TwitterException e) {
-                    e.printStackTrace();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                            getActivity().finish();
-                        }
-                    });
-                } finally {
-                    mDialog.dismiss();
-                }
-            }
-        });
-        t.setPriority(Thread.MAX_PRIORITY);
-        t.start();
-    }
-
     @Override
     protected List<Status> refresh() throws Exception {
-        if (mUser == null) return new ArrayList<Status>();
-        ((ProfileAdapter) getAdapter()).setUser(mUser);
-
         Twitter client = BoidApp.get(getActivity()).getClient();
+        if (mUser == null) {
+            if (getArguments().containsKey("screen_name")) {
+                mUser = client.showUser(getArguments().getString("screen_name"));
+                getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
+                getActivity().invalidateOptionsMenu();
+            } else return new ArrayList<Status>();
+        }
+
+        ((ProfileAdapter) getAdapter()).setUser(mUser);
         if (mProfile.getId() == mUser.getId()) {
             runOnUiThread(new Runnable() {
                 @Override
@@ -142,6 +105,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     @Override
     protected void onError(Exception message) {
         BoidApp.showAppMsgError(getActivity(), message);
+        setEmptyText(message.getMessage());
     }
 
     @Override
