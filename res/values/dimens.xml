@@ -28,6 +28,7 @@
     <dimen name="inline_media">120dp</dimen>
     <dimen name="favorited_indicator">15dp</dimen>
 
-    <dimen name="profile_header_padding">15dp</dimen>
+    <dimen name="profile_header_padding_vertical">10dp</dimen>
+    <dimen name="profile_header_padding_horizontal">15dp</dimen>
 
 </resources>

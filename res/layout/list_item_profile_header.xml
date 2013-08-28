@@ -19,7 +19,10 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent_black"
                         android:padding="10dp"
-                        android:layout_margin="@dimen/profile_header_padding">
+                        android:layout_marginTop="@dimen/profile_header_padding_vertical"
+                        android:layout_marginBottom="@dimen/profile_header_padding_vertical"
+                        android:layout_marginLeft="@dimen/profile_header_padding_horizontal"
+                        android:layout_marginRight="@dimen/profile_header_padding_horizontal">
 
             <com.afollestad.silk.views.image.SilkRoundedImageView android:id="@+id/profilePic"
                                                                   android:layout_width="@dimen/feed_profile_pic"

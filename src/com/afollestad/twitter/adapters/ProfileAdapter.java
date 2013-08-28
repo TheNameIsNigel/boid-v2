@@ -43,8 +43,7 @@ public class ProfileAdapter extends StatusAdapter {
 
     private void addHeaderViews() {
         super.add(0, new StatusJSONImpl(true, false));
-        if (outward != FollowingType.NONE && inward != FollowingType.NONE)
-            super.add(1, new StatusJSONImpl(false, true));
+        super.add(1, new StatusJSONImpl(false, true));
     }
 
     public void setUser(User user) {
@@ -84,10 +83,44 @@ public class ProfileAdapter extends StatusAdapter {
         ((SilkImageView) view.findViewById(R.id.headerImage)).setImageURL(loader,
                 Silk.isTablet(mActivity) ? mUser.getProfileBannerIPadRetinaURL() : mUser.getProfileBannerMobileRetinaURL());
         ((TextView) view.findViewById(R.id.username)).setText(mUser.getName());
-        ((TextView) view.findViewById(R.id.description)).setText(mUser.getDescription());
+        String description = mUser.getDescription();
+        if (mUser.getLocation() != null && !mUser.getLocation().trim().isEmpty())
+            description += "\n" + mUser.getLocation();
+        if (mUser.getURLEntity() != null)
+            description += "\n" + mUser.getURLEntity().getDisplayURL();
+        ((TextView) view.findViewById(R.id.description)).setText(description);
     }
 
-    private void invalidateFollowButton(final Button button) {
+    private void invalidateFollowButton(View view) {
+        TextView tweetCount = (TextView) view.findViewById(R.id.tweetCount);
+        tweetCount.setText(mUser.getStatusesCount() + "\n" + getContext().getString(R.string.tweets));
+        tweetCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        TextView followingCount = (TextView) view.findViewById(R.id.followingCount);
+        followingCount.setText(mUser.getFriendsCount() + "\n" + getContext().getString(R.string.following));
+        followingCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+        TextView followersCount = (TextView) view.findViewById(R.id.followersCount);
+        followersCount.setText(mUser.getFollowersCount() + "\n" + getContext().getString(R.string.followers));
+        followersCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        final Button button = (Button) view.findViewById(R.id.followBtn);
+        if (outward == FollowingType.NONE && inward == FollowingType.NONE) {
+            button.setVisibility(View.GONE);
+            return;
+        }
+
+        button.setVisibility(View.VISIBLE);
         if (mUser.isFollowRequestSent()) {
             button.setText(R.string.request_sent);
             button.setEnabled(false);
@@ -180,7 +213,7 @@ public class ProfileAdapter extends StatusAdapter {
             setupHeader(recycled);
             return recycled;
         } else if (item.isProfileFollowButton()) {
-            invalidateFollowButton((Button) recycled);
+            invalidateFollowButton(recycled);
             return recycled;
         } else recycled = super.onViewCreated(index, recycled, item);
         int top;

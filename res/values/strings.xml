@@ -86,4 +86,8 @@
     <string name="pin_as_column">Pin as Column</string>
     <string name="tweet_with_query">Tweet with Query</string>
 
+    <string name="tweets">Tweets</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+
 </resources>
