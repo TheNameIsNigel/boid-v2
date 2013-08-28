@@ -53,6 +53,7 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
         msges = client.getSentDirectMessages();
         if (msges.size() > 0)
             organizer.add(msges.toArray(new DirectMessage[msges.size()]));
+        organizer.sortAll();
         return organizer.getConversations();
     }
 

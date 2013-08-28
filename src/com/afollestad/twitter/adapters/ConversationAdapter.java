@@ -126,6 +126,11 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
                 add(msg);
         }
 
+        public void sortAll() {
+            for (int i = 0; i < items.size(); i++)
+                items.get(i).sort();
+        }
+
         public List<Conversation> getConversations() {
             return items;
         }
@@ -152,7 +157,7 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
-            profilePic.setFitView(false).setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
+            profilePic.setImageURL(mImageLoader, item.getEndUser().getProfileImageURL());
         }
         ((TextView) recycled.findViewById(R.id.username)).setText(TweetUtils.getDisplayName(item.getEndUser(), mDisplayRealNames));
         TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), message, false, false);
