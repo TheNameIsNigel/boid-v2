@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/profile_header_padding">
+                android:layout_height="match_parent">
 
     <com.afollestad.silk.views.image.SilkImageView android:id="@+id/headerImage"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
-                                                   android:scaleType="centerCrop"/>
+                                                   android:scaleType="centerCrop"
+                                                   android:layout_alignBottom="@+id/headerFrame"/>
 
     <!--suppress AndroidLintUselessParent -->
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout android:id="@+id/headerFrame"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent_black"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:layout_margin="@dimen/profile_header_padding">
 
         <com.afollestad.silk.views.image.SilkRoundedImageView android:id="@+id/profilePic"
                                                               android:layout_width="@dimen/feed_profile_pic"

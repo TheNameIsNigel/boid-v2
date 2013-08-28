@@ -34,7 +34,6 @@ public class ProfileAdapter extends StatusAdapter {
     public ProfileAdapter(Activity context) {
         super(context, true);
         mActivity = context;
-        addHeaderViews();
     }
 
     private Activity mActivity;
@@ -44,7 +43,8 @@ public class ProfileAdapter extends StatusAdapter {
 
     private void addHeaderViews() {
         super.add(0, new StatusJSONImpl(true, false));
-        super.add(1, new StatusJSONImpl(true, true));
+        if (outward != FollowingType.NONE && inward != FollowingType.NONE)
+            super.add(1, new StatusJSONImpl(false, true));
     }
 
     public void setUser(User user) {
@@ -52,13 +52,13 @@ public class ProfileAdapter extends StatusAdapter {
     }
 
     public void setFollowing(FollowingType outwardInward) {
-        this.outward = outwardInward;
-        this.inward = outwardInward;
+        setFollowing(outwardInward, outwardInward);
     }
 
     public void setFollowing(FollowingType outward, FollowingType inward) {
         this.outward = outward;
         this.inward = inward;
+        addHeaderViews();
     }
 
     @Override
@@ -75,7 +75,8 @@ public class ProfileAdapter extends StatusAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        return position >= 2 && super.isEnabled(position);
+        Status item = getItem(position);
+        return !item.isProfileHeader() && !item.isProfileFollowButton();
     }
 
     private void setupHeader(View view) {
@@ -176,10 +177,10 @@ public class ProfileAdapter extends StatusAdapter {
 
     @Override
     public View onViewCreated(int index, View recycled, Status item) {
-        if (index == 0) {
+        if (item.isProfileHeader()) {
             setupHeader(recycled);
             return recycled;
-        } else if (index == 1) {
+        } else if (item.isProfileFollowButton()) {
             invalidateFollowButton((Button) recycled);
             return recycled;
         } else recycled = super.onViewCreated(index, recycled, item);
@@ -193,8 +194,9 @@ public class ProfileAdapter extends StatusAdapter {
 
     @Override
     public int getLayout(int index, int type) {
-        if (index == 0) return R.layout.list_item_profile_header;
-        else if (index == 1) return R.layout.list_item_followbtn;
+        Status item = getItem(index);
+        if (item.isProfileHeader()) return R.layout.list_item_profile_header;
+        else if (item.isProfileFollowButton()) return R.layout.list_item_followbtn;
         return super.getLayout(index, type);
     }
 
@@ -205,8 +207,9 @@ public class ProfileAdapter extends StatusAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) return getViewTypeCount() - 2;
-        else if (position == 1) return getViewTypeCount() - 1;
+        Status item = getItem(position);
+        if (item.isProfileHeader()) return 1;
+        else if (item.isProfileFollowButton()) return 2;
         return super.getItemViewType(position);
     }
 }

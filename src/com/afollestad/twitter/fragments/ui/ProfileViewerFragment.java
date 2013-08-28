@@ -104,7 +104,12 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
 
         Twitter client = BoidApp.get(getActivity()).getClient();
         if (mProfile.getId() == mUser.getId()) {
-            ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.NONE);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.NONE);
+                }
+            });
         } else {
             try {
                 final Relationship friendship = client.showFriendship(mProfile.getId(), mUser.getId());
