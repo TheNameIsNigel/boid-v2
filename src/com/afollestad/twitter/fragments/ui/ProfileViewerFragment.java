@@ -15,7 +15,6 @@ import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,9 +59,14 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
         if (mUser == null) {
             if (getArguments().containsKey("screen_name")) {
                 mUser = client.showUser(getArguments().getString("screen_name"));
-                getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
-                getActivity().invalidateOptionsMenu();
-            } else return new ArrayList<Status>();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
+                        getActivity().invalidateOptionsMenu();
+                    }
+                });
+            }
         }
 
         ((ProfileAdapter) getAdapter()).setUser(mUser);
