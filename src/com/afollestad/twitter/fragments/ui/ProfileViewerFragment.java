@@ -56,17 +56,16 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     @Override
     protected List<Status> refresh() throws Exception {
         Twitter client = BoidApp.get(getActivity()).getClient();
-        if (mUser == null) {
-            if (getArguments().containsKey("screen_name")) {
-                mUser = client.showUser(getArguments().getString("screen_name"));
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
-                        getActivity().invalidateOptionsMenu();
-                    }
-                });
-            }
+        if (mUser == null && getArguments().containsKey("screen_name")) {
+            // If a 'screen_name' intent extra was passed, the user must be manually loaded now
+            mUser = client.showUser(getArguments().getString("screen_name"));
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
+                    getActivity().invalidateOptionsMenu();
+                }
+            });
         }
 
         ((ProfileAdapter) getAdapter()).setUser(mUser);
@@ -74,6 +73,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    // Indicates that you're viewing your own profile, so hide the follow button
                     ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.NONE);
                 }
             });
