@@ -11,6 +11,7 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -83,12 +84,8 @@ public class ProfileAdapter extends StatusAdapter {
         ((SilkImageView) view.findViewById(R.id.headerImage)).setImageURL(loader,
                 Silk.isTablet(mActivity) ? mUser.getProfileBannerIPadRetinaURL() : mUser.getProfileBannerMobileRetinaURL());
         ((TextView) view.findViewById(R.id.username)).setText(mUser.getName());
-        String description = mUser.getDescription();
-        if (mUser.getLocation() != null && !mUser.getLocation().trim().isEmpty())
-            description += "\n" + mUser.getLocation();
-        if (mUser.getURLEntity() != null)
-            description += "\n" + mUser.getURLEntity().getDisplayURL();
-        ((TextView) view.findViewById(R.id.description)).setText(description);
+        TextUtils.linkifyText(getContext(), (TextView) view.findViewById(R.id.description),
+                mUser.getDescription(), true, false, mUser.getDescriptionURLEntities(), null);
     }
 
     private void invalidateFollowButton(View view) {
