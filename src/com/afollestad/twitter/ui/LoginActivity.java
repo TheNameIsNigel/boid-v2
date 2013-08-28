@@ -29,6 +29,7 @@ public class LoginActivity extends ThemedActivity {
             @Override
             public void run() {
                 try {
+                    BoidApp.get(LoginActivity.this).shutdownClient();
                     final RequestToken token = BoidApp.get(LoginActivity.this).getClient()
                             .getOAuthRequestToken(BoidApp.CALLBACK_URL);
                     runOnUiThread(new Runnable() {

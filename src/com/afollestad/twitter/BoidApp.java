@@ -59,6 +59,11 @@ public class BoidApp extends Application {
         return (BoidApp) context.getApplicationContext();
     }
 
+    public void shutdownClient() {
+        client.shutdown();
+        client = null;
+    }
+
     public Twitter getClient() {
         if (client == null) {
             client = new TwitterFactory().getInstance();
