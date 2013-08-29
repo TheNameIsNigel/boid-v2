@@ -18,6 +18,8 @@
         <item name="navDrawerBackground">@color/drawer_background_light</item>
         <item name="errorTextColor">@color/red</item>
 
+        <item name="addIcon">@drawable/ic_add_dark</item>
+
         <item name="composeIcon">@drawable/ic_compose_dark</item>
         <item name="sendIcon">@drawable/ic_send_dark</item>
         <item name="refreshIcon">@drawable/ic_refresh_dark</item>

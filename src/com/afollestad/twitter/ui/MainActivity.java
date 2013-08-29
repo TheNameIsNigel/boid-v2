@@ -66,7 +66,7 @@ public class MainActivity extends ThemedDrawerActivity {
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new MainPagerAdapter(getFragmentManager()));
+        mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
         mPager.setOffscreenPageLimit(5);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -104,6 +104,10 @@ public class MainActivity extends ThemedDrawerActivity {
             drawerList.setItemChecked(mLastChecked, true);
             startActivity(new Intent(this, ProfileActivity.class)
                     .putExtra("user", BoidApp.get(this).getProfile()));
+            return;
+        } else if(index == drawerList.getCount() - 1) {
+            drawerList.setItemChecked(mLastChecked, true);
+            Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_SHORT).show();
             return;
         }
         mLastChecked = index;

@@ -23,14 +23,17 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.ProfileActivity;
+import com.afollestad.twitter.utilities.Columns;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.User;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * The tweet viewer fragment.
@@ -53,10 +56,42 @@ public class TweetViewerFragment extends SilkFragment {
         processArgs();
     }
 
+    private void reloadTweet() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Twitter client = BoidApp.get(getActivity()).getClient();
+                try {
+                    mTweet = client.showStatus(mTweet.getId());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            displayTweet();
+                        }
+                    });
+                } catch (final TwitterException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BoidApp.showAppMsgError(getActivity(), e);
+                        }
+                    });
+                }
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+    }
+
     private void processArgs() {
         mTweet = (Status) getArguments().getSerializable("tweet");
         if (mTweet.isRetweet())
             mTweet = mTweet.getRetweetedStatus();
+        displayTweet();
+    }
+
+    private void displayTweet() {
         View v = getView();
         if (v == null) return;
         SilkImageView profilePic = (SilkImageView) v.findViewById(R.id.profilePic);
@@ -119,6 +154,8 @@ public class TweetViewerFragment extends SilkFragment {
                 startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "image/*"));
             }
         });
+
+        reloadTweet();
     }
 
     @Override
@@ -165,8 +202,7 @@ public class TweetViewerFragment extends SilkFragment {
     }
 
     private void updateCaches() {
-        //TODO other columns that contain tweets, like custom search columns.
-        String[] columnNames = new String[]{"timeline", "mentions"};
+        List<String> columnNames = Columns.getAll(getActivity());
         for (String col : columnNames) {
             new SilkCacheManager<Status>(getActivity(), col, BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
                 @Override

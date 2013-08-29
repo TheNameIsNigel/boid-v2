@@ -13,6 +13,8 @@
     <attr name="retweetIndicator" format="reference"/>
     <attr name="sendButton" format="reference"/>
 
+    <attr name="addIcon" format="reference"/>
+
     <attr name="replyIcon" format="reference"/>
     <attr name="retweetIcon" format="reference"/>
     <attr name="favoritedIcon" format="reference"/>

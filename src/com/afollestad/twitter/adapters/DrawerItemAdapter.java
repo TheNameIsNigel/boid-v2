@@ -27,6 +27,7 @@ public class DrawerItemAdapter extends BaseAdapter {
             items.add("@" + profile.getScreenName());
         else items.add("Profile");
         Collections.addAll(items, context.getResources().getStringArray(R.array.main_drawer_items));
+        items.add(context.getString(R.string.add));
     }
 
     private final Context context;
@@ -49,10 +50,24 @@ public class DrawerItemAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null)
-            view = LayoutInflater.from(context).inflate(R.layout.list_item_drawer, null);
+        if (view == null) {
+            if (getItemViewType(i) == 0)
+                view = LayoutInflater.from(context).inflate(R.layout.list_item_drawer, null);
+            else view = LayoutInflater.from(context).inflate(R.layout.list_item_drawer_add, null);
+        }
         TextView content = (TextView) view.findViewById(R.id.title);
         content.setText(items.get(i));
         return view;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == (getCount() - 1)) return 1;
+        return 0;
     }
 }

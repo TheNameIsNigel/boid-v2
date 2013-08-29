@@ -60,7 +60,7 @@ public class BoidApp extends Application {
     }
 
     public void shutdownClient() {
-        if(client == null) return;
+        if (client == null) return;
         client.shutdown();
         client = null;
     }

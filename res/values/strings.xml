@@ -33,7 +33,6 @@
         <item>Mentions</item>
         <item>Messages</item>
         <item>Trends</item>
-        <item>#Boid</item>
     </string-array>
 
     <string name="composer_input_hint">What\'s happening?</string>
@@ -94,5 +93,6 @@
 
     <string name="retweets">Retweets</string>
     <string name="favorites">Favorites</string>
+    <string name="add">Add</string>
 
 </resources>
