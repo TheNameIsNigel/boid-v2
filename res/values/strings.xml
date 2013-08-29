@@ -76,7 +76,6 @@
     <string name="add_to_list">Add to List</string>
     <string name="block">Block</string>
     <string name="report">Report</string>
-    <string name="not_authorized">Not Authorized</string>
 
     <string name="confirm_unfollow_title">Unfollow</string>
     <string name="confirm_unfollow">Are you sure you want to unfollow @{screenname}?</string>

@@ -86,7 +86,6 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                         @Override
                         public void run() {
                             ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.UNFOLLOWING);
-                            setEmptyText(getString(R.string.not_authorized));
                         }
                     });
                     return new ArrayList<Status>();
@@ -108,7 +107,6 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                     public void run() {
                         ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.UNKNOWN);
                         BoidApp.showAppMsgError(getActivity(), e);
-                        setEmptyText(getString(R.string.error));
                     }
                 });
                 return new ArrayList<Status>();

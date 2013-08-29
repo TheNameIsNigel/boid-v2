@@ -243,9 +243,4 @@ public class ProfileAdapter extends StatusAdapter {
         else if (item.isProfileFollowButton()) return 2;
         return super.getItemViewType(position);
     }
-
-    @Override
-    public boolean isEmpty() {
-        return getCount() <= 2;
-    }
 }
