@@ -61,23 +61,24 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
             // Update profile cache
             BoidApp.get(getActivity()).storeProfile(mUser);
         }
-
     }
 
     @Override
     protected List<Status> refresh() throws Exception {
         Twitter client = BoidApp.get(getActivity()).getClient();
-        if (mUser == null && getArguments().containsKey("screen_name")) {
-            // If a 'screen_name' intent extra was passed, the user must be manually loaded now
-            mUser = client.showUser(getArguments().getString("screen_name"));
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
-                    getActivity().invalidateOptionsMenu();
-                }
-            });
-        }
+        if (mUser == null) {
+            if (getArguments().containsKey("screen_name")) {
+                // If a 'screen_name' intent extra was passed, the user must be manually loaded now
+                mUser = client.showUser(getArguments().getString("screen_name"));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getActivity().getActionBar().setTitle("@" + mUser.getScreenName());
+                        getActivity().invalidateOptionsMenu();
+                    }
+                });
+            } else return new ArrayList<Status>();
+        } else mUser = client.showUser(mUser.getId());
 
         ((ProfileAdapter) getAdapter()).setUser(mUser);
         if (mProfile.getId() == mUser.getId()) {
