@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Boidblack" parent="@android:style/Theme.Holo">
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_boidblack</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Boidblack</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Boidblack</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Boidblack</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Boidblack</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Boidblack</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_boidblack</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_boidblack</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Boidblack</item>
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="android:windowBackground">@android:color/black</item>
+
+        <item name="inputFrameBackground">@drawable/ab_solid_boid</item>
+        <item name="usernameTextColor">@android:color/white</item>
+        <item name="contentTextColor">@android:color/white</item>
+        <item name="navDrawerBackground">@color/drawer_background_dark</item>
+        <item name="errorTextColor">@color/bright_red</item>
+
+        <item name="addIcon">@drawable/ic_add_light</item>
+
+        <item name="composeIcon">@drawable/ic_compose_light</item>
+        <item name="sendIcon">@drawable/ic_send_light</item>
+        <item name="refreshIcon">@drawable/ic_refresh_light</item>
+        <item name="sendButton">@drawable/send_button_light</item>
+        <item name="retweetIndicator">@drawable/ic_retweet_light</item>
+
+        <item name="replyIcon">@drawable/ic_reply_light</item>
+        <item name="retweetIcon">@drawable/ic_retweet_light</item>
+        <item name="favoritedIcon">@drawable/ic_favorited_light</item>
+        <item name="unfavoritedIcon">@drawable/ic_unfavorited_light</item>
+        <item name="shareIcon">@drawable/ic_share_light</item>
+        <item name="deleteIcon">@drawable/ic_delete_light</item>
+
+        <item name="mentionIcon">@drawable/ic_mention_light</item>
+        <item name="editIcon">@drawable/ic_edit_light</item>
+        <item name="searchIcon">@drawable/ic_search_light</item>
+        <item name="pinIcon">@drawable/ic_pin_light</item>
+
+    </style>
+
+    <style name="ActionBar.Solid.Boidblack" parent="@android:style/Widget.Holo.ActionBar.Solid">
+        <item name="android:background">@drawable/ab_solid_boidblack</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_boidblack</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_boidblack</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Boidblack</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Boidblack" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/ab_transparent_boidblack</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Boidblack</item>
+    </style>
+
+    <style name="PopupMenu.Boidblack" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_boidblack</item>
+    </style>
+
+    <style name="DropDownListView.Boidblack" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_boidblack</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Boidblack" parent="@android:style/Widget.Holo.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_boidblack</item>
+    </style>
+
+    <style name="DropDownNav.Boidblack" parent="@android:style/Widget.Holo.Spinner">
+        <item name="android:background">@drawable/spinner_background_ab_boidblack</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_boidblack</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_boidblack</item>
+    </style>
+
+    <style name="ProgressBar.Boidblack" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_boidblack</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Boidblack" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_boidblack</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Boidblack.Widget" parent="@android:style/Theme.Holo">
+        <item name="android:popupMenuStyle">@style/PopupMenu.Boidblack</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Boidblack</item>
+    </style>
+
+</resources>

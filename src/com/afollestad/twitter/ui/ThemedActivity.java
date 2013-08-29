@@ -50,6 +50,8 @@ public class ThemedActivity extends Activity {
                 return R.style.Theme_Boid;
             case 1:
                 return R.style.Theme_Boidlight;
+            case 2:
+                return R.style.Theme_Boidblack;
         }
     }
 }
