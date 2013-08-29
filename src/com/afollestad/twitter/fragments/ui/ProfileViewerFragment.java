@@ -55,6 +55,16 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     @Override
+    protected void onPostLoad(List<Status> results) {
+        super.onPostLoad(results);
+        if (mProfile.getId() == mUser.getId()) {
+            // Update profile cache
+            BoidApp.get(getActivity()).storeProfile(mUser);
+        }
+
+    }
+
+    @Override
     protected List<Status> refresh() throws Exception {
         Twitter client = BoidApp.get(getActivity()).getClient();
         if (mUser == null && getArguments().containsKey("screen_name")) {
