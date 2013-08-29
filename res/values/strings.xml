@@ -80,6 +80,7 @@
     <string name="confirm_unfollow_title">Unfollow</string>
     <string name="confirm_unfollow">Are you sure you want to unfollow @{screenname}?</string>
     <string name="profile">Profile</string>
+    <string name="confirm_delete">Are you sure you want to delete this tweet?</string>
 
     <string name="search">Search</string>
     <string name="search_hint">Search tweets and users…</string>
@@ -90,5 +91,8 @@
     <string name="tweets">Tweets</string>
     <string name="following">Following</string>
     <string name="followers">Followers</string>
+
+    <string name="retweets">Retweets</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

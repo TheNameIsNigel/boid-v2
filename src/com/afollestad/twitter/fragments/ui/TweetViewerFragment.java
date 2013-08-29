@@ -70,6 +70,33 @@ public class TweetViewerFragment extends SilkFragment {
         });
         ((TextView) v.findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
         ((TextView) v.findViewById(R.id.source)).setText("via " + Html.fromHtml(mTweet.getSource()).toString());
+
+        if (mTweet.getFavoriteCount() == 0 && mTweet.getRetweetCount() == 0) {
+            v.findViewById(R.id.infoFrame).setVisibility(View.GONE);
+        } else {
+            v.findViewById(R.id.infoFrame).setVisibility(View.VISIBLE);
+            TextView favoriteCount = (TextView) v.findViewById(R.id.favoriteCount);
+            favoriteCount.setText(mTweet.getFavoriteCount() + "\n" + getString(R.string.favorites));
+            if (mTweet.getFavoriteCount() > 0) {
+                favoriteCount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO
+                    }
+                });
+            }
+            TextView retweetCount = (TextView) v.findViewById(R.id.retweetCount);
+            retweetCount.setText(mTweet.getRetweetCount() + "\n" + getString(R.string.retweets));
+            if (mTweet.getRetweetCount() > 0) {
+                retweetCount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO
+                    }
+                });
+            }
+        }
+
         TextView content = (TextView) v.findViewById(R.id.content);
         TextUtils.linkifyText(getActivity(), content, mTweet, true, true);
 
@@ -131,7 +158,7 @@ public class TweetViewerFragment extends SilkFragment {
                 performShare();
                 return true;
             case R.id.delete:
-                performDelete();
+                confirmDelete();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -256,6 +283,25 @@ public class TweetViewerFragment extends SilkFragment {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND)
                 .setType("text/plain").putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+    }
+
+    private void confirmDelete() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.delete)
+                .setMessage(R.string.confirm_delete)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        performDelete();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
     private void performDelete() {

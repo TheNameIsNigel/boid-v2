@@ -42,6 +42,40 @@
 
         </LinearLayout>
 
+        <LinearLayout android:id="@+id/infoFrame"
+                      android:orientation="horizontal"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:weightSum="3"
+                      android:showDividers="middle"
+                      android:divider="?android:dividerVertical"
+                      android:gravity="center_horizontal"
+                      android:layout_gravity="center_horizontal"
+                      android:layout_marginTop="10dp"
+                      android:layout_marginBottom="5dp">
+
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/favoriteCount"
+                                                         android:layout_width="0dp"
+                                                         android:layout_height="wrap_content"
+                                                         android:layout_weight="1"
+                                                         android:textColor="?contentTextColor"
+                                                         android:background="?android:actionBarItemBackground"
+                                                         android:gravity="center"
+                                                         android:paddingTop="7dp"
+                                                         android:paddingBottom="7dp"/>
+
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/retweetCount"
+                                                         android:layout_width="0dp"
+                                                         android:layout_height="wrap_content"
+                                                         android:layout_weight="1"
+                                                         android:textColor="?contentTextColor"
+                                                         android:background="?android:actionBarItemBackground"
+                                                         android:gravity="center"
+                                                         android:paddingTop="7dp"
+                                                         android:paddingBottom="7dp"/>
+
+        </LinearLayout>
+
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content"
                                                      android:layout_width="match_parent"
                                                      android:layout_height="wrap_content"
