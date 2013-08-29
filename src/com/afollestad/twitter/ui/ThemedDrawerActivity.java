@@ -57,8 +57,10 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
 
     @Override
     public int getDrawerIndicatorRes() {
-        if (getBoidTheme() == R.style.ActionBar_Solid_Boidlight)
+        if (getBoidTheme() == R.style.Theme_Boidlight)
             return R.drawable.ic_navigation_drawer_dark;
-        return R.drawable.ic_navigation_drawer_light;
+        else if (getBoidTheme() == R.style.Theme_Boid)
+            return R.drawable.ic_navigation_drawer_light;
+        else return R.drawable.ic_navigation_drawer_white;
     }
 }
