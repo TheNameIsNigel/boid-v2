@@ -10,7 +10,7 @@
 
     <color name="drawer_background_dark">#3A3A3C</color>
     <color name="drawer_background_light">#FFFFFF</color>
-    <color name="drawer_background_pureblack">#1E1E1E</color>
+    <color name="drawer_background_pureblack">#111111</color>
 
     <color name="pressed_boidlight">#CC33B5E5</color>
     <color name="pressed_boid">#CC33B5E5</color>
