@@ -15,6 +15,7 @@ import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,15 +81,26 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
         } else {
             try {
                 final Relationship friendship = client.showFriendship(mProfile.getId(), mUser.getId());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((ProfileAdapter) getAdapter()).setFollowing(
-                                friendship.isSourceFollowingTarget() ? ProfileAdapter.FollowingType.FOLLOWING : ProfileAdapter.FollowingType.UNFOLLOWING,
-                                friendship.isTargetFollowingSource() ? ProfileAdapter.FollowingType.FOLLOWING : ProfileAdapter.FollowingType.UNFOLLOWING
-                        );
-                    }
-                });
+                if (mUser.isProtected() && !friendship.isSourceFollowingTarget()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.UNFOLLOWING);
+                            setEmptyText(getString(R.string.not_authorized));
+                        }
+                    });
+                    return new ArrayList<Status>();
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((ProfileAdapter) getAdapter()).setFollowing(
+                                    friendship.isSourceFollowingTarget() ? ProfileAdapter.FollowingType.FOLLOWING : ProfileAdapter.FollowingType.UNFOLLOWING,
+                                    friendship.isTargetFollowingSource() ? ProfileAdapter.FollowingType.FOLLOWING : ProfileAdapter.FollowingType.UNFOLLOWING
+                            );
+                        }
+                    });
+                }
             } catch (final TwitterException e) {
                 e.printStackTrace();
                 runOnUiThread(new Runnable() {
@@ -96,8 +108,10 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
                     public void run() {
                         ((ProfileAdapter) getAdapter()).setFollowing(ProfileAdapter.FollowingType.UNKNOWN);
                         BoidApp.showAppMsgError(getActivity(), e);
+                        setEmptyText(getString(R.string.error));
                     }
                 });
+                return new ArrayList<Status>();
             }
         }
 

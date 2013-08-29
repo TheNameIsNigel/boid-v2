@@ -128,7 +128,9 @@ public class ProfileAdapter extends StatusAdapter {
         if (outward == FollowingType.NONE && inward == FollowingType.NONE) {
             button.setVisibility(View.GONE);
             return;
-        } else if (outward == FollowingType.UNKNOWN || inward == FollowingType.UNKNOWN)
+        } else if (outward == FollowingType.UNFOLLOWING && mUser.isProtected())
+            button.setText(R.string.send_request);
+        else if (outward == FollowingType.UNKNOWN || inward == FollowingType.UNKNOWN)
             button.setText(R.string.error);
         else if (outward == FollowingType.FOLLOWING && inward == FollowingType.FOLLOWING)
             button.setText(R.string.follows_you_unfollow);
@@ -240,5 +242,10 @@ public class ProfileAdapter extends StatusAdapter {
         if (item.isProfileHeader()) return 1;
         else if (item.isProfileFollowButton()) return 2;
         return super.getItemViewType(position);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return getCount() <= 2;
     }
 }
