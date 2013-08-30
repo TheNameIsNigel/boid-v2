@@ -2,10 +2,15 @@ package com.afollestad.twitter.fragments.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.StatusAdapter;
+import com.afollestad.twitter.columns.Column;
+import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
@@ -42,6 +47,7 @@ public class SearchFragment extends BoidListFragment<Status> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         mQuery = getArguments().getString("query");
     }
 
@@ -102,5 +108,28 @@ public class SearchFragment extends BoidListFragment<Status> {
     @Override
     protected boolean isPaginationEnabled() {
         return true;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_search, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.pin:
+                Columns.add(getActivity(), new Column(Column.SEARCH, mQuery));
+                return true;
+            case R.id.compose:
+                startActivity(new Intent(getActivity(), ComposeActivity.class)
+                        .putExtra("content", mQuery + " "));
+                return true;
+            case R.id.save:
+                //TODO
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

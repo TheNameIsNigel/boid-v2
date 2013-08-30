@@ -28,13 +28,6 @@
 
     <string name="retweeted_by">Retweeted by @{user}</string>
 
-    <string-array name="main_drawer_items">
-        <item>Timeline</item>
-        <item>Mentions</item>
-        <item>Messages</item>
-        <item>Trends</item>
-    </string-array>
-
     <string name="composer_input_hint">What\'s happening?</string>
     <string name="posting_tweet">Posting tweet…</string>
     <string name="send_error">Failed to post your tweet.</string>
@@ -94,5 +87,15 @@
     <string name="retweets">Retweets</string>
     <string name="favorites">Favorites</string>
     <string name="add">Add</string>
+
+    <string name="add_column">Add Column</string>
+    <string-array name="column_types">
+        <item>Timeline</item>
+        <item>Mentions</item>
+        <item>Messages</item>
+        <item>Trends</item>
+        <item>Search</item>
+        <item>List</item>
+    </string-array>
 
 </resources>

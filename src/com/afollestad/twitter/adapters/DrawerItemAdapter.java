@@ -1,63 +1,39 @@
 package com.afollestad.twitter.adapters;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.columns.Column;
+import com.afollestad.twitter.columns.Columns;
 import twitter4j.User;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A list adapter that displays items in the {@link com.afollestad.twitter.ui.MainActivity}'s navigation drawer.
  *
  * @author Aidan Follestad (afollestad)
  */
-public class DrawerItemAdapter extends BaseAdapter {
+public class DrawerItemAdapter extends SilkAdapter<Column> {
 
     public DrawerItemAdapter(Context context, User profile) {
-        this.context = context;
-        items = new ArrayList<String>();
-        if (profile != null)
-            items.add("@" + profile.getScreenName());
-        else items.add("Profile");
-        Collections.addAll(items, context.getResources().getStringArray(R.array.main_drawer_items));
-        items.add(context.getString(R.string.add));
-    }
-
-    private final Context context;
-    private final List<String> items;
-
-    @Override
-    public int getCount() {
-        return items.size();
+        super(context);
+        add(new Column(Column.PROFILE_BUTTON, "@" + profile.getScreenName()));
+        add(Columns.getAll(context));
+        add(new Column(Column.ADD_BUTTON, context.getString(R.string.add)));
     }
 
     @Override
-    public Object getItem(int i) {
-        return items.get(i);
+    public int getLayout(int index, int type) {
+        if (type == 1) return R.layout.list_item_drawer_add;
+        return R.layout.list_item_drawer;
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            if (getItemViewType(i) == 0)
-                view = LayoutInflater.from(context).inflate(R.layout.list_item_drawer, null);
-            else view = LayoutInflater.from(context).inflate(R.layout.list_item_drawer_add, null);
-        }
-        TextView content = (TextView) view.findViewById(R.id.title);
-        content.setText(items.get(i));
-        return view;
+    public View onViewCreated(int index, View recycled, Column item) {
+        TextView content = (TextView) recycled.findViewById(R.id.title);
+        content.setText(item.getName(true));
+        return recycled;
     }
 
     @Override

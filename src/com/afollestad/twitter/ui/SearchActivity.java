@@ -1,8 +1,6 @@
 package com.afollestad.twitter.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.fragments.pages.SearchFragment;
@@ -33,20 +31,10 @@ public class SearchActivity extends ThemedActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_search, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                return true;
-            case R.id.compose:
-                startActivity(new Intent(this, ComposeActivity.class)
-                        .putExtra("content", getIntent().getStringExtra("query") + " "));
                 return true;
         }
         return super.onOptionsItemSelected(item);

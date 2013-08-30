@@ -5,8 +5,9 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
+import com.afollestad.twitter.columns.Column;
+import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.fragments.pages.*;
-import com.afollestad.twitter.utilities.Columns;
 
 import java.util.List;
 
@@ -20,24 +21,28 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         mCols = Columns.getAll(context);
     }
 
-    private List<String> mCols;
+    private List<Column> mCols;
 
     @Override
     public Fragment getItem(int i) {
-        if (mCols.get(i).equals("timeline")) {
-            return new TimelineFragment();
-        } else if (mCols.get(i).equals("mentions")) {
-            return new MentionsFragment();
-        } else if (mCols.get(i).equals("messages")) {
-            return new ConversationFragment();
-        } else if (mCols.get(i).equals("trends")) {
-            return new TrendsFragment();
-        } else if (mCols.get(i).startsWith("[search]:")) {
-            SavedSearchFragment frag = new SavedSearchFragment();
-            Bundle args = new Bundle();
-            args.putString("query", mCols.get(i).substring(9));
-            frag.setArguments(args);
-            return frag;
+        switch (mCols.get(i).getId()) {
+            case Column.TIMELINE:
+                return new TimelineFragment();
+            case Column.MENTIONS:
+                return new MentionsFragment();
+            case Column.MESSAGES:
+                return new ConversationFragment();
+            case Column.TRENDS:
+                return new TrendsFragment();
+            case Column.SEARCH:
+                SavedSearchFragment frag = new SavedSearchFragment();
+                Bundle args = new Bundle();
+                args.putString("query", mCols.get(i).getComponent());
+                frag.setArguments(args);
+                return frag;
+            case Column.LIST:
+                //TODO
+                break;
         }
         return null;
     }

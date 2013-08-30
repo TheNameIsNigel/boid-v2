@@ -21,6 +21,7 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
+import com.afollestad.twitter.columns.Columns;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
@@ -66,7 +67,7 @@ public class MainActivity extends ThemedDrawerActivity {
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
+        drawerList = (ListView) findViewById(R.id.drawer_list);
         mPager.setOffscreenPageLimit(5);
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -76,9 +77,6 @@ public class MainActivity extends ThemedDrawerActivity {
                 invalidateOptionsMenu();
             }
         });
-
-        drawerList = (ListView) findViewById(R.id.drawer_list);
-        drawerList.setAdapter(new DrawerItemAdapter(this, BoidApp.get(this).getProfile()));
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -98,6 +96,17 @@ public class MainActivity extends ThemedDrawerActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateColumns();
+    }
+
+    private void invalidateColumns() {
+        mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
+        drawerList.setAdapter(new DrawerItemAdapter(this, BoidApp.get(this).getProfile()));
+    }
+
     private void onDrawerItemClicked(int index) {
         getDrawerLayout().closeDrawers();
         if (index == 0) {
@@ -105,9 +114,15 @@ public class MainActivity extends ThemedDrawerActivity {
             startActivity(new Intent(this, ProfileActivity.class)
                     .putExtra("user", BoidApp.get(this).getProfile()));
             return;
-        } else if(index == drawerList.getCount() - 1) {
+        } else if (index == drawerList.getCount() - 1) {
             drawerList.setItemChecked(mLastChecked, true);
-            Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_SHORT).show();
+            Columns.showAddDialog(this, new Columns.ColumnAddListener() {
+                @Override
+                public void onAdded(int newIndex) {
+                    invalidateColumns();
+                    mPager.setCurrentItem(newIndex);
+                }
+            });
             return;
         }
         mLastChecked = index;
