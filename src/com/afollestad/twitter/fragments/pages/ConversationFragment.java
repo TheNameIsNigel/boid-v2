@@ -5,6 +5,7 @@ import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.ConversationAdapter;
+import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ConversationActivity;
 import twitter4j.DirectMessage;
@@ -21,7 +22,7 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
 
     @Override
     public String getCacheTitle() {
-        return "conversations";
+        return Column.MESSAGES + "";
     }
 
     @Override

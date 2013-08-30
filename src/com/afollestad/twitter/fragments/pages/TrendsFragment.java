@@ -6,6 +6,7 @@ import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.TrendAdapter;
+import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.SearchActivity;
 import twitter4j.Paging;
@@ -23,7 +24,7 @@ public class TrendsFragment extends BoidListFragment<Trend> {
 
     @Override
     public String getCacheTitle() {
-        return "trends";
+        return Column.TRENDS + "";
     }
 
     @Override

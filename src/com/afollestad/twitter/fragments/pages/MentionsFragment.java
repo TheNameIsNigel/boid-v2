@@ -5,6 +5,7 @@ import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.StatusAdapter;
+import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
@@ -21,7 +22,7 @@ public class MentionsFragment extends BoidListFragment<Status> {
 
     @Override
     public String getCacheTitle() {
-        return "mentions";
+        return Column.MENTIONS + "";
     }
 
     @Override
