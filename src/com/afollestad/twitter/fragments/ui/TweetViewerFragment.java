@@ -22,9 +22,9 @@ import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.columns.Column;
+import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.ProfileActivity;
-import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
@@ -208,7 +208,7 @@ public class TweetViewerFragment extends SilkFragment {
             new SilkCacheManager<Status>(getActivity(), col.toString(), BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
                 @Override
                 public void onInitialized(SilkCacheManager<Status> manager) {
-                    manager.update(mTweet, false).commitAsync(new SilkCacheManager.SimpleCommitCallback() {
+                    manager.update(mTweet, SilkCacheManager.StartingPoint.ZERO, false).commitAsync(new SilkCacheManager.SimpleCommitCallback() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
