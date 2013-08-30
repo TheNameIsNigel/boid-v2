@@ -3,6 +3,7 @@
 
     <string name="app_name">Boid OSP</string>
 
+    <string name="columns">Columns</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_message">Please login.</string>
     <string name="login">Login</string>
@@ -63,6 +64,7 @@
     <string name="follows_you_unfollow">follows you, unfollow</string>
     <string name="mention">Mention</string>
     <string name="edit">Edit</string>
+    <string name="edit_columns">Edit Columns</string>
     <string name="send_dm">Send DM</string>
     <string name="compose_dm">Compose DM</string>
     <string name="add_to_list">Add to List</string>
@@ -97,5 +99,8 @@
         <item>Search</item>
         <item>List</item>
     </string-array>
+
+    <string name="remove">Remove</string>
+    <string name="confirm_remove">Are you sure you want to remove your {name} column?</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
-import com.afollestad.twitter.columns.Columns;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
@@ -35,6 +35,7 @@ public class MainActivity extends ThemedDrawerActivity {
     private ListView drawerList;
     private PullToRefreshAttacher mPullToRefreshAttacher;
     private int mLastChecked = 1;
+    private int mLastPageCount;
 
     public PullToRefreshAttacher getPullToRefreshAttacher() {
         return mPullToRefreshAttacher;
@@ -57,7 +58,7 @@ public class MainActivity extends ThemedDrawerActivity {
 
     @Override
     public int getOpenedTextRes() {
-        return R.string.app_name;
+        return R.string.columns;
     }
 
     @Override
@@ -99,12 +100,20 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        int oldAccount = mLastPageCount;
         invalidateColumns();
+        int newCount = mLastPageCount;
+        if (oldAccount > 0 && newCount != oldAccount) {
+            // If pages have been added or removed, move to the newer page or last old page
+            mPager.setCurrentItem(newCount - 1);
+        }
     }
 
     private void invalidateColumns() {
         int page = mPager.getCurrentItem();
-        mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
+        MainPagerAdapter pagerAdapter = new MainPagerAdapter(this, getFragmentManager());
+        mLastPageCount = pagerAdapter.getCount();
+        mPager.setAdapter(pagerAdapter);
         drawerList.setAdapter(new DrawerItemAdapter(this, BoidApp.get(this).getProfile()));
         mPager.setCurrentItem(page);
     }
@@ -115,16 +124,6 @@ public class MainActivity extends ThemedDrawerActivity {
             drawerList.setItemChecked(mLastChecked, true);
             startActivity(new Intent(this, ProfileActivity.class)
                     .putExtra("user", BoidApp.get(this).getProfile()));
-            return;
-        } else if (index == drawerList.getCount() - 1) {
-            drawerList.setItemChecked(mLastChecked, true);
-            Columns.showAddDialog(this, new Columns.ColumnAddListener() {
-                @Override
-                public void onAdded(int newIndex) {
-                    invalidateColumns();
-                    mPager.setCurrentItem(newIndex);
-                }
-            });
             return;
         }
         mLastChecked = index;
@@ -141,23 +140,29 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        menu.findItem(R.id.compose_dm).setVisible(mPager.getCurrentItem() == 2);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        boolean drawerOpen = getDrawerLayout().isDrawerOpen(Gravity.START);
+        menu.findItem(R.id.compose_dm).setVisible(!drawerOpen && mPager.getCurrentItem() == 2);
+        menu.findItem(R.id.compose).setVisible(!drawerOpen);
+        menu.findItem(R.id.edit_columns).setVisible(drawerOpen);
         final MenuItem search = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) search.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                search.collapseActionView();
-                return false;
-            }
+        search.setVisible(!drawerOpen);
+        if (!drawerOpen) {
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView = (SearchView) search.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    search.collapseActionView();
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

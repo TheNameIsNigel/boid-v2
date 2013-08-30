@@ -62,18 +62,4 @@ public class Columns {
         cols.remove(index);
         setAll(context, cols);
     }
-
-    public static void showAddDialog(final Activity context, final ColumnAddListener listener) {
-        new AlertDialog.Builder(context)
-                .setTitle(R.string.add_column)
-                .setItems(R.array.column_types, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        //TODO search and list dialogs?
-                        int index = add(context, new Column(which));
-                        if (listener != null) listener.onAdded(index);
-                    }
-                }).show();
-    }
 }

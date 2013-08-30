@@ -20,12 +20,10 @@ public class DrawerItemAdapter extends SilkAdapter<Column> {
         super(context);
         add(new Column(Column.PROFILE_BUTTON, "@" + profile.getScreenName()));
         add(Columns.getAll(context));
-        add(new Column(Column.ADD_BUTTON, context.getString(R.string.add)));
     }
 
     @Override
     public int getLayout(int index, int type) {
-        if (type == 1) return R.layout.list_item_drawer_add;
         return R.layout.list_item_drawer;
     }
 
@@ -34,16 +32,5 @@ public class DrawerItemAdapter extends SilkAdapter<Column> {
         TextView content = (TextView) recycled.findViewById(R.id.title);
         content.setText(item.getName(true));
         return recycled;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 2;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == (getCount() - 1)) return 1;
-        return 0;
     }
 }

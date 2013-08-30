@@ -121,6 +121,7 @@ public class SearchFragment extends BoidListFragment<Status> {
         switch (item.getItemId()) {
             case R.id.pin:
                 Columns.add(getActivity(), new Column(Column.SEARCH, mQuery));
+                getActivity().finish();
                 return true;
             case R.id.compose:
                 startActivity(new Intent(getActivity(), ComposeActivity.class)

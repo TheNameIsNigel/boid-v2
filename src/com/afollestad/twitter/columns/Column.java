@@ -8,7 +8,6 @@ import com.afollestad.silk.cache.SilkComparable;
 public class Column implements SilkComparable<Column> {
 
     public final static int PROFILE_BUTTON = -2;
-    public final static int ADD_BUTTON = -1;
 
     public final static int TIMELINE = 0;
     public final static int MENTIONS = 1;
@@ -82,6 +81,6 @@ public class Column implements SilkComparable<Column> {
 
     @Override
     public boolean shouldIgnore() {
-        return getId() == PROFILE_BUTTON || getId() == ADD_BUTTON;
+        return getId() == PROFILE_BUTTON;
     }
 }
