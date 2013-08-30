@@ -103,8 +103,10 @@ public class MainActivity extends ThemedDrawerActivity {
     }
 
     private void invalidateColumns() {
+        int page = mPager.getCurrentItem();
         mPager.setAdapter(new MainPagerAdapter(this, getFragmentManager()));
         drawerList.setAdapter(new DrawerItemAdapter(this, BoidApp.get(this).getProfile()));
+        mPager.setCurrentItem(page);
     }
 
     private void onDrawerItemClicked(int index) {
