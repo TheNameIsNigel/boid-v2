@@ -25,7 +25,7 @@ import com.afollestad.twitter.adapters.MainPagerAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
- * The activity_main app UI.
+ * The main app UI.
  *
  * @author Aidan Follestad (afollestad)
  */
