@@ -37,7 +37,7 @@
                            android:layout_height="@dimen/favorited_indicator"
                            android:scaleType="fitXY"
                            android:src="?favoritedIcon"
-                           android:layout_marginLeft="6dp"
+                           android:layout_marginLeft="3dp"
                            android:layout_centerVertical="true"
                            android:layout_toLeftOf="@+id/timestamp"
                            android:visibility="gone"/>
@@ -47,7 +47,7 @@
                                                              android:layout_height="wrap_content"
                                                              android:singleLine="true"
                                                              android:textSize="@dimen/timestampText"
-                                                             android:layout_marginLeft="1dp"
+                                                             android:layout_marginLeft="3dp"
                                                              android:textColor="?contentTextColor"
                                                              android:layout_alignParentRight="true"
                                                              android:layout_centerVertical="true"/>

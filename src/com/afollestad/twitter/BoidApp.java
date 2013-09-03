@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.utilities.Utils;
 import com.devspark.appmsg.AppMsg;
 import twitter4j.Twitter;
@@ -120,6 +121,7 @@ public class BoidApp extends Application {
         prefs.edit().remove("token").commit();
         // Clear persisted preferences and stuff for Silk.
         Silk.clearPersistence(this);
+        Columns.clear(this);
         // Wipe the Silk cache
         File cacheDir = getSilkCache();
         for (File fi : cacheDir.listFiles())

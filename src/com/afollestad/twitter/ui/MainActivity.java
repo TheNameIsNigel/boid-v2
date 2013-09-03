@@ -139,14 +139,14 @@ public class MainActivity extends ThemedDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
         boolean drawerOpen = getDrawerLayout().isDrawerOpen(Gravity.START);
-        menu.findItem(R.id.compose_dm).setVisible(!drawerOpen && mPager.getCurrentItem() == 2);
-        menu.findItem(R.id.compose).setVisible(!drawerOpen);
-        menu.findItem(R.id.edit_columns).setVisible(drawerOpen);
-        final MenuItem search = menu.findItem(R.id.search);
-        search.setVisible(!drawerOpen);
-        if (!drawerOpen) {
+        if (drawerOpen) {
+            getMenuInflater().inflate(R.menu.activity_main_draweropen, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.activity_main, menu);
+            menu.findItem(R.id.compose_dm).setVisible(mPager.getCurrentItem() == 2);
+            final MenuItem search = menu.findItem(R.id.search);
+            search.setVisible(!drawerOpen);
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
             SearchView searchView = (SearchView) search.getActionView();
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

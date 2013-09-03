@@ -1,12 +1,8 @@
 package com.afollestad.twitter.columns;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import com.afollestad.twitter.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +57,10 @@ public class Columns {
         List<Column> cols = getAll(context);
         cols.remove(index);
         setAll(context, cols);
+    }
+
+    public static void clear(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().remove("[columns]").commit();
     }
 }

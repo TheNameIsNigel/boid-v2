@@ -67,6 +67,7 @@ public class TweetViewerFragment extends SilkFragment {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            updateCaches();
                             displayTweet();
                         }
                     });
