@@ -8,7 +8,6 @@ import com.afollestad.silk.cache.SilkComparable;
 public class Column implements SilkComparable<Column> {
 
     public final static int PROFILE_BUTTON = -2;
-
     public final static int TIMELINE = 0;
     public final static int MENTIONS = 1;
     public final static int MESSAGES = 2;
@@ -16,23 +15,30 @@ public class Column implements SilkComparable<Column> {
     public final static int SEARCH = 4;
     public final static int LIST = 5;
 
-    public Column(int id) {
+    public Column(Class<?> itemType, int id) {
+        mItemType = itemType;
         mId = id;
     }
 
-    public Column(int id, String component) {
-        mId = id;
-        mComponent = component.replace(",", "&#44;");
+    public Column(Class<?> itemType, int id, String component) {
+        this(itemType, id);
+        mComponent = escape(component);
     }
 
     public Column(String str) {
-        if (str.contains(":")) {
-            mId = Integer.parseInt(str.substring(0, str.indexOf(':')));
-            mComponent = str.substring(str.indexOf(':') + 1).replace("&#44;", ",");
-        } else mId = Integer.parseInt(str);
+        String[] split = str.split(":");
+        mId = Integer.parseInt(split[0]);
+        try {
+            mItemType = Class.forName(split[1]);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (split.length > 2)
+            mComponent = split[2];
     }
 
     private int mId;
+    private Class<?> mItemType;
     private String mComponent;
 
     public int getId() {
@@ -63,13 +69,26 @@ public class Column implements SilkComparable<Column> {
     }
 
     public String getComponent() {
-        return mComponent;
+        return unescape(mComponent);
+    }
+
+    public Class<?> getType() {
+        return mItemType;
     }
 
     @Override
     public String toString() {
-        if (mComponent == null) return mId + "";
-        return mId + ":" + mComponent;
+        String str = mId + ":" + escape(mItemType.getName());
+        if (mComponent != null) str += ":" + mComponent;
+        return str;
+    }
+
+    private String escape(String str) {
+        return str.replace(",", "&#44;").replace(":", "&colon;");
+    }
+
+    private String unescape(String str) {
+        return str.replace("&#44;", ",").replace("&colon;", ":");
     }
 
     @Override

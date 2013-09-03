@@ -2,6 +2,7 @@ package com.afollestad.twitter.adapters;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
@@ -18,7 +19,7 @@ public class DrawerItemAdapter extends SilkAdapter<Column> {
 
     public DrawerItemAdapter(Context context, User profile) {
         super(context);
-        add(new Column(Column.PROFILE_BUTTON, "@" + profile.getScreenName()));
+        add(new Column(Button.class, Column.PROFILE_BUTTON, "@" + profile.getScreenName()));
         add(Columns.getAll(context));
     }
 

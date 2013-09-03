@@ -91,6 +91,7 @@ public class TweetViewerFragment extends SilkFragment {
         if (mTweet.isRetweet())
             mTweet = mTweet.getRetweetedStatus();
         displayTweet();
+        reloadTweet();
     }
 
     private void displayTweet() {
@@ -156,8 +157,6 @@ public class TweetViewerFragment extends SilkFragment {
                 startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "image/*"));
             }
         });
-
-        reloadTweet();
     }
 
     @Override
@@ -204,7 +203,7 @@ public class TweetViewerFragment extends SilkFragment {
     }
 
     private void updateCaches() {
-        List<Column> columns = Columns.getAll(getActivity());
+        List<Column> columns = Columns.getAll(getActivity(), Status.class);
         for (Column col : columns) {
             new SilkCacheManager<Status>(getActivity(), col.toString(), BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
                 @Override

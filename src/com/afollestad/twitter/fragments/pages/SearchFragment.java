@@ -32,7 +32,7 @@ public class SearchFragment extends BoidListFragment<Status> {
 
     @Override
     public String getCacheTitle() {
-        return getCacheEnabled() ? new Column(Column.SEARCH, mQuery).toString() : null;
+        return getCacheEnabled() ? new Column(Status.class, Column.SEARCH, mQuery).toString() : null;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class SearchFragment extends BoidListFragment<Status> {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.pin:
-                Columns.add(getActivity(), new Column(Column.SEARCH, mQuery));
+                Columns.add(getActivity(), new Column(Status.class, Column.SEARCH, mQuery));
                 getActivity().finish();
                 return true;
             case R.id.compose:

@@ -3,6 +3,10 @@ package com.afollestad.twitter.columns;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import com.afollestad.twitter.adapters.ConversationAdapter;
+import twitter4j.Status;
+import twitter4j.Trend;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +20,30 @@ public class Columns {
         public void onAdded(int newIndex);
     }
 
-    public static List<Column> getAll(Context context) {
+    public static List<Column> getAll(Context context, Class<?> ofType) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String saved = prefs.getString("[columns]", null);
         if (saved == null) {
             List<Column> cols = new ArrayList<Column>();
-            cols.add(new Column(Column.TIMELINE));
-            cols.add(new Column(Column.MENTIONS));
-            cols.add(new Column(Column.MESSAGES));
-            cols.add(new Column(Column.TRENDS));
+            cols.add(new Column(Status.class, Column.TIMELINE));
+            cols.add(new Column(Status.class, Column.MENTIONS));
+            cols.add(new Column(ConversationAdapter.Conversation.class, Column.MESSAGES));
+            cols.add(new Column(Trend.class, Column.TRENDS));
             setAll(context, cols);
             return cols;
         }
         String[] cols = saved.split(",");
         List<Column> toReturn = new ArrayList<Column>();
         for (String col : cols) {
-            toReturn.add(new Column(col));
+            Column toAdd = new Column(col);
+            if (ofType != null && !toAdd.getType().getName().equals(ofType.getName())) continue;
+            toReturn.add(toAdd);
         }
         return toReturn;
+    }
+
+    public static List<Column> getAll(Context context) {
+        return getAll(context, null);
     }
 
     public static void setAll(Context context, List<Column> cols) {
