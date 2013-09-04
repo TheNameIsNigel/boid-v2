@@ -130,9 +130,8 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     @Override
-    protected void onError(Exception message) {
-        BoidApp.showAppMsgError(getActivity(), message);
-        setEmptyText(message.getMessage());
+    protected void onError(Exception e) {
+        setEmptyText(BoidApp.showAppMsgError(getActivity(), e));
     }
 
     @Override

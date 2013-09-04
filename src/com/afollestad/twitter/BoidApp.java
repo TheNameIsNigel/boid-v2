@@ -33,11 +33,12 @@ public class BoidApp extends Application {
     public final static String DEFAULT_CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
     public final static String CALLBACK_URL = "boid://auth";
 
-    public static void showAppMsgError(Activity activity, Exception e) {
+    public static String showAppMsgError(Activity activity, Exception e) {
         String msg = e.getMessage();
         if (e instanceof TwitterException)
             msg = Utils.processTwitterException(activity, (TwitterException) e);
         AppMsg.makeText(activity, msg, new AppMsg.Style(AppMsg.LENGTH_LONG, R.color.app_msg_red), R.layout.app_msg_themed).show();
+        return msg;
     }
 
     public static void showAppMsg(Activity activity, String msg) {

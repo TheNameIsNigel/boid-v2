@@ -129,6 +129,7 @@ public class LoginActivity extends ThemedActivity {
     }
 
     private void processVerifier(final String url) {
+        mInWeb = false;
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -156,6 +157,7 @@ public class LoginActivity extends ThemedActivity {
                     public void run() {
                         findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
                         findViewById(R.id.webFrame).setVisibility(View.GONE);
+                        findViewById(R.id.settings).setVisibility(View.GONE);
                         ((TextView) findViewById(R.id.loginMessage)).setText(R.string.logged_in);
                         Button login = (Button) findViewById(R.id.login);
                         login.setText(R.string.finish);
