@@ -10,11 +10,11 @@ import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.cache.SilkComparable;
 import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.silk.utilities.TimeUtils;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ProfileActivity;
-import com.afollestad.twitter.utilities.TimeUtils;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.DirectMessage;
@@ -161,7 +161,7 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         }
         ((TextView) recycled.findViewById(R.id.username)).setText(TweetUtils.getDisplayName(item.getEndUser(), mDisplayRealNames));
         TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), message, false, false);
-        ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(message.getCreatedAt()));
+        ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.toStringShort(message.getCreatedAt()));
         return recycled;
     }
 

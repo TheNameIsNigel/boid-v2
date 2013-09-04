@@ -11,11 +11,11 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.silk.images.SilkImageManager;
+import com.afollestad.silk.utilities.TimeUtils;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ProfileActivity;
-import com.afollestad.twitter.utilities.TimeUtils;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.BoidSpan;
 import com.afollestad.twitter.utilities.text.TextUtils;
@@ -92,7 +92,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
 
         ((TextView) recycled.findViewById(R.id.username)).setText(TweetUtils.getDisplayName(item.getUser(), mDisplayRealNames));
         TextUtils.linkifyText(getContext(), (TextView) recycled.findViewById(R.id.content), item, false, false);
-        ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.getFriendlyTime(item.getCreatedAt()));
+        ((TextView) recycled.findViewById(R.id.timestamp)).setText(TimeUtils.toStringShort(item.getCreatedAt()));
 
         recycled.findViewById(R.id.favoritedIndicator).setVisibility(item.isFavorited() ? View.VISIBLE : View.INVISIBLE);
 
