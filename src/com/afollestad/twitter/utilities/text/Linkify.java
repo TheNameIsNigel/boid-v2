@@ -328,7 +328,7 @@ public class Linkify {
     }
 
     private static void applyLink(Context context, String url, int start, int end, Spannable text) {
-        BoidSpanNoUnderline span = new BoidSpanNoUnderline(context, url);
+        BoidSpan span = new BoidSpan(context, url);
         text.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 

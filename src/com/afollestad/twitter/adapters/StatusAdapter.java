@@ -17,7 +17,7 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TimeUtils;
 import com.afollestad.twitter.utilities.TweetUtils;
-import com.afollestad.twitter.utilities.text.BoidSpanNoUnderline;
+import com.afollestad.twitter.utilities.text.BoidSpan;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
 import twitter4j.User;
@@ -74,7 +74,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
             retweetedBy.setVisibility(View.VISIBLE);
             String retweetedTxt = getContext().getString(R.string.retweeted_by).replace("{user}", item.getUser().getScreenName());
             SpannableString retweetedSpan = new SpannableString(retweetedTxt);
-            retweetedSpan.setSpan(new BoidSpanNoUnderline(getContext(), null), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            retweetedSpan.setSpan(new BoidSpan(getContext(), null), retweetedTxt.indexOf("@"), retweetedTxt.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ((TextView) recycled.findViewById(R.id.retweetedByText)).setText(retweetedSpan);
             item = item.getRetweetedStatus();
         } else {

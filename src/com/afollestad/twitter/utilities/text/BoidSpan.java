@@ -13,9 +13,9 @@ import com.afollestad.twitter.ui.SearchActivity;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class BoidSpanNoUnderline extends ClickableSpan {
+public class BoidSpan extends ClickableSpan {
 
-    public BoidSpanNoUnderline(Context context, String value) {
+    public BoidSpan(Context context, String value) {
         mContext = context;
         mValue = value;
     }
@@ -29,9 +29,12 @@ public class BoidSpanNoUnderline extends ClickableSpan {
             mContext.startActivity(new Intent(mContext, ProfileActivity.class).putExtra("screen_name", mValue.substring(1)));
         } else if (mValue.startsWith("#")) {
             mContext.startActivity(new Intent(mContext, SearchActivity.class).putExtra("query", mValue));
-        } else {
+        } else if (mValue.startsWith("http")) {
             Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mValue));
             mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.open_with)));
+        } else {
+            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mValue, null));
+            mContext.startActivity(intent);
         }
     }
 

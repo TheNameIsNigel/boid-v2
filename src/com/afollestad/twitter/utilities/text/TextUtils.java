@@ -45,14 +45,10 @@ public class TextUtils {
         textView.setText(tweet);
         textView.setLinksClickable(clickable);
 
-        Pattern mentionPattern = Pattern.compile("@([A-Za-z0-9_-]+)");
-        Linkify.addLinks(context, textView, mentionPattern, null, filter);
-
-        Pattern hashtagPattern = Pattern.compile("#([A-Za-z0-9_-]+)");
-        Linkify.addLinks(context, textView, hashtagPattern, null, filter);
-
-        Pattern urlPattern = Patterns.WEB_URL;
-        Linkify.addLinks(context, textView, urlPattern, null, filter);
+        Linkify.addLinks(context, textView, Pattern.compile("@([A-Za-z0-9_-]+)"), null, filter);
+        Linkify.addLinks(context, textView, Pattern.compile("#([A-Za-z0-9_-]+)"), null, filter);
+        Linkify.addLinks(context, textView, Patterns.WEB_URL, null, filter);
+        Linkify.addLinks(context, textView, Patterns.EMAIL_ADDRESS, null, filter);
     }
 
     public static void linkifyText(Context context, TextView textView, Status tweet, boolean clickable, boolean expandUrls) {
