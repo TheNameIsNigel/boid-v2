@@ -8,31 +8,31 @@ import android.view.MenuItem;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.adapters.StatusAdapter;
+import com.afollestad.twitter.adapters.UserAdapter;
 import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ComposeActivity;
-import com.afollestad.twitter.ui.TweetViewerActivity;
+import com.afollestad.twitter.ui.ProfileActivity;
 import twitter4j.Paging;
-import twitter4j.Query;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.User;
 
 import java.util.List;
 
 /**
- * A feed fragment that displays tweet search results.
+ * A feed fragment that displays user search results.
  *
  * @author Aidan Follestad (afollestad)
  */
-public class SearchFragment extends BoidListFragment<Status> {
+public class UserSearchFragment extends BoidListFragment<User> {
 
     private String mQuery;
 
     @Override
     public String getCacheTitle() {
-        return getCacheEnabled() ? new Column(Status.class, Column.SEARCH, mQuery).toString() : null;
+        return getCacheEnabled() ? new Column(User.class, Column.SEARCH, mQuery).toString() : null;
     }
 
     protected boolean getCacheEnabled() {
@@ -52,17 +52,17 @@ public class SearchFragment extends BoidListFragment<Status> {
     }
 
     @Override
-    public SilkAdapter<Status> initializeAdapter() {
-        return new StatusAdapter(getActivity(), false);
+    public SilkAdapter<User> initializeAdapter() {
+        return new UserAdapter(getActivity());
     }
 
     @Override
-    public void onItemTapped(int index, Status status, View view) {
-        startActivity(new Intent(getActivity(), TweetViewerActivity.class).putExtra("tweet", status));
+    public void onItemTapped(int index, User user, View view) {
+        startActivity(new Intent(getActivity(), ProfileActivity.class).putExtra("user", user));
     }
 
     @Override
-    public boolean onItemLongTapped(int index, Status status, View view) {
+    public boolean onItemLongTapped(int index, User user, View view) {
         return false;
     }
 
@@ -84,18 +84,12 @@ public class SearchFragment extends BoidListFragment<Status> {
     }
 
     @Override
-    protected List<Status> load(Twitter client, Paging paging) throws Exception {
-        Query q = new Query(mQuery);
-        if (paging != null) {
-            q.setCount(paging.getCount());
-            q.setSinceId(paging.getSinceId());
-            q.setMaxId(paging.getMaxId());
-        }
-        return client.search(q).getTweets();
+    protected List<User> load(Twitter client, Paging paging) throws Exception {
+        return client.searchUsers(mQuery, 0); //TODO pagination
     }
 
     @Override
-    protected long getItemId(Status item) {
+    protected long getItemId(User item) {
         return item.getId();
     }
 

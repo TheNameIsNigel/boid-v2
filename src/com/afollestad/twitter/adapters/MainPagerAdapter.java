@@ -21,7 +21,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         mCols = Columns.getAll(context);
     }
 
-    private List<Column> mCols;
+    private final List<Column> mCols;
 
     @Override
     public Fragment getItem(int i) {

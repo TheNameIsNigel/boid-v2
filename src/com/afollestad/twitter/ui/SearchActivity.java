@@ -1,9 +1,10 @@
 package com.afollestad.twitter.ui;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.fragments.pages.SearchFragment;
+import com.afollestad.twitter.adapters.SearchPagerAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
@@ -20,14 +21,17 @@ public class SearchActivity extends ThemedActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
+        setContentView(R.layout.activity_search);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
-        SearchFragment frag = new SearchFragment();
-        frag.setArguments(getIntent().getExtras());
-        getFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
+        ViewPager mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setOffscreenPageLimit(2);
+        mPager.setAdapter(new SearchPagerAdapter(this, getIntent().getExtras(), getFragmentManager()));
+
+        if (getIntent().getStringExtra("query").startsWith("@"))
+            mPager.setCurrentItem(1);
     }
 
     @Override
