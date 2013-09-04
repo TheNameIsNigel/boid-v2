@@ -96,7 +96,6 @@ public class LoginActivity extends ThemedActivity {
         WebView view = (WebView) findViewById(R.id.webView);
         view.getSettings().setJavaScriptEnabled(true);
         view.getSettings().setAppCacheEnabled(false);
-        view.getSettings().setSavePassword(false);
         view.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, final String url) {

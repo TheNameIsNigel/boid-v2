@@ -28,11 +28,6 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     }
 
     @Override
-    public boolean getShouldShowLastUpdated() {
-        return getLastUpdatedTime() != null;
-    }
-
-    @Override
     public int getEmptyText() {
         return R.string.no_trends;
     }

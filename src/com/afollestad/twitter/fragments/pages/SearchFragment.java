@@ -35,11 +35,6 @@ public class SearchFragment extends BoidListFragment<Status> {
         return getCacheEnabled() ? new Column(Status.class, Column.SEARCH, mQuery).toString() : null;
     }
 
-    @Override
-    public boolean getShouldShowLastUpdated() {
-        return getCacheEnabled() && super.getShouldShowLastUpdated();
-    }
-
     protected boolean getCacheEnabled() {
         return false;
     }
