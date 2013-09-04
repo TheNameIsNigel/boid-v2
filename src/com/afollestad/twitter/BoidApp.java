@@ -29,8 +29,8 @@ public class BoidApp extends Application {
     private Twitter client;
     private SilkImageManager mImageLoader;
 
-    public final static String CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
-    public final static String CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
+    public final static String DEFAULT_CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
+    public final static String DEFAULT_CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
     public final static String CALLBACK_URL = "boid://auth";
 
     public static void showAppMsgError(Activity activity, Exception e) {
@@ -69,12 +69,38 @@ public class BoidApp extends Application {
     public Twitter getClient() {
         if (client == null) {
             client = new TwitterFactory().getInstance();
-            client.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
+            client.setOAuthConsumer(getConsumerKey(), getConsumerSecret());
             AccessToken token = getToken();
             if (token != null)
                 client.setOAuthAccessToken(token);
         }
         return client;
+    }
+
+    public void setConsumerKey(String key) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        if (key == null || key.trim().isEmpty())
+            prefs.remove("consumer_key");
+        else prefs.putString("consumer_key", key);
+        prefs.commit();
+    }
+
+    public void setConsumerSecret(String secret) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        if (secret == null || secret.trim().isEmpty())
+            prefs.remove("consumer_secret");
+        else prefs.putString("consumer_secret", secret);
+        prefs.commit();
+    }
+
+    public String getConsumerKey() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getString("consumer_key", DEFAULT_CONSUMER_KEY);
+    }
+
+    public String getConsumerSecret() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getString("consumer_secret", DEFAULT_CONSUMER_SECRET);
     }
 
     public BoidApp storeToken(AccessToken token) {
@@ -92,8 +118,6 @@ public class BoidApp extends Application {
     public void clearAccount() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("token").remove("token_secret").remove("profile").commit();
-        client = TwitterFactory.getSingleton();
-        client.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
     }
 
     public User getProfile() {

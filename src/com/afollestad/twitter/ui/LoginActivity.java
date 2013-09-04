@@ -23,7 +23,10 @@ import twitter4j.auth.RequestToken;
  */
 public class LoginActivity extends ThemedActivity {
 
+    private boolean mInWeb;
+
     private void loadWeb() {
+        mInWeb = true;
         final WebView view = (WebView) findViewById(R.id.webView);
         Thread t = new Thread(new Runnable() {
             @Override
@@ -70,8 +73,23 @@ public class LoginActivity extends ThemedActivity {
                 loadWeb();
             }
         });
+        findViewById(R.id.settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, LoginSettingsActivity.class));
+            }
+        });
 
         getActionBar().setDisplayShowHomeEnabled(false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mInWeb) {
+            mInWeb = false;
+            findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
+            findViewById(R.id.webFrame).setVisibility(View.GONE);
+        } else super.onBackPressed();
     }
 
     private void setupWebView() {
@@ -82,7 +100,10 @@ public class LoginActivity extends ThemedActivity {
         view.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, final String url) {
-                if (url.startsWith("boid://")) {
+                if (url.contains("denied=")) {
+                    onBackPressed();
+                    return true;
+                } else if (url.startsWith("boid://")) {
                     processVerifier(url);
                     return true;
                 } else return false;

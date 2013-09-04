@@ -17,6 +17,7 @@
         <item name="contentTextColor">@android:color/secondary_text_light</item>
         <item name="navDrawerBackground">@color/drawer_background_light</item>
         <item name="errorTextColor">@color/red</item>
+        <item name="headerTextColor">@android:color/holo_blue_dark</item>
 
         <item name="addIcon">@drawable/ic_add_dark</item>
 

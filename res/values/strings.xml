@@ -103,4 +103,8 @@
     <string name="remove">Remove</string>
     <string name="confirm_remove">Are you sure you want to remove your {name} column?</string>
 
+    <string name="login_settings">Login Settings</string>
+    <string name="custom_consumer_key">Custom Consumer Key</string>
+    <string name="custom_consumer_secret">Custom Consumer Secret</string>
+
 </resources>

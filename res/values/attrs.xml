@@ -6,6 +6,7 @@
     <attr name="navDrawerBackground" format="color"/>
     <attr name="errorTextColor" format="color"/>
     <attr name="inputFrameBackground" format="reference"/>
+    <attr name="headerTextColor" format="color"/>
 
     <attr name="composeIcon" format="reference"/>
     <attr name="sendIcon" format="reference"/>

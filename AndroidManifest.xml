@@ -26,6 +26,9 @@
         <activity android:name=".ui.LoginActivity" android:label="@string/welcome"
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
 
+        <activity android:name=".ui.LoginSettingsActivity" android:label="@string/login_settings"
+                  android:configChanges="screenSize|orientation|keyboardHidden"/>
+
         <activity android:name=".ui.ComposeActivity" android:label="@string/compose"
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
 
