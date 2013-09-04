@@ -8,7 +8,7 @@ import android.widget.ListView;
 import com.afollestad.silk.cache.CacheLimiter;
 import com.afollestad.silk.cache.SilkCacheManager;
 import com.afollestad.silk.cache.SilkComparable;
-import com.afollestad.silk.fragments.SilkLastUpdatedFragment;
+import com.afollestad.silk.fragments.SilkCachedFeedFragment;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.MainActivity;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public abstract class BoidListFragment<T extends SilkComparable> extends SilkLastUpdatedFragment<T> {
+public abstract class BoidListFragment<T extends SilkComparable> extends SilkCachedFeedFragment<T> {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -56,13 +56,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkLas
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_list_lastupdated_themed;
-    }
-
-    @Override
-    public void onUserRefresh() {
-        mPullToRefreshAttacher.setRefreshing(true);
-        super.onUserRefresh();
+        return R.layout.fragment_list_themed;
     }
 
     @Override
