@@ -169,6 +169,10 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.edit_columns:
+                //TODO
+                Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_LONG).show();
+                return true;
             case R.id.compose:
                 startActivity(new Intent(this, ComposeActivity.class));
                 return true;
