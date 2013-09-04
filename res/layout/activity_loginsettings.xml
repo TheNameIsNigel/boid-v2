@@ -17,7 +17,7 @@
         <com.afollestad.silk.views.text.SilkEditText android:id="@+id/consumerKey"
                                                      android:layout_width="match_parent"
                                                      android:layout_height="wrap_content"
-                                                     android:inputType="textEmailAddress"
+                                                     android:inputType="text"
                                                      android:layout_marginTop="4dp"
                                                      android:hint="@string/custom_consumer_key"/>
 
@@ -31,7 +31,7 @@
         <com.afollestad.silk.views.text.SilkEditText android:id="@+id/consumerSecret"
                                                      android:layout_width="match_parent"
                                                      android:layout_height="wrap_content"
-                                                     android:inputType="textPersonName"
+                                                     android:inputType="text"
                                                      android:layout_marginTop="4dp"
                                                      android:hint="@string/custom_consumer_secret"/>
 
