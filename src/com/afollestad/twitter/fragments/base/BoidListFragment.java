@@ -27,7 +27,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
     public final int getPageLength() {
-        //TODO configurable setting
+        // TODO configurable setting
         return 200;
     }
 
@@ -50,7 +50,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
     }
 
     @Override
-    public void onError(Exception e) {
+    public final void onError(Exception e) {
         BoidApp.showAppMsgError(getActivity(), e);
     }
 
@@ -126,6 +126,8 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
     protected abstract long getItemId(T item);
 
     protected abstract boolean isPaginationEnabled();
+
+    // TODO make scroll position saving/restoring work correctly.
 
     public final void saveScrollPos() {
         int mSavedIndex = getListView().getFirstVisiblePosition();
