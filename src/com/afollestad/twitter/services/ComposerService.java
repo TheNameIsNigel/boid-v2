@@ -36,6 +36,8 @@ public class ComposerService extends IntentService {
             if (replyTo != null) update.setInReplyToStatusId(replyTo.getId());
         }
 
+        // TODO location and media attachment
+
         try {
             cl.updateStatus(update);
             ComposerNotify.destroy(this, tag);
