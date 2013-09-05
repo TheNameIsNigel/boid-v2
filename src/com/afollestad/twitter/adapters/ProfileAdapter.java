@@ -38,7 +38,7 @@ public class ProfileAdapter extends StatusAdapter {
         mActivity = context;
     }
 
-    private Activity mActivity;
+    private final Activity mActivity;
     private User mUser;
     private FollowingType outward = FollowingType.UNKNOWN;
     private FollowingType inward = FollowingType.UNKNOWN;
