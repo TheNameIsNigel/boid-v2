@@ -37,7 +37,7 @@ public class Column implements SilkComparable<Column> {
             mComponent = split[2];
     }
 
-    private int mId;
+    private final int mId;
     private Class<?> mItemType;
     private String mComponent;
 

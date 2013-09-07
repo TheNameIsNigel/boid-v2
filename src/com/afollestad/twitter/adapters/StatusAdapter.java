@@ -45,7 +45,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
 
     private final boolean mDisplayRealNames;
     private final SilkImageManager mImageLoader;
-    private boolean mConvertRetweets;
+    private final boolean mConvertRetweets;
 
     @Override
     public void set(List<Status> toSet) {

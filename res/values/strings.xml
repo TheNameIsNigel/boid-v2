@@ -89,20 +89,6 @@
 
     <string name="retweets">Retweets</string>
     <string name="favorites">Favorites</string>
-    <string name="add">Add</string>
-
-    <string name="add_column">Add Column</string>
-    <string-array name="column_types">
-        <item>Timeline</item>
-        <item>Mentions</item>
-        <item>Messages</item>
-        <item>Trends</item>
-        <item>Search</item>
-        <item>List</item>
-    </string-array>
-
-    <string name="remove">Remove</string>
-    <string name="confirm_remove">Are you sure you want to remove your {name} column?</string>
 
     <string name="login_settings">Login Settings</string>
     <string name="custom_consumer_key">Custom Consumer Key</string>

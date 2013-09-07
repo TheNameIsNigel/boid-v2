@@ -50,12 +50,6 @@ public class Linkify {
     public static final int ALL = WEB_URLS | EMAIL_ADDRESSES | PHONE_NUMBERS | MAP_ADDRESSES;
 
     /**
-     * Don't treat anything with fewer than this many digits as a
-     * phone number.
-     */
-    private static int PHONE_NUMBER_MINIMUM_DIGITS = 5;
-
-    /**
      * Filters out web URL matches that occur after an at-sign (@).  This is
      * to prevent turning the domain name in an email address into a web link.
      */
@@ -81,6 +75,11 @@ public class Linkify {
             for (int i = start; i < end; i++) {
                 if (Character.isDigit(s.charAt(i))) {
                     digitCount++;
+                    /*
+      Don't treat anything with fewer than this many digits as a
+      phone number.
+     */
+                    int PHONE_NUMBER_MINIMUM_DIGITS = 5;
                     if (digitCount >= PHONE_NUMBER_MINIMUM_DIGITS) {
                         return true;
                     }
@@ -350,9 +349,8 @@ public class Linkify {
 
             if (matchFilter == null || matchFilter.acceptMatch(s, start, end)) {
                 LinkSpec spec = new LinkSpec();
-                String url = makeUrl(m.group(0), m, transformFilter);
 
-                spec.url = url;
+                spec.url = makeUrl(m.group(0), m, transformFilter);
                 spec.start = start;
                 spec.end = end;
 
