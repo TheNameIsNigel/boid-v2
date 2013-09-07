@@ -65,8 +65,8 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
     }
 
     @Override
-    protected void onPostLoad(List<Status> results) {
-        super.onPostLoad(results);
+    protected void onPostLoad(List<Status> results, boolean paginated) {
+        super.onPostLoad(results, paginated);
         if (mProfile.getId() == mUser.getId()) {
             // Update profile cache
             BoidApp.get(getActivity()).storeProfile(mUser);
@@ -132,7 +132,6 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
                 return new ArrayList<Status>();
             }
         }
-
         return client.getUserTimeline(mUser.getId(), paging);
     }
 

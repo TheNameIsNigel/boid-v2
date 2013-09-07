@@ -7,7 +7,6 @@ import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.caching.SilkCacheLimiter;
 import com.afollestad.silk.caching.SilkComparable;
 import com.afollestad.silk.fragments.SilkCachedFeedFragment;
-import com.afollestad.silk.views.list.SilkListView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
@@ -43,13 +42,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
-    protected int getAddIndex() {
-        return 0;
-    }
-
-    @Override
-    protected void onPostLoad(List<ItemType> results) {
-        super.onPostLoad(results);
+    protected void onPostLoad(List<ItemType> results, boolean paginated) {
+        super.onPostLoad(results, paginated);
         // Cache will expire 15 minutes after refreshing
         if (getCache() != null)
             getCache().setExpiration(0, 0, 0, 15);
@@ -90,30 +84,14 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
                 }
             });
         }
-        if (isPaginationEnabled()) {
-            ((SilkListView) getListView()).setOnSilkScrollListener(new SilkListView.OnSilkScrollListener() {
-                @Override
-                public void onScrollToTop() {
-                }
-
-                @Override
-                public void onScrollToBottom() {
-                    performRefresh(false);
-                }
-            });
-        }
     }
 
     @Override
     protected final List<ItemType> refresh() throws Exception {
-        if (!isPaginationEnabled()) {
-            return load(BoidApp.get(getActivity()).getClient(), null);
-        }
         Paging paging = null;
         if (isPageCursorMode()) {
-            if (getAdapter().getCount() == 0) mCursor = -1;
-            else mCursor++;
-        } else if (getAdapter().getCount() > 0) {
+            mCursor = -1;
+        } else if (!getAdapter().isEmpty()) {
             paging = new Paging();
             paging.setCount(getPageLength());
             // Get tweets newer than the most recent tweet in the adapter
@@ -131,6 +109,20 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
                 paging.setSinceId(getAdapter().getItemId(temp.get(0)));
             }
             return results;
+        }
+        return load(BoidApp.get(getActivity()).getClient(), paging);
+    }
+
+    @Override
+    protected final List<ItemType> paginate() throws Exception {
+        if (!isPaginationEnabled()) return null;
+        Paging paging = new Paging();
+        paging.setCount(getPageLength());
+        if (isPageCursorMode()) {
+            mCursor++;
+        } else {
+            // Get tweets older than the oldest one in the adapter
+            paging.setMaxId(getAdapter().getItemId(getAdapter().getCount() - 1));
         }
         return load(BoidApp.get(getActivity()).getClient(), paging);
     }

@@ -69,6 +69,11 @@ public class ProfileAdapter extends StatusAdapter {
     }
 
     @Override
+    public boolean isEmpty() {
+        return getCount() <= 2;
+    }
+
+    @Override
     public boolean isEnabled(int position) {
         Status item = getItem(position);
         return !item.isProfileHeader() && !item.isProfileFollowButton();
