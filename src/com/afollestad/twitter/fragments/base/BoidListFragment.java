@@ -22,7 +22,7 @@ import java.util.List;
 public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
-    private int mCursor = -1;
+    private long mCursor = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,18 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     public final int getPageLength() {
         // TODO configurable setting
         return 250;
+    }
+
+    @Override
+    public void setLoadComplete(boolean error) {
+        super.setLoadComplete(error);
+        if (mPullToRefreshAttacher != null)
+            mPullToRefreshAttacher.setRefreshComplete();
+    }
+
+    @Override
+    protected int getAddIndex() {
+        return 0;
     }
 
     @Override
@@ -93,24 +105,17 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
-    public void setLoadComplete(boolean error) {
-        super.setLoadComplete(error);
-        if (mPullToRefreshAttacher != null)
-            mPullToRefreshAttacher.setRefreshComplete();
-    }
-
-    @Override
     protected final List<ItemType> refresh() throws Exception {
         if (!isPaginationEnabled()) {
             return load(BoidApp.get(getActivity()).getClient(), null);
         }
-        Paging paging = new Paging();
-        paging.setCount(getPageLength());
-        if (isPageIndexMode()) {
+        Paging paging = null;
+        if (isPageCursorMode()) {
             if (getAdapter().getCount() == 0) mCursor = -1;
             else mCursor++;
-            paging.setPage(mCursor);
         } else if (getAdapter().getCount() > 0) {
+            paging = new Paging();
+            paging.setCount(getPageLength());
             // Get tweets newer than the most recent tweet in the adapter
             paging.setSinceId(getAdapter().getItemId(0));
             // Refresh in a loop to fill gaps until all tweets are retrieved
@@ -136,7 +141,11 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     protected abstract boolean isPaginationEnabled();
 
-    protected boolean isPageIndexMode() {
+    protected long getCursor() {
+        return mCursor;
+    }
+
+    protected boolean isPageCursorMode() {
         return false;
     }
 
