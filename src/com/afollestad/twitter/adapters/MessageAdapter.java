@@ -61,7 +61,7 @@ public class MessageAdapter extends SilkAdapter<DirectMessage> {
     }
 
     @Override
-    public long getItemId(int i) {
-        return getItem(i).getId();
+    public long getItemId(DirectMessage item) {
+        return item.getId();
     }
 }

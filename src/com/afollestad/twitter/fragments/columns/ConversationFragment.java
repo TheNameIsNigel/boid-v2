@@ -59,11 +59,6 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
     }
 
     @Override
-    protected long getItemId(ConversationAdapter.Conversation item) {
-        return 0;
-    }
-
-    @Override
     protected boolean isPaginationEnabled() {
         return false;
     }

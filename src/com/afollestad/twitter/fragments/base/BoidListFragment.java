@@ -117,7 +117,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             paging = new Paging();
             paging.setCount(getPageLength());
             // Get tweets newer than the most recent tweet in the adapter
-            paging.setSinceId(getAdapter().getItemId(0));
+            paging.setSinceId(getAdapter().getItemId(getAddIndex()));
             // Refresh in a loop to fill gaps until all tweets are retrieved
             List<ItemType> results = new ArrayList<ItemType>();
             while (true) {
@@ -128,7 +128,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
                     results.add(index, item);
                     index++;
                 }
-                paging.setSinceId(getItemId(temp.get(0)));
+                paging.setSinceId(getAdapter().getItemId(temp.get(0)));
             }
             return results;
         }
@@ -136,8 +136,6 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     protected abstract List<ItemType> load(Twitter client, Paging paging) throws Exception;
-
-    protected abstract long getItemId(ItemType item);
 
     protected abstract boolean isPaginationEnabled();
 

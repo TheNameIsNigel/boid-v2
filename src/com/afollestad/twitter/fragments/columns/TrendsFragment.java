@@ -62,11 +62,6 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     }
 
     @Override
-    protected long getItemId(Trend item) {
-        return 0;
-    }
-
-    @Override
     protected boolean isPaginationEnabled() {
         return false;
     }

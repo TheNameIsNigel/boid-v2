@@ -21,8 +21,6 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.internal.json.StatusJSONImpl;
 
-import java.util.List;
-
 /**
  * @author Aidan Follestad (afollestad)
  */
@@ -77,6 +75,7 @@ public class ProfileAdapter extends StatusAdapter {
     }
 
     private void setupHeader(View view) {
+        if (mUser == null) return;
         SilkImageManager loader = BoidApp.get(mActivity).getImageLoader();
         ((SilkImageView) view.findViewById(R.id.profilePic)).setImageURL(loader, mUser.getBiggerProfileImageURL());
         ((SilkImageView) view.findViewById(R.id.headerImage)).setImageURL(loader,
@@ -87,6 +86,7 @@ public class ProfileAdapter extends StatusAdapter {
     }
 
     private void invalidateFollowButton(final View view) {
+        if (mUser == null) return;
         TextView tweetCount = (TextView) view.findViewById(R.id.tweetCount);
         tweetCount.setText(mUser.getStatusesCount() + "\n" + getContext().getString(R.string.tweets));
         TextView followingCount = (TextView) view.findViewById(R.id.followingCount);

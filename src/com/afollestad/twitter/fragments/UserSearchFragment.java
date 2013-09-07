@@ -89,11 +89,6 @@ public class UserSearchFragment extends BoidListFragment<User> {
     }
 
     @Override
-    protected long getItemId(User item) {
-        return item.getId();
-    }
-
-    @Override
     protected boolean isPaginationEnabled() {
         return true;
     }

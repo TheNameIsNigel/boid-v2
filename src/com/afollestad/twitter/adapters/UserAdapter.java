@@ -51,7 +51,7 @@ public class UserAdapter extends SilkAdapter<User> {
     }
 
     @Override
-    public long getItemId(int i) {
-        return getItem(i).getId();
+    public long getItemId(User item) {
+        return item.getId();
     }
 }

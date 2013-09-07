@@ -95,11 +95,6 @@ public class SearchFragment extends BoidListFragment<Status> {
     }
 
     @Override
-    protected long getItemId(Status item) {
-        return item.getId();
-    }
-
-    @Override
     protected boolean isPaginationEnabled() {
         return true;
     }

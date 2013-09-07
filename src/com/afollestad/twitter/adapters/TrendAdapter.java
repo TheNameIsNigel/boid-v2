@@ -28,4 +28,14 @@ public class TrendAdapter extends SilkAdapter<Trend> {
         ((TextView) view).setText(item.getName());
         return view;
     }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public long getItemId(Trend item) {
+        return 0;
+    }
 }

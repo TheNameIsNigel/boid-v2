@@ -166,6 +166,11 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
     }
 
     @Override
+    public long getItemId(Conversation item) {
+        return item.getEndUser().getId();
+    }
+
+    @Override
     public void onClick(View v) {
         getContext().startActivity(new Intent(getContext(), ProfileActivity.class)
                 .putExtra("user", (User) v.getTag()));

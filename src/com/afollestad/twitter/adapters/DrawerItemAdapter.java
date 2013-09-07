@@ -34,4 +34,9 @@ public class DrawerItemAdapter extends SilkAdapter<Column> {
         content.setText(item.getName(true));
         return recycled;
     }
+
+    @Override
+    public long getItemId(Column item) {
+        return item.getId();
+    }
 }

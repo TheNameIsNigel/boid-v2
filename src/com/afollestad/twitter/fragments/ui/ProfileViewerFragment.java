@@ -7,10 +7,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
-import com.afollestad.silk.fragments.SilkFeedFragment;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.ProfileAdapter;
+import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.*;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class ProfileViewerFragment extends SilkFeedFragment<Status> {
+public class ProfileViewerFragment extends BoidListFragment<Status> {
 
     private User mUser;
     private User mProfile;
@@ -60,6 +60,11 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     @Override
+    public String getCacheName() {
+        return null;
+    }
+
+    @Override
     protected void onPostLoad(List<Status> results) {
         super.onPostLoad(results);
         if (mProfile.getId() == mUser.getId()) {
@@ -69,8 +74,7 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     @Override
-    protected List<Status> refresh() throws Exception {
-        Twitter client = BoidApp.get(getActivity()).getClient();
+    protected List<Status> load(Twitter client, Paging paging) throws Exception {
         if (mUser == null) {
             if (getArguments().containsKey("screen_name")) {
                 // If a 'screen_name' intent extra was passed, the user must be manually loaded now
@@ -129,14 +133,12 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
             }
         }
 
-        Paging paging = new Paging();
-        paging.setCount(200);
         return client.getUserTimeline(mUser.getId(), paging);
     }
 
     @Override
-    protected void onError(Exception e) {
-        setEmptyText(BoidApp.showAppMsgError(getActivity(), e));
+    protected boolean isPaginationEnabled() {
+        return true;
     }
 
     @Override

@@ -94,8 +94,8 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
     }
 
     @Override
-    public long getItemId(int i) {
-        return getItem(i).getId();
+    public long getItemId(Status item) {
+        return item.getId();
     }
 
     @Override
