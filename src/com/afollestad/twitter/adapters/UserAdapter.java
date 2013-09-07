@@ -34,11 +34,21 @@ public class UserAdapter extends SilkAdapter<User> {
 
     @Override
     public int getLayout(int index, int type) {
+        if (type == 1) return R.layout.list_item_endresults;
         return R.layout.list_item_user;
     }
 
     @Override
+    public boolean isEnabled(int position) {
+        if (getItem(position).isEndResults())
+            return false;
+        return super.isEnabled(position);
+    }
+
+    @Override
     public View onViewCreated(int index, View recycled, User item) {
+        if (item.isEndResults())
+            return recycled;
         SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
@@ -53,5 +63,17 @@ public class UserAdapter extends SilkAdapter<User> {
     @Override
     public long getItemId(User item) {
         return item.getId();
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (getItem(position).isEndResults())
+            return 1;
+        return 0;
     }
 }

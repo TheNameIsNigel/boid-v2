@@ -11,6 +11,7 @@ import com.afollestad.twitter.ui.ProfileActivity;
 import twitter4j.Paging;
 import twitter4j.Twitter;
 import twitter4j.User;
+import twitter4j.internal.json.UserJSONImpl;
 
 import java.util.List;
 
@@ -31,6 +32,15 @@ public class ProfileFollowingViewer extends BoidListFragment<User> {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mUser = (User) getArguments().getSerializable("user");
+    }
+
+    @Override
+    protected void onPostLoad(List<User> results, boolean paginated) {
+        super.onPostLoad(results, paginated);
+        if (results == null || results.size() == 0) {
+            getAdapter().add(new UserJSONImpl(true));
+            getListView().smoothScrollToPosition(getAdapter().getCount());
+        }
     }
 
     @Override
