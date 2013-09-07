@@ -40,10 +40,12 @@ public class TweetUtils {
             return media[0].getMediaURL();
         } else if (urls != null && urls.length > 0) {
             for (URLEntity url : urls) {
-                String du = url.getDisplayURL().toLowerCase(Locale.getDefault());
-                if (du.endsWith(".jpg") || du.endsWith(".jpeg") || du.endsWith(".gif") || du.endsWith(".png") || du.endsWith(".bmp")) {
-                    return url.getExpandedURL();
-                } else if (du.startsWith("instagram.com")) {
+                String full = url.getExpandedURL().toLowerCase(Locale.getDefault());
+                if (full.endsWith(".jpg") || full.endsWith(".jpeg") || full.endsWith(".gif") || full.endsWith(".png") || full.endsWith(".bmp")) {
+                    return full;
+                }
+                String du = url.getDisplayURL().toLowerCase(Locale.getDefault()).trim();
+                if (du.startsWith("instagram.com")) {
                     String mu = url.getExpandedURL();
                     if (!mu.endsWith("/")) mu += "/";
                     return mu + "media/?size=" + (larger ? "l" : "m");
