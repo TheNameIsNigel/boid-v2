@@ -124,8 +124,13 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
+    public void performPaginate(boolean showProgress) {
+        if (!isPaginationEnabled()) return;
+        super.performPaginate(showProgress);
+    }
+
+    @Override
     protected final List<ItemType> paginate() throws Exception {
-        if (!isPaginationEnabled()) return null;
         Paging paging = new Paging();
         paging.setCount(getPageLength());
         if (isPageCursorMode()) {
