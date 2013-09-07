@@ -1,13 +1,11 @@
 package com.afollestad.twitter.fragments.base;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.ListView;
-import com.afollestad.silk.cache.CacheLimiter;
-import com.afollestad.silk.cache.SilkCacheManager;
-import com.afollestad.silk.cache.SilkComparable;
+import com.afollestad.silk.caching.LimiterBehavior;
+import com.afollestad.silk.caching.SilkCache;
+import com.afollestad.silk.caching.SilkCacheLimiter;
+import com.afollestad.silk.caching.SilkComparable;
 import com.afollestad.silk.fragments.SilkCachedFeedFragment;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
@@ -17,12 +15,10 @@ import twitter4j.Paging;
 import twitter4j.Twitter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public abstract class BoidListFragment<T extends SilkComparable> extends SilkCachedFeedFragment<T> {
+public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -32,19 +28,15 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
     }
 
     @Override
-    protected final File getCacheDirectory() {
-        return BoidApp.getSilkCache();
-    }
-
-    @Override
-    protected SilkCacheManager<T> onCacheInitialized(SilkCacheManager<T> cache) {
+    protected SilkCache<ItemType> onCacheInitialized(SilkCache<ItemType> cache) {
         if (!cache.hasLimiter()) {
             // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
-            cache.setLimiter(new CacheLimiter(700, CacheLimiter.TrimMode.BOTTOM));
+            // TODO this will cause problems with pagination?
+            cache.setLimiter(new SilkCacheLimiter(700, LimiterBehavior.REMOVE_BOTTOM));
         }
         if (!cache.hasExpiration()) {
             // Caches expire after 5 days
-            cache.setExpiration(Calendar.getInstance().getTimeInMillis() + (1000 * 60 * 60 * 24 * 5));
+            cache.setExpiration(0, 5, 0, 0);
         }
         return cache;
     }
@@ -80,22 +72,7 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
     }
 
     @Override
-    protected boolean onPreLoad() {
-        saveScrollPos();
-        return super.onPreLoad();
-    }
-
-    @Override
-    protected void onPostLoad(List<T> results) {
-        super.onPostLoad(results);
-        if (getAdapter().getCount() > results.size()) {
-            // Items were added to the top of the list instead of overwriting the adapter, restore scroll position
-            restoreScrollPos(results.size());
-        }
-    }
-
-    @Override
-    protected final List<T> refresh() throws Exception {
+    protected final List<ItemType> refresh() throws Exception {
         if (!isPaginationEnabled()) {
             return load(BoidApp.get(getActivity()).getClient(), null);
         }
@@ -105,12 +82,12 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
             // Get tweets newer than the most recent tweet in the adapter
             paging.setSinceId(getAdapter().getItemId(0));
             // Refresh in a loop to fill gaps until all tweets are retrieved
-            List<T> results = new ArrayList<T>();
+            List<ItemType> results = new ArrayList<ItemType>();
             while (true) {
-                List<T> temp = load(BoidApp.get(getActivity()).getClient(), paging);
+                List<ItemType> temp = load(BoidApp.get(getActivity()).getClient(), paging);
                 if (temp == null || temp.size() == 0) break;
                 int index = 0;
-                for (T item : temp) {
+                for (ItemType item : temp) {
                     results.add(index, item);
                     index++;
                 }
@@ -121,36 +98,36 @@ public abstract class BoidListFragment<T extends SilkComparable> extends SilkCac
         return load(BoidApp.get(getActivity()).getClient(), paging);
     }
 
-    protected abstract List<T> load(Twitter client, Paging paging) throws Exception;
+    protected abstract List<ItemType> load(Twitter client, Paging paging) throws Exception;
 
-    protected abstract long getItemId(T item);
+    protected abstract long getItemId(ItemType item);
 
     protected abstract boolean isPaginationEnabled();
 
     // TODO make scroll position saving/restoring work correctly.
 
-    public final void saveScrollPos() {
-        int mSavedIndex = getListView().getFirstVisiblePosition();
-        View v = getListView().getChildAt(0);
-        int mSavedFromTop = (v == null) ? 0 : v.getTop();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putInt(getCacheTitle() + "_saved_index", mSavedIndex)
-                .putInt(getCacheTitle() + "_saved_top", mSavedFromTop).commit();
-    }
-
-    public final void restoreScrollPos(int addedCount) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int mSavedIndex = prefs.getInt(getCacheTitle() + "_saved_index", -1);
-        if (mSavedIndex == -1) return;
-        else if (mSavedIndex > getAdapter().getCount() - 1) {
-            // The saved scroll position is out of date with the cache
-            prefs.edit().remove(getCacheTitle() + "_saved_index").remove(getCacheTitle() + "_saved_top").commit();
-            return;
-        }
-        int mSavedFromTop = prefs.getInt(getCacheTitle() + "_saved_top", 0);
-        getListView().clearFocus();
-        ((ListView) getListView()).setSelectionFromTop(mSavedIndex + addedCount, mSavedFromTop);
-        getListView().requestFocus();
-        getListView().requestFocusFromTouch();
-    }
+//    public final void saveScrollPos() {
+//        int mSavedIndex = getListView().getFirstVisiblePosition();
+//        View v = getListView().getChildAt(0);
+//        int mSavedFromTop = (v == null) ? 0 : v.getTop();
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        prefs.edit().putInt(getCacheTitle() + "_saved_index", mSavedIndex)
+//                .putInt(getCacheTitle() + "_saved_top", mSavedFromTop).commit();
+//    }
+//
+//    public final void restoreScrollPos(int addedCount) {
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//        int mSavedIndex = prefs.getInt(getCacheTitle() + "_saved_index", -1);
+//        if (mSavedIndex == -1) return;
+//        else if (mSavedIndex > getAdapter().getCount() - 1) {
+//            // The saved scroll position is out of date with the cache
+//            prefs.edit().remove(getCacheTitle() + "_saved_index").remove(getCacheTitle() + "_saved_top").commit();
+//            return;
+//        }
+//        int mSavedFromTop = prefs.getInt(getCacheTitle() + "_saved_top", 0);
+//        getListView().clearFocus();
+//        ((ListView) getListView()).setSelectionFromTop(mSavedIndex + addedCount, mSavedFromTop);
+//        getListView().requestFocus();
+//        getListView().requestFocusFromTouch();
+//    }
 }

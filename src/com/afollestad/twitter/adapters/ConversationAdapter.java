@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.TextView;
 import com.afollestad.silk.adapters.SilkAdapter;
-import com.afollestad.silk.cache.SilkComparable;
+import com.afollestad.silk.caching.SilkComparable;
 import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.utilities.TimeUtils;
 import com.afollestad.silk.views.image.SilkImageView;
@@ -81,13 +81,13 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         }
 
         @Override
-        public boolean isSameAs(Conversation another) {
-            return getEndUser().getId() == another.getEndUser().getId();
+        public Object getSilkId() {
+            return getEndUser().getId();
         }
 
         @Override
-        public boolean shouldIgnore() {
-            return false;
+        public boolean equalTo(Conversation other) {
+            return getEndUser().getSilkId() == other.getEndUser().getSilkId();
         }
     }
 

@@ -6,8 +6,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ComposeActivity;
 
 /**
  * Convenience methods for displaying 'sending' or 'failed to send' notifications for tweets. Used by the

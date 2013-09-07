@@ -21,7 +21,7 @@ import java.util.List;
 public class TimelineFragment extends BoidListFragment<Status> {
 
     @Override
-    public String getCacheTitle() {
+    public String getCacheName() {
         return Column.TIMELINE + "";
     }
 

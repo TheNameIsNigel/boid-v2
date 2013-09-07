@@ -23,7 +23,7 @@ import java.util.List;
 public class TrendsFragment extends BoidListFragment<Trend> {
 
     @Override
-    public String getCacheTitle() {
+    public String getCacheName() {
         return Column.TRENDS + "";
     }
 

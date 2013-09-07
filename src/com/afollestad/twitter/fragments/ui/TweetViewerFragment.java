@@ -13,7 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.afollestad.silk.cache.SilkCacheManager;
+import com.afollestad.silk.caching.OnReadyCallback;
+import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.fragments.SilkFragment;
 import com.afollestad.silk.images.Dimension;
 import com.afollestad.silk.images.SilkImageManager;
@@ -163,7 +164,7 @@ public class TweetViewerFragment extends SilkFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_tweet_viewer, menu);
         User me = BoidApp.get(getActivity()).getProfile();
-        menu.findItem(R.id.delete).setVisible(me.getId() == mTweet.getUser().getId());
+        menu.findItem(R.id.delete).setVisible(me.getSilkId() == mTweet.getUser().getSilkId());
         MenuItem favorite = menu.findItem(R.id.favorite);
         int favIcon;
         if (mTweet.isFavorited()) {
@@ -205,10 +206,10 @@ public class TweetViewerFragment extends SilkFragment {
     private void updateCaches() {
         List<Column> columns = Columns.getAll(getActivity(), Status.class);
         for (Column col : columns) {
-            new SilkCacheManager<Status>(getActivity(), col.toString(), BoidApp.getSilkCache(), new SilkCacheManager.InitializedCallback<Status>() {
+            new SilkCache<Status>(getActivity(), col.toString(), new OnReadyCallback<Status>() {
                 @Override
-                public void onInitialized(SilkCacheManager<Status> manager) {
-                    manager.update(mTweet, SilkCacheManager.StartingPoint.ZERO, false).commitAsync(new SilkCacheManager.SimpleCommitCallback() {
+                public void onReady(SilkCache<Status> cache) {
+                    cache.update(mTweet).commit(new SilkCache.SimpleCommitCallback() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
@@ -385,9 +386,5 @@ public class TweetViewerFragment extends SilkFragment {
     @Override
     public String getTitle() {
         return getString(R.string.tweet);
-    }
-
-    @Override
-    protected void onVisibilityChange(boolean visible) {
     }
 }

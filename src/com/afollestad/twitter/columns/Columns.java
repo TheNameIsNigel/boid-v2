@@ -3,7 +3,6 @@ package com.afollestad.twitter.columns;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import com.afollestad.twitter.adapters.ConversationAdapter;
 import twitter4j.Status;
 import twitter4j.Trend;

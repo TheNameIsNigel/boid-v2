@@ -155,10 +155,6 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     @Override
-    protected void onVisibilityChange(boolean visible) {
-    }
-
-    @Override
     public String getTitle() {
         if (mUser == null) return getString(R.string.profile);
         return "@" + mUser.getScreenName();

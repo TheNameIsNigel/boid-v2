@@ -21,7 +21,7 @@ import java.util.List;
 public class ConversationFragment extends BoidListFragment<ConversationAdapter.Conversation> {
 
     @Override
-    public String getCacheTitle() {
+    public String getCacheName() {
         return Column.MESSAGES + "";
     }
 

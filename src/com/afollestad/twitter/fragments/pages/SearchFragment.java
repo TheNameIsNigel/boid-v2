@@ -31,7 +31,7 @@ public class SearchFragment extends BoidListFragment<Status> {
     private String mQuery;
 
     @Override
-    public String getCacheTitle() {
+    public String getCacheName() {
         return getCacheEnabled() ? new Column(Status.class, Column.SEARCH, mQuery).toString() : null;
     }
 

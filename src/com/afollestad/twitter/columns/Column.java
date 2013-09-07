@@ -1,6 +1,6 @@
 package com.afollestad.twitter.columns;
 
-import com.afollestad.silk.cache.SilkComparable;
+import com.afollestad.silk.caching.SilkComparable;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -92,14 +92,12 @@ public class Column implements SilkComparable<Column> {
     }
 
     @Override
-    public boolean isSameAs(Column another) {
-        boolean equal = getId() == another.getId();
-        if (getComponent() != null) equal = equal && getComponent().equals(another.getComponent());
-        return equal;
+    public Object getSilkId() {
+        return toString();
     }
 
     @Override
-    public boolean shouldIgnore() {
-        return getId() == PROFILE_BUTTON;
+    public boolean equalTo(Column other) {
+        return toString().equals(other.toString());
     }
 }
