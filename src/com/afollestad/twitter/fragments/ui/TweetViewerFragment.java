@@ -162,9 +162,10 @@ public class TweetViewerFragment extends SilkFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fragment_tweet_viewer, menu);
         User me = BoidApp.get(getActivity()).getProfile();
-        menu.findItem(R.id.delete).setVisible(me.getSilkId() == mTweet.getUser().getSilkId());
+        boolean isMe = me.getId() == mTweet.getUser().getId();
+        inflater.inflate(isMe ? R.menu.fragment_tweet_viewer_me : R.menu.fragment_tweet_viewer, menu);
+        if (!isMe) menu.findItem(R.id.retweet).setVisible(!mTweet.getUser().isProtected());
         MenuItem favorite = menu.findItem(R.id.favorite);
         int favIcon;
         if (mTweet.isFavorited()) {
