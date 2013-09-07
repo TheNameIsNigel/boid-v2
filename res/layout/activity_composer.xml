@@ -7,14 +7,14 @@
             android:layout_height="wrap_content"
             android:padding="15dp">
 
-        <include android:id="@+id/replyInclude" layout="@layout/activity_composer_replyindicator"/>
+        <include android:id="@+id/inReplyToFrame" layout="@layout/activity_composer_replyindicator"/>
 
         <com.afollestad.twitter.views.CounterEditText android:id="@+id/input"
                                                       android:layout_width="fill_parent"
                                                       android:layout_height="wrap_content"
                                                       android:lineSpacingMultiplier="1.1"
                                                       android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
-                                                      android:layout_below="@+id/replyInclude"
+                                                      android:layout_below="@+id/inReplyToFrame"
                                                       android:hint="@string/composer_input_hint"
                                                       android:textColor="?contentTextColor"
                                                       android:gravity="top" android:minLines="3"/>
