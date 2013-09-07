@@ -26,7 +26,6 @@ public class ProfileFollowersViewer extends BoidListFragment<User> {
         return null;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +71,14 @@ public class ProfileFollowersViewer extends BoidListFragment<User> {
     }
 
     @Override
+    protected boolean isPageIndexMode() {
+        return true;
+    }
+
+    @Override
     protected List<User> load(Twitter client, Paging paging) throws Exception {
         //TODO pagination cursor?
-        return client.getFollowersList(mUser.getId(), paging.getPage());
+        return client.getFollowersList(mUser.getId(), (long)paging.getPage());
     }
 
     @Override

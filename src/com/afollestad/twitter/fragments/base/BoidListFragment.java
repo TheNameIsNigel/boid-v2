@@ -7,6 +7,7 @@ import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.caching.SilkCacheLimiter;
 import com.afollestad.silk.caching.SilkComparable;
 import com.afollestad.silk.fragments.SilkCachedFeedFragment;
+import com.afollestad.silk.views.list.SilkListView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
@@ -21,6 +22,7 @@ import java.util.List;
 public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
+    private int mCursor = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,18 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
                 }
             });
         }
+        if (isPaginationEnabled()) {
+            ((SilkListView) getListView()).setOnSilkScrollListener(new SilkListView.OnSilkScrollListener() {
+                @Override
+                public void onScrollToTop() {
+                }
+
+                @Override
+                public void onScrollToBottom() {
+                    performRefresh(false);
+                }
+            });
+        }
     }
 
     @Override
@@ -92,7 +106,11 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         }
         Paging paging = new Paging();
         paging.setCount(getPageLength());
-        if (getAdapter().getCount() > 0) {
+        if (isPageIndexMode()) {
+            if (getAdapter().getCount() == 0) mCursor = -1;
+            else mCursor++;
+            paging.setPage(mCursor);
+        } else if (getAdapter().getCount() > 0) {
             // Get tweets newer than the most recent tweet in the adapter
             paging.setSinceId(getAdapter().getItemId(0));
             // Refresh in a loop to fill gaps until all tweets are retrieved
@@ -117,6 +135,10 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     protected abstract long getItemId(ItemType item);
 
     protected abstract boolean isPaginationEnabled();
+
+    protected boolean isPageIndexMode() {
+        return false;
+    }
 
     // TODO make scroll position saving/restoring work correctly.
 
