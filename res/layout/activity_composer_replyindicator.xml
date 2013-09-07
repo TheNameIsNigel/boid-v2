@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/inReplyToFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <com.afollestad.silk.views.image.SilkImageView android:id="@+id/replyProfilePic"
+                                                   android:layout_width="@dimen/feed_profile_pic"
+                                                   android:layout_height="@dimen/feed_profile_pic"
+                                                   android:src="@drawable/ic_contact_picture"
+                                                   android:layout_marginRight="10dp"
+                                                   android:layout_marginLeft="10dp"/>
+
+    <LinearLayout android:id="@+id/contentFrame"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_toRightOf="@+id/replyProfilePic">
+
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+                        android:paddingRight="20dp">
+
+            <TextView android:id="@+id/replyUsername"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:singleLine="true"
+                      android:textColor="?usernameTextColor"
+                      android:textSize="@dimen/usernameText"
+                      android:layout_alignParentLeft="true"
+                      android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/replyContent" android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:lineSpacingMultiplier="1.1"
+                                                     android:textSize="@dimen/contentText"
+                                                     android:textColor="?contentTextColor"
+                                                     android:layout_marginRight="20dp"/>
+
+    </LinearLayout>
+
+    <com.afollestad.silk.views.text.SilkTextView android:layout_below="@+id/contentFrame"
+                                                 android:layout_width="fill_parent"
+                                                 android:layout_height="wrap_content"
+                                                 style="?android:attr/listSeparatorTextViewStyle"
+                                                 android:text="@string/in_reply_to"
+                                                 android:layout_marginTop="15dp"/>
+
+</RelativeLayout>

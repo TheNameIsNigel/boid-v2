@@ -7,16 +7,21 @@
             android:layout_height="wrap_content"
             android:padding="15dp">
 
-        <com.afollestad.twitter.views.CounterEditText android:id="@+id/input" android:layout_width="fill_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:lineSpacingMultiplier="1.1"
-                                                    android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
-                                                    android:hint="@string/composer_input_hint"
-                                                    android:textColor="?contentTextColor"
-                                                    android:gravity="top" android:minLines="3"/>
+        <include android:id="@+id/replyInclude" layout="@layout/activity_composer_replyindicator"/>
+
+        <com.afollestad.twitter.views.CounterEditText android:id="@+id/input"
+                                                      android:layout_width="fill_parent"
+                                                      android:layout_height="wrap_content"
+                                                      android:lineSpacingMultiplier="1.1"
+                                                      android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+                                                      android:layout_below="@+id/replyInclude"
+                                                      android:hint="@string/composer_input_hint"
+                                                      android:textColor="?contentTextColor"
+                                                      android:gravity="top" android:minLines="3"/>
 
         <!--suppress AndroidLintHardcodedText -->
-        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/counter" android:layout_width="wrap_content"
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/counter"
+                                                     android:layout_width="wrap_content"
                                                      android:layout_height="wrap_content"
                                                      android:textColor="?contentTextColor"
                                                      android:layout_alignRight="@+id/input"
@@ -26,5 +31,6 @@
                                                      android:layout_marginRight="3dp"/>
 
     </RelativeLayout>
+
 
 </ScrollView>

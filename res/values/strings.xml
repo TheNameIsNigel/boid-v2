@@ -95,4 +95,6 @@
     <string name="custom_consumer_key">Custom Consumer Key</string>
     <string name="custom_consumer_secret">Custom Consumer Secret</string>
 
+    <string name="in_reply_to">In reply to</string>
+
 </resources>

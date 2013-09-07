@@ -22,9 +22,15 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     public final int getPageLength() {
         // TODO configurable setting
-        return 200;
+        return 250;
     }
 
     @Override
