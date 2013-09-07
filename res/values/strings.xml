@@ -22,6 +22,7 @@
     <string name="trends">Trends</string>
 
     <string name="no_tweets">No tweets</string>
+    <string name="no_users">No users</string>
     <string name="no_mentions">No mentions</string>
     <string name="no_messages">No messages</string>
     <string name="no_conversations">No conversations</string>

@@ -48,7 +48,7 @@ public class UserSearchFragment extends BoidListFragment<User> {
 
     @Override
     public int getEmptyText() {
-        return R.string.no_tweets;
+        return R.string.no_users;
     }
 
     @Override
