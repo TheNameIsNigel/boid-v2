@@ -1,20 +1,28 @@
-package com.afollestad.twitter.ui;
+package com.afollestad.twitter.ui.theming;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import com.afollestad.silk.activities.SilkDrawerActivity;
 import com.afollestad.twitter.R;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
 /**
- * Same as {@link ThemedActivity}, but used by the {@link SettingsActivity}.
+ * Provides a standardized base for all activities that automatically theme themselves based on
+ * the application's theme setting; this is basically every activity in the app.
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ThemedPreferenceActivity extends PreferenceActivity {
+public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
 
     private int mTheme;
     private boolean mDisplayRealNames;
+
+    private PullToRefreshAttacher mPullToRefreshAttacher;
+
+    public PullToRefreshAttacher getPullToRefreshAttacher() {
+        return mPullToRefreshAttacher;
+    }
 
     public final boolean shouldRecreate() {
         int currentTheme = getBoidTheme();
@@ -23,18 +31,18 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme();
         mDisplayRealNames = shouldDisplayRealNames();
         setTheme(mTheme);
         super.onCreate(savedInstanceState);
+        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (shouldRecreate())
-            recreate();
+        if (shouldRecreate()) recreate();
     }
 
     public final boolean shouldDisplayRealNames() {
@@ -53,5 +61,12 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
             case 2:
                 return R.style.Theme_Boidblack;
         }
+    }
+
+    @Override
+    public int getDrawerIndicatorRes() {
+        if (getBoidTheme() == R.style.Theme_Boidlight)
+            return R.drawable.ic_navigation_drawer_dark;
+        else return R.drawable.ic_navigation_drawer_light;
     }
 }

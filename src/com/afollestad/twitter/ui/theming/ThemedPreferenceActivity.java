@@ -1,18 +1,17 @@
-package com.afollestad.twitter.ui;
+package com.afollestad.twitter.ui.theming;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import com.afollestad.twitter.R;
 
 /**
- * Provides a standardized base for all activities that automatically theme themselves based on
- * the application's theme setting; this is basically every activity in the app.
+ * Same as {@link ThemedActivity}, but used by the {@link com.afollestad.twitter.ui.SettingsActivity}.
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ThemedActivity extends Activity {
+public class ThemedPreferenceActivity extends PreferenceActivity {
 
     private int mTheme;
     private boolean mDisplayRealNames;
@@ -34,7 +33,8 @@ public class ThemedActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (shouldRecreate()) recreate();
+        if (shouldRecreate())
+            recreate();
     }
 
     public final boolean shouldDisplayRealNames() {

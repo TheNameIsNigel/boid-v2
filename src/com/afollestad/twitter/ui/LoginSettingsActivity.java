@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.theming.ThemedActivity;
 
 /**
  * The login settings UI.

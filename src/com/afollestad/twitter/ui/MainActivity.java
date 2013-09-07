@@ -22,7 +22,7 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
 
 /**
  * The main app UI.
@@ -33,13 +33,8 @@ public class MainActivity extends ThemedDrawerActivity {
 
     private ViewPager mPager;
     private ListView drawerList;
-    private PullToRefreshAttacher mPullToRefreshAttacher;
     private int mLastChecked = 1;
     private int mLastPageCount;
-
-    public PullToRefreshAttacher getPullToRefreshAttacher() {
-        return mPullToRefreshAttacher;
-    }
 
     @Override
     public int getDrawerShadowRes() {
@@ -64,8 +59,6 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         drawerList = (ListView) findViewById(R.id.drawer_list);
@@ -104,7 +97,7 @@ public class MainActivity extends ThemedDrawerActivity {
         invalidateColumns();
         int newCount = mLastPageCount;
         if (oldAccount > 0 && newCount != oldAccount) {
-            // If pages have been added or removed, move to the newer page or last old page
+            // If columns have been added or removed, move to the newer page or last old page
             mPager.setCurrentItem(newCount - 1);
         }
     }

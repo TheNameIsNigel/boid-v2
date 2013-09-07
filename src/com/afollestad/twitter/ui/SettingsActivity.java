@@ -3,6 +3,7 @@ package com.afollestad.twitter.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.theming.ThemedPreferenceActivity;
 
 import java.util.List;
 

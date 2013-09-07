@@ -3,13 +3,14 @@ package com.afollestad.twitter.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.fragments.ui.ProfileViewerFragment;
+import com.afollestad.twitter.fragments.ui.ProfileFollowersViewer;
 import com.afollestad.twitter.ui.theming.ThemedActivity;
+import com.afollestad.twitter.ui.theming.ThemedPtrActivity;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class ProfileActivity extends ThemedActivity {
+public class ProfileFollowersActivity extends ThemedPtrActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class ProfileActivity extends ThemedActivity {
 
         Bundle args = new Bundle();
         args.putAll(getIntent().getExtras());
-        ProfileViewerFragment frag = new ProfileViewerFragment();
+        ProfileFollowersViewer frag = new ProfileFollowersViewer();
         frag.setArguments(args);
         getFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
     }

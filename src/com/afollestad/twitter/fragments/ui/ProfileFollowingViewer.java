@@ -1,49 +1,37 @@
-package com.afollestad.twitter.fragments.pages;
+package com.afollestad.twitter.fragments.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.UserAdapter;
-import com.afollestad.twitter.columns.Column;
-import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
-import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.ProfileActivity;
 import twitter4j.Paging;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.User;
 
 import java.util.List;
 
 /**
- * A feed fragment that displays user search results.
- *
  * @author Aidan Follestad (afollestad)
  */
-public class UserSearchFragment extends BoidListFragment<User> {
+public class ProfileFollowingViewer extends BoidListFragment<User> {
 
-    private String mQuery;
+    private User mUser;
 
     @Override
     public String getCacheName() {
-        return getCacheEnabled() ? new Column(User.class, Column.SEARCH, mQuery).toString() : null;
+        return null;
     }
 
-    protected boolean getCacheEnabled() {
-        return false;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mQuery = getArguments().getString("query");
+        mUser = (User) getArguments().getSerializable("user");
     }
 
     @Override
@@ -80,12 +68,13 @@ public class UserSearchFragment extends BoidListFragment<User> {
 
     @Override
     public String getTitle() {
-        return mQuery;
+        return getString(R.string.following);
     }
 
     @Override
     protected List<User> load(Twitter client, Paging paging) throws Exception {
-        return client.searchUsers(mQuery, 0); //TODO pagination
+        //TODO pagination cursor?
+        return client.getFriendsList(mUser.getId(), paging.getPage());
     }
 
     @Override
@@ -96,29 +85,5 @@ public class UserSearchFragment extends BoidListFragment<User> {
     @Override
     protected boolean isPaginationEnabled() {
         return true;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_search, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.pin:
-                Columns.add(getActivity(), new Column(Status.class, Column.SEARCH, mQuery));
-                getActivity().finish();
-                return true;
-            case R.id.compose:
-                startActivity(new Intent(getActivity(), ComposeActivity.class)
-                        .putExtra("content", mQuery + " "));
-                return true;
-            case R.id.save:
-                //TODO
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

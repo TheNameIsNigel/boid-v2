@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.fragments.ui.TweetViewerFragment;
+import com.afollestad.twitter.ui.theming.ThemedActivity;
 
 /**
  * The tweet viewer UI.

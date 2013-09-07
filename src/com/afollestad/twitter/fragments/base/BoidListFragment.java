@@ -9,8 +9,8 @@ import com.afollestad.silk.caching.SilkComparable;
 import com.afollestad.silk.fragments.SilkCachedFeedFragment;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.ui.MainActivity;
-import com.afollestad.twitter.ui.SearchActivity;
+import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
+import com.afollestad.twitter.ui.theming.ThemedPtrActivity;
 import twitter4j.Paging;
 import twitter4j.Twitter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
@@ -64,21 +64,25 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (getActivity() instanceof MainActivity)
-            mPullToRefreshAttacher = ((MainActivity) getActivity()).getPullToRefreshAttacher();
-        else mPullToRefreshAttacher = ((SearchActivity) getActivity()).getPullToRefreshAttacher();
-        mPullToRefreshAttacher.addRefreshableView(getListView(), new PullToRefreshAttacher.OnRefreshListener() {
-            @Override
-            public void onRefreshStarted(View view) {
-                performRefresh(false);
-            }
-        });
+        if (getActivity() instanceof ThemedDrawerActivity)
+            mPullToRefreshAttacher = ((ThemedDrawerActivity) getActivity()).getPullToRefreshAttacher();
+        else if (getActivity() instanceof ThemedPtrActivity)
+            mPullToRefreshAttacher = ((ThemedPtrActivity) getActivity()).getPullToRefreshAttacher();
+        if (mPullToRefreshAttacher != null) {
+            mPullToRefreshAttacher.addRefreshableView(getListView(), new PullToRefreshAttacher.OnRefreshListener() {
+                @Override
+                public void onRefreshStarted(View view) {
+                    performRefresh(false);
+                }
+            });
+        }
     }
 
     @Override
     public void setLoadComplete(boolean error) {
         super.setLoadComplete(error);
-        mPullToRefreshAttacher.setRefreshComplete();
+        if (mPullToRefreshAttacher != null)
+            mPullToRefreshAttacher.setRefreshComplete();
     }
 
     @Override

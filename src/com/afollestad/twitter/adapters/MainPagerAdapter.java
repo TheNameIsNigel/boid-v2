@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.columns.Columns;
-import com.afollestad.twitter.fragments.pages.*;
+import com.afollestad.twitter.fragments.columns.*;
 
 import java.util.List;
 

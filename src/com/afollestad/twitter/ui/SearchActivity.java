@@ -7,26 +7,18 @@ import android.view.MenuItem;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.SearchSuggestionsProvider;
 import com.afollestad.twitter.adapters.SearchPagerAdapter;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
+import com.afollestad.twitter.ui.theming.ThemedPtrActivity;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class SearchActivity extends ThemedActivity {
-
-    private PullToRefreshAttacher mPullToRefreshAttacher;
-
-    public PullToRefreshAttacher getPullToRefreshAttacher() {
-        return mPullToRefreshAttacher;
-    }
+public class SearchActivity extends ThemedPtrActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
 
         ViewPager mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setOffscreenPageLimit(2);

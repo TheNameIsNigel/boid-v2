@@ -6,8 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.fragments.pages.SearchFragment;
-import com.afollestad.twitter.fragments.pages.UserSearchFragment;
+import com.afollestad.twitter.fragments.SearchFragment;
+import com.afollestad.twitter.fragments.UserSearchFragment;
 
 /**
  * @author Aidan Follestad (afollestad)

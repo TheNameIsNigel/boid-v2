@@ -1,4 +1,4 @@
-package com.afollestad.twitter.fragments.pages;
+package com.afollestad.twitter.fragments.columns;
 
 import android.content.Intent;
 import android.view.View;
@@ -16,18 +16,18 @@ import twitter4j.Twitter;
 import java.util.List;
 
 /**
- * A feed fragment that displays the current user's home timeline.
+ * A feed fragment that displays the current user's mentions.
  */
-public class TimelineFragment extends BoidListFragment<Status> {
+public class MentionsFragment extends BoidListFragment<Status> {
 
     @Override
     public String getCacheName() {
-        return Column.TIMELINE + "";
+        return Column.MENTIONS + "";
     }
 
     @Override
     public int getEmptyText() {
-        return R.string.no_tweets;
+        return R.string.no_mentions;
     }
 
     @Override
@@ -55,17 +55,17 @@ public class TimelineFragment extends BoidListFragment<Status> {
 //            // Get tweets older than the oldest tweet in the adapter
 //            paging.setMaxId(adapt.getItemId(adapt.getCount() - 1) - 1);
 //        }
-//        return BoidApp.get(getActivity()).getClient().getHomeTimeline(paging).toArray(new Status[0]);
+//        return BoidApp.get(getActivity()).getClient().getMentionsTimeline(paging).toArray(new Status[0]);
 //    }
 
     @Override
     public String getTitle() {
-        return getString(R.string.timeline);
+        return getString(R.string.mentions);
     }
 
     @Override
     protected List<Status> load(Twitter client, Paging paging) throws Exception {
-        return client.getHomeTimeline(paging);
+        return client.getMentionsTimeline(paging);
     }
 
     @Override

@@ -1,7 +1,9 @@
-package com.afollestad.twitter.fragments.pages;
+package com.afollestad.twitter.fragments.columns;
+
+import com.afollestad.twitter.fragments.SearchFragment;
 
 /**
- * A {@link SearchFragment} with the cache enabled.
+ * A {@link com.afollestad.twitter.fragments.SearchFragment} with the cache enabled.
  *
  * @author Aidan Follestad (afollestad)
  */

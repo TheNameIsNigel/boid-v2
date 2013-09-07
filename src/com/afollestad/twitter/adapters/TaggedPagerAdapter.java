@@ -20,12 +20,12 @@ import java.util.ArrayList;
  * saving and restoring of fragment's state.
  * <p/>
  * <p>This version of the pager is more useful when there are a large number
- * of pages, working more like a list view.  When pages are not visible to
+ * of columns, working more like a list view.  When columns are not visible to
  * the user, their entire fragment may be destroyed, only keeping the saved
  * state of that fragment.  This allows the pager to hold on to much less
  * memory associated with each visited page as compared to
  * {@link FragmentPagerAdapter} at the cost of potentially more overhead when
- * switching between pages.
+ * switching between columns.
  * <p/>
  * <p>When using FragmentPagerAdapter the host ViewPager must have a
  * valid ID set.</p>

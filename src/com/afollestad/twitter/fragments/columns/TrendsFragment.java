@@ -1,4 +1,4 @@
-package com.afollestad.twitter.fragments.pages;
+package com.afollestad.twitter.fragments.columns;
 
 import android.content.Intent;
 import android.view.View;

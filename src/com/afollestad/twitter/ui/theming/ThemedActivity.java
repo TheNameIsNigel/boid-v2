@@ -1,9 +1,9 @@
-package com.afollestad.twitter.ui;
+package com.afollestad.twitter.ui.theming;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import com.afollestad.silk.activities.SilkDrawerActivity;
 import com.afollestad.twitter.R;
 
 /**
@@ -12,7 +12,7 @@ import com.afollestad.twitter.R;
  *
  * @author Aidan Follestad (afollestad)
  */
-public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
+public class ThemedActivity extends Activity {
 
     private int mTheme;
     private boolean mDisplayRealNames;
@@ -24,7 +24,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme();
         mDisplayRealNames = shouldDisplayRealNames();
         setTheme(mTheme);
@@ -53,12 +53,5 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
             case 2:
                 return R.style.Theme_Boidblack;
         }
-    }
-
-    @Override
-    public int getDrawerIndicatorRes() {
-        if (getBoidTheme() == R.style.Theme_Boidlight)
-            return R.drawable.ic_navigation_drawer_dark;
-        else return R.drawable.ic_navigation_drawer_light;
     }
 }

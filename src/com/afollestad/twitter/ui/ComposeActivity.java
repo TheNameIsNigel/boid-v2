@@ -13,6 +13,7 @@ import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.services.ComposerService;
+import com.afollestad.twitter.ui.theming.ThemedActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.afollestad.twitter.views.CounterEditText;

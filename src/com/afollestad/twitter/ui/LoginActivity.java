@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.theming.ThemedActivity;
 import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;

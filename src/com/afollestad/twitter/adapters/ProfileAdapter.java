@@ -3,6 +3,7 @@ package com.afollestad.twitter.adapters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ProfileFollowersActivity;
+import com.afollestad.twitter.ui.ProfileFollowingActivity;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -91,16 +94,13 @@ public class ProfileAdapter extends StatusAdapter {
     private void invalidateFollowButton(final View view) {
         TextView tweetCount = (TextView) view.findViewById(R.id.tweetCount);
         tweetCount.setText(mUser.getStatusesCount() + "\n" + getContext().getString(R.string.tweets));
-        tweetCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
         TextView followingCount = (TextView) view.findViewById(R.id.followingCount);
         followingCount.setText(mUser.getFriendsCount() + "\n" + getContext().getString(R.string.following));
         followingCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getContext().startActivity(new Intent(getContext(), ProfileFollowingActivity.class)
+                        .putExtra("user", mUser));
             }
         });
         TextView followersCount = (TextView) view.findViewById(R.id.followersCount);
@@ -108,6 +108,8 @@ public class ProfileAdapter extends StatusAdapter {
         followersCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getContext().startActivity(new Intent(getContext(), ProfileFollowersActivity.class)
+                        .putExtra("user", mUser));
             }
         });
 
