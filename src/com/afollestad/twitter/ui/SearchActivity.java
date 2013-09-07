@@ -1,9 +1,11 @@
 package com.afollestad.twitter.ui;
 
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.SearchSuggestionsProvider;
 import com.afollestad.twitter.adapters.SearchPagerAdapter;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 
@@ -30,8 +32,12 @@ public class SearchActivity extends ThemedActivity {
         mPager.setOffscreenPageLimit(2);
         mPager.setAdapter(new SearchPagerAdapter(this, getIntent().getExtras(), getFragmentManager()));
 
-        if (getIntent().getStringExtra("query").startsWith("@"))
+        String query = getIntent().getStringExtra("query");
+        if (query.startsWith("@"))
             mPager.setCurrentItem(1);
+        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                SearchSuggestionsProvider.AUTHORITY, SearchSuggestionsProvider.MODE);
+        suggestions.saveRecentQuery(query, null);
     }
 
     @Override

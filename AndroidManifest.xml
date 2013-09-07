@@ -57,6 +57,9 @@
         <service android:name="com.afollestad.twitter.services.ComposerService" android:label="@string/compose"
                  android:configChanges="screenSize|orientation|keyboardHidden"/>
 
+        <provider android:name=".SearchSuggestionsProvider"
+                  android:authorities="com.afollestad.twitter.SearchSuggestionsProvider"/>
+
     </application>
 
 </manifest>
