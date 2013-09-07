@@ -23,8 +23,8 @@ public class TweetUtils {
         UserMentionEntity[] mentions = tweet.getUserMentionEntities();
         if (mentions != null) {
             for (UserMentionEntity mention : mentions) {
-                if (mention.getId() == tweet.getUser().getSilkId()) continue;
-                else if (mention.getId() == me.getSilkId()) continue;
+                if (mention.getId() == tweet.getUser().getId()) continue;
+                else if (mention.getId() == me.getId()) continue;
                 toReturn += "@" + mention.getScreenName() + " ";
             }
         }
