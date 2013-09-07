@@ -28,15 +28,18 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
+    protected void onPostLoad(List<ItemType> results) {
+        super.onPostLoad(results);
+        // Cache will expire 10 minutes after refreshing
+        getCache().setExpiration(0, 0, 0, 10);
+    }
+
+    @Override
     protected SilkCache<ItemType> onCacheInitialized(SilkCache<ItemType> cache) {
         if (!cache.hasLimiter()) {
             // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
             // TODO this will cause problems with pagination?
             cache.setLimiter(new SilkCacheLimiter(700, LimiterBehavior.REMOVE_BOTTOM));
-        }
-        if (!cache.hasExpiration()) {
-            // Caches expire after 5 days
-            cache.setExpiration(0, 5, 0, 0);
         }
         return cache;
     }
