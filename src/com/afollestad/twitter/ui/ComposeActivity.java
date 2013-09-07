@@ -53,10 +53,10 @@ public class ComposeActivity extends ThemedActivity {
                 mReplyTo = mReplyTo.getRetweetedStatus();
             input.append(TweetUtils.getReplyAll(BoidApp.get(this).getProfile(), mReplyTo));
             setTitle(R.string.reply);
-            setupInReplyTo();
         } else {
             setTitle(R.string.compose);
         }
+        setupInReplyTo();
     }
 
     private void setupInReplyTo() {
