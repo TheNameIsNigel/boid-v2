@@ -137,7 +137,7 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
 
     @Override
     protected boolean isPaginationEnabled() {
-        return true;
+        return false;
     }
 
     @Override

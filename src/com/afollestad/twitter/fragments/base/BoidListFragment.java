@@ -31,7 +31,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     public final int getPageLength() {
         // TODO configurable setting
-        return 250;
+//        return 250;
+        return 10;
     }
 
     @Override
@@ -88,12 +89,11 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     @Override
     protected final List<ItemType> refresh() throws Exception {
-        Paging paging = null;
+        Paging paging = new Paging();
+        paging.setCount(getPageLength());
         if (isPageCursorMode()) {
             mCursor = -1;
         } else if (!getAdapter().isEmpty()) {
-            paging = new Paging();
-            paging.setCount(getPageLength());
             // Get tweets newer than the most recent tweet in the adapter
             paging.setSinceId(getAdapter().getItemId(getAddIndex()));
             // Refresh in a loop to fill gaps until all tweets are retrieved
@@ -122,7 +122,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             mCursor++;
         } else {
             // Get tweets older than the oldest one in the adapter
-            paging.setMaxId(getAdapter().getItemId(getAdapter().getCount() - 1));
+            paging.setMaxId(getAdapter().getItemId(getAdapter().getCount() - 1) - 1);
         }
         return load(BoidApp.get(getActivity()).getClient(), paging);
     }
