@@ -29,6 +29,11 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         setRetainInstance(true);
     }
 
+    @Override
+    protected int getAddIndex() {
+        return 0;
+    }
+
     public final int getPageLength() {
         return 200;
     }
