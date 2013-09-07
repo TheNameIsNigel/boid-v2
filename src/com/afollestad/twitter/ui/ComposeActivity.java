@@ -61,15 +61,20 @@ public class ComposeActivity extends ThemedActivity {
 
     private void setupInReplyTo() {
         View frame = findViewById(R.id.inReplyToFrame);
+        View label = findViewById(R.id.inReplyToLabel);
         if (mReplyTo != null) {
             frame.setVisibility(View.VISIBLE);
+            label.setVisibility(View.VISIBLE);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             boolean mDisplayRealNames = prefs.getBoolean("display_realname", true);
             SilkImageView profilePic = (SilkImageView) frame.findViewById(R.id.replyProfilePic);
             profilePic.setImageURL(BoidApp.get(this).getImageLoader(), mReplyTo.getUser().getBiggerProfileImageURL());
             ((TextView) frame.findViewById(R.id.replyUsername)).setText(TweetUtils.getDisplayName(mReplyTo.getUser(), mDisplayRealNames));
             TextUtils.linkifyText(this, (TextView) frame.findViewById(R.id.replyContent), mReplyTo, false, false);
-        } else frame.setVisibility(View.GONE);
+        } else {
+            frame.setVisibility(View.GONE);
+            label.setVisibility(View.GONE);
+        }
     }
 
     private void setupInput() {

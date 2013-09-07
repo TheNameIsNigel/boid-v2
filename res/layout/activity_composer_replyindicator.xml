@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
 
     <com.afollestad.silk.views.image.SilkImageView android:id="@+id/replyProfilePic"
                                                    android:layout_width="@dimen/feed_profile_pic"
@@ -39,11 +40,4 @@
 
     </LinearLayout>
 
-    <com.afollestad.silk.views.text.SilkTextView android:layout_below="@+id/contentFrame"
-                                                 android:layout_width="fill_parent"
-                                                 android:layout_height="wrap_content"
-                                                 style="?android:attr/listSeparatorTextViewStyle"
-                                                 android:text="@string/in_reply_to"
-                                                 android:layout_marginTop="15dp"/>
-
-</RelativeLayout>
+</LinearLayout>
