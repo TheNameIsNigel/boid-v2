@@ -30,8 +30,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     @Override
     protected void onPostLoad(List<ItemType> results) {
         super.onPostLoad(results);
-        // Cache will expire 10 minutes after refreshing
-        getCache().setExpiration(0, 0, 0, 10);
+        // Cache will expire 15 minutes after refreshing
+        getCache().setExpiration(0, 0, 0, 15);
     }
 
     @Override
