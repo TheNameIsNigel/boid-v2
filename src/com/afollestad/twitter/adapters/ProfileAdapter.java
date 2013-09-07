@@ -38,6 +38,7 @@ public class ProfileAdapter extends StatusAdapter {
     public ProfileAdapter(Activity context) {
         super(context, true);
         mActivity = context;
+        addHeaderViews();
     }
 
     private final Activity mActivity;
@@ -61,12 +62,6 @@ public class ProfileAdapter extends StatusAdapter {
     public void setFollowing(FollowingType outward, FollowingType inward) {
         this.outward = outward;
         this.inward = inward;
-    }
-
-    @Override
-    public void set(List<Status> toSet) {
-        super.set(toSet);
-        addHeaderViews();
     }
 
     @Override

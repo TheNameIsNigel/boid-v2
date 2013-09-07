@@ -35,6 +35,11 @@ public class ProfileViewerFragment extends SilkFeedFragment<Status> {
     }
 
     @Override
+    protected int getAddIndex() {
+        return 2;
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         int res = R.menu.fragment_profile_viewer;
         if (mUser != null && mUser.getId() == mProfile.getId())
