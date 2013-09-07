@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.fragments.ui.ProfileViewerFragment;
-import com.afollestad.twitter.ui.theming.ThemedActivity;
+import com.afollestad.twitter.ui.theming.ThemedPtrActivity;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class ProfileActivity extends ThemedActivity {
+public class ProfileActivity extends ThemedPtrActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

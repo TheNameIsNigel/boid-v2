@@ -30,9 +30,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     public final int getPageLength() {
-        // TODO configurable setting
-//        return 250;
-        return 10;
+        return 200;
     }
 
     @Override
