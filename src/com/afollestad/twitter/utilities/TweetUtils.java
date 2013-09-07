@@ -41,7 +41,9 @@ public class TweetUtils {
         } else if (urls != null && urls.length > 0) {
             for (URLEntity url : urls) {
                 String du = url.getDisplayURL().toLowerCase(Locale.getDefault());
-                if (du.startsWith("instagram.com")) {
+                if (du.endsWith(".jpg") || du.endsWith(".jpeg") || du.endsWith(".gif") || du.endsWith(".png") || du.endsWith(".bmp")) {
+                    return url.getExpandedURL();
+                } else if (du.startsWith("instagram.com")) {
                     String mu = url.getExpandedURL();
                     if (!mu.endsWith("/")) mu += "/";
                     return mu + "media/?size=" + (larger ? "l" : "m");
