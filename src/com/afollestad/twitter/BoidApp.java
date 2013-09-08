@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.images.SilkImageManager;
@@ -16,8 +15,6 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
-
-import java.io.File;
 
 /**
  * Variables and methods kept in memory throughout the life of the app.
@@ -43,10 +40,6 @@ public class BoidApp extends Application {
 
     public static void showAppMsg(Activity activity, String msg) {
         AppMsg.makeText(activity, msg, new AppMsg.Style(AppMsg.LENGTH_LONG, R.color.app_msg_blue)).show();
-    }
-
-    public static File getSilkCache() {
-        return new File(Environment.getExternalStorageDirectory(), "Boid");
     }
 
     public SilkImageManager getImageLoader() {
@@ -147,10 +140,5 @@ public class BoidApp extends Application {
         // Clear persisted preferences and stuff for Silk.
         Silk.clearPersistence(this);
         Columns.clear(this);
-        // Wipe the Silk cache
-        File cacheDir = getSilkCache();
-        for (File fi : cacheDir.listFiles())
-            fi.delete();
-        cacheDir.delete();
     }
 }
