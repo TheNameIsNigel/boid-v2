@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -83,8 +85,17 @@ public class ProfileAdapter extends StatusAdapter {
         if (mUser == null) return;
         SilkImageManager loader = BoidApp.get(mActivity).getImageLoader();
         ((SilkImageView) view.findViewById(R.id.profilePic)).setImageURL(loader, mUser.getBiggerProfileImageURL());
-        ((SilkImageView) view.findViewById(R.id.headerImage)).setImageURL(loader,
-                Silk.isTablet(mActivity) ? mUser.getProfileBannerIPadRetinaURL() : mUser.getProfileBannerMobileRetinaURL());
+        SilkImageView header = (SilkImageView) view.findViewById(R.id.headerImage);
+        if (mUser.getProfileBannerURL() == null || mUser.getProfileBannerURL().trim().isEmpty()) {
+            if (mUser.isProfileUseBackgroundImage()) {
+                header.setImageURL(loader, mUser.getProfileBackgroundImageURL());
+            } else {
+                header.setImageDrawable(new ColorDrawable(Color.parseColor(mUser.getProfileBackgroundColor())));
+            }
+        } else {
+            header.setImageURL(loader, Silk.isTablet(mActivity) ?
+                    mUser.getProfileBannerIPadRetinaURL() : mUser.getProfileBannerMobileRetinaURL());
+        }
         ((TextView) view.findViewById(R.id.username)).setText(mUser.getName());
         TextUtils.linkifyText(getContext(), (TextView) view.findViewById(R.id.description),
                 mUser.getDescription(), true, false, mUser.getDescriptionURLEntities(), null);
