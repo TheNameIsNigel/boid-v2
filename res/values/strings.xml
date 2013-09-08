@@ -96,5 +96,6 @@
     <string name="custom_consumer_secret">Custom Consumer Secret</string>
 
     <string name="in_reply_to">In reply to</string>
+    <string name="end_of_results">End of Results</string>
 
 </resources>
