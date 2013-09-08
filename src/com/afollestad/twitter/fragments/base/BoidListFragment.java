@@ -3,6 +3,7 @@ package com.afollestad.twitter.fragments.base;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import com.afollestad.silk.caching.LimiterBehavior;
@@ -54,7 +55,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     protected void onPreLoad() {
         super.onPreLoad();
         mShouldRestoreScroll = getAdapter().getCount() > 0;
-        saveScrollPos();
+        if (mShouldRestoreScroll)
+            saveScrollPos();
     }
 
     @Override
@@ -171,6 +173,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.edit().putInt(getCacheName() + "_saved_index", mSavedIndex)
                 .putInt(getCacheName() + "_saved_top", mSavedFromTop).commit();
+        Log.d("BoidListFragment", "List position saved; index: " + mSavedIndex + ", top: " + mSavedFromTop);
     }
 
     public final void restoreScrollPos(final int addedCount) {
@@ -187,7 +190,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             @Override
             public void run() {
                 getListView().clearFocus();
-                ((ListView) getListView()).setSelectionFromTop(addedCount, mSavedFromTop);
+                ((ListView) getListView()).setSelectionFromTop(addedCount - 1, mSavedFromTop);
+                Log.d("BoidListFragment", "Scroll position restored... index: " + (addedCount - 1) + ", top: " + mSavedFromTop);
             }
         });
     }
