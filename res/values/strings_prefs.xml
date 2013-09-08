@@ -31,11 +31,13 @@
         <item>Dark (Default)</item>
         <item>Light</item>
         <item>Pure black</item>
+        <item>Gray</item>
     </string-array>
-    <string-array name="theme_values">
+    <string-array name="theme_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <string name="display_realname">Show real names</string>

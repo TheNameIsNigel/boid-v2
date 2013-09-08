@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Boid OSP</string>
+    <string name="app_name" translatable="false">Boid OSP</string>
 
     <string name="columns">Columns</string>
     <string name="welcome">Welcome</string>
     <string name="welcome_message">Please login.</string>
     <string name="login">Login</string>
-    <string name="failed_login">An error occured while contacting Twitter.</string>
+    <string name="failed_login">An error occurred while contacting Twitter.</string>
     <string name="logged_in">Your account was added! Tap finish to experience Boid.</string>
     <string name="finish">Finish</string>
     <string name="retry">Retry</string>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Boidgray" parent="@style/Theme.Boid">
+        <item name="android:windowBackground">@color/gray_window</item>
+        <item name="android:colorBackground">@color/gray_window</item>
+    </style>
+
+</resources>
