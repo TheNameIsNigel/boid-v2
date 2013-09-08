@@ -66,18 +66,6 @@ public class SearchFragment extends BoidListFragment<Status> {
         return false;
     }
 
-//    @Override
-//    public Status[] paginate() throws TwitterException {
-//        Paging paging = new Paging();
-//        paging.setCount(PAGE_LENGTH);
-//        BoidAdapter adapt = getAdapter();
-//        if (adapt.getCount() > 0) {
-//            // Get tweets older than the oldest tweet in the adapter
-//            paging.setMaxId(adapt.getItemId(adapt.getCount() - 1) - 1);
-//        }
-//        return BoidApp.get(getActivity()).getClient().getHomeTimeline(paging).toArray(new Status[0]);
-//    }
-
     @Override
     public String getTitle() {
         return mQuery;

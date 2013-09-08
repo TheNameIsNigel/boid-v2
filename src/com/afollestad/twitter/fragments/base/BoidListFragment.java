@@ -1,6 +1,8 @@
 package com.afollestad.twitter.fragments.base;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import com.afollestad.silk.caching.LimiterBehavior;
 import com.afollestad.silk.caching.SilkCache;
@@ -22,12 +24,6 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
     private long mCursor = -1;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
     @Override
     protected int getAddIndex() {
@@ -53,11 +49,18 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
+    protected void onPreLoad() {
+        super.onPreLoad();
+        saveScrollPos();
+    }
+
+    @Override
     protected void onPostLoad(List<ItemType> results, boolean paginated) {
         super.onPostLoad(results, paginated);
         // Cache will expire 15 minutes after refreshing
         if (getCache() != null)
             getCache().setExpiration(0, 0, 0, 15);
+        restoreScrollPos(results.size());
     }
 
     @Override
@@ -154,30 +157,33 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         return false;
     }
 
-    // TODO make scroll position saving/restoring work correctly.
+    public final void saveScrollPos() {
+        int mSavedIndex = getListView().getFirstVisiblePosition();
+        View v = getListView().getChildAt(0);
+        int mSavedFromTop = (v == null) ? 0 : v.getTop();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putInt(getCacheName() + "_saved_index", mSavedIndex)
+                .putInt(getCacheName() + "_saved_top", mSavedFromTop).commit();
+    }
 
-//    public final void saveScrollPos() {
-//        int mSavedIndex = getListView().getFirstVisiblePosition();
-//        View v = getListView().getChildAt(0);
-//        int mSavedFromTop = (v == null) ? 0 : v.getTop();
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//        prefs.edit().putInt(getCacheTitle() + "_saved_index", mSavedIndex)
-//                .putInt(getCacheTitle() + "_saved_top", mSavedFromTop).commit();
-//    }
-//
-//    public final void restoreScrollPos(int addedCount) {
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//        int mSavedIndex = prefs.getInt(getCacheTitle() + "_saved_index", -1);
-//        if (mSavedIndex == -1) return;
-//        else if (mSavedIndex > getAdapter().getCount() - 1) {
-//            // The saved scroll position is out of date with the cache
-//            prefs.edit().remove(getCacheTitle() + "_saved_index").remove(getCacheTitle() + "_saved_top").commit();
-//            return;
-//        }
-//        int mSavedFromTop = prefs.getInt(getCacheTitle() + "_saved_top", 0);
-//        getListView().clearFocus();
-//        ((ListView) getListView()).setSelectionFromTop(mSavedIndex + addedCount, mSavedFromTop);
-//        getListView().requestFocus();
-//        getListView().requestFocusFromTouch();
-//    }
+    public final void restoreScrollPos(final int addedCount) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        final int mSavedIndex = prefs.getInt(getCacheName() + "_saved_index", -1);
+        if (mSavedIndex == -1) return;
+        else if (mSavedIndex > getAdapter().getCount() - 1) {
+            // The saved scroll position is out of date with the cache
+            prefs.edit().remove(getCacheName() + "_saved_index").remove(getCacheName() + "_saved_top").commit();
+            return;
+        }
+        final int mSavedFromTop = prefs.getInt(getCacheName() + "_saved_top", 0);
+        getListView().post(new Runnable() {
+            @Override
+            public void run() {
+                getListView().clearFocus();
+                getListView().setSelectionFromTop(addedCount - 1, mSavedFromTop);
+                getListView().requestFocus();
+                getListView().requestFocusFromTouch();
+            }
+        });
+    }
 }

@@ -7,7 +7,6 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.StatusAdapter;
 import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
-import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.Paging;
 import twitter4j.Status;
@@ -42,21 +41,8 @@ public class MentionsFragment extends BoidListFragment<Status> {
 
     @Override
     public boolean onItemLongTapped(int index, Status status, View view) {
-        startActivity(new Intent(getActivity(), ComposeActivity.class).putExtra("reply_to", status));
-        return true;
+        return false;
     }
-
-//    @Override
-//    public Status[] paginate() throws TwitterException {
-//        Paging paging = new Paging();
-//        paging.setCount(PAGE_LENGTH);
-//        BoidAdapter adapt = getAdapter();
-//        if (adapt.getCount() > 0) {
-//            // Get tweets older than the oldest tweet in the adapter
-//            paging.setMaxId(adapt.getItemId(adapt.getCount() - 1) - 1);
-//        }
-//        return BoidApp.get(getActivity()).getClient().getMentionsTimeline(paging).toArray(new Status[0]);
-//    }
 
     @Override
     public String getTitle() {
