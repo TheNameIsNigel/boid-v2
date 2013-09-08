@@ -187,7 +187,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             @Override
             public void run() {
                 getListView().clearFocus();
-                ((ListView) getListView()).setSelectionFromTop(addedCount - 1, mSavedFromTop);
+                ((ListView) getListView()).setSelectionFromTop(addedCount, mSavedFromTop);
             }
         });
     }
