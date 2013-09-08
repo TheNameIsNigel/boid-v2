@@ -132,13 +132,15 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         super.performPaginate(showProgress);
     }
 
+    public final void setCursor(long cursor) {
+        mCursor = cursor;
+    }
+
     @Override
     protected final List<ItemType> paginate() throws Exception {
         Paging paging = new Paging();
         paging.setCount(getPageLength());
-        if (isPageCursorMode()) {
-            mCursor++;
-        } else {
+        if (!isPageCursorMode()) {
             // Get tweets older than the oldest one in the adapter
             paging.setMaxId(getAdapter().getItemId(getAdapter().getCount() - 1) - 1);
         }

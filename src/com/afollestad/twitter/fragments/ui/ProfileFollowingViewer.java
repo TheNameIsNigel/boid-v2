@@ -8,6 +8,7 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.UserAdapter;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ProfileActivity;
+import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.Twitter;
 import twitter4j.User;
@@ -80,8 +81,9 @@ public class ProfileFollowingViewer extends BoidListFragment<User> {
 
     @Override
     protected List<User> load(Twitter client, Paging paging) throws Exception {
-        //TODO pagination cursor?
-        return client.getFriendsList(mUser.getId(), getCursor());
+        PagableResponseList<User> results = client.getFriendsList(mUser.getId(), getCursor());
+        setCursor(results.getNextCursor());
+        return results;
     }
 
     @Override

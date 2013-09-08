@@ -3,11 +3,13 @@ package com.afollestad.twitter.fragments.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.UserAdapter;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ProfileActivity;
+import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.Twitter;
 import twitter4j.User;
@@ -41,7 +43,6 @@ public class ProfileFollowersViewer extends BoidListFragment<User> {
             getAdapter().add(new UserJSONImpl(true));
             getListView().smoothScrollToPosition(getAdapter().getCount());
         }
-
     }
 
     @Override
@@ -81,8 +82,9 @@ public class ProfileFollowersViewer extends BoidListFragment<User> {
 
     @Override
     protected List<User> load(Twitter client, Paging paging) throws Exception {
-        //TODO pagination cursor?
-        return client.getFollowersList(mUser.getId(), getCursor());
+        PagableResponseList<User> results = client.getFollowersList(mUser.getId(), getCursor());
+        setCursor(results.getNextCursor());
+        return results;
     }
 
     @Override
