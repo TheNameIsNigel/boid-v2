@@ -20,7 +20,6 @@ public class LoginSettingsActivity extends ThemedActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setDisplayShowHomeEnabled(false);
         setContentView(R.layout.activity_loginsettings);
 
         final EditText key = (EditText) findViewById(R.id.consumerKey);
