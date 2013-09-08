@@ -11,6 +11,7 @@
     <com.afollestad.silk.views.text.SilkTextView android:id="@+id/title"
                                                  android:layout_width="wrap_content"
                                                  android:layout_height="wrap_content"
-                                                 android:textSize="@dimen/drawerItemText"/>
+                                                 android:textSize="@dimen/drawerItemText"
+                                                 android:textColor="?usernameTextColor"/>
 
 </LinearLayout>

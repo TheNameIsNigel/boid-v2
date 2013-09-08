@@ -28,10 +28,10 @@
     <string name="theme_desc">The overall look and feel of Boid.</string>
 
     <string-array name="theme_names">
-        <item>Dark (Default)</item>
-        <item>Light</item>
+        <item>Gray (Default)</item>
+        <item>Dark</item>
         <item>Pure black</item>
-        <item>Gray</item>
+        <item>Light</item>
     </string-array>
     <string-array name="theme_values" translatable="false">
         <item>0</item>

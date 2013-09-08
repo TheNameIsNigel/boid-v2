@@ -48,13 +48,14 @@ public class ThemedActivity extends Activity {
         int theme = Integer.parseInt(prefs.getString("boid_theme", "0"));
         switch (theme) {
             default:
-                return R.style.Theme_Boid;
+                return R.style.Theme_Boidgray;
             case 1:
-                return R.style.Theme_Boidlight;
+                return R.style.Theme_Boid;
             case 2:
                 return R.style.Theme_Boidblack;
             case 3:
-                return R.style.Theme_Boidgray;
+                return R.style.Theme_Boidlight;
+
         }
     }
 }
