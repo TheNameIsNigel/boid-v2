@@ -39,6 +39,7 @@
     <string name="tweet">Tweet</string>
     <string name="reply">Reply</string>
     <string name="retweet">Retweet</string>
+    <string name="unretweet">Unretweet</string>
     <string name="favorite">Favorite</string>
     <string name="unfavorite">Unfavorite</string>
     <string name="share">Share</string>

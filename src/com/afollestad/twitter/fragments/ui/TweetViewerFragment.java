@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.afollestad.silk.caching.OnReadyCallback;
 import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.fragments.SilkFragment;
@@ -92,6 +93,7 @@ public class TweetViewerFragment extends SilkFragment {
         if (mTweet.isRetweet())
             mTweet = mTweet.getRetweetedStatus();
         displayTweet();
+        // Reload to update if the tweet was outdated in the cache
         reloadTweet();
     }
 
@@ -165,7 +167,15 @@ public class TweetViewerFragment extends SilkFragment {
         User me = BoidApp.get(getActivity()).getProfile();
         boolean isMe = me.getId() == mTweet.getUser().getId();
         inflater.inflate(isMe ? R.menu.fragment_tweet_viewer_me : R.menu.fragment_tweet_viewer, menu);
-        if (!isMe) menu.findItem(R.id.retweet).setVisible(!mTweet.getUser().isProtected());
+        if (!isMe) {
+            MenuItem retweet = menu.findItem(R.id.retweet);
+            retweet.setVisible(!mTweet.getUser().isProtected());
+            Toast.makeText(getActivity(), mTweet.getCurrentUserRetweetId() + "", Toast.LENGTH_LONG).show();
+            if (mTweet.getCurrentUserRetweetId() > 0) {
+                retweet.setTitle(R.string.unretweet);
+                retweet.setIcon(R.drawable.ic_unretweet);
+            }
+        }
         MenuItem favorite = menu.findItem(R.id.favorite);
         int favIcon;
         if (mTweet.isFavorited()) {
@@ -274,6 +284,7 @@ public class TweetViewerFragment extends SilkFragment {
                 switch (which) {
                     default:
                         performRetweet();
+                        break;
                     case 1:
                         startActivity(new Intent(getActivity(), ComposeActivity.class)
                                 .putExtra("content", "\"@" + mTweet.getUser().getScreenName() + ": " + mTweet.getText() + "\" "));
