@@ -25,6 +25,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
     private long mCursor = -1;
+    private boolean mShouldRestoreScroll = false;
 
     @Override
     protected int getAddIndex() {
@@ -52,6 +53,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     @Override
     protected void onPreLoad() {
         super.onPreLoad();
+        mShouldRestoreScroll = getAdapter().getCount() > 0;
         saveScrollPos();
     }
 
@@ -61,7 +63,9 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         // Cache will expire 15 minutes after refreshing
         if (getCache() != null)
             getCache().setExpiration(0, 0, 0, 15);
-        restoreScrollPos(results.size());
+        // Only restore the scroll position if the list was not empty before refreshing
+        if (mShouldRestoreScroll)
+            restoreScrollPos(results.size());
     }
 
     @Override
@@ -183,9 +187,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             @Override
             public void run() {
                 getListView().clearFocus();
-                ((ListView)getListView()).setSelectionFromTop(addedCount - 1, mSavedFromTop);
-                getListView().requestFocus();
-                getListView().requestFocusFromTouch();
+                ((ListView) getListView()).setSelectionFromTop(addedCount - 1, mSavedFromTop);
             }
         });
     }
