@@ -76,6 +76,7 @@
     <string name="confirm_unfollow_title">Unfollow</string>
     <string name="confirm_unfollow">Are you sure you want to unfollow @{screenname}?</string>
     <string name="profile">Profile</string>
+    <string name="confirm_unretweet">Are you sure you want to unretweet this tweet?</string>
     <string name="confirm_delete">Are you sure you want to delete this tweet?</string>
 
     <string name="search">Search</string>

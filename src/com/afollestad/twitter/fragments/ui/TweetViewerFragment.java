@@ -170,7 +170,6 @@ public class TweetViewerFragment extends SilkFragment {
         if (!isMe) {
             MenuItem retweet = menu.findItem(R.id.retweet);
             retweet.setVisible(!mTweet.getUser().isProtected());
-            Toast.makeText(getActivity(), mTweet.getCurrentUserRetweetId() + "", Toast.LENGTH_LONG).show();
             if (mTweet.getCurrentUserRetweetId() > 0) {
                 retweet.setTitle(R.string.unretweet);
                 retweet.setIcon(R.drawable.ic_unretweet);
@@ -199,7 +198,9 @@ public class TweetViewerFragment extends SilkFragment {
                 startActivity(new Intent(getActivity(), ComposeActivity.class).putExtra("reply_to", mTweet));
                 return true;
             case R.id.retweet:
-                showRetweetDialog();
+                if (mTweet.getCurrentUserRetweetId() > 0) {
+                    confirmDelete();
+                } else showRetweetDialog();
                 return true;
             case R.id.favorite:
                 toggleFavorite();
@@ -306,7 +307,7 @@ public class TweetViewerFragment extends SilkFragment {
                 try {
                     Twitter cl = BoidApp.get(getActivity()).getClient();
                     cl.retweetStatus(mTweet.getId());
-                } catch (final Exception e) {
+                } catch (final TwitterException e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
@@ -336,9 +337,10 @@ public class TweetViewerFragment extends SilkFragment {
     }
 
     private void confirmDelete() {
+        boolean unretweetMode = mTweet.getCurrentUserRetweetId() > 0;
         new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.delete)
-                .setMessage(R.string.confirm_delete)
+                .setTitle(unretweetMode ? R.string.unretweet : R.string.delete)
+                .setMessage(unretweetMode ? R.string.confirm_unretweet : R.string.confirm_delete)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -355,6 +357,7 @@ public class TweetViewerFragment extends SilkFragment {
     }
 
     private void performDelete() {
+        final boolean unretweetMode = mTweet.getCurrentUserRetweetId() > 0;
         final ProgressDialog dialog = new ProgressDialog(getActivity());
         dialog.setMessage(getString(R.string.please_wait));
         dialog.setCancelable(false);
@@ -365,7 +368,7 @@ public class TweetViewerFragment extends SilkFragment {
             public void run() {
                 try {
                     Twitter cl = BoidApp.get(getActivity()).getClient();
-                    cl.destroyStatus(mTweet.getId());
+                    cl.destroyStatus(unretweetMode ? mTweet.getCurrentUserRetweetId() : mTweet.getId());
                 } catch (final Exception e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
