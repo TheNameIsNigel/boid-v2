@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ListView;
 import com.afollestad.silk.caching.LimiterBehavior;
 import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.caching.SilkCacheLimiter;
@@ -182,7 +183,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             @Override
             public void run() {
                 getListView().clearFocus();
-                getListView().setSelectionFromTop(addedCount - 1, mSavedFromTop);
+                ((ListView)getListView()).setSelectionFromTop(addedCount - 1, mSavedFromTop);
                 getListView().requestFocus();
                 getListView().requestFocusFromTouch();
             }
