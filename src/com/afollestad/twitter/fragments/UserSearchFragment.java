@@ -85,7 +85,7 @@ public class UserSearchFragment extends BoidListFragment<User> {
 
     @Override
     protected List<User> load(Twitter client, Paging paging) throws Exception {
-        return client.searchUsers(mQuery, 0); //TODO pagination
+        return client.searchUsers(mQuery, 0);
     }
 
     @Override

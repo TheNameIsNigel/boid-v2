@@ -45,7 +45,6 @@ public class TrendsFragment extends BoidListFragment<Trend> {
 
     @Override
     public boolean onItemLongTapped(int index, Trend item, View view) {
-        //TODO
         return false;
     }
 
