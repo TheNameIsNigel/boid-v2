@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.provider.SearchRecentSuggestions;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.twitter.columns.Columns;
@@ -134,10 +135,13 @@ public class BoidApp extends Application {
     }
 
     public void logout() {
-        // Remove the stored authentication token and saved column positions
+        // Remove all stored preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().remove("token").commit();
+        prefs.edit().clear().commit();
         getSharedPreferences("[column-positions]", MODE_PRIVATE).edit().clear().commit();
+        // Clear search history
+        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionsProvider.AUTHORITY, SearchSuggestionsProvider.MODE);
+        suggestions.clearHistory();
         // Clear persisted preferences and stuff for Silk.
         Silk.clearPersistence(this);
         Columns.clear(this);
