@@ -56,6 +56,8 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     }
 
     private SharedPreferences getPrefs() {
+        if(getActivity() == null)
+            throw new RuntimeException("Could not get state list persistence, activity is null...");
         return getActivity().getSharedPreferences("[column-positions]", Context.MODE_PRIVATE);
     }
 
