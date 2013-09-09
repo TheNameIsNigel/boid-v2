@@ -40,6 +40,11 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
     }
 
     @Override
+    protected boolean doesCacheExpire() {
+        return false;
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         int res = R.menu.fragment_profile_viewer;
         if (mUser != null && mUser.getId() == mProfile.getId())

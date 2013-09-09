@@ -220,12 +220,15 @@ public class TweetViewerFragment extends SilkFragment {
             new SilkCache<Status>(getActivity(), col.toString(), new OnReadyCallback<Status>() {
                 @Override
                 public void onReady(SilkCache<Status> cache) {
-                    cache.update(mTweet).commit(new SilkCache.SimpleCommitCallback() {
-                        @Override
-                        public void onError(Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
+                    cache.update(mTweet);
+                    if (cache.isChanged()) {
+                        cache.commit(new SilkCache.SimpleCommitCallback() {
+                            @Override
+                            public void onError(Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
                 }
             });
         }

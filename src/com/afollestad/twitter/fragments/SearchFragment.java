@@ -72,6 +72,11 @@ public class SearchFragment extends BoidListFragment<Status> {
     }
 
     @Override
+    protected boolean doesCacheExpire() {
+        return false;
+    }
+
+    @Override
     protected List<Status> load(Twitter client, Paging paging) throws Exception {
         Query q = new Query(mQuery);
         if (paging != null) {

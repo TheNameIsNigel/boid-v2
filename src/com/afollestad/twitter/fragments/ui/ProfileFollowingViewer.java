@@ -80,6 +80,11 @@ public class ProfileFollowingViewer extends BoidListFragment<User> {
     }
 
     @Override
+    protected boolean doesCacheExpire() {
+        return false;
+    }
+
+    @Override
     protected List<User> load(Twitter client, Paging paging) throws Exception {
         PagableResponseList<User> results = client.getFriendsList(mUser.getId(), getCursor());
         setCursor(results.getNextCursor());

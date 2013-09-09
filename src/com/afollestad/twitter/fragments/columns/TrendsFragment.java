@@ -49,6 +49,11 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     }
 
     @Override
+    protected boolean doesCacheExpire() {
+        return false;
+    }
+
+    @Override
     protected List<Trend> load(Twitter client, Paging paging) throws Exception {
         Trends trends = BoidApp.get(getActivity()).getClient().getPlaceTrends(1);
         runOnUiThread(new Runnable() {
