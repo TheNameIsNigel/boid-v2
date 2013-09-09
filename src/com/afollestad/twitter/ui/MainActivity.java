@@ -145,11 +145,12 @@ public class MainActivity extends ThemedDrawerActivity {
             final MenuItem search = menu.findItem(R.id.search);
             search.setVisible(!drawerOpen);
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView = (SearchView) search.getActionView();
+            final SearchView searchView = (SearchView) search.getActionView();
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     search.collapseActionView();
+                    searchView.setIconified(false);
                     return false;
                 }
 
