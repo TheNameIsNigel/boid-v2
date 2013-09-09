@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.afollestad.silk.caching.OnReadyCallback;
 import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.fragments.SilkFragment;
@@ -330,7 +329,8 @@ public class TweetViewerFragment extends SilkFragment {
 
     private void performShare() {
         String shareBody = "@" + mTweet.getUser().getScreenName() + ": " +
-                TextUtils.expandURLs(mTweet.getText(), true, mTweet.getURLEntities(), mTweet.getMediaEntities());
+                TextUtils.expandURLs(mTweet.getText(), true, mTweet.getURLEntities(), mTweet.getMediaEntities()) + "\n\n" +
+                "https://twitter.com/" + mTweet.getUser().getScreenName() + "/status/" + mTweet.getId();
         Intent sharingIntent = new Intent(Intent.ACTION_SEND)
                 .setType("text/plain").putExtra(Intent.EXTRA_TEXT, shareBody);
         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
