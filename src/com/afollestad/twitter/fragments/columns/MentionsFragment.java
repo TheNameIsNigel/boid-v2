@@ -21,7 +21,7 @@ public class MentionsFragment extends BoidListFragment<Status> {
 
     @Override
     public String getCacheName() {
-        return Column.MENTIONS + "";
+        return new Column(Status.class, Column.MENTIONS).toString();
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
 
     @Override
     public String getCacheName() {
-        return Column.MESSAGES + "";
+        return new Column(ConversationAdapter.Conversation.class, Column.MESSAGES).toString();
     }
 
     @Override
