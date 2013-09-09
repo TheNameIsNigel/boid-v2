@@ -54,7 +54,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     @Override
     protected void onPreLoad() {
         super.onPreLoad();
-        mShouldRestoreScroll = getAdapter().getCount() > 0;
+        mShouldRestoreScroll = !getAdapter().isEmpty();
         if (mShouldRestoreScroll)
             saveScrollPos();
     }
