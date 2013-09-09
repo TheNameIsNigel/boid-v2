@@ -83,7 +83,7 @@
     <string name="search_hint">Search tweets and users…</string>
     <string name="save_search">Save Search</string>
     <string name="pin_as_column">Pin as Column</string>
-    <string name="tweet_with_query">Tweet with Query</string>
+    <string name="tweet_with_query">Tweet with {query}</string>
 
     <string name="tweets">Tweets</string>
     <string name="users">Users</string>
