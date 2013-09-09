@@ -10,6 +10,7 @@ import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.Paging;
 import twitter4j.Status;
+import twitter4j.Trend;
 import twitter4j.Twitter;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class TimelineFragment extends BoidListFragment<Status> {
 
     @Override
     public String getCacheName() {
-        return Column.TIMELINE + "";
+        return new Column(Status.class, Column.TIMELINE).toString();
     }
 
     @Override

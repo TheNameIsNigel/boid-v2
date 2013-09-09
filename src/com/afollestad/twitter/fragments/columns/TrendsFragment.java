@@ -24,7 +24,7 @@ public class TrendsFragment extends BoidListFragment<Trend> {
 
     @Override
     public String getCacheName() {
-        return Column.TRENDS + "";
+        return new Column(Trend.class, Column.TRENDS).toString();
     }
 
     @Override
