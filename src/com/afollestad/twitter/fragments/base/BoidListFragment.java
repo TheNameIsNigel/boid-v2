@@ -116,6 +116,10 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     @Override
     public void performPaginate(boolean showProgress) {
         if (!isPaginationEnabled()) return;
+        if (mPullToRefreshAttacher != null && !showProgress) {
+            // Override show progress value to show the action bar refresh indicator at all times
+            mPullToRefreshAttacher.setRefreshing(true);
+        }
         super.performPaginate(showProgress);
     }
 
