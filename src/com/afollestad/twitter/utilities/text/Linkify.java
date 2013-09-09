@@ -23,25 +23,25 @@ public class Linkify {
      * Bit field indicating that web URLs should be matched in methods that
      * take an options mask
      */
-    public static final int WEB_URLS = 0x01;
+    private static final int WEB_URLS = 0x01;
 
     /**
      * Bit field indicating that email addresses should be matched in methods
      * that take an options mask
      */
-    public static final int EMAIL_ADDRESSES = 0x02;
+    private static final int EMAIL_ADDRESSES = 0x02;
 
     /**
      * Bit field indicating that phone numbers should be matched in methods that
      * take an options mask
      */
-    public static final int PHONE_NUMBERS = 0x04;
+    private static final int PHONE_NUMBERS = 0x04;
 
     /**
      * Bit field indicating that street addresses should be matched in methods that
      * take an options mask
      */
-    public static final int MAP_ADDRESSES = 0x08;
+    private static final int MAP_ADDRESSES = 0x08;
 
     /**
      * Bit mask indicating that all available patterns should be matched in
@@ -53,7 +53,7 @@ public class Linkify {
      * Filters out web URL matches that occur after an at-sign (@).  This is
      * to prevent turning the domain name in an email address into a web link.
      */
-    public static final MatchFilter sUrlMatchFilter = new MatchFilter() {
+    private static final MatchFilter sUrlMatchFilter = new MatchFilter() {
         public final boolean acceptMatch(CharSequence s, int start, int end) {
             if (start == 0) {
                 return true;
@@ -68,7 +68,7 @@ public class Linkify {
      * Filters out URL matches that don't have enough digits to be a
      * phone number.
      */
-    public static final MatchFilter sPhoneNumberMatchFilter = new MatchFilter() {
+    private static final MatchFilter sPhoneNumberMatchFilter = new MatchFilter() {
         public final boolean acceptMatch(CharSequence s, int start, int end) {
             int digitCount = 0;
 
@@ -96,7 +96,7 @@ public class Linkify {
      * &apos;+1 (919) 555-1212&apos;
      * becomes &apos;+19195551212&apos;
      */
-    public static final TransformFilter sPhoneNumberTransformFilter = new TransformFilter() {
+    private static final TransformFilter sPhoneNumberTransformFilter = new TransformFilter() {
         public final String transformUrl(final Matcher match, String url) {
             return Regex.digitsAndPlusOnly(match);
         }
@@ -156,7 +156,7 @@ public class Linkify {
      * attached to the Spannable, to avoid problems if you call it
      * repeatedly on the same text.
      */
-    public static boolean addLinks(Context context, Spannable text, int mask) {
+    private static boolean addLinks(Context context, Spannable text, int mask) {
         if (mask == 0) {
             return false;
         }
@@ -300,9 +300,9 @@ public class Linkify {
      *                    additional control over which pattern matches are
      *                    to be converted into links.
      */
-    public static boolean addLinks(Context context, Spannable s, Pattern p,
-                                   MatchFilter matchFilter,
-                                   TransformFilter transformFilter) {
+    private static boolean addLinks(Context context, Spannable s, Pattern p,
+                                    MatchFilter matchFilter,
+                                    TransformFilter transformFilter) {
         boolean hasMatches = false;
         Matcher m = p.matcher(s);
 

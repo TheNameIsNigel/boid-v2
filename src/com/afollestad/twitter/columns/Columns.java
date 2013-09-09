@@ -47,7 +47,7 @@ public class Columns {
         return getAll(context, null);
     }
 
-    public static void setAll(Context context, List<Column> cols) {
+    private static void setAll(Context context, List<Column> cols) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String toSave = "";
         for (int i = 0; i < cols.size(); i++) {

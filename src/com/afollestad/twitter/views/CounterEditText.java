@@ -39,7 +39,7 @@ public class CounterEditText extends SilkEditText {
     private int errorTextColor;
     private int contentTextColor;
 
-    public final static int CHARACTER_LIMIT = 140;
+    private final static int CHARACTER_LIMIT = 140;
 
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {

@@ -17,7 +17,7 @@ import com.afollestad.twitter.ui.ComposeActivity;
  */
 public class ComposerNotify {
 
-    public final static int ID = 100;
+    private final static int ID = 100;
 
     public static String show(Context context, Bundle args) {
         String tag = System.currentTimeMillis() + "";

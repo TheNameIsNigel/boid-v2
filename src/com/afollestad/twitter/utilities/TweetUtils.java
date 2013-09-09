@@ -35,7 +35,7 @@ public class TweetUtils {
         return getMediaURL(tweet.getMediaEntities(), tweet.getURLEntities(), larger);
     }
 
-    public static String getMediaURL(MediaEntity[] media, URLEntity[] urls, boolean larger) {
+    private static String getMediaURL(MediaEntity[] media, URLEntity[] urls, boolean larger) {
         if (media != null && media.length > 0) {
             return media[0].getMediaURL();
         } else if (urls != null && urls.length > 0) {

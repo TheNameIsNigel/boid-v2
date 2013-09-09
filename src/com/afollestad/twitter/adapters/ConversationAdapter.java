@@ -136,7 +136,7 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
         }
     }
 
-    public static class MessageComparator implements Comparator<DirectMessage> {
+    private static class MessageComparator implements Comparator<DirectMessage> {
         @Override
         public int compare(DirectMessage one, DirectMessage two) {
             return one.getCreatedAt().compareTo(two.getCreatedAt());

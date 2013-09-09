@@ -27,8 +27,8 @@ public class BoidApp extends Application {
     private Twitter client;
     private SilkImageManager mImageLoader;
 
-    public final static String DEFAULT_CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
-    public final static String DEFAULT_CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
+    private final static String DEFAULT_CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
+    private final static String DEFAULT_CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
     public final static String CALLBACK_URL = "boid://auth";
 
     public static String showAppMsgError(Activity activity, Exception e) {
@@ -122,7 +122,7 @@ public class BoidApp extends Application {
         return (User) Silk.deserializeObject(prefs.getString("profile", null));
     }
 
-    public AccessToken getToken() {
+    AccessToken getToken() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!prefs.contains("token"))
             return null;

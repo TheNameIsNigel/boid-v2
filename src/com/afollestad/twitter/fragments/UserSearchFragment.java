@@ -29,7 +29,7 @@ public class UserSearchFragment extends BoidListFragment<User> {
         return getCacheEnabled() ? new Column(User.class, Column.SEARCH, mQuery).toString() : null;
     }
 
-    protected boolean getCacheEnabled() {
+    boolean getCacheEnabled() {
         return false;
     }
 
