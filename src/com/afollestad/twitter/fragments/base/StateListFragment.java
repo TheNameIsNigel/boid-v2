@@ -34,9 +34,16 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     }
 
     @Override
+    protected void onPostLoadFromCache(List<ItemType> results) {
+        super.onPostLoadFromCache(results);
+        restoreScrollPos(-1);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        restoreScrollPos(-1);
+        if (!getAdapter().isEmpty())
+            restoreScrollPos(-1);
     }
 
     @Override

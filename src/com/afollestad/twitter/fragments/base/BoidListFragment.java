@@ -32,8 +32,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
-    public void setLoading(boolean progress) {
-        super.setLoading(progress);
+    protected void onPreLoad() {
+        super.onPreLoad();
         if (mPullToRefreshAttacher != null && !getAdapter().isEmpty())
             mPullToRefreshAttacher.setRefreshing(true);
     }
