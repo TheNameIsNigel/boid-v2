@@ -50,6 +50,11 @@ public class MentionsFragment extends BoidListFragment<Status> {
     }
 
     @Override
+    protected boolean doesCacheExpire() {
+        return true;
+    }
+
+    @Override
     protected List<Status> load(Twitter client, Paging paging) throws Exception {
         return client.getMentionsTimeline(paging);
     }

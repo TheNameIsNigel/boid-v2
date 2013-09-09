@@ -46,6 +46,11 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
     }
 
     @Override
+    protected boolean doesCacheExpire() {
+        return false;
+    }
+
+    @Override
     protected List<ConversationAdapter.Conversation> load(Twitter client, Paging paging) throws Exception {
         ConversationAdapter.ConversationOrganizer organizer = new ConversationAdapter.ConversationOrganizer(getActivity());
         ResponseList<DirectMessage> msges = client.getDirectMessages();
