@@ -1,16 +1,11 @@
 package com.afollestad.twitter.fragments.base;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import com.afollestad.silk.caching.LimiterBehavior;
 import com.afollestad.silk.caching.SilkCache;
 import com.afollestad.silk.caching.SilkCacheLimiter;
 import com.afollestad.silk.caching.SilkComparable;
-import com.afollestad.silk.fragments.SilkCachedFeedFragment;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
@@ -22,11 +17,10 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {
+public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>> extends StateListFragment<ItemType> {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
     private long mCursor = -1;
-    private boolean mShouldRestoreScroll = false;
 
     @Override
     protected int getAddIndex() {
@@ -45,29 +39,13 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     @Override
-    public void setLoadComplete(boolean error) {
-        super.setLoadComplete(error);
-        if (mPullToRefreshAttacher != null)
-            mPullToRefreshAttacher.setRefreshComplete();
-    }
-
-    @Override
-    protected void onPreLoad() {
-        super.onPreLoad();
-        mShouldRestoreScroll = !getAdapter().isEmpty();
-        if (mShouldRestoreScroll)
-            saveScrollPos();
-    }
-
-    @Override
     protected void onPostLoad(List<ItemType> results, boolean paginated) {
         super.onPostLoad(results, paginated);
+        if (mPullToRefreshAttacher != null)
+            mPullToRefreshAttacher.setRefreshComplete();
         // Cache will expire 15 minutes after refreshing
         if (getCache() != null)
             getCache().setExpiration(0, 0, 0, 15);
-        // Only restore the scroll position if the list was not empty before refreshing
-        if (mShouldRestoreScroll)
-            restoreScrollPos(results.size());
     }
 
     @Override
@@ -164,35 +142,5 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     protected boolean isPageCursorMode() {
         return false;
-    }
-
-    public final void saveScrollPos() {
-        int mSavedIndex = getListView().getFirstVisiblePosition();
-        View v = getListView().getChildAt(0);
-        int mSavedFromTop = (v == null) ? 0 : v.getTop();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putInt(getCacheName() + "_saved_index", mSavedIndex)
-                .putInt(getCacheName() + "_saved_top", mSavedFromTop).commit();
-        Log.d("BoidListFragment", "List position saved; index: " + mSavedIndex + ", top: " + mSavedFromTop);
-    }
-
-    public final void restoreScrollPos(final int addedCount) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        final int mSavedIndex = prefs.getInt(getCacheName() + "_saved_index", -1);
-        if (mSavedIndex == -1) return;
-        else if (mSavedIndex > getAdapter().getCount() - 1) {
-            // The saved scroll position is out of date with the cache
-            prefs.edit().remove(getCacheName() + "_saved_index").remove(getCacheName() + "_saved_top").commit();
-            return;
-        }
-        final int mSavedFromTop = prefs.getInt(getCacheName() + "_saved_top", 0);
-        getListView().post(new Runnable() {
-            @Override
-            public void run() {
-                getListView().clearFocus();
-                ((ListView) getListView()).setSelectionFromTop(addedCount - 1, mSavedFromTop);
-                Log.d("BoidListFragment", "Scroll position restored... index: " + (addedCount - 1) + ", top: " + mSavedFromTop);
-            }
-        });
     }
 }

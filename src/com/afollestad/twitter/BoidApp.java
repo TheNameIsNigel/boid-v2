@@ -134,9 +134,10 @@ public class BoidApp extends Application {
     }
 
     public void logout() {
-        // Remove the stored authentication token
+        // Remove the stored authentication token and saved column positions
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("token").commit();
+        getSharedPreferences("[column-positions]", MODE_PRIVATE).edit().clear().commit();
         // Clear persisted preferences and stuff for Silk.
         Silk.clearPersistence(this);
         Columns.clear(this);
