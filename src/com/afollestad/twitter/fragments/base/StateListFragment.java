@@ -79,7 +79,7 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
 
     protected final void restoreScrollPos(final int addedCount) {
         int[] saved = getPersistence();
-        final int index = addedCount == -1 ? saved[0] : addedCount - 1;
+        final int index = addedCount == -1 ? saved[0] : addedCount;
         if (index == -1) return;
         else if (index > getAdapter().getCount() - 1) {
             Log.d("StateListFragment", "Saved scroll position larger than list size...");
@@ -91,7 +91,7 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
             public void run() {
                 getListView().clearFocus();
                 ((ListView) getListView()).setSelectionFromTop(index, top);
-                Log.d("StateListFragment", "Scroll position restored; index: " + (addedCount - 1) + ", top: " + top);
+                Log.d("StateListFragment", "Scroll position restored; index: " + index + ", top: " + top);
             }
         });
     }
