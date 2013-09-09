@@ -26,8 +26,8 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     }
 
     @Override
-    protected void onPostLoad(List<ItemType> results, boolean paginated) {
-        super.onPostLoad(results, paginated);
+    protected void onPostLoad(List<ItemType> results, boolean paginated, boolean loadComplete) {
+        super.onPostLoad(results, paginated, loadComplete);
         // Only restore the scroll position if the list was not empty before refreshing
         if (mShouldRestoreScroll)
             restoreScrollPos(results.size());
@@ -35,8 +35,9 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
 
     @Override
     protected void onPostLoadFromCache(List<ItemType> results) {
-        super.onPostLoadFromCache(results);
+        super.onPostLoad(results, false, false);
         restoreScrollPos(-1);
+        setLoadComplete(false);
     }
 
     @Override
