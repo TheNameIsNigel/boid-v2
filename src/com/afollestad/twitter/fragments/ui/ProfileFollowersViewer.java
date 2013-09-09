@@ -37,8 +37,8 @@ public class ProfileFollowersViewer extends BoidListFragment<User> {
     }
 
     @Override
-    protected void onPostLoad(List<User> results, boolean paginated) {
-        super.onPostLoad(results, paginated);
+    protected void onPostLoad(List<User> results, boolean paginated, boolean loadComplete) {
+        super.onPostLoad(results, paginated, loadComplete);
         if (results == null || results.size() == 0 || getAdapter().getCount() == mUser.getFollowersCount()) {
             getAdapter().add(new UserJSONImpl(true));
             getListView().smoothScrollToPosition(getAdapter().getCount());

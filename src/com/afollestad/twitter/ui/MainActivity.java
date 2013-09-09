@@ -78,13 +78,7 @@ public class MainActivity extends ThemedDrawerActivity {
             }
         });
 
-        if (BoidApp.get(this).hasAccount()) {
-            // Restore the last viewed fragment
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            int index = prefs.getInt("recent_fragment_main", 1);
-            drawerList.setItemChecked(index + 1, true);
-            onDrawerItemClicked(index);
-        } else {
+        if (!BoidApp.get(this).hasAccount()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
@@ -93,12 +87,20 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Check for new columns
         int oldAccount = mLastPageCount;
         invalidateColumns();
         int newCount = mLastPageCount;
         if (oldAccount > 0 && newCount != oldAccount) {
             // If columns have been added or removed, move to the newer page or last old page
             mPager.setCurrentItem(newCount - 1);
+        }
+        // Restore the last viewed fragment page
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int index = prefs.getInt("recent_fragment_main", -1);
+        if (index > -1) {
+            mPager.setCurrentItem(index);
+            prefs.edit().remove("recent_fragment_main").commit();
         }
     }
 
@@ -127,7 +129,7 @@ public class MainActivity extends ThemedDrawerActivity {
     protected void onPause() {
         super.onPause();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putInt("recent_fragment_main", mPager.getCurrentItem() + 1).commit();
+        prefs.edit().putInt("recent_fragment_main", mPager.getCurrentItem()).commit();
     }
 
     @Override
