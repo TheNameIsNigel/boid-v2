@@ -150,7 +150,7 @@ public class MainActivity extends ThemedDrawerActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     search.collapseActionView();
-                    searchView.setIconified(false);
+                    searchView.setIconified(true);
                     return false;
                 }
 
