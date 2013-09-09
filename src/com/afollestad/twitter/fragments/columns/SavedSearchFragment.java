@@ -21,5 +21,6 @@ public class SavedSearchFragment extends SearchFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.pin).setVisible(false);
+        menu.findItem(R.id.save).setVisible(false);
     }
 }
