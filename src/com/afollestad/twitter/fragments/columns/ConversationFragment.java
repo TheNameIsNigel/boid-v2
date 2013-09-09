@@ -17,6 +17,8 @@ import java.util.List;
 
 /**
  * A feed fragment that displays the current user's message conversations.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class ConversationFragment extends BoidListFragment<ConversationAdapter.Conversation> {
 

@@ -13,6 +13,8 @@ import twitter4j.DirectMessage;
 
 /**
  * A feed fragment that displays direct messages from a conversation, and allows you to send messages.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class MessagesFragment extends Fragment {
 

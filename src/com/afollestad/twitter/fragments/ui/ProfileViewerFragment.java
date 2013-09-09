@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The fragment that displays all information and tweets for a profile, contained in a {@link com.afollestad.twitter.ui.ProfileActivity} on phones.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class ProfileViewerFragment extends BoidListFragment<Status> {

@@ -3,6 +3,8 @@ package com.afollestad.twitter.columns;
 import com.afollestad.silk.caching.SilkComparable;
 
 /**
+ * Represents a column in the {@link com.afollestad.twitter.ui.MainActivity}. Used for storage and persistence of column settings.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class Column implements SilkComparable<Column> {

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Utility methods for retrieval and modification of columns in the {@link com.afollestad.twitter.ui.MainActivity}.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class Columns {

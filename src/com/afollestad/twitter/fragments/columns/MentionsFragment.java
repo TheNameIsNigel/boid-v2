@@ -16,6 +16,8 @@ import java.util.List;
 
 /**
  * A feed fragment that displays the current user's mentions.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class MentionsFragment extends BoidListFragment<Status> {
 

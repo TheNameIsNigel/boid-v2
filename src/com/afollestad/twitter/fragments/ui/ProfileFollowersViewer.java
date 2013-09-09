@@ -18,6 +18,8 @@ import twitter4j.internal.json.UserJSONImpl;
 import java.util.List;
 
 /**
+ * Displays a user's followers.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class ProfileFollowersViewer extends BoidListFragment<User> {

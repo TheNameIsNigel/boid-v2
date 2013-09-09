@@ -24,6 +24,9 @@ import twitter4j.User;
 import twitter4j.internal.json.StatusJSONImpl;
 
 /**
+ * A {@link StatusAdapter} that displays 2 header views for a profile (including
+ * their header image, profile picture, tweet/followers/following count, follow button, etc.).
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class ProfileAdapter extends StatusAdapter {

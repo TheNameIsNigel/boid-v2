@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * A feed fragment that displays Twitter trends.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class TrendsFragment extends BoidListFragment<Trend> {
 

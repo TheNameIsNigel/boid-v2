@@ -17,6 +17,8 @@ import java.util.List;
 
 /**
  * A feed fragment that displays the current user's home timeline.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class TimelineFragment extends BoidListFragment<Status> {
 

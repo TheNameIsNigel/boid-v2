@@ -38,7 +38,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- * The tweet viewer fragment.
+ * Displays information about a specific tweet, contained in the {@link com.afollestad.twitter.ui.TweetViewerActivity} on phones.
  *
  * @author Aidan Follestad (afollestad)
  */

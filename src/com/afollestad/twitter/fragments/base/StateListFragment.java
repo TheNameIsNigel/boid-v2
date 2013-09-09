@@ -11,6 +11,8 @@ import com.afollestad.silk.fragments.SilkCachedFeedFragment;
 import java.util.List;
 
 /**
+ * Extended by the {@link BoidListFragment}, handles saving list positions and restoring them later.
+ *
  * @author Aidan Follestad (afollestad)
  */
 abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {

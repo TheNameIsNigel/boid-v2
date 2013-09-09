@@ -12,6 +12,8 @@ import com.afollestad.twitter.fragments.columns.*;
 import java.util.List;
 
 /**
+ * The {@link com.afollestad.twitter.ui.MainActivity}'s column view pager adapter.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class MainPagerAdapter extends FragmentStatePagerAdapter {

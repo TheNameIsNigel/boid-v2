@@ -10,6 +10,8 @@ import com.afollestad.twitter.fragments.SearchFragment;
 import com.afollestad.twitter.fragments.UserSearchFragment;
 
 /**
+ * Displays a "Tweets" and "Users" page for the {@link com.afollestad.twitter.ui.SearchActivity}'s ViewPager.
+ *
  * @author Aidan Follestad (afollestad)
  */
 public class SearchPagerAdapter extends FragmentStatePagerAdapter {

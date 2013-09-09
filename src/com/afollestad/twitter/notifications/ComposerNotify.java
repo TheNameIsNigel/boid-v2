@@ -12,6 +12,8 @@ import com.afollestad.twitter.ui.ComposeActivity;
 /**
  * Convenience methods for displaying 'sending' or 'failed to send' notifications for tweets. Used by the
  * {@link com.afollestad.twitter.services.ComposerService}.
+ *
+ * @author Aidan Follestad (afollestad)
  */
 public class ComposerNotify {
 

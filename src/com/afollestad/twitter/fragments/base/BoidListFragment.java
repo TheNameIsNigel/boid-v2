@@ -17,6 +17,14 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The fragment class extended by most other fragments in the app (including all column fragments).
+ * <p/>
+ * Automatically handles many things used by all the columns, such as action bar pull to refresh, cache expiration,
+ * and pagination of statuses or users.
+ *
+ * @author Aidan Follestad (afollestad)
+ */
 public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>> extends StateListFragment<ItemType> {
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
