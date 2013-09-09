@@ -87,6 +87,7 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // Check for new columns
         int oldAccount = mLastPageCount;
         invalidateColumns();
@@ -94,13 +95,14 @@ public class MainActivity extends ThemedDrawerActivity {
         if (oldAccount > 0 && newCount != oldAccount) {
             // If columns have been added or removed, move to the newer page or last old page
             mPager.setCurrentItem(newCount - 1);
-        }
-        // Restore the last viewed fragment page
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int index = prefs.getInt("recent_fragment_main", -1);
-        if (index > -1) {
-            mPager.setCurrentItem(index);
             prefs.edit().remove("recent_fragment_main").commit();
+        } else {
+            // Restore the last viewed fragment page
+            int index = prefs.getInt("recent_fragment_main", -1);
+            if (index > -1) {
+                mPager.setCurrentItem(index);
+                prefs.edit().remove("recent_fragment_main").commit();
+            }
         }
     }
 
