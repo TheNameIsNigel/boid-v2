@@ -5,7 +5,7 @@
         <item name="inputFrameBackground">@android:color/white</item>
         <item name="usernameTextColor">@android:color/black</item>
         <item name="contentTextColor">@android:color/secondary_text_light</item>
-        <item name="navDrawerBackground">@color/drawer_background_light</item>
+        <item name="navDrawerBackground">@color/drawer_background_dark</item>
         <item name="errorTextColor">@color/red</item>
         <item name="headerTextColor">@android:color/holo_blue_light</item>
 
