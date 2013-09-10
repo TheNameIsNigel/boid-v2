@@ -18,8 +18,6 @@ import java.util.List;
 abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {
 
     private boolean mShouldRestoreScroll = false;
-    private int mSavedIndex = -1;
-    private int mSavedTop = -1;
 
     @Override
     protected void onPreLoad() {
@@ -58,19 +56,17 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     }
 
     private SharedPreferences getPrefs() {
+        if(getActivity() == null)
+            throw new RuntimeException("Could not get state list persistence, activity is null...");
         return getActivity().getSharedPreferences("[column-positions]", Context.MODE_PRIVATE);
     }
 
     private int[] getPersistence() {
-        if (getActivity() == null || (mSavedIndex > -1 && mSavedTop > -1))
-            return new int[]{mSavedIndex, mSavedTop};
         String persisted = getPrefs().getString(getCacheName(), null);
         if (persisted == null) return new int[]{-1, -1};
         String[] split = persisted.split(":");
         getPrefs().edit().remove(getCacheName()).commit();
-        mSavedIndex = Integer.parseInt(split[0]);
-        mSavedTop = Integer.parseInt(split[1]);
-        return new int[]{mSavedIndex, mSavedTop};
+        return new int[]{Integer.parseInt(split[0]), Integer.parseInt(split[1])};
     }
 
     private void setPersistence(int position, int top) {
@@ -78,11 +74,11 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     }
 
     final void saveScrollPos() {
-        mSavedIndex = getListView().getFirstVisiblePosition();
+        int mSavedIndex = getListView().getFirstVisiblePosition();
         View v = getListView().getChildAt(0);
-        mSavedTop = (v == null) ? 0 : v.getTop();
-        setPersistence(mSavedIndex, mSavedTop);
-        Log.d("StateListFragment", "List position saved; index: " + mSavedIndex + ", top: " + mSavedTop);
+        int mSavedFromTop = (v == null) ? 0 : v.getTop();
+        setPersistence(mSavedIndex, mSavedFromTop);
+        Log.d("StateListFragment", "List position saved; index: " + mSavedIndex + ", top: " + mSavedFromTop);
     }
 
     final void restoreScrollPos(final int addedCount) {
