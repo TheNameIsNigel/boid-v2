@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Boidlight.DarkAB" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="inputFrameBackground">@android:color/white</item>
+        <item name="usernameTextColor">@android:color/black</item>
+        <item name="contentTextColor">@android:color/secondary_text_light</item>
+        <item name="navDrawerBackground">@color/drawer_background_light</item>
+        <item name="errorTextColor">@color/red</item>
+        <item name="headerTextColor">@android:color/holo_blue_light</item>
+
+        <item name="addIcon">@drawable/ic_add_dark</item>
+
+        <item name="composeIcon">@drawable/ic_compose_dark</item>
+        <item name="sendIcon">@drawable/ic_send_dark</item>
+        <item name="refreshIcon">@drawable/ic_refresh_dark</item>
+        <item name="sendButton">@drawable/send_button_dark</item>
+        <item name="retweetIndicator">@drawable/ic_retweet_dark</item>
+
+        <item name="replyIcon">@drawable/ic_reply_dark</item>
+        <item name="retweetIcon">@drawable/ic_retweet_dark</item>
+        <item name="favoritedIcon">@drawable/ic_favorited_dark</item>
+        <item name="unfavoritedIcon">@drawable/ic_unfavorited_dark</item>
+        <item name="shareIcon">@drawable/ic_share_dark</item>
+        <item name="deleteIcon">@drawable/ic_delete_dark</item>
+
+        <item name="mentionIcon">@drawable/ic_mention_dark</item>
+        <item name="editIcon">@drawable/ic_edit_dark</item>
+        <item name="searchIcon">@drawable/ic_search_dark</item>
+        <item name="pinIcon">@drawable/ic_pin_dark</item>
+
+    </style>
+
+</resources>
