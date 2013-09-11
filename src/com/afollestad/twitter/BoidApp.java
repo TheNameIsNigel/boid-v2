@@ -16,6 +16,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
+import twitter4j.internal.json.UserJSONImpl;
 
 /**
  * Variables and methods kept in memory throughout the life of the app.
@@ -106,7 +107,7 @@ public class BoidApp extends Application {
 
     public BoidApp storeProfile(User profile) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putString("profile", Silk.serializeObject(profile)).commit();
+        prefs.edit().putString("profile", Silk.serializeObject(profile, UserJSONImpl.class)).commit();
         return this;
     }
 
@@ -119,7 +120,7 @@ public class BoidApp extends Application {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!prefs.contains("profile"))
             return null;
-        return (User) Silk.deserializeObject(prefs.getString("profile", null));
+        return (User) Silk.deserializeObject(prefs.getString("profile", null), UserJSONImpl.class);
     }
 
     AccessToken getToken() {

@@ -12,6 +12,7 @@ import com.afollestad.twitter.ui.ProfileActivity;
 import twitter4j.Paging;
 import twitter4j.Twitter;
 import twitter4j.User;
+import twitter4j.internal.json.UserJSONImpl;
 
 import java.util.List;
 
@@ -27,6 +28,11 @@ public class UserSearchFragment extends BoidListFragment<User> {
     @Override
     public String getCacheName() {
         return getCacheEnabled() ? new Column(User.class, Column.SEARCH, mQuery).toString() : null;
+    }
+
+    @Override
+    public Class getCacheClass() {
+        return UserJSONImpl.class;
     }
 
     boolean getCacheEnabled() {

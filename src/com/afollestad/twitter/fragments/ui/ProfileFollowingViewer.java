@@ -31,6 +31,11 @@ public class ProfileFollowingViewer extends BoidListFragment<User> {
     }
 
     @Override
+    public Class getCacheClass() {
+        return UserJSONImpl.class;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);

@@ -14,6 +14,7 @@ import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.*;
+import twitter4j.internal.json.StatusJSONImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,11 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
     @Override
     public String getCacheName() {
         return null;
+    }
+
+    @Override
+    public Class getCacheClass() {
+        return StatusJSONImpl.class;
     }
 
     @Override

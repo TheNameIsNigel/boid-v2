@@ -28,6 +28,11 @@ public class ConversationFragment extends BoidListFragment<ConversationAdapter.C
     }
 
     @Override
+    public Class<ConversationAdapter.Conversation> getCacheClass() {
+        return ConversationAdapter.Conversation.class;
+    }
+
+    @Override
     public int getEmptyText() {
         return R.string.no_conversations;
     }

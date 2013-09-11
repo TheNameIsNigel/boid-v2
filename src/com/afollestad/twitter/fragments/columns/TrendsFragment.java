@@ -13,6 +13,7 @@ import twitter4j.Paging;
 import twitter4j.Trend;
 import twitter4j.Trends;
 import twitter4j.Twitter;
+import twitter4j.internal.json.TrendJSONImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +28,11 @@ public class TrendsFragment extends BoidListFragment<Trend> {
     @Override
     public String getCacheName() {
         return new Column(Trend.class, Column.TRENDS).toString();
+    }
+
+    @Override
+    public Class getCacheClass() {
+        return TrendJSONImpl.class;
     }
 
     @Override

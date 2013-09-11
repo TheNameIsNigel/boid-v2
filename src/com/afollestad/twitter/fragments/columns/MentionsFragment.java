@@ -11,6 +11,7 @@ import com.afollestad.twitter.ui.TweetViewerActivity;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.internal.json.StatusJSONImpl;
 
 import java.util.List;
 
@@ -24,6 +25,11 @@ public class MentionsFragment extends BoidListFragment<Status> {
     @Override
     public String getCacheName() {
         return new Column(Status.class, Column.MENTIONS).toString();
+    }
+
+    @Override
+    public Class getCacheClass() {
+        return StatusJSONImpl.class;
     }
 
     @Override

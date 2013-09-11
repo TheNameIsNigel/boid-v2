@@ -3,7 +3,6 @@ package com.afollestad.twitter.fragments.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 import com.afollestad.silk.adapters.SilkAdapter;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.UserAdapter;
@@ -29,6 +28,11 @@ public class ProfileFollowersViewer extends BoidListFragment<User> {
     @Override
     public String getCacheName() {
         return null;
+    }
+
+    @Override
+    public Class getCacheClass() {
+        return UserJSONImpl.class;
     }
 
     @Override

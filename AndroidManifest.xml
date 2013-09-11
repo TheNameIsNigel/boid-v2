@@ -24,7 +24,8 @@
         </activity>
 
         <activity android:name=".ui.LoginActivity" android:label="@string/welcome"
-                  android:configChanges="screenSize|orientation|keyboardHidden"/>
+                  android:configChanges="screenSize|orientation|keyboardHidden"
+                  android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ui.LoginSettingsActivity" android:label="@string/login_settings"
                   android:configChanges="screenSize|orientation|keyboardHidden"/>

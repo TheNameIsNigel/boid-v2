@@ -217,7 +217,7 @@ public class TweetViewerFragment extends SilkFragment {
     private void updateCaches() {
         List<Column> columns = Columns.getAll(getActivity(), Status.class);
         for (Column col : columns) {
-            new SilkCache<Status>(getActivity(), col.toString(), new OnReadyCallback<Status>() {
+            new SilkCache<Status>(getActivity(), col.toString(), Status.class, new OnReadyCallback<Status>() {
                 @Override
                 public void onReady(SilkCache<Status> cache) {
                     cache.update(mTweet);
