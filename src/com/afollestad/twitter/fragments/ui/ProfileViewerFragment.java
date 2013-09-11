@@ -38,11 +38,6 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
     }
 
     @Override
-    protected int getAddIndex() {
-        return 2;
-    }
-
-    @Override
     protected boolean doesCacheExpire() {
         return false;
     }
@@ -75,6 +70,22 @@ public class ProfileViewerFragment extends BoidListFragment<Status> {
     @Override
     public Class getCacheClass() {
         return StatusJSONImpl.class;
+    }
+
+    @Override
+    protected List<Status> onUpdateItems(List<Status> results, boolean paginated) {
+        List<Status> items = getAdapter().getItems();
+        if (results != null) {
+            if (paginated) {
+                items.addAll(results);
+            } else {
+                // Clears old items and re-adds the header views
+                getAdapter().clear();
+                // Tweets are added after the header views
+                getAdapter().add(2, results);
+            }
+        }
+        return items;
     }
 
     @Override

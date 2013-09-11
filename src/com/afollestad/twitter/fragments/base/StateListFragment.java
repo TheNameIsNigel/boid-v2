@@ -37,7 +37,7 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
 
     @Override
     protected void onPostLoadFromCache(List<ItemType> results) {
-        appendToAdapter(results, false);
+        getAdapter().set(onUpdateItems(results, false));
         restoreScrollPos(-1);
         setLoadComplete(false);
     }
@@ -56,7 +56,7 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     }
 
     private SharedPreferences getPrefs() {
-        if(getActivity() == null)
+        if (getActivity() == null)
             throw new RuntimeException("Could not get state list persistence, activity is null...");
         return getActivity().getSharedPreferences("[column-positions]", Context.MODE_PRIVATE);
     }

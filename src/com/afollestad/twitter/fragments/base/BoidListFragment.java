@@ -1,6 +1,7 @@
 package com.afollestad.twitter.fragments.base;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import com.afollestad.silk.caching.LimiterBehavior;
 import com.afollestad.silk.caching.SilkCache;
@@ -30,11 +31,6 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     private PullToRefreshAttacher mPullToRefreshAttacher;
     private long mCursor = -1;
 
-    @Override
-    protected int getAddIndex() {
-        return 0;
-    }
-
     public final int getPageLength() {
         return 200;
     }
@@ -47,6 +43,20 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     }
 
     protected abstract boolean doesCacheExpire();
+
+    @Override
+    protected List<ItemType> onUpdateItems(List<ItemType> results, boolean paginated) {
+        List<ItemType> items = getAdapter().getItems();
+        if (results != null) {
+            if (paginated) {
+                items.addAll(results);
+            } else {
+                // Tweets are added to the beginning of the list instead of overwriting everything like the default implementation
+                items.addAll(0, results);
+            }
+        }
+        return items;
+    }
 
     @Override
     protected void onPostLoad(List<ItemType> results, boolean paginated) {
@@ -103,7 +113,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
             mCursor = -1;
         } else if (!getAdapter().isEmpty()) {
             // Get tweets newer than the most recent tweet in the adapter
-            paging.setSinceId(getAdapter().getItemId(getAddIndex()));
+            paging.setSinceId(getAdapter().getItemId(0));
             // Refresh in a loop to fill gaps until all tweets are retrieved
             List<ItemType> results = new ArrayList<ItemType>();
             while (true) {

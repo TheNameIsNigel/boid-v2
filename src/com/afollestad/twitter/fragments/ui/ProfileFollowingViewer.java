@@ -82,11 +82,6 @@ public class ProfileFollowingViewer extends BoidListFragment<User> {
     }
 
     @Override
-    protected int getAddIndex() {
-        return -1;
-    }
-
-    @Override
     protected boolean doesCacheExpire() {
         return false;
     }
