@@ -26,6 +26,7 @@
         <item name="refreshIcon">@drawable/ic_refresh_dark</item>
         <item name="sendButton">@drawable/send_button_dark</item>
         <item name="retweetIndicator">@drawable/ic_retweet_dark</item>
+        <item name="favoritedIndicator">@drawable/ic_favorited_dark</item>
 
         <item name="replyIcon">@drawable/ic_reply_dark</item>
         <item name="retweetIcon">@drawable/ic_retweet_dark</item>

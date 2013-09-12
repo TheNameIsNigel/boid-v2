@@ -27,6 +27,7 @@
         <item name="refreshIcon">@drawable/ic_refresh_light</item>
         <item name="sendButton">@drawable/send_button_light</item>
         <item name="retweetIndicator">@drawable/ic_retweet_light</item>
+        <item name="favoritedIndicator">@drawable/ic_favorited_light</item>
 
         <item name="replyIcon">@drawable/ic_reply_light</item>
         <item name="retweetIcon">@drawable/ic_retweet_light</item>

@@ -36,7 +36,7 @@
                            android:layout_width="@dimen/favorited_indicator"
                            android:layout_height="@dimen/favorited_indicator"
                            android:scaleType="fitXY"
-                           android:src="?favoritedIcon"
+                           android:src="?favoritedIndicator"
                            android:layout_marginLeft="3dp"
                            android:layout_centerVertical="true"
                            android:layout_toLeftOf="@+id/timestamp"
