@@ -21,8 +21,9 @@
         <item name="errorTextColor">@color/bright_red</item>
         <item name="headerTextColor">@android:color/holo_blue_dark</item>
 
-        <item name="addIcon">@drawable/ic_add_light</item>
+        <item name="boid_button">@drawable/boid_button</item>
 
+        <item name="addIcon">@drawable/ic_add_light</item>
         <item name="composeIcon">@drawable/ic_compose_light</item>
         <item name="sendIcon">@drawable/ic_send_light</item>
         <item name="refreshIcon">@drawable/ic_refresh_light</item>
