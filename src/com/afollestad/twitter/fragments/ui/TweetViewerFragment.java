@@ -204,6 +204,14 @@ public class TweetViewerFragment extends SilkFragment {
                 startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "image/*"));
             }
         });
+
+        v.findViewById(R.id.articleFrame).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mTweet.getURLEntities()[0].getExpandedURL()));
+                startActivity(Intent.createChooser(intent, getString(R.string.open_with)));
+            }
+        });
     }
 
     @Override
