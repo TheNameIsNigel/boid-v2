@@ -121,7 +121,7 @@
                                                                   android:textStyle="bold"
                                                                   android:textSize="@dimen/tweetViewerContent"
                                                                   android:singleLine="true"
-                                                                  android:paddingTop="15dp"/>
+                                                                  android:paddingTop="20dp"/>
 
             <com.afollestad.silk.views.image.SilkImageView android:id="@+id/articleImage"
                                                            android:layout_width="fill_parent"
