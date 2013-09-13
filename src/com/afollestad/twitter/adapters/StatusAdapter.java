@@ -33,6 +33,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
         super(context);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mDisplayRealNames = prefs.getBoolean("display_realname", true);
+        mDisplayInlineMedia = prefs.getBoolean("inline_media_toggle", true);
         mImageLoader = BoidApp.get(context).getImageLoader();
         mConvertRetweets = convertRetweets;
     }
@@ -42,6 +43,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
     }
 
     private final boolean mDisplayRealNames;
+    private final boolean mDisplayInlineMedia;
     private final SilkImageManager mImageLoader;
     private final boolean mConvertRetweets;
 
@@ -81,13 +83,18 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
         recycled.findViewById(R.id.favoritedIndicator).setVisibility(item.isFavorited() ? View.VISIBLE : View.INVISIBLE);
 
         SilkImageView media = (SilkImageView) recycled.findViewById(R.id.media);
-        String mediaUrl = TweetUtils.getTweetMediaURL(item, false);
-        if (mediaUrl != null) {
-            media.setVisibility(View.VISIBLE);
-            if (getScrollState() != AbsListView.OnScrollListener.SCROLL_STATE_FLING)
-                media.setImageURL(mImageLoader, mediaUrl);
-            else media.setImageBitmap(null);
+        if (mDisplayInlineMedia) {
+            String mediaUrl = TweetUtils.getTweetMediaURL(item, false);
+            if (mediaUrl != null) {
+                media.setVisibility(View.VISIBLE);
+                if (getScrollState() != AbsListView.OnScrollListener.SCROLL_STATE_FLING)
+                    media.setImageURL(mImageLoader, mediaUrl);
+                else media.setImageBitmap(null);
+            } else {
+                media.setVisibility(View.GONE);
+            }
         } else {
+            // Inline media is disabled
             media.setVisibility(View.GONE);
         }
 

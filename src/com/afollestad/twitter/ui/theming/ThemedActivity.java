@@ -17,11 +17,13 @@ public class ThemedActivity extends Activity {
 
     private int mTheme;
     private boolean mDisplayRealNames;
+    private boolean mInlineMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme(this);
         mDisplayRealNames = shouldDisplayRealNames(this);
+        mInlineMedia = shouldDisplayInlineMedia(this);
         setTheme(mTheme);
         super.onCreate(savedInstanceState);
     }
@@ -29,18 +31,24 @@ public class ThemedActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (shouldRecreate(this, mTheme, mDisplayRealNames)) recreate();
+        if (shouldRecreate(this, mTheme, mDisplayRealNames, mInlineMedia)) recreate();
     }
 
-    public static boolean shouldRecreate(Context context, int mTheme, boolean mDisplayRealNames) {
+    public static boolean shouldRecreate(Context context, int mTheme, boolean mDisplayRealNames, boolean mInlineMedia) {
         int currentTheme = getBoidTheme(context);
         boolean displayRealNames = shouldDisplayRealNames(context);
-        return currentTheme != mTheme || displayRealNames != mDisplayRealNames;
+        boolean displayInlineMeida = shouldDisplayInlineMedia(context);
+        return currentTheme != mTheme || displayRealNames != mDisplayRealNames || displayInlineMeida != mInlineMedia;
     }
 
     public static boolean shouldDisplayRealNames(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean("display_realname", true);
+    }
+
+    public static boolean shouldDisplayInlineMedia(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("inline_media_toggle", true);
     }
 
     public static int getBoidTheme(Context context) {

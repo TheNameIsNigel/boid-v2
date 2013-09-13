@@ -12,11 +12,13 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
 
     private int mTheme;
     private boolean mDisplayRealNames;
+    private boolean mInlineMedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = ThemedActivity.getBoidTheme(this);
         mDisplayRealNames = ThemedActivity.shouldDisplayRealNames(this);
+        mInlineMedia = ThemedActivity.shouldDisplayInlineMedia(this);
         setTheme(mTheme);
         super.onCreate(savedInstanceState);
     }
@@ -24,7 +26,7 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ThemedActivity.shouldRecreate(this, mTheme, mDisplayRealNames))
+        if (ThemedActivity.shouldRecreate(this, mTheme, mDisplayRealNames, mInlineMedia))
             recreate();
     }
 }
