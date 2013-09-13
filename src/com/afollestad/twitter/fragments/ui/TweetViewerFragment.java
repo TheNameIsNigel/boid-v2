@@ -253,6 +253,7 @@ public class TweetViewerFragment extends SilkFragment {
                 retweet.setIcon(R.drawable.ic_unretweet);
             }
         }
+        // The reply or reply all icon are used based on the number of mentions that would be in the reply
         menu.findItem(R.id.reply).setIcon(resolveThemeAttr(getTotalMentions() > 1 ? R.attr.replyAllIcon : R.attr.replyIcon));
         MenuItem favorite = menu.findItem(R.id.favorite);
         int favIcon;
