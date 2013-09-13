@@ -47,14 +47,17 @@ public class ConversationAdapter extends SilkAdapter<ConversationAdapter.Convers
      */
     public static class Conversation implements SilkComparable<Conversation> {
 
+        public Conversation() {
+        }
+
         public Conversation(User endUser, DirectMessage msg) {
             this.endUser = endUser;
             this.messages = new ArrayList<DirectMessage>();
             this.messages.add(msg);
         }
 
-        private final User endUser;
-        private final List<DirectMessage> messages;
+        private User endUser;
+        private List<DirectMessage> messages;
 
         public User getEndUser() {
             return endUser;
