@@ -32,10 +32,7 @@ import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.User;
+import twitter4j.*;
 import twitter4j.internal.json.StatusJSONImpl;
 
 import java.util.Calendar;
@@ -224,6 +221,25 @@ public class TweetViewerFragment extends SilkFragment {
         }
     }
 
+    private int resolveThemeAttr(int id) {
+        TypedArray ta = getActivity().obtainStyledAttributes(new int[]{id});
+        int resolved = ta.getResourceId(0, 0);
+        ta.recycle();
+        return resolved;
+    }
+
+    private int getTotalMentions() {
+        if (mTweet.getUserMentionEntities() == null || mTweet.getUserMentionEntities().length == 0) return 0;
+        int mentions = 0;
+        User me = BoidApp.get(getActivity()).getProfile();
+        if (mTweet.getUser().getId() != me.getId()) mentions++;
+        for (UserMentionEntity mention : mTweet.getUserMentionEntities()) {
+            if (mention.getId() == me.getId() || mention.getId() == mTweet.getUser().getId()) continue;
+            mentions++;
+        }
+        return mentions;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         User me = BoidApp.get(getActivity()).getProfile();
@@ -237,6 +253,7 @@ public class TweetViewerFragment extends SilkFragment {
                 retweet.setIcon(R.drawable.ic_unretweet);
             }
         }
+        menu.findItem(R.id.reply).setIcon(resolveThemeAttr(getTotalMentions() > 1 ? R.attr.replyAllIcon : R.attr.replyIcon));
         MenuItem favorite = menu.findItem(R.id.favorite);
         int favIcon;
         if (mTweet.isFavorited()) {
@@ -246,10 +263,7 @@ public class TweetViewerFragment extends SilkFragment {
             favorite.setTitle(R.string.favorite);
             favIcon = R.attr.unfavoritedIcon;
         }
-        TypedArray ta = getActivity().obtainStyledAttributes(new int[]{favIcon});
-        favIcon = ta.getResourceId(0, 0);
-        ta.recycle();
-        favorite.setIcon(favIcon);
+        favorite.setIcon(resolveThemeAttr(favIcon));
         super.onCreateOptionsMenu(menu, inflater);
     }
 
