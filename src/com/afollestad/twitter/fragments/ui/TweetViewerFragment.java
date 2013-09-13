@@ -154,7 +154,7 @@ public class TweetViewerFragment extends SilkFragment {
             }
         });
         ((TextView) v.findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
-        ((TextView) v.findViewById(R.id.source)).setText("via " + Html.fromHtml(mTweet.getSource()).toString());
+        ((TextView) v.findViewById(R.id.screenname)).setText("@" + mTweet.getUser().getScreenName());
 
 //       TODO if (mTweet.getFavoriteCount() == 0 && mTweet.getRetweetCount() == 0) {
 //            v.findViewById(R.id.infoFrame).setVisibility(View.GONE);
@@ -187,7 +187,8 @@ public class TweetViewerFragment extends SilkFragment {
 
         Calendar time = new GregorianCalendar();
         time.setTime(mTweet.getCreatedAt());
-        ((TextView) v.findViewById(R.id.timestamp)).setText(TimeUtils.toStringLong(time));
+        ((TextView) v.findViewById(R.id.timestamp)).setText(TimeUtils.toStringLong(time) +
+                " via " + Html.fromHtml(mTweet.getSource()).toString());
 
         final SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
         final String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
