@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +25,8 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.columns.Columns;
+import com.afollestad.twitter.readability.Readability;
+import com.afollestad.twitter.readability.Response;
 import com.afollestad.twitter.ui.ComposeActivity;
 import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
@@ -71,9 +74,45 @@ public class TweetViewerFragment extends SilkFragment {
                         public void run() {
                             updateCaches();
                             displayTweet();
+                            loadArticle();
                         }
                     });
                 } catch (final TwitterException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BoidApp.showAppMsgError(getActivity(), e);
+                        }
+                    });
+                }
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+    }
+
+    private void loadArticle() {
+        final View articleFrame = getView().findViewById(R.id.articleFrame);
+        articleFrame.setVisibility(View.GONE);
+        if (mTweet.getURLEntities() == null || mTweet.getURLEntities().length == 0) return;
+        final TextView title = (TextView) getView().findViewById(R.id.articleTitle);
+        final TextView content = (TextView) getView().findViewById(R.id.articleDescription);
+        final Handler mHandler = new Handler();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final Response response = Readability.load(mHandler, mTweet.getURLEntities()[0].getExpandedURL());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            articleFrame.setVisibility(View.VISIBLE);
+                            title.setText(response.getTitle());
+                            content.setText(response.getExcerpt());
+                        }
+                    });
+                } catch (final Exception e) {
                     e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
