@@ -119,7 +119,7 @@
                                                                   android:layout_height="wrap_content"
                                                                   android:textColor="?usernameTextColor"
                                                                   android:textStyle="bold"
-                                                                  android:textSize="@dimen/tweetViewerContent"
+                                                                  android:textSize="@dimen/tweetViewerUsername"
                                                                   android:singleLine="true"
                                                                   android:paddingTop="20dp"/>
 
