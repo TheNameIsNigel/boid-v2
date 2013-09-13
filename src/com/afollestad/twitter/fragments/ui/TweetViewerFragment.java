@@ -32,6 +32,7 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
+import twitter4j.internal.json.StatusJSONImpl;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -217,7 +218,7 @@ public class TweetViewerFragment extends SilkFragment {
     private void updateCaches() {
         List<Column> columns = Columns.getAll(getActivity(), Status.class);
         for (Column col : columns) {
-            new SilkCache<Status>(getActivity(), col.toString(), Status.class, new OnReadyCallback<Status>() {
+            new SilkCache<Status>(getActivity(), col.toString(), StatusJSONImpl.class, new OnReadyCallback<Status>() {
                 @Override
                 public void onReady(SilkCache<Status> cache) {
                     cache.update(mTweet);
