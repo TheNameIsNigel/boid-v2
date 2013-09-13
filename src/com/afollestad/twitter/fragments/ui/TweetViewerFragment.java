@@ -63,6 +63,7 @@ public class TweetViewerFragment extends SilkFragment {
     }
 
     private void reloadTweet() {
+        loadArticle();
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -74,7 +75,6 @@ public class TweetViewerFragment extends SilkFragment {
                         public void run() {
                             updateCaches();
                             displayTweet();
-                            loadArticle();
                         }
                     });
                 } catch (final TwitterException e) {
@@ -98,6 +98,7 @@ public class TweetViewerFragment extends SilkFragment {
         if (mTweet.getURLEntities() == null || mTweet.getURLEntities().length == 0) return;
         final TextView title = (TextView) getView().findViewById(R.id.articleTitle);
         final TextView content = (TextView) getView().findViewById(R.id.articleDescription);
+        final SilkImageView image = (SilkImageView) getView().findViewById(R.id.articleImage);
         final Handler mHandler = new Handler();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -109,6 +110,10 @@ public class TweetViewerFragment extends SilkFragment {
                         public void run() {
                             articleFrame.setVisibility(View.VISIBLE);
                             title.setText(response.getTitle());
+                            if (response.getLeadImageUrl() != null && !response.getLeadImageUrl().trim().isEmpty()) {
+                                image.setVisibility(View.VISIBLE);
+                                image.setImageURL(BoidApp.get(getActivity()).getImageLoader(), response.getLeadImageUrl());
+                            }
                             content.setText(response.getExcerpt());
                         }
                     });
