@@ -7,12 +7,20 @@
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
 
-        <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
-                                                       android:layout_width="@dimen/feed_profile_pic"
-                                                       android:layout_height="@dimen/feed_profile_pic"
-                                                       android:src="@drawable/ic_contact_picture"
-                                                       android:layout_marginRight="10dp"
-                                                       android:layout_marginLeft="10dp"/>
+        <FrameLayout android:id="@+id/profilePicFrame"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:clickable="true"
+                     android:foreground="?android:actionBarItemBackground"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginLeft="10dp">
+
+            <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
+                                                           android:layout_width="@dimen/feed_profile_pic"
+                                                           android:layout_height="@dimen/feed_profile_pic"
+                                                           android:src="@drawable/ic_contact_picture"/>
+
+        </FrameLayout>
 
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"

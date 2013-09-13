@@ -65,8 +65,9 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
         }
 
         SilkImageView profilePic = (SilkImageView) recycled.findViewById(R.id.profilePic);
-        profilePic.setTag(item.getUser());
-        profilePic.setOnClickListener(this);
+        View profilePicFrame = recycled.findViewById(R.id.profilePicFrame);
+        profilePicFrame.setTag(item.getUser());
+        profilePicFrame.setOnClickListener(this);
         if (getScrollState() == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
             profilePic.setImageResource(R.drawable.ic_contact_picture);
         } else {
