@@ -7,4 +7,7 @@
     <header android:fragment="com.afollestad.twitter.preferences.LookAndFeelFragment"
             android:title="@string/look_feel" android:summary="@string/look_feel_desc"/>
 
+    <header android:fragment="com.afollestad.twitter.preferences.TweetViewerFragment"
+            android:title="@string/tweet_viewer" android:summary="@string/tweet_viewer_desc"/>
+
 </preference-headers>

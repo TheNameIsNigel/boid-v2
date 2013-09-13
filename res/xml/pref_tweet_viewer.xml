@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference android:key="readability_toggle" android:title="@string/readability"
+                        android:summary="@string/readability_desc" android:persistent="true"
+                        android:defaultValue="true"/>
+
+    <CheckBoxPreference android:key="media_previews_toggle" android:title="@string/media_previews"
+                        android:summary="@string/media_previews_desc" android:persistent="true"
+                        android:defaultValue="true"/>
+
+</PreferenceScreen>

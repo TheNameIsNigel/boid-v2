@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -93,7 +94,18 @@ public class TweetViewerFragment extends SilkFragment {
     }
 
     private void loadArticle() {
+        if (!PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("readability_toggle", true)) {
+            // Readability is turned off from the preferences
+            return;
+        }
         final View articleFrame = getView().findViewById(R.id.articleFrame);
+        articleFrame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mTweet.getURLEntities()[0].getExpandedURL()));
+                startActivity(Intent.createChooser(intent, getString(R.string.open_with)));
+            }
+        });
         articleFrame.setVisibility(View.GONE);
         if (mTweet.getURLEntities() == null || mTweet.getURLEntities().length == 0) return;
         final TextView title = (TextView) getView().findViewById(R.id.articleTitle);
@@ -192,28 +204,24 @@ public class TweetViewerFragment extends SilkFragment {
                 " via " + Html.fromHtml(mTweet.getSource()).toString());
 
         final SilkImageView media = (SilkImageView) v.findViewById(R.id.media);
-        final String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
-        if (mediaUrl != null) {
-            media.setVisibility(View.VISIBLE);
-            media.setImageURL(BoidApp.get(getActivity()).getImageLoader(), mediaUrl);
-        } else media.setVisibility(View.GONE);
-
-        media.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SilkImageManager image = BoidApp.get(getActivity()).getImageLoader();
-                Uri uri = Uri.fromFile(image.getCacheFile(mediaUrl, new Dimension(v)));
-                startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "image/*"));
-            }
-        });
-
-        v.findViewById(R.id.articleFrame).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mTweet.getURLEntities()[0].getExpandedURL()));
-                startActivity(Intent.createChooser(intent, getString(R.string.open_with)));
-            }
-        });
+        if (PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean("media_previews_toggle", true)) {
+            final String mediaUrl = TweetUtils.getTweetMediaURL(mTweet, true);
+            if (mediaUrl != null) {
+                media.setVisibility(View.VISIBLE);
+                media.setImageURL(BoidApp.get(getActivity()).getImageLoader(), mediaUrl);
+                media.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SilkImageManager image = BoidApp.get(getActivity()).getImageLoader();
+                        Uri uri = Uri.fromFile(image.getCacheFile(mediaUrl, new Dimension(v)));
+                        startActivity(new Intent(Intent.ACTION_VIEW).setDataAndType(uri, "image/*"));
+                    }
+                });
+            } else media.setVisibility(View.GONE);
+        } else {
+            // Media previews are turned off in the settings
+            media.setVisibility(View.GONE);
+        }
     }
 
     @Override

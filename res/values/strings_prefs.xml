@@ -9,6 +9,9 @@
     <string name="look_feel">Look and Feel</string>
     <string name="look_feel_desc">Change the look and feel of Boid to your liking.</string>
 
+    <string name="tweet_viewer">Tweet Viewer</string>
+    <string name="tweet_viewer_desc">Settings that affect the Tweet viewer.</string>
+
     <!-- About preference category -->
 
     <string name="version">Version</string>
@@ -44,5 +47,11 @@
 
     <string name="display_realname">Show real names</string>
     <string name="display_realname_desc">Display user\'s full names in feeds as opposed to their screen name.</string>
+
+    <string name="readability">Readability</string>
+    <string name="readability_desc">Toggle article previews via Readability.</string>
+
+    <string name="media_previews">Media Previews</string>
+    <string name="media_previews_desc">Toggle previews of inline Tweet media.</string>
 
 </resources>
