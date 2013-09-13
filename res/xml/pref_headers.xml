@@ -4,13 +4,13 @@
     <header android:fragment="com.afollestad.twitter.preferences.AboutFragment"
             android:title="@string/about" android:summary="@string/about_desc"/>
 
+    <header android:fragment="com.afollestad.twitter.preferences.FeedsFragment"
+            android:title="@string/feeds" android:summary="@string/feeds_desc"/>
+
     <header android:fragment="com.afollestad.twitter.preferences.LookAndFeelFragment"
             android:title="@string/look_feel" android:summary="@string/look_feel_desc"/>
 
     <header android:fragment="com.afollestad.twitter.preferences.TweetViewerFragment"
             android:title="@string/tweet_viewer" android:summary="@string/tweet_viewer_desc"/>
-
-    <header android:fragment="com.afollestad.twitter.preferences.FeedsFragment"
-            android:title="@string/feeds" android:summary="@string/feeds_desc"/>
 
 </preference-headers>
