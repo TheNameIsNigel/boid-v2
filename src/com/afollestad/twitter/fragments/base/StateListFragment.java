@@ -19,6 +19,9 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
 
     private boolean mShouldRestoreScroll = false;
 
+    /**
+     * Saves the scroll position before refreshing if the list is not currently empty.
+     */
     @Override
     protected void onPreLoad() {
         super.onPreLoad();
@@ -27,14 +30,22 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
             saveScrollPos();
     }
 
+    /**
+     * Restores the scroll position after refreshing is complete.
+     */
     @Override
     protected void onPostLoad(List<ItemType> results, boolean paginated) {
         super.onPostLoad(results, paginated);
         // Only restore the scroll position if the list was not empty before refreshing
-        if (mShouldRestoreScroll)
+        if (mShouldRestoreScroll) {
+            // The scroll position is set to the number of items added after refresh
             restoreScrollPos(results.size());
+        }
     }
 
+    /**
+     * Loads items that were brought in from the cache into the list and restores the last saved scroll position.
+     */
     @Override
     protected void onPostLoadFromCache(List<ItemType> results) {
         getAdapter().set(onUpdateItems(results, false));

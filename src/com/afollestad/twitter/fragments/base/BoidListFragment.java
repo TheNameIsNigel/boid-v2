@@ -72,7 +72,6 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     protected SilkCache<ItemType> onCacheInitialized(SilkCache<ItemType> cache) {
         if (!cache.hasLimiter()) {
             // Limit caches to 700 tweets, older tweets are taken off when the limit is reached
-            // TODO this will cause problems with pagination?
             cache.setLimiter(new SilkCacheLimiter(700, LimiterBehavior.REMOVE_BOTTOM));
         }
         return cache;
