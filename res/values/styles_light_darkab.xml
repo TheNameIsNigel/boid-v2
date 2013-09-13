@@ -20,6 +20,7 @@
         <item name="favoritedIndicator">@drawable/ic_favorited_dark</item>
 
         <item name="replyIcon">@drawable/ic_reply_light</item>
+        <item name="replyAllIcon">@drawable/ic_reply_all_light</item>
         <item name="retweetIcon">@drawable/ic_retweet_light</item>
         <item name="favoritedIcon">@drawable/ic_favorited_light</item>
         <item name="unfavoritedIcon">@drawable/ic_unfavorited_light</item>
