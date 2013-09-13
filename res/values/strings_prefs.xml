@@ -60,4 +60,7 @@
     <string name="inline_media">Inline Media</string>
     <string name="inline_media_desc">Toggle previews of inline Tweet media (picture previews in lists).</string>
 
+    <string name="boidapp">\@boidapp</string>
+    <string name="follow_boidapp">Follow us on Twitter for the latest news.</string>
+
 </resources>

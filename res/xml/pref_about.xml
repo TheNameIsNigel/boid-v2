@@ -5,6 +5,8 @@
 
     <Preference android:key="app_build" android:title="@string/build"/>
 
+    <Preference android:key="boidapp" android:title="@string/boidapp" android:summary="@string/follow_boidapp"/>
+
     <Preference android:key="developers" android:title="@string/developers" android:summary="@string/developers_desc"/>
 
     <Preference android:key="libraries" android:title="@string/libraries" android:summary="@string/libraries_desc"/>

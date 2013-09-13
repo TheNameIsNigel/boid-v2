@@ -1,11 +1,13 @@
 package com.afollestad.twitter.preferences;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ProfileActivity;
 
 /**
  * The 'about' preference category.
@@ -29,5 +31,14 @@ public class AboutFragment extends PreferenceFragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        findPreference("boidapp").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getActivity(), ProfileActivity.class)
+                        .putExtra("screen_name", "boidapp"));
+                return true;
+            }
+        });
     }
 }
