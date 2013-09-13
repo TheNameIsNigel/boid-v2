@@ -145,8 +145,9 @@ public class TweetViewerFragment extends SilkFragment {
         View v = getView();
         if (v == null) return;
         SilkImageView profilePic = (SilkImageView) v.findViewById(R.id.profilePic);
+        View profilePicFrame = v.findViewById(R.id.profilePicFrame);
         profilePic.setFitView(false).setImageURL(BoidApp.get(getActivity()).getImageLoader(), mTweet.getUser().getProfileImageURL());
-        profilePic.setOnClickListener(new View.OnClickListener() {
+        profilePicFrame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ProfileActivity.class)

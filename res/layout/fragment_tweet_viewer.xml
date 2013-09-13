@@ -15,12 +15,20 @@
                       android:gravity="center_vertical"
                       android:layout_marginTop="20dp">
 
-            <!--suppress AndroidLintUselessParent -->
-            <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
-                                                           android:layout_width="@dimen/feed_profile_pic"
-                                                           android:layout_height="@dimen/feed_profile_pic"
-                                                           android:scaleType="fitXY"
-                                                           android:layout_marginRight="20dp"/>
+            <FrameLayout android:id="@+id/profilePicFrame"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:clickable="true"
+                         android:foreground="?android:actionBarItemBackground"
+                         android:layout_marginRight="20dp">
+
+                <!--suppress AndroidLintUselessParent -->
+                <com.afollestad.silk.views.image.SilkImageView android:id="@+id/profilePic"
+                                                               android:layout_width="@dimen/feed_profile_pic"
+                                                               android:layout_height="@dimen/feed_profile_pic"
+                                                               android:scaleType="fitXY"/>
+
+            </FrameLayout>
 
             <LinearLayout android:orientation="vertical"
                           android:layout_width="match_parent"
