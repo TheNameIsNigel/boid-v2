@@ -65,7 +65,6 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
         String persisted = getPrefs().getString(getCacheName(), null);
         if (persisted == null) return new int[]{-1, -1};
         String[] split = persisted.split(":");
-        getPrefs().edit().remove(getCacheName()).commit();
         return new int[]{Integer.parseInt(split[0]), Integer.parseInt(split[1])};
     }
 
