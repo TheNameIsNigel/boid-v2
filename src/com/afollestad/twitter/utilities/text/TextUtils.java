@@ -44,6 +44,7 @@ public class TextUtils {
 
         Linkify.addLinks(context, textView, Pattern.compile("@([A-Za-z0-9_-]+)"), null, filter);
         Linkify.addLinks(context, textView, Pattern.compile("#([A-Za-z0-9_-]+)"), null, filter);
+        Linkify.addLinks(context, textView, Pattern.compile("^\\$([A-Za-z0-9_-]+)"), null, filter);
         Linkify.addLinks(context, textView, Patterns.WEB_URL, null, filter);
         Linkify.addLinks(context, textView, Patterns.EMAIL_ADDRESS, null, filter);
     }

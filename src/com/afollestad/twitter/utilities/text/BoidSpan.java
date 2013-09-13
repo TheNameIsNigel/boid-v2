@@ -29,7 +29,7 @@ public class BoidSpan extends ClickableSpan {
             mContext.startActivity(new Intent(mContext, ProfileActivity.class).putExtra("screen_name", mValue.substring(1)));
         } else if (mValue.startsWith("#")) {
             mContext.startActivity(new Intent(mContext, SearchActivity.class).putExtra("query", mValue));
-        } else if (mValue.startsWith("http")) {
+        } else if (mValue.startsWith("http") || mValue.startsWith("$")) {
             Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mValue));
             mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.open_with)));
         } else {
