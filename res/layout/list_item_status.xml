@@ -3,6 +3,30 @@
               android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
               android:paddingTop="@dimen/status_item_padding" android:paddingBottom="@dimen/status_item_padding">
 
+    <LinearLayout android:id="@+id/inReplyToFrame"
+                  android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="3dp"
+                  android:layout_marginLeft="57dp"
+                  android:layout_marginRight="20dp"
+                  android:gravity="center_vertical"
+                  android:visibility="gone">
+
+        <!--suppress AndroidLintContentDescription -->
+        <ImageView android:layout_width="@dimen/indicator_icon"
+                   android:layout_height="@dimen/indicator_icon"
+                   android:src="?replyIcon"
+                   android:layout_marginRight="3dp"/>
+
+        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/inReplyTo"
+                                                     android:layout_width="wrap_content"
+                                                     android:layout_height="wrap_content"
+                                                     android:textSize="@dimen/timestampText"
+                                                     android:textColor="?contentTextColor"/>
+
+    </LinearLayout>
+
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content">
@@ -62,23 +86,27 @@
 
             </RelativeLayout>
 
-            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content" android:layout_width="wrap_content"
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/content"
+                                                         android:layout_width="wrap_content"
                                                          android:layout_height="wrap_content"
                                                          android:lineSpacingMultiplier="1.1"
                                                          android:textSize="@dimen/contentText"
                                                          android:textColor="?contentTextColor"
                                                          android:layout_marginRight="20dp"/>
 
-            <LinearLayout android:id="@+id/retweetedBy" android:layout_width="fill_parent"
+            <LinearLayout android:id="@+id/retweetedBy"
+                          android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:layout_marginTop="3dp" android:layout_marginBottom="3dp"
+                          android:layout_marginTop="3dp"
+                          android:layout_marginBottom="3dp"
                           android:layout_marginRight="20dp"
-                          android:orientation="horizontal" android:visibility="gone"
+                          android:orientation="horizontal"
+                          android:visibility="gone"
                           android:gravity="center_vertical">
 
                 <!--suppress AndroidLintContentDescription -->
-                <ImageView android:layout_width="@dimen/retweet_indicator"
-                           android:layout_height="@dimen/retweet_indicator"
+                <ImageView android:layout_width="@dimen/indicator_icon"
+                           android:layout_height="@dimen/indicator_icon"
                            android:scaleType="fitXY" android:src="?retweetIndicator"/>
 
                 <com.afollestad.silk.views.text.SilkTextView android:id="@+id/retweetedByText"
@@ -91,6 +119,13 @@
 
             </LinearLayout>
 
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/via" android:layout_width="wrap_content"
+                                                         android:layout_height="wrap_content"
+                                                         android:textSize="@dimen/timestampText"
+                                                         android:textColor="?contentTextColor"
+                                                         android:layout_marginTop="3dp"
+                                                         android:layout_marginRight="20dp"
+                                                         android:visibility="gone"/>
 
         </LinearLayout>
 

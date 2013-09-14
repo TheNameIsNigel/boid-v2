@@ -26,8 +26,6 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mTheme = ThemedActivity.getBoidTheme(this);
-        mDisplayRealNames = ThemedActivity.shouldDisplayRealNames(this);
-        mInlineMedia = ThemedActivity.shouldDisplayInlineMedia(this);
         setTheme(mTheme);
         super.onCreate(savedInstanceState);
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
@@ -36,7 +34,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ThemedActivity.shouldRecreate(this, mTheme, mDisplayRealNames, mInlineMedia)) recreate();
+        if (ThemedActivity.shouldRecreate(this, mTheme)) recreate();
     }
 
     @Override

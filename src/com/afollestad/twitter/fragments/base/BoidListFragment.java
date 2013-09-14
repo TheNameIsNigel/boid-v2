@@ -106,6 +106,9 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     @Override
     protected final List<ItemType> refresh() throws Exception {
+        if(!isPaginationEnabled()) {
+            return load(BoidApp.get(getActivity()).getClient(), null);
+        }
         Paging paging = new Paging();
         paging.setCount(getPageLength());
         if (isPageCursorMode()) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.view.View;
@@ -34,6 +35,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mDisplayRealNames = prefs.getBoolean("display_realname", true);
         mDisplayInlineMedia = prefs.getBoolean("inline_media_toggle", true);
+        mDisplayVia = prefs.getBoolean("inline_via_indicator", false);
         mImageLoader = BoidApp.get(context).getImageLoader();
         mConvertRetweets = convertRetweets;
     }
@@ -44,6 +46,7 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
 
     private final boolean mDisplayRealNames;
     private final boolean mDisplayInlineMedia;
+    private final boolean mDisplayVia;
     private final SilkImageManager mImageLoader;
     private final boolean mConvertRetweets;
 
@@ -96,6 +99,23 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
         } else {
             // Inline media is disabled
             media.setVisibility(View.GONE);
+        }
+
+        TextView via = (TextView) recycled.findViewById(R.id.via);
+        if (mDisplayVia) {
+            via.setVisibility(View.VISIBLE);
+            via.setText("via " + Html.fromHtml(item.getSource()).toString());
+        } else {
+            via.setVisibility(View.GONE);
+        }
+
+        View inReplyToFrame = recycled.findViewById(R.id.inReplyToFrame);
+        if (item.getInReplyToUserId() > 0) {
+            inReplyToFrame.setVisibility(View.VISIBLE);
+            TextView inReplyTo = (TextView) recycled.findViewById(R.id.inReplyTo);
+            inReplyTo.setText(getContext().getString(R.string.in_reply_to_x).replace("{x}", item.getInReplyToScreenName()));
+        } else {
+            inReplyToFrame.setVisibility(View.GONE);
         }
 
         return recycled;

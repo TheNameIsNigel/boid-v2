@@ -54,7 +54,9 @@
         <item>Quote</item>
     </string-array>
     <string name="logout">Logout</string>
-    <string name="confirm_logout">Are you sure you want to logout? Your account and all associated settings will be cleared.</string>
+    <string name="confirm_logout">Are you sure you want to logout? Your account and all associated settings will be
+        cleared.
+    </string>
 
     <string name="follow">follow</string>
     <string name="loading">Loading…</string>
@@ -99,5 +101,6 @@
 
     <string name="in_reply_to">In reply to</string>
     <string name="end_of_results">End of Results</string>
+    <string name="in_reply_to_x">In reply to @{x}</string>
 
 </resources>

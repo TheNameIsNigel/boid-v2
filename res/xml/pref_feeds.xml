@@ -5,4 +5,8 @@
                         android:summary="@string/inline_media_desc" android:persistent="true"
                         android:defaultValue="true"/>
 
+    <CheckBoxPreference android:key="inline_via_indicator" android:title="@string/via_indicator"
+                        android:summary="@string/via_indicator_desc" android:persistent="true"
+                        android:defaultValue="false"/>
+
 </PreferenceScreen>
