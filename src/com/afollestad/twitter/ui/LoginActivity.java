@@ -157,14 +157,21 @@ public class LoginActivity extends ThemedActivity {
                     public void run() {
                         findViewById(R.id.welcomeFrame).setVisibility(View.VISIBLE);
                         findViewById(R.id.webFrame).setVisibility(View.GONE);
-                        findViewById(R.id.settings).setVisibility(View.GONE);
                         ((TextView) findViewById(R.id.loginMessage)).setText(R.string.logged_in);
                         Button login = (Button) findViewById(R.id.login);
+                        Button exit = (Button) findViewById(R.id.settings);
                         login.setText(R.string.finish);
+                        exit.setText(R.string.exit);
                         login.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            }
+                        });
+                        exit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 finish();
                             }
                         });
