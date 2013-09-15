@@ -16,6 +16,7 @@
     <orderEntry type="module" module-name="ActionBar-Ptr" />
     <orderEntry type="module" module-name="Android-AppMsg" />
     <orderEntry type="module" module-name="Silk" />
+    <orderEntry type="module" module-name="PagerSlidingTabStrip" />
     <orderEntry type="module" module-name="twitter4j-core" />
     <orderEntry type="module-library">
       <library>
@@ -35,7 +36,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="PagerSlidingTabStrip" />
   </component>
 </module>
 

@@ -7,53 +7,55 @@
               android:visibility="gone"
               android:id="@+id/emojiKeyboard">
 
-        <LinearLayout
+    <LinearLayout
+            android:layout_height="48dp"
+            android:layout_width="match_parent">
+
+        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+                android:id="@+id/emojiTabs"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="48dp"
-                android:layout_width="match_parent">
+                android:textColor="?usernameTextColor"/>
 
-            <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
-                    android:id="@+id/emojiTabs"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="48dp"/>
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="wrap_content"
+                      android:layout_height="48dp">
 
-            <LinearLayout android:orientation="vertical"
+            <LinearLayout android:orientation="horizontal"
                           android:layout_width="wrap_content"
-                          android:layout_height="48dp">
+                          android:layout_height="46dp">
 
-                <LinearLayout android:orientation="horizontal"
-                              android:layout_width="wrap_content"
-                              android:layout_height="46dp">
-
-                    <View android:layout_width="1dp"
-                          android:layout_height="wrap_content"
-                          android:layout_marginBottom="@dimen/emoji_divider_padding"
-                          android:layout_marginTop="@dimen/emoji_divider_padding"
-                          android:background="@color/emoji_divider_color"/>
-
-                    <ImageButton android:id="@+id/delete"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="48dp"
-                                 android:scaleType="fitCenter"
-                                 android:src="?emojiBackspace"
-                                 android:background="@drawable/btn_backspace"
-                                 android:paddingLeft="15dp"
-                                 android:paddingRight="15dp"/>
-
-                </LinearLayout>
-
-                <View android:layout_width="match_parent"
-                      android:layout_height="2dp"
+                <View android:layout_width="1dp"
+                      android:layout_height="wrap_content"
+                      android:layout_marginBottom="@dimen/emoji_divider_padding"
+                      android:layout_marginTop="@dimen/emoji_divider_padding"
                       android:background="@color/emoji_divider_color"/>
+
+                <!--suppress AndroidLintContentDescription -->
+                <ImageButton android:id="@+id/delete"
+                             android:layout_width="wrap_content"
+                             android:layout_height="48dp"
+                             android:scaleType="fitCenter"
+                             android:src="?emojiBackspace"
+                             android:background="@drawable/btn_backspace"
+                             android:paddingLeft="15dp"
+                             android:paddingRight="15dp"/>
 
             </LinearLayout>
 
+            <View android:layout_width="match_parent"
+                  android:layout_height="2dp"
+                  android:background="@color/emoji_divider_color"/>
+
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
-                android:id="@+id/emojiKeyboardPager"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
+    </LinearLayout>
 
-        </android.support.v4.view.ViewPager>
+    <android.support.v4.view.ViewPager
+            android:id="@+id/emojiKeyboardPager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+    </android.support.v4.view.ViewPager>
 </LinearLayout>
