@@ -2,12 +2,12 @@ package com.afollestad.twitter.services;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.location.Location;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.notifications.ComposerNotify;
-import twitter4j.Status;
-import twitter4j.StatusUpdate;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
+import twitter4j.*;
+
+import java.util.List;
 
 /**
  * Handles tweet composition, sends tweets in the background and displays notifications while sending or if the app
@@ -36,7 +36,22 @@ public class ComposerService extends IntentService {
             if (replyTo != null) update.setInReplyToStatusId(replyTo.getId());
         }
 
-        // TODO location and media attachment
+        if (intent.hasExtra("location")) {
+            Location location = intent.getParcelableExtra("location");
+            GeoLocation geoLoc = new GeoLocation(location.getLatitude(), location.getLongitude());
+            update.setLocation(geoLoc);
+
+            try {
+                List<Place> places = cl.reverseGeoCode(new GeoQuery(geoLoc));
+                update.setPlaceId(places.get(0).getId());
+            } catch (TwitterException e) {
+                e.printStackTrace();
+                ComposerNotify.showError(this, intent.getExtras(), tag);
+                return;
+            }
+        }
+
+        // TODO media attachment
 
         try {
             cl.updateStatus(update);

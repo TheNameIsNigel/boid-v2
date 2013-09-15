@@ -2,6 +2,8 @@ package com.afollestad.twitter.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -13,7 +15,7 @@ import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.services.ComposerService;
-import com.afollestad.twitter.ui.theming.ThemedActivity;
+import com.afollestad.twitter.ui.theming.ThemedLocationActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.afollestad.twitter.views.CounterEditText;
@@ -25,9 +27,10 @@ import twitter4j.User;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ComposeActivity extends ThemedActivity {
+public class ComposeActivity extends ThemedLocationActivity {
 
     private Status mReplyTo;
+    private boolean mAttachLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,10 @@ public class ComposeActivity extends ThemedActivity {
         setupInput();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         processIntent();
+    }
+
+    @Override
+    public void onLocationUpdate(Location location) {
     }
 
     private void processIntent() {
@@ -87,16 +94,27 @@ public class ComposeActivity extends ThemedActivity {
         final EditText input = (EditText) findViewById(R.id.input);
         item.setEnabled(false);
         input.setEnabled(false);
-        startService(new Intent(this, ComposerService.class)
-                .putExtra("content", input.getText().toString().trim())
-                .putExtra("reply_to", mReplyTo));
+        Bundle extras = new Bundle();
+        extras.putString("content", input.getText().toString().trim());
+        extras.putSerializable("reply_to", mReplyTo);
+        if (mAttachLocation)
+            extras.putParcelable("location", getCurrentLocation());
+        startService(new Intent(this, ComposerService.class).putExtras(extras));
         finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_composer, menu);
+        menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : resolveThemeAttr(R.attr.attachLocation));
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private int resolveThemeAttr(int id) {
+        TypedArray ta = obtainStyledAttributes(new int[]{id});
+        int resolved = ta.getResourceId(0, 0);
+        ta.recycle();
+        return resolved;
     }
 
     @Override
@@ -107,6 +125,10 @@ public class ComposeActivity extends ThemedActivity {
                 return true;
             case R.id.send:
                 send(item);
+                return true;
+            case R.id.locate:
+                mAttachLocation = !mAttachLocation;
+                invalidateOptionsMenu();
                 return true;
         }
         return super.onOptionsItemSelected(item);

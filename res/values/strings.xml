@@ -113,5 +113,6 @@
     <string name="unattach_camera">Unattach Camera</string>
     <string name="attach_gallery">Attach Gallery</string>
     <string name="unattach_gallery">Unattach Gallery</string>
+    <string name="disconnected_location_service">Disconnected from the location service.</string>
 
 </resources>

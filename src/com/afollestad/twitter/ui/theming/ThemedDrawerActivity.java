@@ -14,8 +14,6 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
 
     private int mTheme;
-    private boolean mDisplayRealNames;
-    private boolean mInlineMedia;
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
