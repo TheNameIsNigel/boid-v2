@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ComposeActivity;
 
 public class PeopleEmojiAdapter extends BaseEmojiAdapter {
 
@@ -36,7 +37,7 @@ public class PeopleEmojiAdapter extends BaseEmojiAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO add text here
+                ComposeActivity.insertEmoji(context, mEmojiTexts[position], sIconIds[position]);
             }
         });
 

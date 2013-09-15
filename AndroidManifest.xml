@@ -12,7 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application android:name="com.afollestad.twitter.BoidApp" android:label="@string/app_name"
-                 android:icon="@drawable/ic_launcher" android:theme="@style/Theme.Boidgray">
+                 android:icon="@drawable/ic_launcher" android:theme="@style/Theme.Boidgray"
+                 android:hardwareAccelerated="true">
 
         <activity android:name=".ui.MainActivity" android:label="@string/app_name"
                   android:configChanges="screenSize|orientation|keyboardHidden">
@@ -32,8 +33,7 @@
 
         <activity android:name=".ui.ComposeActivity" android:label="@string/compose"
                   android:configChanges="screenSize|orientation|keyboardHidden"
-                  android:uiOptions="splitActionBarWhenNarrow"
-                  android:hardwareAccelerated="true"/>
+                  android:uiOptions="splitActionBarWhenNarrow"/>
 
         <activity android:name=".ui.TweetViewerActivity" android:label="@string/tweet"
                   android:configChanges="screenSize|orientation|keyboardHidden"

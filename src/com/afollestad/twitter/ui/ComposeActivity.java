@@ -3,19 +3,15 @@ package com.afollestad.twitter.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
@@ -30,6 +26,7 @@ import com.afollestad.twitter.services.ComposerService;
 import com.afollestad.twitter.ui.theming.ThemedLocationActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.Utils;
+import com.afollestad.twitter.utilities.text.EmojiConverter;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.afollestad.twitter.views.CounterEditText;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
@@ -53,10 +50,12 @@ public class ComposeActivity extends ThemedLocationActivity {
     private boolean mAttachLocation;
     private String mCurrentCapturePath;
     private String mCurrentGalleryPath;
-    private boolean isEmojiShowing;
 
+    private boolean isEmojiShowing;
     private static EmojiDataSource dataSource;
     private static ArrayList<EmojiRecent> recents;
+    private static CounterEditText input;
+    private static EmojiPagerAdapter emojiAdapter;
 
     private final static int CAPTURE_RESULT = 100;
     private final static int GALLERY_RESULT = 200;
@@ -136,6 +135,7 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     private void setUpEmojiKeyboard() {
         isEmojiShowing = false;
+        input = (CounterEditText) findViewById(R.id.input);
         dataSource = new EmojiDataSource(this);
         dataSource.open();
         recents = (ArrayList<EmojiRecent>) dataSource.getAllRecents();
@@ -147,16 +147,18 @@ public class ComposeActivity extends ThemedLocationActivity {
         vp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, keyboardHeight));
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.emojiTabs);
         tabs.setIndicatorColor(getResources().getColor(android.R.color.holo_blue_dark));
-        EmojiPagerAdapter adapter = new EmojiPagerAdapter(this, vp, recents, keyboardHeight);
-        vp.setAdapter(adapter);
+        emojiAdapter = new EmojiPagerAdapter(this, vp, recents, keyboardHeight);
+        vp.setAdapter(emojiAdapter);
         tabs.setViewPager(vp);
         vp.setCurrentItem(1);
+
+        final Context context = this;
 
         ImageButton delete = (ImageButton) findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO remove text here
+                removeText(context);
             }
         });
     }
@@ -232,7 +234,7 @@ public class ComposeActivity extends ThemedLocationActivity {
         startActivityForResult(intent, GALLERY_RESULT);
     }
 
-    private void insertEmoji() {
+    private void insertEmojiKeyboard() {
         if (isEmojiShowing) {
             isEmojiShowing = false;
             findViewById(R.id.emojiKeyboard).setVisibility(View.GONE);
@@ -247,7 +249,7 @@ public class ComposeActivity extends ThemedLocationActivity {
                 @Override
                 public void onClick(View view) {
                     if(isEmojiShowing) {
-                        insertEmoji();
+                        insertEmojiKeyboard();
                     }
                 }
             });
@@ -262,6 +264,39 @@ public class ComposeActivity extends ThemedLocationActivity {
             return null;
         }
         return cursor.getString(0);
+    }
+
+    public static void insertEmoji(Context context, String emoji, int icon) {
+        input.append(EmojiConverter.getSmiledText(context, emoji));
+
+        for (int i = 0; i < recents.size(); i++) {
+            if (recents.get(i).text.equals(emoji)) {
+                dataSource.updateRecent(icon + "");
+                recents.get(i).count++;
+                return;
+            }
+        }
+
+        EmojiRecent recent = dataSource.createRecent(emoji, icon + "");
+
+        if (recent != null) {
+            recents.add(recent);
+        }
+    }
+
+    public static void removeText(Context context) {
+        String currentText = input.getText().toString();
+        if (currentText.length() > 0) {
+            // FIXME most emoji strings are 2 characters long, so they are first turned into a black box/question mark and then removed
+            input.setText(EmojiConverter.getSmiledText(context, currentText.substring(0, currentText.length() - 1)));
+            input.setSelection(currentText.length() - 1);
+        }
+    }
+
+    public static void removeRecent(int position) {
+        dataSource.deleteRecent(recents.get(position).id);
+        recents.remove(position);
+        emojiAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -298,7 +333,7 @@ public class ComposeActivity extends ThemedLocationActivity {
                 selectGallery();
                 return true;
             case R.id.emoji:
-                insertEmoji();
+                insertEmojiKeyboard();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -307,7 +342,7 @@ public class ComposeActivity extends ThemedLocationActivity {
     @Override
     public void onBackPressed() {
         if (isEmojiShowing) {
-            insertEmoji();
+            insertEmojiKeyboard();
         } else {
             super.onBackPressed();
         }

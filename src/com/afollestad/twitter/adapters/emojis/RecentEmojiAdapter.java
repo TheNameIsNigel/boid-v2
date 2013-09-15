@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.data.EmojiRecent;
+import com.afollestad.twitter.ui.ComposeActivity;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class RecentEmojiAdapter extends BaseEmojiAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO add text here
+                ComposeActivity.insertEmoji(context, recents.get(position).text, Integer.parseInt(recents.get(position).icon));
             }
         });
 
@@ -55,7 +56,7 @@ public class RecentEmojiAdapter extends BaseEmojiAdapter {
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                // TODO remove recent here
+                ComposeActivity.removeRecent(position);
                 adapter.notifyDataSetChanged();
                 return true;
             }

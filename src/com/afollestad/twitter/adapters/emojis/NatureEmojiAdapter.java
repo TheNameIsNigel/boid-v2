@@ -6,11 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.ui.ComposeActivity;
 
 public class NatureEmojiAdapter extends BaseEmojiAdapter {
 
+    private Context mContext;
+
     public NatureEmojiAdapter(Context context) {
         super(context);
+        mContext = context;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class NatureEmojiAdapter extends BaseEmojiAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO add text here
+                ComposeActivity.insertEmoji(mContext, mEmojiTexts[position], sIconIds[position]);
             }
         });
 
