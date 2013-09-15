@@ -63,7 +63,7 @@
     <string name="boidapp">\@boidapp</string>
     <string name="follow_boidapp">Follow us on Twitter for the latest news.</string>
 
-    <string name="via_indicator">Via indicator</string>
+    <string name="via_indicator">Via Indicator</string>
     <string name="via_indicator_desc">Toggle the \"via\" indicator for Tweets in lists (indicates the app used to
         compose
         the Tweet).

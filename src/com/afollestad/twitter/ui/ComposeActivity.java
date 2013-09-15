@@ -3,13 +3,18 @@ package com.afollestad.twitter.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.afollestad.silk.Silk;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
@@ -22,6 +27,11 @@ import com.afollestad.twitter.views.CounterEditText;
 import twitter4j.Status;
 import twitter4j.User;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * The tweet composition UI.
  *
@@ -31,6 +41,9 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     private Status mReplyTo;
     private boolean mAttachLocation;
+    private String mCurrentCapturePath;
+
+    private final static int CAPTURE_RESULT = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +112,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         extras.putSerializable("reply_to", mReplyTo);
         if (mAttachLocation)
             extras.putParcelable("location", getCurrentLocation());
+        if (mCurrentCapturePath != null)
+            extras.putString("media", mCurrentCapturePath);
         startService(new Intent(this, ComposerService.class).putExtras(extras));
         finish();
     }
@@ -107,7 +122,37 @@ public class ComposeActivity extends ThemedLocationActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_composer, menu);
         menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
+        MenuItem camera = menu.findItem(R.id.camera);
+        camera.setVisible(Silk.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE));
+        camera.setIcon(mCurrentCapturePath != null ? R.drawable.ic_camera_unattach : Utils.resolveThemeAttr(this, R.attr.attachCamera));
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void capture() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "capture_" + timeStamp + "_";
+        File image;
+        try {
+            image = File.createTempFile(imageFileName, ".jpg", getExternalCacheDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mCurrentCapturePath = image.getAbsolutePath();
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
+        startActivityForResult(takePictureIntent, CAPTURE_RESULT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_RESULT) {
+            if (resultCode == RESULT_CANCELED)
+                mCurrentCapturePath = null;
+            invalidateOptionsMenu();
+        }
     }
 
     @Override
@@ -122,6 +167,12 @@ public class ComposeActivity extends ThemedLocationActivity {
             case R.id.locate:
                 mAttachLocation = !mAttachLocation;
                 invalidateOptionsMenu();
+                return true;
+            case R.id.camera:
+                capture();
+                return true;
+            case R.id.gallery:
+                //TODO
                 return true;
         }
         return super.onOptionsItemSelected(item);

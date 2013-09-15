@@ -7,6 +7,7 @@ import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.notifications.ComposerNotify;
 import twitter4j.*;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -51,7 +52,8 @@ public class ComposerService extends IntentService {
             }
         }
 
-        // TODO media attachment
+        if (intent.hasExtra("media"))
+            update.setMedia(new File(intent.getStringExtra("media")));
 
         try {
             cl.updateStatus(update);

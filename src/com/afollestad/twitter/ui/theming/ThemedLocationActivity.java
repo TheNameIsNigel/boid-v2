@@ -74,7 +74,7 @@ public abstract class ThemedLocationActivity extends ThemedActivity implements
     }
 
     @Override
-    protected final void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case CONNECTION_FAILURE_RESOLUTION_REQUEST:
                 switch (resultCode) {
