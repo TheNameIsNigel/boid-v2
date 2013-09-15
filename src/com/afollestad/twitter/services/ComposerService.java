@@ -47,7 +47,7 @@ public class ComposerService extends IntentService {
                 update.setPlaceId(places.get(0).getId());
             } catch (TwitterException e) {
                 e.printStackTrace();
-                ComposerNotify.showError(this, intent.getExtras(), tag);
+                ComposerNotify.showError(this, intent.getExtras(), e, tag);
                 return;
             }
         }
@@ -60,7 +60,7 @@ public class ComposerService extends IntentService {
             ComposerNotify.destroy(this, tag);
         } catch (TwitterException e) {
             e.printStackTrace();
-            ComposerNotify.showError(this, intent.getExtras(), tag);
+            ComposerNotify.showError(this, intent.getExtras(), e, tag);
         }
     }
 }

@@ -2,11 +2,14 @@ package com.afollestad.twitter.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,8 +44,10 @@ public class ComposeActivity extends ThemedLocationActivity {
     private Status mReplyTo;
     private boolean mAttachLocation;
     private String mCurrentCapturePath;
+    private String mCurrentGalleryPath;
 
     private final static int CAPTURE_RESULT = 100;
+    private final static int GALLERY_RESULT = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,20 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     private void processIntent() {
         EditText input = (EditText) findViewById(R.id.input);
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         Intent i = getIntent();
         input.setText("");
         if (i.hasExtra("mention")) {
@@ -113,8 +132,15 @@ public class ComposeActivity extends ThemedLocationActivity {
             extras.putParcelable("location", getCurrentLocation());
         if (mCurrentCapturePath != null)
             extras.putString("media", mCurrentCapturePath);
+        else if (mCurrentGalleryPath != null)
+            extras.putString("media", mCurrentGalleryPath);
         startService(new Intent(this, ComposerService.class).putExtras(extras));
         finish();
+    }
+
+    private boolean invalidateTweetButton() {
+        EditText input = (EditText) findViewById(R.id.input);
+        return !input.getText().toString().trim().isEmpty() || mCurrentCapturePath != null || mCurrentGalleryPath != null;
     }
 
     @Override
@@ -123,7 +149,12 @@ public class ComposeActivity extends ThemedLocationActivity {
         menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
         MenuItem camera = menu.findItem(R.id.camera);
         camera.setVisible(Silk.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE));
+        camera.setEnabled(mCurrentGalleryPath == null);
         camera.setIcon(mCurrentCapturePath != null ? R.drawable.ic_camera_unattach : Utils.resolveThemeAttr(this, R.attr.attachCamera));
+        MenuItem gallery = menu.findItem(R.id.gallery);
+        gallery.setEnabled(mCurrentCapturePath == null);
+        gallery.setIcon(mCurrentGalleryPath != null ? R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachGallery));
+        menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -131,6 +162,7 @@ public class ComposeActivity extends ThemedLocationActivity {
         if (mCurrentCapturePath != null) {
             mCurrentCapturePath = null;
             invalidateOptionsMenu();
+            return;
         }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "capture_" + timeStamp + "_";
@@ -148,14 +180,37 @@ public class ComposeActivity extends ThemedLocationActivity {
         startActivityForResult(takePictureIntent, CAPTURE_RESULT);
     }
 
+    private void selectGallery() {
+        if (mCurrentGalleryPath != null) {
+            mCurrentGalleryPath = null;
+            invalidateOptionsMenu();
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_PICK).setType("image/*");
+        startActivityForResult(intent, GALLERY_RESULT);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (!cursor.moveToFirst()) {
+            return null;
+        }
+        return cursor.getString(0);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_RESULT) {
             if (resultCode == RESULT_CANCELED)
                 mCurrentCapturePath = null;
-            invalidateOptionsMenu();
+        } else if (requestCode == GALLERY_RESULT) {
+            if (resultCode == RESULT_CANCELED)
+                mCurrentGalleryPath = null;
+            else mCurrentGalleryPath = getRealPathFromURI(data.getData());
         }
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -175,7 +230,7 @@ public class ComposeActivity extends ThemedLocationActivity {
                 capture();
                 return true;
             case R.id.gallery:
-                //TODO
+                selectGallery();
                 return true;
         }
         return super.onOptionsItemSelected(item);

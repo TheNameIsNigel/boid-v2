@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ComposeActivity;
+import com.afollestad.twitter.utilities.Utils;
+import twitter4j.TwitterException;
 
 /**
  * Convenience methods for displaying 'sending' or 'failed to send' notifications for tweets. Used by the
@@ -33,12 +35,12 @@ public class ComposerNotify {
         return tag;
     }
 
-    public static void showError(Context context, Bundle args, String tag) {
+    public static void showError(Context context, Bundle args, TwitterException error, String tag) {
         Notification.Builder builder = new Notification.Builder(context);
         Intent onTap = new Intent(context, ComposeActivity.class).putExtras(args);
         builder.setAutoCancel(true)
                 .setContentTitle(context.getString(R.string.send_error))
-                .setContentText(args.getString("content"))
+                .setContentText(Utils.processTwitterException(context, error))
                 .setSmallIcon(R.drawable.ic_status)
                 .setTicker(context.getString(R.string.send_error))
                 .setContentIntent(PendingIntent.getActivity(context, ID, onTap, PendingIntent.FLAG_CANCEL_CURRENT));
