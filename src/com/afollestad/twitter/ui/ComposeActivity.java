@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -129,6 +128,10 @@ public class ComposeActivity extends ThemedLocationActivity {
     }
 
     private void capture() {
+        if (mCurrentCapturePath != null) {
+            mCurrentCapturePath = null;
+            invalidateOptionsMenu();
+        }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "capture_" + timeStamp + "_";
         File image;
