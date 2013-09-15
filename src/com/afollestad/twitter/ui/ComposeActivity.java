@@ -205,9 +205,11 @@ public class ComposeActivity extends ThemedLocationActivity {
             findViewById(R.id.emojiKeyboard).setVisibility(View.GONE);
         } else {
             isEmojiShowing = true;
+            findViewById(R.id.emojiKeyboard).setVisibility(View.VISIBLE);
+
             PagerSlidingTabStrip titleStrip = (PagerSlidingTabStrip) findViewById(R.id.emojiTabs);
             ViewPager pager = (ViewPager) findViewById(R.id.emojiKeyboardPager);
-            findViewById(R.id.emojiKeyboard).setVisibility(View.VISIBLE);
+
             InputMethodManager imm = (InputMethodManager)getSystemService(
                     Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(pager.getWindowToken(), 0);
