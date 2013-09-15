@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.SearchRecentSuggestions;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
@@ -20,6 +21,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.SearchSuggestionsProvider;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
 import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
@@ -163,6 +165,9 @@ public class MainActivity extends ThemedDrawerActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     search.collapseActionView();
+                    SearchRecentSuggestions suggestions = new SearchRecentSuggestions(MainActivity.this,
+                            SearchSuggestionsProvider.AUTHORITY, SearchSuggestionsProvider.MODE);
+                    suggestions.saveRecentQuery(query, null);
                     return false;
                 }
 

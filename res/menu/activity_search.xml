@@ -3,8 +3,7 @@
 
     <item android:id="@+id/pin" android:title="@string/pin_as_column"
           android:icon="?pinIcon" android:showAsAction="ifRoom"/>
-    <item android:id="@+id/compose" android:title="@string/tweet_with_query"
-          android:icon="?composeIcon" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/tweetWithQuery" android:icon="?composeIcon" android:showAsAction="ifRoom"/>
     <item android:id="@+id/save" android:title="@string/save_search"/>
 
 </menu>

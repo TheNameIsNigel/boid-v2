@@ -8,8 +8,6 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginBottom="3dp"
-                  android:layout_marginLeft="57dp"
-                  android:layout_marginRight="20dp"
                   android:gravity="center_vertical"
                   android:visibility="gone">
 
@@ -17,13 +15,15 @@
         <ImageView android:layout_width="@dimen/indicator_icon"
                    android:layout_height="@dimen/indicator_icon"
                    android:src="?replyIcon"
-                   android:layout_marginRight="3dp"/>
+                   android:layout_marginRight="3dp"
+                   android:layout_marginLeft="57dp"/>
 
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/inReplyTo"
                                                      android:layout_width="wrap_content"
                                                      android:layout_height="wrap_content"
                                                      android:textSize="@dimen/timestampText"
-                                                     android:textColor="?contentTextColor"/>
+                                                     android:textColor="?contentTextColor"
+                                                     android:layout_marginRight="20dp"/>
 
     </LinearLayout>
 

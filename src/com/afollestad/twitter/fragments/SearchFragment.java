@@ -100,9 +100,9 @@ public class SearchFragment extends BoidListFragment<Status> {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.activity_search, menu);
-        menu.findItem(R.id.compose).setTitle(getString(R.string.tweet_with_query).replace("{query}", mQuery));
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.activity_search, menu);
+        menu.findItem(R.id.tweetWithQuery).setTitle(getString(R.string.tweet_with_query).replace("{query}", mQuery));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class SearchFragment extends BoidListFragment<Status> {
                 Columns.add(getActivity(), new Column(Status.class, Column.SEARCH, mQuery));
                 getActivity().finish();
                 return true;
-            case R.id.compose:
+            case R.id.tweetWithQuery:
                 startActivity(new Intent(getActivity(), ComposeActivity.class)
                         .putExtra("content", mQuery + " "));
                 return true;
