@@ -35,7 +35,9 @@ import twitter4j.Status;
 import twitter4j.User;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -199,7 +201,7 @@ public class ComposeActivity extends ThemedLocationActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void capture() {
+    private File createTempImageFile() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "capture_" + timeStamp + "_";
         File image;
@@ -208,8 +210,13 @@ public class ComposeActivity extends ThemedLocationActivity {
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return;
+            return null;
         }
+        return image;
+    }
+
+    private void capture() {
+        File image = createTempImageFile();
         mCurrentCapturePath = image.getAbsolutePath();
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
@@ -245,6 +252,19 @@ public class ComposeActivity extends ThemedLocationActivity {
     }
 
     private String getRealPathFromURI(Uri contentUri) {
+        if (contentUri.toString().startsWith("content://com.google.android.gallery3d.provider/picasa/")) {
+            try {
+                InputStream picasaInput = getContentResolver().openInputStream(contentUri);
+                File image = createTempImageFile();
+                Utils.copy(picasaInput, new FileOutputStream(image));
+                return image.getAbsolutePath();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                return null;
+            }
+        }
+
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
         if (!cursor.moveToFirst()) {
@@ -269,7 +289,7 @@ public class ComposeActivity extends ThemedLocationActivity {
     public static void removeText(Context context) {
         String currentText = input.getText().toString();
         if (currentText.length() > 0) {
-            // FIXME most emoji strings are 2 characters long, so they are first turned into a black box/question mark and then removed
+            // TODO FIXME most emoji strings are 2 characters long, so they are first turned into a black box/question mark and then removed
             input.setText(EmojiConverter.getSmiledText(context, currentText.substring(0, currentText.length() - 1)));
             input.setSelection(currentText.length() - 1);
         }

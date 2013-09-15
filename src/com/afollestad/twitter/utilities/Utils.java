@@ -5,6 +5,9 @@ import android.content.res.TypedArray;
 import com.afollestad.twitter.R;
 import twitter4j.TwitterException;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
  * Various utility methods.
  *
@@ -29,5 +32,14 @@ public class Utils {
         int resolved = ta.getResourceId(0, 0);
         ta.recycle();
         return resolved;
+    }
+
+    public static void copy(InputStream input, OutputStream output) throws Exception {
+        byte[] buffer = new byte[2048];
+        int bytesRead;
+        while ((bytesRead = input.read(buffer)) != -1)
+            output.write(buffer, 0, bytesRead);
+        output.close();
+        input.close();
     }
 }
