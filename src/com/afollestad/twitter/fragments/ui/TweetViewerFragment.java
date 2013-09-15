@@ -114,6 +114,7 @@ public class TweetViewerFragment extends SilkFragment {
             public void run() {
                 try {
                     final Response response = Readability.load(mHandler, mTweet.getURLEntities()[0].getExpandedURL());
+                    if (response == null) return;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

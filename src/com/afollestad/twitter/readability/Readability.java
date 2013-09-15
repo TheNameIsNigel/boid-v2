@@ -16,6 +16,8 @@ public class Readability {
     public static Response load(Handler handler, String url) throws Exception {
         SilkHttpResponse response = new SilkHttpClient(handler).get("https://readability.com/api/content/v1/parser?url=" +
                 URLEncoder.encode(url, "UTF-8") + "&token=" + TOKEN);
-        return new Response(response.getContentJSON());
+        Response readable = new Response(response.getContentJSON());
+        if (!readable.invalidate()) return null;
+        return readable;
     }
 }

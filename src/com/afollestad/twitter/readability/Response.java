@@ -102,4 +102,8 @@ public class Response {
     public int getRenderedPages() {
         return renderedPages;
     }
+
+    public boolean invalidate() {
+        return getContent() != null && !getContent().toString().trim().isEmpty();
+    }
 }
