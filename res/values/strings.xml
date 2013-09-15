@@ -8,8 +8,8 @@
     <string name="welcome_message">Please login.</string>
     <string name="login">Login</string>
     <string name="failed_login">An error occurred while contacting Twitter.</string>
-    <string name="logged_in">Your account was added! Tap 'Continue' to download and cache the default columns, press
-        \"Exit\" to close the app and do so later.
+    <string name="logged_in">Your account was added! Tap \'Continue\' to download and cache the default columns, press
+        \'Exit\' to close the app and do so later.
     </string>
     <string name="finish">Continue</string>
     <string name="exit">Exit</string>
