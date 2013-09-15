@@ -113,7 +113,10 @@ public class StatusAdapter extends SilkAdapter<Status> implements View.OnClickLi
         if (item.getInReplyToUserId() > 0) {
             inReplyToFrame.setVisibility(View.VISIBLE);
             TextView inReplyTo = (TextView) recycled.findViewById(R.id.inReplyTo);
-            inReplyTo.setText(getContext().getString(R.string.in_reply_to_x).replace("{x}", item.getInReplyToScreenName()));
+            String inReplyToText = getContext().getString(R.string.in_reply_to_x).replace("{x}", item.getInReplyToScreenName());
+            SpannableString inReplyToSpan = new SpannableString(inReplyToText);
+            inReplyToSpan.setSpan(new BoidSpan(getContext(), null), inReplyToText.indexOf("@"), inReplyToText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            inReplyTo.setText(inReplyToSpan);
         } else {
             inReplyToFrame.setVisibility(View.GONE);
         }
