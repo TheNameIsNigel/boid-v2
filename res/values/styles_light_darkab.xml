@@ -27,7 +27,6 @@
         <item name="shareIcon">@drawable/ic_share_light</item>
         <item name="deleteIcon">@drawable/ic_delete_light</item>
 
-        <item name="mentionIcon">@drawable/ic_mention_light</item>
         <item name="editIcon">@drawable/ic_edit_light</item>
         <item name="searchIcon">@drawable/ic_search_light</item>
         <item name="pinIcon">@drawable/ic_pin_light</item>

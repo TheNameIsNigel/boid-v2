@@ -2,7 +2,6 @@ package com.afollestad.twitter.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +16,7 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.services.ComposerService;
 import com.afollestad.twitter.ui.theming.ThemedLocationActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
+import com.afollestad.twitter.utilities.Utils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.afollestad.twitter.views.CounterEditText;
 import twitter4j.Status;
@@ -106,15 +106,8 @@ public class ComposeActivity extends ThemedLocationActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_composer, menu);
-        menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : resolveThemeAttr(R.attr.attachLocation));
+        menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
         return super.onCreateOptionsMenu(menu);
-    }
-
-    private int resolveThemeAttr(int id) {
-        TypedArray ta = obtainStyledAttributes(new int[]{id});
-        int resolved = ta.getResourceId(0, 0);
-        ta.recycle();
-        return resolved;
     }
 
     @Override

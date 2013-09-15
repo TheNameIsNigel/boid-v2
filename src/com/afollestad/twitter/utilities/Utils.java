@@ -1,6 +1,7 @@
 package com.afollestad.twitter.utilities;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import com.afollestad.twitter.R;
 import twitter4j.TwitterException;
 
@@ -21,5 +22,12 @@ public class Utils {
             msg = te.getErrorMessage();
         else msg = te.getMessage();
         return msg;
+    }
+
+    public static int resolveThemeAttr(Context context, int id) {
+        TypedArray ta = context.obtainStyledAttributes(new int[]{id});
+        int resolved = ta.getResourceId(0, 0);
+        ta.recycle();
+        return resolved;
     }
 }
