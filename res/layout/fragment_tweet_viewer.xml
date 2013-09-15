@@ -113,7 +113,7 @@
                       android:orientation="vertical"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:layout_marginTop="20dp"
+                      android:layout_marginTop="10dp"
                       android:background="?android:actionBarItemBackground"
                       android:visibility="gone"
                       android:showDividers="beginning"
@@ -129,7 +129,7 @@
                                                                   android:textStyle="bold"
                                                                   android:textSize="@dimen/tweetViewerUsername"
                                                                   android:singleLine="true"
-                                                                  android:paddingTop="20dp"/>
+                                                                  android:paddingTop="15dp"/>
 
             <com.afollestad.silk.views.image.SilkImageView android:id="@+id/articleImage"
                                                            android:layout_width="fill_parent"
