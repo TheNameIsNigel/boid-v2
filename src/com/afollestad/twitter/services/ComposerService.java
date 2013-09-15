@@ -42,7 +42,7 @@ public class ComposerService extends IntentService {
             update.setLocation(geoLoc);
 
             try {
-                List<Place> places = cl.reverseGeoCode(new GeoQuery(geoLoc));
+                List<Place> places = cl.reverseGeoCode(new GeoQuery(geoLoc).granularity("poi"));
                 update.setPlaceId(places.get(0).getId());
             } catch (TwitterException e) {
                 e.printStackTrace();
