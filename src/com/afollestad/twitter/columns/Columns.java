@@ -17,10 +17,6 @@ import java.util.List;
  */
 public class Columns {
 
-    public interface ColumnAddListener {
-        public void onAdded(int newIndex);
-    }
-
     public static List<Column> getAll(Context context, Class<?> ofType) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String saved = prefs.getString("[columns]", null);

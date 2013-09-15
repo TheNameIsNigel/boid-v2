@@ -1,7 +1,6 @@
 package com.afollestad.twitter.fragments.base;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import com.afollestad.silk.caching.LimiterBehavior;
 import com.afollestad.silk.caching.SilkCache;
@@ -46,6 +45,8 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     @Override
     protected List<ItemType> onUpdateItems(List<ItemType> results, boolean paginated) {
+        if (mShouldRestoreScroll)
+            saveScrollPos();
         List<ItemType> items = getAdapter().getItems();
         if (results != null) {
             if (paginated) {
@@ -106,7 +107,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     @Override
     protected final List<ItemType> refresh() throws Exception {
-        if(!isPaginationEnabled()) {
+        if (!isPaginationEnabled()) {
             return load(BoidApp.get(getActivity()).getClient(), null);
         }
         Paging paging = new Paging();

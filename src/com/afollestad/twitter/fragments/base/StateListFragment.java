@@ -17,7 +17,7 @@ import java.util.List;
  */
 abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> extends SilkCachedFeedFragment<ItemType> {
 
-    private boolean mShouldRestoreScroll = false;
+    protected boolean mShouldRestoreScroll = false;
 
     /**
      * Saves the scroll position before refreshing if the list is not currently empty.
@@ -26,8 +26,6 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
     protected void onPreLoad() {
         super.onPreLoad();
         mShouldRestoreScroll = !getAdapter().isEmpty();
-        if (mShouldRestoreScroll)
-            saveScrollPos();
     }
 
     /**
