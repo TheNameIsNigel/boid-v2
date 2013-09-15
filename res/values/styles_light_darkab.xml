@@ -35,6 +35,9 @@
         <item name="attachCamera">@drawable/ic_camera_attach_light</item>
         <item name="attachGallery">@drawable/ic_gallery_attach_light</item>
 
+        <item name="emojiBackspace">@drawable/ic_backspace_dark</item>
+        <item name="emojiKeyboard">@drawable/ic_emoji_keyboard_light</item>
+
     </style>
 
 </resources>

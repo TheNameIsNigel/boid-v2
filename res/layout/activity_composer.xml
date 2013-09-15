@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
 
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="15dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-        <include android:id="@+id/inReplyToFrame" layout="@layout/activity_composer_replyindicator"/>
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
 
-        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/inReplyToLabel"
-                                                     android:layout_below="@+id/inReplyToFrame"
-                                                     android:layout_width="fill_parent"
-                                                     android:layout_height="wrap_content"
-                                                     style="?android:attr/listSeparatorTextViewStyle"
-                                                     android:text="@string/in_reply_to"
-                                                     android:layout_marginTop="10dp"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp">
 
-        <com.afollestad.twitter.views.CounterEditText android:id="@+id/input"
-                                                      android:layout_width="fill_parent"
-                                                      android:layout_height="wrap_content"
-                                                      android:lineSpacingMultiplier="1.1"
-                                                      android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
-                                                      android:layout_below="@+id/inReplyToLabel"
-                                                      android:hint="@string/composer_input_hint"
-                                                      android:textColor="?contentTextColor"
-                                                      android:gravity="top"
-                                                      android:minLines="3"/>
+            <include android:id="@+id/inReplyToFrame" layout="@layout/activity_composer_replyindicator"/>
 
-        <!--suppress AndroidLintHardcodedText -->
-        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/counter"
-                                                     android:layout_width="wrap_content"
-                                                     android:layout_height="wrap_content"
-                                                     android:textColor="?contentTextColor"
-                                                     android:layout_alignRight="@+id/input"
-                                                     android:text="0"
-                                                     android:layout_below="@+id/input"
-                                                     android:layout_marginTop="3dp"
-                                                     android:layout_marginRight="3dp"/>
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/inReplyToLabel"
+                                                         android:layout_below="@+id/inReplyToFrame"
+                                                         android:layout_width="fill_parent"
+                                                         android:layout_height="wrap_content"
+                                                         style="?android:attr/listSeparatorTextViewStyle"
+                                                         android:text="@string/in_reply_to"
+                                                         android:layout_marginTop="10dp"/>
 
-    </RelativeLayout>
+            <com.afollestad.twitter.views.CounterEditText android:id="@+id/input"
+                                                          android:layout_width="fill_parent"
+                                                          android:layout_height="wrap_content"
+                                                          android:lineSpacingMultiplier="1.1"
+                                                          android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+                                                          android:layout_below="@+id/inReplyToLabel"
+                                                          android:hint="@string/composer_input_hint"
+                                                          android:textColor="?contentTextColor"
+                                                          android:gravity="top"
+                                                          android:minLines="3"/>
+
+            <!--suppress AndroidLintHardcodedText -->
+            <com.afollestad.silk.views.text.SilkTextView android:id="@+id/counter"
+                                                         android:layout_width="wrap_content"
+                                                         android:layout_height="wrap_content"
+                                                         android:textColor="?contentTextColor"
+                                                         android:layout_alignRight="@+id/input"
+                                                         android:text="0"
+                                                         android:layout_below="@+id/input"
+                                                         android:layout_marginTop="3dp"
+                                                         android:layout_marginRight="3dp"/>
+
+        </RelativeLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
+    <View android:layout_height="0dp"
+          android:layout_width="match_parent"
+          android:layout_weight="1"/>
+
+    <include layout="@layout/keyboard_emoji"/>
+
+</LinearLayout>

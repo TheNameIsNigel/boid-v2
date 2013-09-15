@@ -44,6 +44,9 @@
         <item name="attachCamera">@drawable/ic_camera_attach_dark</item>
         <item name="attachGallery">@drawable/ic_gallery_attach_dark</item>
 
+        <item name="emojiBackspace">@drawable/ic_backspace_dark</item>
+        <item name="emojiKeyboard">@drawable/ic_emoji_keyboard_dark</item>
+
     </style>
 
     <style name="ActionBar.Transparent.Boidlight" parent="@android:style/Widget.Holo.Light.ActionBar">

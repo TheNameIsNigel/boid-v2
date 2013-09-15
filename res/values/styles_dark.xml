@@ -45,6 +45,9 @@
         <item name="attachCamera">@drawable/ic_camera_attach_light</item>
         <item name="attachGallery">@drawable/ic_gallery_attach_light</item>
 
+        <item name="emojiBackspace">@drawable/ic_backspace_light</item>
+        <item name="emojiKeyboard">@drawable/ic_emoji_keyboard_light</item>
+
     </style>
     <style name="ActionBar.Solid.Boid" parent="@android:style/Widget.Holo.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_boid</item>

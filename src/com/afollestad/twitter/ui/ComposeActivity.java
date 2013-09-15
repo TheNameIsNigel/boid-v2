@@ -1,5 +1,6 @@
 package com.afollestad.twitter.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -8,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ import com.afollestad.twitter.utilities.TweetUtils;
 import com.afollestad.twitter.utilities.Utils;
 import com.afollestad.twitter.utilities.text.TextUtils;
 import com.afollestad.twitter.views.CounterEditText;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import twitter4j.Status;
 import twitter4j.User;
 
@@ -45,6 +49,7 @@ public class ComposeActivity extends ThemedLocationActivity {
     private boolean mAttachLocation;
     private String mCurrentCapturePath;
     private String mCurrentGalleryPath;
+    private boolean isEmojiShowing;
 
     private final static int CAPTURE_RESULT = 100;
     private final static int GALLERY_RESULT = 200;
@@ -56,6 +61,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         setupInput();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         processIntent();
+
+        isEmojiShowing = false;
     }
 
     @Override
@@ -155,6 +162,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         gallery.setEnabled(mCurrentCapturePath == null);
         gallery.setIcon(mCurrentGalleryPath != null ? R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachGallery));
         menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
+        MenuItem emoji = menu.findItem(R.id.emoji);
+        emoji.setIcon(isEmojiShowing ? R.drawable.ic_emoji_keyboard_showing : Utils.resolveThemeAttr(this, R.attr.emojiKeyboard));
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -188,6 +197,22 @@ public class ComposeActivity extends ThemedLocationActivity {
         }
         Intent intent = new Intent(Intent.ACTION_PICK).setType("image/*");
         startActivityForResult(intent, GALLERY_RESULT);
+    }
+
+    private void insertEmoji() {
+        if (isEmojiShowing) {
+            isEmojiShowing = false;
+            findViewById(R.id.emojiKeyboard).setVisibility(View.GONE);
+        } else {
+            isEmojiShowing = true;
+            PagerSlidingTabStrip titleStrip = (PagerSlidingTabStrip) findViewById(R.id.emojiTabs);
+            ViewPager pager = (ViewPager) findViewById(R.id.emojiKeyboardPager);
+            findViewById(R.id.emojiKeyboard).setVisibility(View.VISIBLE);
+            InputMethodManager imm = (InputMethodManager)getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(pager.getWindowToken(), 0);
+        }
+        invalidateOptionsMenu();
     }
 
     private String getRealPathFromURI(Uri contentUri) {
@@ -231,6 +256,9 @@ public class ComposeActivity extends ThemedLocationActivity {
                 return true;
             case R.id.gallery:
                 selectGallery();
+                return true;
+            case R.id.emoji:
+                insertEmoji();
                 return true;
         }
         return super.onOptionsItemSelected(item);

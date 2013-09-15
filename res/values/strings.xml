@@ -115,4 +115,12 @@
     <string name="unattach_gallery">Unattach Gallery</string>
     <string name="disconnected_location_service">Disconnected from the location service.</string>
 
+    <string name="emoji">Insert Emoji</string>
+    <string name="emoji_recent">Favorites</string>
+    <string name="emoji_people">People</string>
+    <string name="emoji_things">Objects</string>
+    <string name="emoji_nature">Nature</string>
+    <string name="emoji_places">Places</string>
+    <string name="emoji_symbols">Symbols</string>
+
 </resources>

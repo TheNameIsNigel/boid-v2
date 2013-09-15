@@ -34,4 +34,7 @@
     <attr name="attachCamera" format="reference"/>
     <attr name="attachGallery" format="reference"/>
 
+    <attr name="emojiBackspace" format="reference"/>
+    <attr name="emojiKeyboard" format="reference"/>
+
 </resources>
