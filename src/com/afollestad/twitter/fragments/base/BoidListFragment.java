@@ -63,9 +63,9 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         super.onPostLoad(results, paginated);
         if (mPullToRefreshAttacher != null)
             mPullToRefreshAttacher.setRefreshComplete();
-        // Cache will expire 15 minutes after refreshing
+        // Cache will expire a day after refreshing
         if (getCache() != null && doesCacheExpire())
-            getCache().setExpiration(0, 0, 0, 15);
+            getCache().setExpiration(0, 1, 0, 0);
     }
 
     @Override
