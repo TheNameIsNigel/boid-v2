@@ -140,6 +140,8 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     private boolean invalidateTweetButton() {
         EditText input = (EditText) findViewById(R.id.input);
+        if (input.getText().toString().trim().length() > 140)
+            return false;
         return !input.getText().toString().trim().isEmpty() || mCurrentCapturePath != null || mCurrentGalleryPath != null;
     }
 
