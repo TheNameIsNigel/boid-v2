@@ -167,31 +167,31 @@ public class TweetViewerFragment extends SilkFragment {
         ((TextView) v.findViewById(R.id.fullname)).setText(mTweet.getUser().getName());
         ((TextView) v.findViewById(R.id.screenname)).setText("@" + mTweet.getUser().getScreenName());
 
-//       TODO if (mTweet.getFavoriteCount() == 0 && mTweet.getRetweetCount() == 0) {
-//            v.findViewById(R.id.infoFrame).setVisibility(View.GONE);
-//        } else {
-//            v.findViewById(R.id.infoFrame).setVisibility(View.VISIBLE);
-//            TextView favoriteCount = (TextView) v.findViewById(R.id.favoriteCount);
-//            favoriteCount.setText(mTweet.getFavoriteCount() + "\n" + getString(R.string.favorites));
-//            if (mTweet.getFavoriteCount() > 0) {
-//                favoriteCount.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //TODO
-//                    }
-//                });
-//            }
-//            TextView retweetCount = (TextView) v.findViewById(R.id.retweetCount);
-//            retweetCount.setText(mTweet.getRetweetCount() + "\n" + getString(R.string.retweets));
-//            if (mTweet.getRetweetCount() > 0) {
-//                retweetCount.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //TODO
-//                    }
-//                });
-//            }
-//        }
+        if (mTweet.getFavoriteCount() == 0 && mTweet.getRetweetCount() == 0) {
+            v.findViewById(R.id.infoFrame).setVisibility(View.GONE);
+        } else {
+            v.findViewById(R.id.infoFrame).setVisibility(View.VISIBLE);
+            TextView favoriteCount = (TextView) v.findViewById(R.id.favoriteCount);
+            favoriteCount.setText(mTweet.getFavoriteCount() + " " + getString(R.string.favorites));
+            if (mTweet.getFavoriteCount() > 0) {
+                favoriteCount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO
+                    }
+                });
+            }
+            TextView retweetCount = (TextView) v.findViewById(R.id.retweetCount);
+            retweetCount.setText(mTweet.getRetweetCount() + " " + getString(R.string.retweets));
+            if (mTweet.getRetweetCount() > 0) {
+                retweetCount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO
+                    }
+                });
+            }
+        }
 
         TextView content = (TextView) v.findViewById(R.id.content);
         TextUtils.linkifyText(getActivity(), content, mTweet, true, true);

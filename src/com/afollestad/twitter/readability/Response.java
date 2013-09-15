@@ -104,6 +104,6 @@ public class Response {
     }
 
     public boolean invalidate() {
-        return getContent() != null && !getContent().toString().trim().isEmpty();
+        return getContent() != null && !getContent().toString().trim().isEmpty() && !getExcerpt().trim().isEmpty();
     }
 }
