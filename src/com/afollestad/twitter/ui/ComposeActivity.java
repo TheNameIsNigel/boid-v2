@@ -3,26 +3,29 @@ package com.afollestad.twitter.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.util.Log;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.afollestad.silk.Silk;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
+import com.afollestad.twitter.adapters.emojis.EmojiPagerAdapter;
+import com.afollestad.twitter.data.EmojiDataSource;
+import com.afollestad.twitter.data.EmojiRecent;
 import com.afollestad.twitter.services.ComposerService;
 import com.afollestad.twitter.ui.theming.ThemedLocationActivity;
 import com.afollestad.twitter.utilities.TweetUtils;
@@ -36,6 +39,7 @@ import twitter4j.User;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -51,6 +55,9 @@ public class ComposeActivity extends ThemedLocationActivity {
     private String mCurrentGalleryPath;
     private boolean isEmojiShowing;
 
+    private static EmojiDataSource dataSource;
+    private static ArrayList<EmojiRecent> recents;
+
     private final static int CAPTURE_RESULT = 100;
     private final static int GALLERY_RESULT = 200;
 
@@ -59,10 +66,9 @@ public class ComposeActivity extends ThemedLocationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_composer);
         setupInput();
+        setUpEmojiKeyboard();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         processIntent();
-
-        isEmojiShowing = false;
     }
 
     @Override
@@ -126,6 +132,33 @@ public class ComposeActivity extends ThemedLocationActivity {
     private void setupInput() {
         final CounterEditText input = (CounterEditText) findViewById(R.id.input);
         input.setCounterView((TextView) findViewById(R.id.counter));
+    }
+
+    private void setUpEmojiKeyboard() {
+        isEmojiShowing = false;
+        dataSource = new EmojiDataSource(this);
+        dataSource.open();
+        recents = (ArrayList<EmojiRecent>) dataSource.getAllRecents();
+
+        Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int keyboardHeight = (int) (d.getHeight()/3.0);
+
+        ViewPager vp = (ViewPager) findViewById(R.id.emojiKeyboardPager);
+        vp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, keyboardHeight));
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.emojiTabs);
+        tabs.setIndicatorColor(getResources().getColor(android.R.color.holo_blue_dark));
+        EmojiPagerAdapter adapter = new EmojiPagerAdapter(this, vp, recents, keyboardHeight);
+        vp.setAdapter(adapter);
+        tabs.setViewPager(vp);
+        vp.setCurrentItem(1);
+
+        ImageButton delete = (ImageButton) findViewById(R.id.delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO remove text here
+            }
+        });
     }
 
     private void send(MenuItem item) {
@@ -205,14 +238,19 @@ public class ComposeActivity extends ThemedLocationActivity {
             findViewById(R.id.emojiKeyboard).setVisibility(View.GONE);
         } else {
             isEmojiShowing = true;
-            findViewById(R.id.emojiKeyboard).setVisibility(View.VISIBLE);
-
-            PagerSlidingTabStrip titleStrip = (PagerSlidingTabStrip) findViewById(R.id.emojiTabs);
-            ViewPager pager = (ViewPager) findViewById(R.id.emojiKeyboardPager);
-
+            View keyboard = findViewById(R.id.emojiKeyboard);
+            keyboard.setVisibility(View.VISIBLE);
             InputMethodManager imm = (InputMethodManager)getSystemService(
                     Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(pager.getWindowToken(), 0);
+            imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
+            findViewById(R.id.input).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(isEmojiShowing) {
+                        insertEmoji();
+                    }
+                }
+            });
         }
         invalidateOptionsMenu();
     }
@@ -264,5 +302,14 @@ public class ComposeActivity extends ThemedLocationActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isEmojiShowing) {
+            insertEmoji();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
