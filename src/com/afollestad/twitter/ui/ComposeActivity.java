@@ -1,6 +1,8 @@
 package com.afollestad.twitter.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -15,7 +17,6 @@ import android.text.TextWatcher;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import com.afollestad.silk.Silk;
 import com.afollestad.silk.views.image.SilkImageView;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
@@ -140,8 +141,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         dataSource.open();
         recents = (ArrayList<EmojiRecent>) dataSource.getAllRecents();
 
-        Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int keyboardHeight = (int) (d.getHeight()/3.0);
+        Display d = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int keyboardHeight = (int) (d.getHeight() / 3.0);
 
         ViewPager vp = (ViewPager) findViewById(R.id.emojiKeyboardPager);
         vp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, keyboardHeight));
@@ -189,13 +190,9 @@ public class ComposeActivity extends ThemedLocationActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_composer, menu);
         menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
-        MenuItem camera = menu.findItem(R.id.camera);
-        camera.setVisible(Silk.isIntentAvailable(this, MediaStore.ACTION_IMAGE_CAPTURE));
-        camera.setEnabled(mCurrentGalleryPath == null);
-        camera.setIcon(mCurrentCapturePath != null ? R.drawable.ic_camera_unattach : Utils.resolveThemeAttr(this, R.attr.attachCamera));
-        MenuItem gallery = menu.findItem(R.id.gallery);
-        gallery.setEnabled(mCurrentCapturePath == null);
-        gallery.setIcon(mCurrentGalleryPath != null ? R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachGallery));
+        MenuItem media = menu.findItem(R.id.media);
+        media.setIcon(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
+                R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachMedia));
         menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
         MenuItem emoji = menu.findItem(R.id.emoji);
         emoji.setIcon(isEmojiShowing ? R.drawable.ic_emoji_keyboard_showing : Utils.resolveThemeAttr(this, R.attr.emojiKeyboard));
@@ -242,13 +239,13 @@ public class ComposeActivity extends ThemedLocationActivity {
             isEmojiShowing = true;
             View keyboard = findViewById(R.id.emojiKeyboard);
             keyboard.setVisibility(View.VISIBLE);
-            InputMethodManager imm = (InputMethodManager)getSystemService(
+            InputMethodManager imm = (InputMethodManager) getSystemService(
                     Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(keyboard.getWindowToken(), 0);
             findViewById(R.id.input).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(isEmojiShowing) {
+                    if (isEmojiShowing) {
                         insertEmojiKeyboard();
                     }
                 }
@@ -313,6 +310,24 @@ public class ComposeActivity extends ThemedLocationActivity {
         invalidateOptionsMenu();
     }
 
+    private void attachMedia() {
+        new AlertDialog.Builder(this).setTitle(R.string.attach_media)
+                .setItems(R.array.media_attach_types, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        switch (which) {
+                            default:
+                                capture();
+                                break;
+                            case 1:
+                                selectGallery();
+                                break;
+                        }
+                    }
+                }).show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -326,11 +341,8 @@ public class ComposeActivity extends ThemedLocationActivity {
                 mAttachLocation = !mAttachLocation;
                 invalidateOptionsMenu();
                 return true;
-            case R.id.camera:
-                capture();
-                return true;
-            case R.id.gallery:
-                selectGallery();
+            case R.id.media:
+                attachMedia();
                 return true;
             case R.id.emoji:
                 insertEmojiKeyboard();

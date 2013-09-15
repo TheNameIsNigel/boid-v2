@@ -31,8 +31,7 @@
     <attr name="pinIcon" format="reference"/>
 
     <attr name="attachLocation" format="reference"/>
-    <attr name="attachCamera" format="reference"/>
-    <attr name="attachGallery" format="reference"/>
+    <attr name="attachMedia" format="reference"/>
 
     <attr name="emojiBackspace" format="reference"/>
     <attr name="emojiKeyboard" format="reference"/>

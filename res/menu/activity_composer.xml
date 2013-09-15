@@ -5,10 +5,8 @@
           android:icon="?emojiKeyboard" android:showAsAction="ifRoom"/>
     <item android:id="@+id/locate" android:title="@string/attach_location"
           android:icon="?attachLocation" android:showAsAction="ifRoom"/>
-    <item android:id="@+id/camera" android:title="@string/attach_camera"
-          android:icon="?attachCamera" android:showAsAction="ifRoom"/>
-    <item android:id="@+id/gallery" android:title="@string/attach_gallery"
-          android:icon="?attachGallery" android:showAsAction="ifRoom"/>
+    <item android:id="@+id/media" android:title="@string/attach_media"
+          android:icon="?attachMedia" android:showAsAction="ifRoom"/>
     <item android:id="@+id/send" android:title="@string/tweet"
           android:showAsAction="ifRoom"/>
 

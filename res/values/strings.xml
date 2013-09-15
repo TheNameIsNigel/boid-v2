@@ -109,11 +109,14 @@
     <string name="tweet">Tweet</string>
     <string name="attach_location">Attach Location</string>
     <string name="unattach_location">Unattach Location</string>
-    <string name="attach_camera">Attach Camera</string>
-    <string name="unattach_camera">Unattach Camera</string>
-    <string name="attach_gallery">Attach Gallery</string>
-    <string name="unattach_gallery">Unattach Gallery</string>
+    <string name="attach_media">Attach Media</string>
+    <string name="unattach_media">Unattach Media</string>
     <string name="disconnected_location_service">Disconnected from the location service.</string>
+
+    <string-array name="media_attach_types">
+        <item>Camera</item>
+        <item>Gallery</item>
+    </string-array>
 
     <string name="emoji">Insert Emoji</string>
     <string name="emoji_recent">Favorites</string>
