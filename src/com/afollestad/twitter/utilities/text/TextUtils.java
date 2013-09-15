@@ -1,8 +1,10 @@
 package com.afollestad.twitter.utilities.text;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.TextView;
+import com.afollestad.twitter.BoidApp;
 import twitter4j.*;
 
 import java.util.regex.Matcher;
@@ -29,6 +31,26 @@ public class TextUtils {
             }
         }
         return tweet;
+    }
+
+    public static int getShortenedUrlDifference(String text, BoidApp.Config config) {
+        int totalDiff = 0;
+        Matcher m = Patterns.WEB_URL.matcher(text);
+        while (m.find()) {
+            String url = m.group();
+            Log.d("getShortenedUrlDifference", url);
+            int sl = url.startsWith("https://") ? config.getShortUrlHttpsLength() : config.getShortUrlLength();
+            if (sl == url.length()) {
+                Log.d("getShortenedUrlDifference", "URL length is equal to that of the short URL length");
+                continue;
+            }
+            Log.d("getShortenedUrlDifference", "Normal length: " + url.length());
+            Log.d("getShortenedUrlDifference", "Short length: " + sl);
+            totalDiff += (url.length() - sl);
+        }
+        if (totalDiff == 0) return 0;
+        Log.d("getShortenedUrlDifference", "Total diff: " + totalDiff);
+        return totalDiff;
     }
 
     public static void linkifyText(Context context, TextView textView, String tweet, boolean clickable, boolean expandUrls, URLEntity[] urls, MediaEntity[] media) {

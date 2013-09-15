@@ -200,11 +200,6 @@ public class ComposeActivity extends ThemedLocationActivity {
     }
 
     private void capture() {
-        if (mCurrentCapturePath != null) {
-            mCurrentCapturePath = null;
-            invalidateOptionsMenu();
-            return;
-        }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "capture_" + timeStamp + "_";
         File image;
@@ -222,11 +217,6 @@ public class ComposeActivity extends ThemedLocationActivity {
     }
 
     private void selectGallery() {
-        if (mCurrentGalleryPath != null) {
-            mCurrentGalleryPath = null;
-            invalidateOptionsMenu();
-            return;
-        }
         Intent intent = new Intent(Intent.ACTION_PICK).setType("image/*");
         startActivityForResult(intent, GALLERY_RESULT);
     }
@@ -265,20 +255,15 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     public static void insertEmoji(Context context, String emoji, int icon) {
         input.append(EmojiConverter.getSmiledText(context, emoji));
-
-        for (int i = 0; i < recents.size(); i++) {
-            if (recents.get(i).text.equals(emoji)) {
+        for (EmojiRecent recent1 : recents) {
+            if (recent1.text.equals(emoji)) {
                 dataSource.updateRecent(icon + "");
-                recents.get(i).count++;
+                recent1.count++;
                 return;
             }
         }
-
         EmojiRecent recent = dataSource.createRecent(emoji, icon + "");
-
-        if (recent != null) {
-            recents.add(recent);
-        }
+        if (recent != null) recents.add(recent);
     }
 
     public static void removeText(Context context) {
@@ -307,10 +292,18 @@ public class ComposeActivity extends ThemedLocationActivity {
                 mCurrentGalleryPath = null;
             else mCurrentGalleryPath = getRealPathFromURI(data.getData());
         }
+        ((CounterEditText) findViewById(R.id.input)).setHasMedia(mCurrentCapturePath != null || mCurrentGalleryPath != null);
         invalidateOptionsMenu();
     }
 
     private void attachMedia() {
+        if (mCurrentCapturePath != null || mCurrentGalleryPath != null) {
+            mCurrentCapturePath = null;
+            mCurrentGalleryPath = null;
+            ((CounterEditText) findViewById(R.id.input)).setHasMedia(mCurrentCapturePath != null || mCurrentGalleryPath != null);
+            invalidateOptionsMenu();
+            return;
+        }
         new AlertDialog.Builder(this).setTitle(R.string.attach_media)
                 .setItems(R.array.media_attach_types, new DialogInterface.OnClickListener() {
                     @Override

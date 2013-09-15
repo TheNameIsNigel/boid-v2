@@ -111,7 +111,9 @@
     <string name="unattach_location">Unattach Location</string>
     <string name="attach_media">Attach Media</string>
     <string name="unattach_media">Unattach Media</string>
+
     <string name="disconnected_location_service">Disconnected from the location service.</string>
+    <string name="urls_shortened">URLs will be shortened</string>
 
     <string-array name="media_attach_types">
         <item>Camera</item>

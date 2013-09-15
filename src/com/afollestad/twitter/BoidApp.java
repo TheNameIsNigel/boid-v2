@@ -11,12 +11,11 @@ import com.afollestad.silk.images.SilkImageManager;
 import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.utilities.Utils;
 import com.devspark.appmsg.AppMsg;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
+import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.internal.json.UserJSONImpl;
+
+import java.io.Serializable;
 
 /**
  * Variables and methods kept in memory throughout the life of the app.
@@ -31,6 +30,37 @@ public class BoidApp extends Application {
     private final static String DEFAULT_CONSUMER_KEY = "5LvP1d0cOmkQleJlbKICtg";
     private final static String DEFAULT_CONSUMER_SECRET = "j44kDQMIDuZZEvvCHy046HSurt8avLuGeip2QnOpHKI";
     public final static String CALLBACK_URL = "boid://auth";
+
+    public static class Config implements Serializable {
+
+        public Config() {
+            mCharsPerMedia = 23;
+            mShortUrlLength = 22;
+            mShortUrlHttpsLength = 23;
+        }
+
+        public Config(TwitterAPIConfiguration config) {
+            mCharsPerMedia = config.getCharactersReservedPerMedia();
+            mShortUrlLength = config.getShortURLLength();
+            mShortUrlHttpsLength = config.getShortURLLengthHttps();
+        }
+
+        private int mCharsPerMedia;
+        private int mShortUrlLength;
+        private int mShortUrlHttpsLength;
+
+        public int getCharsPerMedia() {
+            return mCharsPerMedia;
+        }
+
+        public int getShortUrlLength() {
+            return mShortUrlLength;
+        }
+
+        public int getShortUrlHttpsLength() {
+            return mShortUrlHttpsLength;
+        }
+    }
 
     public static String showAppMsgError(Activity activity, Exception e) {
         String msg = e.getMessage();
@@ -133,6 +163,19 @@ public class BoidApp extends Application {
     public boolean hasAccount() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         return prefs.contains("token");
+    }
+
+    public BoidApp storeConfig(Config config) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putString("api_config", Silk.serializeObject(config, Config.class)).commit();
+        return this;
+    }
+
+    public Config getConfig() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.contains("api_config"))
+            return new Config();
+        return (Config) Silk.deserializeObject(prefs.getString("api_config", null), Config.class);
     }
 
     public void logout() {

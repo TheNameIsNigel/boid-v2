@@ -25,6 +25,10 @@ import com.afollestad.twitter.SearchSuggestionsProvider;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
 import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
+import twitter4j.TwitterAPIConfiguration;
+import twitter4j.TwitterException;
+
+import java.util.Calendar;
 
 /**
  * The main app UI.
@@ -37,6 +41,28 @@ public class MainActivity extends ThemedDrawerActivity {
     private ListView drawerList;
     private int mLastChecked = 1;
     private int mLastPageCount;
+
+    private void loadConfig() {
+        long now = Calendar.getInstance().getTimeInMillis();
+        long lastUpdate = PreferenceManager.getDefaultSharedPreferences(this).getLong("last_api_config_update", -1);
+        if (lastUpdate != -1 && now < lastUpdate + (1000 * 60 * 60 * 24)) {
+            // Hasn't been 24 hours yet
+            return;
+        }
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TwitterAPIConfiguration config = BoidApp.get(MainActivity.this).getClient().getAPIConfiguration();
+                    BoidApp.get(MainActivity.this).storeConfig(new BoidApp.Config(config));
+                } catch (TwitterException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.setPriority(Thread.MAX_PRIORITY);
+        t.start();
+    }
 
     @Override
     public int getDrawerShadowRes() {
@@ -61,6 +87,8 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        loadConfig();
 
         mPager = (ViewPager) findViewById(R.id.pager);
         drawerList = (ListView) findViewById(R.id.drawer_list);
