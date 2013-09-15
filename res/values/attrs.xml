@@ -31,4 +31,8 @@
     <attr name="searchIcon" format="reference"/>
     <attr name="pinIcon" format="reference"/>
 
+    <attr name="attachLocation" format="reference"/>
+    <attr name="attachCamera" format="reference"/>
+    <attr name="attachGallery" format="reference"/>
+
 </resources>

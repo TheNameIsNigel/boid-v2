@@ -25,7 +25,7 @@
                                                       android:layout_below="@+id/inReplyToLabel"
                                                       android:hint="@string/composer_input_hint"
                                                       android:textColor="?contentTextColor"
-                                                      android:gravity="top" android:minLines="3"/>
+                                                      android:gravity="top"/>
 
         <!--suppress AndroidLintHardcodedText -->
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/counter"

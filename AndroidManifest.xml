@@ -31,7 +31,8 @@
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
 
         <activity android:name=".ui.ComposeActivity" android:label="@string/compose"
-                  android:configChanges="screenSize|orientation|keyboardHidden"/>
+                  android:configChanges="screenSize|orientation|keyboardHidden"
+                  android:uiOptions="splitActionBarWhenNarrow"/>
 
         <activity android:name=".ui.TweetViewerActivity" android:label="@string/tweet"
                   android:configChanges="screenSize|orientation|keyboardHidden"

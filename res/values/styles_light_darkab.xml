@@ -32,6 +32,10 @@
         <item name="searchIcon">@drawable/ic_search_light</item>
         <item name="pinIcon">@drawable/ic_pin_light</item>
 
+        <item name="attachLocation">@drawable/ic_location_attach_light</item>
+        <item name="attachCamera">@drawable/ic_camera_attach_light</item>
+        <item name="attachGallery">@drawable/ic_gallery_attach_light</item>
+
     </style>
 
 </resources>

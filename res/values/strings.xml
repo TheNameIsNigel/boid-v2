@@ -106,4 +106,12 @@
     <string name="end_of_results">End of Results</string>
     <string name="in_reply_to_x">In reply to @{x}</string>
 
+    <string name="tweet">Tweet</string>
+    <string name="attach_location">Attach Location</string>
+    <string name="unattach_location">Unattach Location</string>
+    <string name="attach_camera">Attach Camera</string>
+    <string name="unattach_camera">Unattach Camera</string>
+    <string name="attach_gallery">Attach Gallery</string>
+    <string name="unattach_gallery">Unattach Gallery</string>
+
 </resources>
