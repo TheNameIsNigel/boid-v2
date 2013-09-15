@@ -45,7 +45,7 @@ public class TweetUtils {
                     return full;
                 }
                 String du = url.getDisplayURL().toLowerCase(Locale.getDefault()).trim();
-                if (du.startsWith("instagram.com")) {
+                if (du.startsWith("instagram.com/p/")) {
                     String mu = url.getExpandedURL();
                     if (!mu.endsWith("/")) mu += "/";
                     return mu + "media/?size=" + (larger ? "l" : "m");
