@@ -244,6 +244,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         if (isEmojiShowing) {
             isEmojiShowing = false;
             findViewById(R.id.emojiKeyboard).setVisibility(View.GONE);
+            findViewById(R.id.input).requestFocus();
+            findViewById(R.id.input).requestFocusFromTouch();
         } else {
             isEmojiShowing = true;
             View keyboard = findViewById(R.id.emojiKeyboard);
@@ -308,10 +310,10 @@ public class ComposeActivity extends ThemedLocationActivity {
     public static void removeText(Context context) {
         String currentText = input.getText().toString();
         if (currentText.length() > 0 && input.getSelectionStart() > 0) {
-            // TODO FIXME most emoji strings are 2 characters long, so they are first turned into a black box/question mark and then removed
+            //TODO are all emojis 2 characters long?
             input.setEnabled(false);
             input.setText(EmojiConverter.getSmiledText(context,
-                    new StringBuilder(input.getText().toString()).deleteCharAt(input.getSelectionStart() - 1).toString()));
+                    new StringBuilder(input.getText().toString()).deleteCharAt(input.getSelectionStart() - 2).toString()));
             input.setEnabled(true);
             input.setSelection(currentText.length() - 1);
         }
