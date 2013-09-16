@@ -31,7 +31,7 @@ public class RecentEmojiAdapter extends BaseEmojiAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final ImageView imageView;
+        ImageView imageView;
         if (convertView == null) {
             imageView = new ImageView(context);
             int scale = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, context.getResources().getDisplayMetrics());
@@ -42,7 +42,6 @@ public class RecentEmojiAdapter extends BaseEmojiAdapter {
         }
 
         imageView.setImageResource(Integer.parseInt(recents.get(position).icon));
-        imageView.setBackgroundResource(R.drawable.btn_backspace);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
