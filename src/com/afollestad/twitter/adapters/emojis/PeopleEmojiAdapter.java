@@ -43,7 +43,7 @@ public class PeopleEmojiAdapter extends BaseEmojiAdapter {
         return imageView;
     }
 
-    public static final String[] mEmojiTexts = {
+    private static final String[] mEmojiTexts = {
             // People
             "\u263A", "\uD83D\uDE0A", "\uD83D\uDE00", "\uD83D\uDE01", "\uD83D\uDE02",
             "\uD83D\uDE03", "\uD83D\uDE04", "\uD83D\uDE05", "\uD83D\uDE06", "\uD83D\uDE07",

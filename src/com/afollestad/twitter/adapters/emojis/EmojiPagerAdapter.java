@@ -13,21 +13,19 @@ import java.util.ArrayList;
 
 public class EmojiPagerAdapter extends PagerAdapter {
 
-    private String[] titles;
-    private ViewPager pager;
-    private ArrayList<View> pages;
-    private int keyboardHeight;
+    private final String[] titles;
+    private final ViewPager pager;
+    private final ArrayList<View> pages;
+    private final int keyboardHeight;
 
     public EmojiPagerAdapter(Context context, ViewPager pager, ArrayList<EmojiRecent> recents, int keyboardHeight) {
         super();
 
-        String[] titles = { context.getString(R.string.emoji_recent), context.getString(R.string.emoji_people),
+        this.titles = new String[]{context.getString(R.string.emoji_recent), context.getString(R.string.emoji_people),
                 context.getString(R.string.emoji_things), context.getString(R.string.emoji_nature),
-                context.getString(R.string.emoji_places), context.getString(R.string.emoji_symbols) };
+                context.getString(R.string.emoji_places), context.getString(R.string.emoji_symbols)};
 
-        this.titles = titles;
         this.keyboardHeight = keyboardHeight;
-
         this.pager = pager;
         this.pages = new ArrayList<View>();
 
@@ -46,7 +44,7 @@ public class EmojiPagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem (ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, Object object) {
         pager.removeView(pages.get(position));
     }
 

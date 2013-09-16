@@ -3,9 +3,9 @@ package com.afollestad.twitter.adapters.emojis;
 import android.content.Context;
 import android.widget.BaseAdapter;
 
-public abstract class BaseEmojiAdapter extends BaseAdapter {
+abstract class BaseEmojiAdapter extends BaseAdapter {
 
-    protected Context context;
+    protected final Context context;
 
     public BaseEmojiAdapter(Context context) {
         this.context = context;

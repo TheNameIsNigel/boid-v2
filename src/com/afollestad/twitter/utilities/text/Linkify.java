@@ -18,7 +18,7 @@ import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Linkify {
+class Linkify {
     /**
      * Bit field indicating that web URLs should be matched in methods that
      * take an options mask

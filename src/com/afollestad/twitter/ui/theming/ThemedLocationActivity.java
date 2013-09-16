@@ -24,7 +24,7 @@ public abstract class ThemedLocationActivity extends ThemedActivity implements
         GooglePlayServicesClient.OnConnectionFailedListener,
         LocationListener {
 
-    final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
     final static class ErrorDialogFragment extends DialogFragment {
 

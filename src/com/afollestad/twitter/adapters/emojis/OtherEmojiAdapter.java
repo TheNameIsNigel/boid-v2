@@ -43,7 +43,7 @@ public class OtherEmojiAdapter extends BaseEmojiAdapter {
         return imageView;
     }
 
-    public static final String[] mEmojiTexts = {
+    private static final String[] mEmojiTexts = {
             // other
             "\uD83D\uDD1d", "\uD83D\uDD19", "\uD83D\uDD1b", "\uD83D\uDD1c", "\uD83D\uDD1a",
             "\u23f3", "\u231b", "\u23f0", "\u2648", "\u2649",

@@ -43,7 +43,7 @@ public class TransEmojiAdapter extends BaseEmojiAdapter {
         return imageView;
     }
 
-    public static final String[] mEmojiTexts = {
+    private static final String[] mEmojiTexts = {
             // transportation
             "\uD83C\uDFE0", "\uD83C\uDFe1", "\uD83C\uDFE2", "\uD83C\uDFE3", "\uD83C\uDFE4",
             "\uD83C\uDFE5", "\uD83C\uDFe6", "\uD83C\uDFE7", "\uD83C\uDFE8", "\uD83C\uDFE9",

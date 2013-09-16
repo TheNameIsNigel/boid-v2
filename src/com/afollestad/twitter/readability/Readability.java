@@ -11,7 +11,7 @@ import java.net.URLEncoder;
  */
 public class Readability {
 
-    public final static String TOKEN = "7855c885b4bfe7ada90401d87fd3298d8bfdc0b2";
+    private final static String TOKEN = "7855c885b4bfe7ada90401d87fd3298d8bfdc0b2";
 
     public static Response load(Handler handler, String url) throws Exception {
         SilkHttpResponse response = new SilkHttpClient(handler).get("https://readability.com/api/content/v1/parser?url=" +

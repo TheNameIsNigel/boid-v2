@@ -45,9 +45,9 @@ public class BoidApp extends Application {
             mShortUrlHttpsLength = config.getShortURLLengthHttps();
         }
 
-        private int mCharsPerMedia;
-        private int mShortUrlLength;
-        private int mShortUrlHttpsLength;
+        private final int mCharsPerMedia;
+        private final int mShortUrlLength;
+        private final int mShortUrlHttpsLength;
 
         public int getCharsPerMedia() {
             return mCharsPerMedia;

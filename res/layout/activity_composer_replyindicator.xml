@@ -14,8 +14,7 @@
     <LinearLayout android:id="@+id/contentFrame"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_toRightOf="@+id/replyProfilePic">
+                  android:orientation="vertical">
 
         <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
                         android:paddingRight="20dp">

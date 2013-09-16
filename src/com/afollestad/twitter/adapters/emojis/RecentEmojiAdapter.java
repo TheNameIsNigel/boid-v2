@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class RecentEmojiAdapter extends BaseEmojiAdapter {
 
-    private ArrayList<EmojiRecent> recents;
+    private final ArrayList<EmojiRecent> recents;
 
     public RecentEmojiAdapter(Context context, ArrayList<EmojiRecent> recents) {
         super(context);

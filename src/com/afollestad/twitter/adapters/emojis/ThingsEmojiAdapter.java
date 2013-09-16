@@ -43,7 +43,7 @@ public class ThingsEmojiAdapter extends BaseEmojiAdapter {
         return imageView;
     }
 
-    public static final String[] mEmojiTexts = {
+    private static final String[] mEmojiTexts = {
             //things
             "\uD83D\uDD30", "\uD83D\uDC84", "\uD83D\uDC5e", "\uD83D\uDC5f", "\uD83D\uDC51",
             "\uD83D\uDC52", "\uD83C\uDFa9", "\uD83C\uDF93", "\uD83D\uDC53", "\u231a",

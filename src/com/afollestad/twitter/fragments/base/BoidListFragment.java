@@ -30,7 +30,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
     private PullToRefreshAttacher mPullToRefreshAttacher;
     private long mCursor = -1;
 
-    public final int getPageLength() {
+    final int getPageLength() {
         return 200;
     }
 
@@ -148,7 +148,7 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
         super.performPaginate(showProgress);
     }
 
-    public final void setCursor(long cursor) {
+    protected final void setCursor(long cursor) {
         mCursor = cursor;
     }
 

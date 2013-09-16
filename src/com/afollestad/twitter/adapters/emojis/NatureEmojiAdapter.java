@@ -10,7 +10,7 @@ import com.afollestad.twitter.ui.ComposeActivity;
 
 public class NatureEmojiAdapter extends BaseEmojiAdapter {
 
-    private Context mContext;
+    private final Context mContext;
 
     public NatureEmojiAdapter(Context context) {
         super(context);
@@ -46,7 +46,7 @@ public class NatureEmojiAdapter extends BaseEmojiAdapter {
         return imageView;
     }
 
-    public static final String[] mEmojiTexts = {
+    private static final String[] mEmojiTexts = {
             // nature
             "\uD83D\uDC15", "\uD83D\uDC36", "\uD83D\uDC29", "\uD83D\uDC08", "\uD83D\uDC31",
             "\uD83D\uDC00", "\uD83D\uDC01", "\uD83D\uDC2d", "\uD83D\uDC39", "\uD83D\uDC22",

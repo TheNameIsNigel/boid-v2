@@ -887,7 +887,7 @@ public class EmojiConverter {
 	    map.put(Pattern.compile(Pattern.quote(smile)), resource);
 	}
 
-	public static boolean addSmiles(Context context, Spannable spannable) {
+	private static boolean addSmiles(Context context, Spannable spannable) {
 	    boolean hasChanges = false;
 	    for (Entry<Pattern, Integer> entry : emoticons.entrySet()) {
 	        Matcher matcher = entry.getKey().matcher(spannable);
@@ -921,7 +921,7 @@ public class EmojiConverter {
 	    return spannable;
 	}
 	
-	public static Bitmap drawableToBitmap (Drawable drawable, Context context) {
+	private static Bitmap drawableToBitmap(Drawable drawable, Context context) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable)drawable).getBitmap();
         }

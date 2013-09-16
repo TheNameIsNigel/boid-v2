@@ -12,9 +12,9 @@ import java.util.List;
 public class EmojiDataSource {
     // Database fields
     private SQLiteDatabase database;
-    private EmojiSQLiteHelper dbHelper;
-    private String[] allColumns = { EmojiSQLiteHelper.COLUMN_ID,
-            EmojiSQLiteHelper.COLUMN_TEXT, EmojiSQLiteHelper.COLUMN_ICON, EmojiSQLiteHelper.COLUMN_COUNT };
+    private final EmojiSQLiteHelper dbHelper;
+    private final String[] allColumns = {EmojiSQLiteHelper.COLUMN_ID,
+            EmojiSQLiteHelper.COLUMN_TEXT, EmojiSQLiteHelper.COLUMN_ICON, EmojiSQLiteHelper.COLUMN_COUNT};
 
     public EmojiDataSource(Context context) {
         dbHelper = new EmojiSQLiteHelper(context);
@@ -62,7 +62,7 @@ public class EmojiDataSource {
             values.put(EmojiSQLiteHelper.COLUMN_COUNT, newRecent.count + 1);
             database.update(EmojiSQLiteHelper.TABLE_RECENTS, values, "_id=" + newRecent.id, null);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -71,7 +71,7 @@ public class EmojiDataSource {
             database.delete(EmojiSQLiteHelper.TABLE_RECENTS, EmojiSQLiteHelper.COLUMN_ID
                     + " = " + id, null);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

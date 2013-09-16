@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class EmojiKeyboardView {
 
-    private int position;
-    private Context context;
+    private final int position;
+    private final Context context;
     private ArrayList<EmojiRecent> recents;
 
     public EmojiKeyboardView(Context context, int position) {

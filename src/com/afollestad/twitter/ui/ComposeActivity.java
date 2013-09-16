@@ -173,7 +173,7 @@ public class ComposeActivity extends ThemedLocationActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeText(ComposeActivity.this);
+                removeText();
             }
         });
     }
@@ -203,13 +203,20 @@ public class ComposeActivity extends ThemedLocationActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_composer, menu);
-        menu.findItem(R.id.locate).setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
+        // Location attachment action
+        MenuItem locate = menu.findItem(R.id.locate);
+        locate.setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
+        locate.setTitle(mAttachLocation ? R.string.unattach_location : R.string.attach_location);
+        // Media attachment action
         MenuItem media = menu.findItem(R.id.media);
         media.setIcon(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
                 R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachMedia));
-        menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
+        media.setTitle(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
+                R.string.unattach_media : R.string.attach_media);
+        // Other actions
         MenuItem emoji = menu.findItem(R.id.emoji);
         emoji.setIcon(isEmojiShowing ? R.drawable.ic_emoji_keyboard_showing : Utils.resolveThemeAttr(this, R.attr.emojiKeyboard));
+        menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -307,12 +314,12 @@ public class ComposeActivity extends ThemedLocationActivity {
         if (recent != null) recents.add(recent);
     }
 
-    public static void removeText(Context context) {
+    private void removeText() {
         String currentText = input.getText().toString();
         if (currentText.length() > 0 && input.getSelectionStart() > 0) {
             //TODO are all emojis 2 characters long?
             input.setEnabled(false);
-            input.setText(EmojiConverter.getSmiledText(context,
+            input.setText(EmojiConverter.getSmiledText(this,
                     new StringBuilder(input.getText().toString()).deleteCharAt(input.getSelectionStart() - 2).toString()));
             input.setEnabled(true);
             input.setSelection(currentText.length() - 1);
