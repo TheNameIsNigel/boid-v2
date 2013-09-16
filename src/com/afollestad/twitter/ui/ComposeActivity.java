@@ -65,34 +65,64 @@ public class ComposeActivity extends ThemedLocationActivity {
     private final static int CAPTURE_RESULT = 100;
     private final static int GALLERY_RESULT = 200;
 
+    // Activity methods
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAttachLocation = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("always_attach_location", false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_composer);
         setupInput();
-        setUpEmojiKeyboard();
+        setupEmojiKeyboard();
         getActionBar().setDisplayHomeAsUpEnabled(true);
         processIntent();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_composer, menu);
+        // Location attachment action
+        MenuItem locate = menu.findItem(R.id.locate);
+        locate.setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
+        locate.setTitle(mAttachLocation ? R.string.unattach_location : R.string.attach_location);
+        // Media attachment action
+        MenuItem media = menu.findItem(R.id.media);
+        media.setIcon(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
+                R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachMedia));
+        media.setTitle(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
+                R.string.unattach_media : R.string.attach_media);
+        // Other actions
+        MenuItem emoji = menu.findItem(R.id.emoji);
+        emoji.setIcon(isEmojiShowing ? R.drawable.ic_emoji_keyboard_showing : Utils.resolveThemeAttr(this, R.attr.emojiKeyboard));
+        menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.send:
+                send(item);
+                return true;
+            case R.id.locate:
+                attachLocation();
+                return true;
+            case R.id.media:
+                attachMedia();
+                return true;
+            case R.id.emoji:
+                insertEmojiKeyboard();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Initialization/setup methods
+
     private void processIntent() {
-        EditText input = (EditText) findViewById(R.id.input);
-        input.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                invalidateOptionsMenu();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
-
         Intent i = getIntent();
         input.setText("");
         if (i.hasExtra("mention")) {
@@ -150,9 +180,23 @@ public class ComposeActivity extends ThemedLocationActivity {
     private void setupInput() {
         final CounterEditText input = (CounterEditText) findViewById(R.id.input);
         input.setCounterView((TextView) findViewById(R.id.counter));
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
-    private void setUpEmojiKeyboard() {
+    private void setupEmojiKeyboard() {
         isEmojiShowing = false;
         input = (CounterEditText) findViewById(R.id.input);
         dataSource = new EmojiDataSource(this);
@@ -178,6 +222,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         });
     }
 
+    // Tweet composition methods
+
     private void send(MenuItem item) {
         final EditText input = (EditText) findViewById(R.id.input);
         item.setEnabled(false);
@@ -200,52 +246,7 @@ public class ComposeActivity extends ThemedLocationActivity {
         return input.getText().toString().trim().length() <= 140 && (!input.getText().toString().trim().isEmpty() || mCurrentCapturePath != null || mCurrentGalleryPath != null);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_composer, menu);
-        // Location attachment action
-        MenuItem locate = menu.findItem(R.id.locate);
-        locate.setIcon(mAttachLocation ? R.drawable.ic_location_unattach : Utils.resolveThemeAttr(this, R.attr.attachLocation));
-        locate.setTitle(mAttachLocation ? R.string.unattach_location : R.string.attach_location);
-        // Media attachment action
-        MenuItem media = menu.findItem(R.id.media);
-        media.setIcon(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
-                R.drawable.ic_gallery_unattach : Utils.resolveThemeAttr(this, R.attr.attachMedia));
-        media.setTitle(mCurrentCapturePath != null || mCurrentGalleryPath != null ?
-                R.string.unattach_media : R.string.attach_media);
-        // Other actions
-        MenuItem emoji = menu.findItem(R.id.emoji);
-        emoji.setIcon(isEmojiShowing ? R.drawable.ic_emoji_keyboard_showing : Utils.resolveThemeAttr(this, R.attr.emojiKeyboard));
-        menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    private File createTempImageFile() {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "capture_" + timeStamp + "_";
-        File image;
-        try {
-            image = File.createTempFile(imageFileName, ".jpg", getExternalCacheDir());
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return null;
-        }
-        return image;
-    }
-
-    private void capture() {
-        File image = createTempImageFile();
-        mCurrentCapturePath = image.getAbsolutePath();
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
-        startActivityForResult(takePictureIntent, CAPTURE_RESULT);
-    }
-
-    private void selectGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK).setType("image/*");
-        startActivityForResult(intent, GALLERY_RESULT);
-    }
+    // Emoji keyboard methods
 
     private void insertEmojiKeyboard() {
         if (isEmojiShowing) {
@@ -270,28 +271,6 @@ public class ComposeActivity extends ThemedLocationActivity {
             });
         }
         invalidateOptionsMenu();
-    }
-
-    private void loadGalleryImage(Uri contentUri) {
-        if (contentUri.toString().startsWith("content://com.google.android.gallery3d.provider/picasa/")) {
-            try {
-                InputStream picasaInput = getContentResolver().openInputStream(contentUri);
-                File image = createTempImageFile();
-                Utils.copy(picasaInput, new FileOutputStream(image));
-                mCurrentGalleryPath = image.getAbsolutePath();
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-                mCurrentGalleryPath = null;
-            }
-            invalidateAttachment();
-            return;
-        }
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (!cursor.moveToFirst()) return;
-        mCurrentGalleryPath = cursor.getString(0);
-        invalidateAttachment();
     }
 
     public static void insertEmoji(Context context, String emoji, int icon) {
@@ -332,6 +311,17 @@ public class ComposeActivity extends ThemedLocationActivity {
         recents.remove(position);
         emojiAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (isEmojiShowing) {
+            insertEmojiKeyboard();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // Attachment methods
 
     private void invalidateAttachment() {
         ((CounterEditText) findViewById(R.id.input)).setHasMedia(mCurrentCapturePath != null || mCurrentGalleryPath != null);
@@ -405,34 +395,52 @@ public class ComposeActivity extends ThemedLocationActivity {
         invalidateOptionsMenu();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.send:
-                send(item);
-                return true;
-            case R.id.locate:
-                attachLocation();
-                return true;
-            case R.id.media:
-                attachMedia();
-                return true;
-            case R.id.emoji:
-                insertEmojiKeyboard();
-                return true;
+    private File createTempImageFile() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "capture_" + timeStamp + "_";
+        File image;
+        try {
+            image = File.createTempFile(imageFileName, ".jpg", getExternalCacheDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
         }
-        return super.onOptionsItemSelected(item);
+        return image;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (isEmojiShowing) {
-            insertEmojiKeyboard();
-        } else {
-            super.onBackPressed();
+    private void capture() {
+        File image = createTempImageFile();
+        mCurrentCapturePath = image.getAbsolutePath();
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                .putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
+        startActivityForResult(takePictureIntent, CAPTURE_RESULT);
+    }
+
+    private void selectGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK).setType("image/*");
+        startActivityForResult(intent, GALLERY_RESULT);
+    }
+
+    private void loadGalleryImage(Uri contentUri) {
+        if (contentUri.toString().startsWith("content://com.google.android.gallery3d.provider/picasa/")) {
+            try {
+                InputStream picasaInput = getContentResolver().openInputStream(contentUri);
+                File image = createTempImageFile();
+                Utils.copy(picasaInput, new FileOutputStream(image));
+                mCurrentGalleryPath = image.getAbsolutePath();
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                mCurrentGalleryPath = null;
+            }
+            invalidateAttachment();
+            return;
         }
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (!cursor.moveToFirst()) return;
+        mCurrentGalleryPath = cursor.getString(0);
+        invalidateAttachment();
     }
 }
