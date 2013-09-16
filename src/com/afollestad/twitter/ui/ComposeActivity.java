@@ -67,6 +67,7 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAttachLocation = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("always_attach_location", false);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_composer);
         setupInput();
@@ -355,6 +356,35 @@ public class ComposeActivity extends ThemedLocationActivity {
                 }).show();
     }
 
+    private void attachLocation() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!prefs.contains("always_attach_location")) {
+            new AlertDialog.Builder(this).setTitle(R.string.always_attach_location)
+                    .setMessage(R.string.always_attach_location_prompt)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            prefs.edit().putBoolean("always_attach_location", true).commit();
+                            mAttachLocation = !mAttachLocation;
+                            invalidateOptionsMenu();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            prefs.edit().putBoolean("always_attach_location", false).commit();
+                            mAttachLocation = !mAttachLocation;
+                            invalidateOptionsMenu();
+                        }
+                    }).show();
+            return;
+        }
+        mAttachLocation = !mAttachLocation;
+        invalidateOptionsMenu();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -365,8 +395,7 @@ public class ComposeActivity extends ThemedLocationActivity {
                 send(item);
                 return true;
             case R.id.locate:
-                mAttachLocation = !mAttachLocation;
-                invalidateOptionsMenu();
+                attachLocation();
                 return true;
             case R.id.media:
                 attachMedia();

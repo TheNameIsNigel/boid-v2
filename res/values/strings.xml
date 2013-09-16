@@ -115,6 +115,9 @@
     <string name="disconnected_location_service">Disconnected from the location service.</string>
     <string name="urls_shortened">URLs will be shortened</string>
     <string name="add_account_try_again">Please add an account and try again!</string>
+    <string name="always_attach_location_prompt">Do you want to always attach your location by default when composing
+        Tweets?
+    </string>
 
     <string-array name="media_attach_types">
         <item>Camera</item>

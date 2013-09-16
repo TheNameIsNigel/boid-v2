@@ -15,6 +15,9 @@
     <string name="feeds">Feeds</string>
     <string name="feeds_desc">Settings that deal with feed content (e.g. tweets).</string>
 
+    <string name="composer">Composer</string>
+    <string name="composer_desc">Settings for the Tweet composition interface.</string>
+
     <!-- About preference category -->
 
     <string name="version">Version</string>
@@ -67,6 +70,11 @@
     <string name="via_indicator_desc">Toggle the \"via\" indicator for Tweets in lists (indicates the app used to
         compose
         the Tweet).
+    </string>
+
+    <string name="always_attach_location">Always Attach Location</string>
+    <string name="always_attach_location_desc">Toggle whether or not the composer will attach your current location by
+        default.
     </string>
 
 </resources>
