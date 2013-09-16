@@ -3,11 +3,11 @@ package com.afollestad.twitter.ui;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.afollestad.twitter.R;
-import com.afollestad.twitter.fragments.columns.MessagesFragment;
+import com.afollestad.twitter.fragments.columns.MessagingFragment;
 import com.afollestad.twitter.ui.theming.ThemedActivity;
 
 /**
- * The direct message conversation viewer UI, just displays a {@link MessagesFragment} on phones.
+ * The direct message conversation viewer UI, just displays a {@link com.afollestad.twitter.fragments.columns.MessagingFragment} on phones.
  *
  * @author Aidan Follestad (afollestad)
  */
@@ -21,7 +21,7 @@ public class ConversationActivity extends ThemedActivity {
 
         Bundle args = new Bundle();
         args.putAll(getIntent().getExtras());
-        MessagesFragment frag = new MessagesFragment();
+        MessagingFragment frag = new MessagingFragment();
         frag.setArguments(args);
         getFragmentManager().beginTransaction().replace(R.id.content_frame, frag).commit();
     }

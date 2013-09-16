@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class ConversationFragment extends BoidListFragment<ConversationAdapter.Conversation> {
+public class ConversationsFragment extends BoidListFragment<ConversationAdapter.Conversation> {
 
     @Override
     public String getCacheName() {

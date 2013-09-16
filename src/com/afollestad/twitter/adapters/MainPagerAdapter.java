@@ -33,7 +33,7 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
             case Column.MENTIONS:
                 return new MentionsFragment();
             case Column.MESSAGES:
-                return new ConversationFragment();
+                return new ConversationsFragment();
             case Column.TRENDS:
                 return new TrendsFragment();
             case Column.SEARCH:

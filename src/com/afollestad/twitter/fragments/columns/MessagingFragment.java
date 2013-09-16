@@ -16,7 +16,7 @@ import twitter4j.DirectMessage;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class MessagesFragment extends Fragment {
+public class MessagingFragment extends Fragment {
 
     private ConversationAdapter.Conversation mConvo;
 
