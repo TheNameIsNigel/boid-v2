@@ -87,9 +87,6 @@ public class MainActivity extends ThemedDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        loadConfig();
-
         mPager = (ViewPager) findViewById(R.id.pager);
         drawerList = (ListView) findViewById(R.id.drawer_list);
         mPager.setOffscreenPageLimit(5);
@@ -107,11 +104,10 @@ public class MainActivity extends ThemedDrawerActivity {
                 onDrawerItemClicked(position);
             }
         });
-
         if (!BoidApp.get(this).hasAccount()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        }
+        } else loadConfig();
     }
 
     @Override
