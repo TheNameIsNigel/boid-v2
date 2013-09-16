@@ -44,8 +44,9 @@ public class MainActivity extends ThemedDrawerActivity {
     private int mLastPageCount;
 
     private void loadConfig() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         long now = Calendar.getInstance().getTimeInMillis();
-        long lastUpdate = PreferenceManager.getDefaultSharedPreferences(this).getLong("last_api_config_update", -1);
+        long lastUpdate = prefs.getLong("last_api_config_update", -1);
         if (lastUpdate != -1 && now < lastUpdate + (1000 * 60 * 60 * 24)) {
             // Hasn't been 24 hours yet
             return;
@@ -56,8 +57,20 @@ public class MainActivity extends ThemedDrawerActivity {
                 try {
                     TwitterAPIConfiguration config = BoidApp.get(MainActivity.this).getClient().getAPIConfiguration();
                     BoidApp.get(MainActivity.this).storeConfig(new BoidApp.Config(config));
-                } catch (TwitterException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            prefs.edit().putLong("last_api_config_update", Calendar.getInstance().getTimeInMillis()).commit();
+                        }
+                    });
+                } catch (final TwitterException e) {
                     e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BoidApp.showAppMsgError(MainActivity.this, e);
+                        }
+                    });
                 }
             }
         });
