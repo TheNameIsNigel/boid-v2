@@ -129,5 +129,6 @@ public abstract class ThemedLocationActivity extends ThemedActivity implements
         return mCurrentLocation;
     }
 
-    public abstract void onLocationUpdate(Location location);
+    protected void onLocationUpdate(Location location) {
+    }
 }

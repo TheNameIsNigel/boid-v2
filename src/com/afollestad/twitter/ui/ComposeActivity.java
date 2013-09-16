@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.location.Location;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,7 +14,9 @@ import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.afollestad.silk.views.image.SilkImageView;
@@ -73,10 +75,6 @@ public class ComposeActivity extends ThemedLocationActivity {
         processIntent();
     }
 
-    @Override
-    public void onLocationUpdate(Location location) {
-    }
-
     private void processIntent() {
         EditText input = (EditText) findViewById(R.id.input);
         input.addTextChangedListener(new TextWatcher() {
@@ -93,14 +91,16 @@ public class ComposeActivity extends ThemedLocationActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
         Intent i = getIntent();
         input.setText("");
         if (i.hasExtra("mention")) {
             User mention = (User) i.getSerializableExtra("mention");
             input.append("@" + mention.getScreenName() + " ");
         }
-        if (i.hasExtra("content"))
+        if (i.hasExtra("content")) {
             input.append(i.getStringExtra("content"));
+        }
         if (i.hasExtra("reply_to")) {
             mReplyTo = (Status) i.getSerializableExtra("reply_to");
             if (mReplyTo.isRetweet())
@@ -111,6 +111,21 @@ public class ComposeActivity extends ThemedLocationActivity {
             setTitle(R.string.compose);
         }
         setupInReplyTo();
+
+        // Sharing from external apps
+        if (Intent.ACTION_SEND.equals(i.getAction()) && i.getType() != null) {
+            if (!BoidApp.get(this).hasAccount()) {
+                Toast.makeText(this, R.string.add_account_try_again, Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+            if ("text/plain".equals(i.getType())) {
+                input.append(i.getStringExtra(Intent.EXTRA_TEXT));
+            } else if (i.getType().startsWith("image/")) {
+                loadGalleryImage((Uri) i.getParcelableExtra(Intent.EXTRA_STREAM));
+                invalidateAttachment();
+            }
+        }
     }
 
     private void setupInReplyTo() {
@@ -142,10 +157,9 @@ public class ComposeActivity extends ThemedLocationActivity {
         dataSource = new EmojiDataSource(this);
         dataSource.open();
         recents = (ArrayList<EmojiRecent>) dataSource.getAllRecents();
-
-        Display d = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-        int keyboardHeight = (int) (d.getHeight() / 3.0);
-
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int keyboardHeight = (int) (size.y / 3.0);
         ViewPager vp = (ViewPager) findViewById(R.id.emojiKeyboardPager);
         vp.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, keyboardHeight));
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.emojiTabs);
@@ -154,14 +168,11 @@ public class ComposeActivity extends ThemedLocationActivity {
         vp.setAdapter(emojiAdapter);
         tabs.setViewPager(vp);
         vp.setCurrentItem(1);
-
-        final Context context = this;
-
         ImageButton delete = (ImageButton) findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeText(context);
+                removeText(ComposeActivity.this);
             }
         });
     }
@@ -251,26 +262,26 @@ public class ComposeActivity extends ThemedLocationActivity {
         invalidateOptionsMenu();
     }
 
-    private String getRealPathFromURI(Uri contentUri) {
+    private void loadGalleryImage(Uri contentUri) {
         if (contentUri.toString().startsWith("content://com.google.android.gallery3d.provider/picasa/")) {
             try {
                 InputStream picasaInput = getContentResolver().openInputStream(contentUri);
                 File image = createTempImageFile();
                 Utils.copy(picasaInput, new FileOutputStream(image));
-                return image.getAbsolutePath();
+                mCurrentGalleryPath = image.getAbsolutePath();
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-                return null;
+                mCurrentGalleryPath = null;
             }
+            invalidateAttachment();
+            return;
         }
-
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (!cursor.moveToFirst()) {
-            return null;
-        }
-        return cursor.getString(0);
+        if (!cursor.moveToFirst()) return;
+        mCurrentGalleryPath = cursor.getString(0);
+        invalidateAttachment();
     }
 
     public static void insertEmoji(Context context, String emoji, int icon) {
@@ -301,27 +312,30 @@ public class ComposeActivity extends ThemedLocationActivity {
         emojiAdapter.notifyDataSetChanged();
     }
 
+    private void invalidateAttachment() {
+        ((CounterEditText) findViewById(R.id.input)).setHasMedia(mCurrentCapturePath != null || mCurrentGalleryPath != null);
+        invalidateOptionsMenu();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_RESULT) {
             if (resultCode == RESULT_CANCELED)
                 mCurrentCapturePath = null;
+            invalidateAttachment();
         } else if (requestCode == GALLERY_RESULT) {
             if (resultCode == RESULT_CANCELED)
                 mCurrentGalleryPath = null;
-            else mCurrentGalleryPath = getRealPathFromURI(data.getData());
+            else loadGalleryImage(data.getData());
         }
-        ((CounterEditText) findViewById(R.id.input)).setHasMedia(mCurrentCapturePath != null || mCurrentGalleryPath != null);
-        invalidateOptionsMenu();
     }
 
     private void attachMedia() {
         if (mCurrentCapturePath != null || mCurrentGalleryPath != null) {
             mCurrentCapturePath = null;
             mCurrentGalleryPath = null;
-            ((CounterEditText) findViewById(R.id.input)).setHasMedia(mCurrentCapturePath != null || mCurrentGalleryPath != null);
-            invalidateOptionsMenu();
+            invalidateAttachment();
             return;
         }
         new AlertDialog.Builder(this).setTitle(R.string.attach_media)
