@@ -286,7 +286,14 @@ public class ComposeActivity extends ThemedLocationActivity {
     }
 
     public static void insertEmoji(Context context, String emoji, int icon) {
-        input.append(EmojiConverter.getSmiledText(context, emoji));
+        input.setEnabled(false); // prevent modification temporarily
+        int beforeSelectionStart = input.getSelectionStart();
+        int beforeLength = input.getText().toString().length();
+        CharSequence before = input.getText().subSequence(0, beforeSelectionStart);
+        CharSequence after = input.getText().subSequence(input.getSelectionEnd(), beforeLength);
+        input.setText(android.text.TextUtils.concat(before, EmojiConverter.getSmiledText(context, emoji), after));
+        input.setEnabled(true);
+        input.setSelection(beforeSelectionStart + (input.getText().toString().length() - beforeLength));
         for (EmojiRecent recent1 : recents) {
             if (recent1.text.equals(emoji)) {
                 dataSource.updateRecent(icon + "");
@@ -300,9 +307,12 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     public static void removeText(Context context) {
         String currentText = input.getText().toString();
-        if (currentText.length() > 0) {
+        if (currentText.length() > 0 && input.getSelectionStart() > 0) {
             // TODO FIXME most emoji strings are 2 characters long, so they are first turned into a black box/question mark and then removed
-            input.setText(EmojiConverter.getSmiledText(context, currentText.substring(0, currentText.length() - 1)));
+            input.setEnabled(false);
+            input.setText(EmojiConverter.getSmiledText(context,
+                    new StringBuilder(input.getText().toString()).deleteCharAt(input.getSelectionStart() - 1).toString()));
+            input.setEnabled(true);
             input.setSelection(currentText.length() - 1);
         }
     }
