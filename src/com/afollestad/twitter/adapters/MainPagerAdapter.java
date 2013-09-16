@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
 import com.afollestad.twitter.columns.Column;
 import com.afollestad.twitter.columns.Columns;
 import com.afollestad.twitter.fragments.columns.*;
@@ -16,7 +15,7 @@ import java.util.List;
  *
  * @author Aidan Follestad (afollestad)
  */
-public class MainPagerAdapter extends FragmentStatePagerAdapter {
+public class MainPagerAdapter extends TaggedPagerAdapter {
 
     public MainPagerAdapter(Context context, FragmentManager fm) {
         super(fm);

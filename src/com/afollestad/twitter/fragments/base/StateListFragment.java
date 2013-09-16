@@ -89,6 +89,17 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
         Log.d("StateListFragment", "List position saved; index: " + mSavedIndex + ", top: " + mSavedFromTop);
     }
 
+    protected final void setScrollPosition(final int index, final int top) {
+        getListView().post(new Runnable() {
+            @Override
+            public void run() {
+                getListView().clearFocus();
+                ((ListView) getListView()).setSelectionFromTop(index, top);
+                Log.d("StateListFragment", "Scroll position set; index: " + index + ", top: " + top);
+            }
+        });
+    }
+
     final void restoreScrollPos(final int addedCount) {
         int[] saved = getPersistence();
         final int index = addedCount == -1 ? saved[0] : addedCount;
@@ -98,13 +109,6 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
             return;
         }
         final int top = saved[1];
-        getListView().post(new Runnable() {
-            @Override
-            public void run() {
-                getListView().clearFocus();
-                ((ListView) getListView()).setSelectionFromTop(index, top);
-                Log.d("StateListFragment", "Scroll position restored; index: " + index + ", top: " + top);
-            }
-        });
+        setScrollPosition(index, top);
     }
 }

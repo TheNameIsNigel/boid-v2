@@ -24,6 +24,7 @@ import com.afollestad.twitter.R;
 import com.afollestad.twitter.SearchSuggestionsProvider;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
+import com.afollestad.twitter.fragments.base.BoidListFragment;
 import com.afollestad.twitter.ui.theming.ThemedDrawerActivity;
 import twitter4j.TwitterAPIConfiguration;
 import twitter4j.TwitterException;
@@ -150,7 +151,9 @@ public class MainActivity extends ThemedDrawerActivity {
             return;
         }
         mLastChecked = index;
-        mPager.setCurrentItem(index - 1);
+        if ((index - 1) == mPager.getCurrentItem()) {
+            ((BoidListFragment) getFragmentManager().findFragmentByTag("page:" + (index - 1))).jumpToTop();
+        } else mPager.setCurrentItem(index - 1);
     }
 
     @Override

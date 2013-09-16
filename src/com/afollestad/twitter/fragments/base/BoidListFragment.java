@@ -43,6 +43,10 @@ public abstract class BoidListFragment<ItemType extends SilkComparable<ItemType>
 
     protected abstract boolean doesCacheExpire();
 
+    public final void jumpToTop() {
+        setScrollPosition(0, 0);
+    }
+
     @Override
     protected List<ItemType> onUpdateItems(List<ItemType> results, boolean paginated) {
         if (mShouldRestoreScroll)
