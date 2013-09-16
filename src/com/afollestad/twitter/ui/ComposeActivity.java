@@ -317,12 +317,13 @@ public class ComposeActivity extends ThemedLocationActivity {
     private void removeText() {
         String currentText = input.getText().toString();
         if (currentText.length() > 0 && input.getSelectionStart() > 0) {
-            //TODO are all emojis 2 characters long?
+            //TODO removal of 2 character emojis?
             input.setEnabled(false);
+            int selection = input.getSelectionStart();
             input.setText(EmojiConverter.getSmiledText(this,
-                    new StringBuilder(input.getText().toString()).deleteCharAt(input.getSelectionStart() - 2).toString()));
+                    new StringBuilder(input.getText().toString()).deleteCharAt(selection - 1).toString()));
             input.setEnabled(true);
-            input.setSelection(currentText.length() - 1);
+            input.setSelection(selection - 1);
         }
     }
 
