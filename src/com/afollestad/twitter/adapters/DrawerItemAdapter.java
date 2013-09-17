@@ -17,9 +17,9 @@ import twitter4j.User;
  */
 public class DrawerItemAdapter extends SilkAdapter<Column> {
 
-    public DrawerItemAdapter(Context context, User profile) {
+    public DrawerItemAdapter(Context context) {
         super(context);
-        add(new Column(Button.class, Column.PROFILE_BUTTON, "@" + profile.getScreenName()));
+        add(new Column(Button.class, Column.PROFILE_BUTTON, context.getString(R.string.my_profile)));
         add(Columns.getAll(context));
     }
 

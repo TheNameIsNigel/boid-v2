@@ -151,7 +151,7 @@ public class MainActivity extends ThemedDrawerActivity {
         MainPagerAdapter pagerAdapter = new MainPagerAdapter(this, getFragmentManager());
         mLastPageCount = pagerAdapter.getCount();
         mPager.setAdapter(pagerAdapter);
-        drawerList.setAdapter(new DrawerItemAdapter(this, BoidApp.get(this).getProfile()));
+        drawerList.setAdapter(new DrawerItemAdapter(this));
         mPager.setCurrentItem(page);
     }
 

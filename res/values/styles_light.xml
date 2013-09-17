@@ -18,7 +18,6 @@
         <item name="errorTextColor">@color/red</item>
         <item name="headerTextColor">@android:color/holo_blue_light</item>
 
-        <item name="boid_button">@drawable/boid_button_light</item>
         <item name="retweetIndicator">@drawable/ic_retweet_dark</item>
         <item name="favoritedIndicator">@drawable/ic_favorited_dark</item>
         <item name="replyIndicator">@drawable/ic_reply_dark</item>
