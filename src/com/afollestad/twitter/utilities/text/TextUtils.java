@@ -1,10 +1,15 @@
 package com.afollestad.twitter.utilities.text;
 
+import android.app.Activity;
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.widget.TextView;
 import com.afollestad.twitter.BoidApp;
+import com.afollestad.twitter.R;
 import twitter4j.*;
 
 import java.util.regex.Matcher;
@@ -61,7 +66,15 @@ public class TextUtils {
             }
         };
 
-        textView.setText(tweet);
+        if (!hasEmoji(tweet)) {
+            textView.setText(tweet);
+        } else {
+            // TODO optimize inserting
+            // might not be the most efficient way to do this, not sure how to make it better though... :/ does create a little lag when it hits an emoji
+            textView.setText(EmojiConverter.getSmiledText(context, tweet, textView.getTextSize()));
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+        }
+
         textView.setLinksClickable(clickable);
 
         Linkify.addLinks(context, textView, Pattern.compile("@([A-Za-z0-9_-]+)"), null, filter);
@@ -81,5 +94,14 @@ public class TextUtils {
 
     public static void linkifyText(Context context, TextView textView, DirectMessage msg, boolean clickable, boolean expandUrls) {
         linkifyText(context, textView, msg.getText(), clickable, expandUrls, msg.getURLEntities(), msg.getMediaEntities());
+    }
+
+    private static Pattern pattern;
+    public static boolean hasEmoji(String text) {
+        if (pattern == null) {
+            pattern = Pattern.compile("[^\\x20-\\x7E\\n]");
+        }
+
+        return pattern.matcher(text).find();
     }
 }

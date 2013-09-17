@@ -279,7 +279,7 @@ public class ComposeActivity extends ThemedLocationActivity {
         int beforeLength = input.getText().toString().length();
         CharSequence before = input.getText().subSequence(0, beforeSelectionStart);
         CharSequence after = input.getText().subSequence(input.getSelectionEnd(), beforeLength);
-        input.setText(android.text.TextUtils.concat(before, EmojiConverter.getSmiledText(context, emoji), after));
+        input.setText(android.text.TextUtils.concat(before, EmojiConverter.getSmiledText(context, emoji, input.getTextSize()), after));
         input.setEnabled(true);
         input.setSelection(beforeSelectionStart + (input.getText().toString().length() - beforeLength));
         for (EmojiRecent recent1 : recents) {
@@ -300,7 +300,8 @@ public class ComposeActivity extends ThemedLocationActivity {
             input.setEnabled(false);
             int selection = input.getSelectionStart();
             input.setText(EmojiConverter.getSmiledText(this,
-                    new StringBuilder(input.getText().toString()).deleteCharAt(selection - 1).toString()));
+                    new StringBuilder(input.getText().toString()).deleteCharAt(selection - 1).toString(),
+                    input.getTextSize()));
             input.setEnabled(true);
             input.setSelection(selection - 1);
         }

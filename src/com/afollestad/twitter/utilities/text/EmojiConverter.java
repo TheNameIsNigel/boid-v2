@@ -8,8 +8,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.Spannable.Factory;
+import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
-import android.util.TypedValue;
 import com.afollestad.twitter.R;
 
 import java.util.HashMap;
@@ -887,7 +887,7 @@ public class EmojiConverter {
 	    map.put(Pattern.compile(Pattern.quote(smile)), resource);
 	}
 
-	private static boolean addSmiles(Context context, Spannable spannable) {
+	private static boolean addSmiles(Context context, Spannable spannable, float textSize) {
 	    boolean hasChanges = false;
 	    for (Entry<Pattern, Integer> entry : emoticons.entrySet()) {
 	        Matcher matcher = entry.getKey().matcher(spannable);
@@ -904,9 +904,8 @@ public class EmojiConverter {
 	                }
 	            if (set) {
 	                hasChanges = true;
-	                int scale = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, context.getResources().getDisplayMetrics());
-	                final Bitmap bitmap = Bitmap.createScaledBitmap(drawableToBitmap(context.getResources().getDrawable(entry.getValue()), context), scale, scale, true);
-	                spannable.setSpan(new ImageSpan(context, bitmap),
+	                final Bitmap bitmap = Bitmap.createScaledBitmap(drawableToBitmap(context.getResources().getDrawable(entry.getValue()), context), (int) (textSize * 1.3), (int) (textSize * 1.3), true);
+	                spannable.setSpan(new ImageSpan(context, bitmap, DynamicDrawableSpan.ALIGN_BASELINE),
 	                        matcher.start(), matcher.end(),
 	                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 	            }
@@ -915,9 +914,9 @@ public class EmojiConverter {
 	    return hasChanges;
 	}
 
-	public static Spannable getSmiledText(Context context, CharSequence text) {
+	public static Spannable getSmiledText(Context context, CharSequence text, float textSize) {
 	    Spannable spannable = spannableFactory.newSpannable(text);
-	    addSmiles(context, spannable);
+	    addSmiles(context, spannable, textSize);
 	    return spannable;
 	}
 	
