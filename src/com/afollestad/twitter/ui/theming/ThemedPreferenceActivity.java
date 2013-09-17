@@ -13,6 +13,7 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
 
     private int mTheme;
     private int mAbColor;
+    private boolean mUseColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +22,14 @@ public class ThemedPreferenceActivity extends PreferenceActivity {
         mAbColor = ThemedActivity.getAccentColor(this);
         if (mAbColor != -1)
             getActionBar().setBackgroundDrawable(new ColorDrawable(mAbColor));
+        mUseColor = ThemedActivity.shouldUseThemeColor(this);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (ThemedActivity.shouldRecreate(this, mTheme, mAbColor))
+        if (ThemedActivity.shouldRecreate(this, mTheme, mAbColor, mUseColor))
             recreate();
     }
 }

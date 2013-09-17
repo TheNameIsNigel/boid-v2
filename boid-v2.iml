@@ -18,6 +18,7 @@
     <orderEntry type="module" module-name="Silk" />
     <orderEntry type="module" module-name="PagerSlidingTabStrip" />
     <orderEntry type="module" module-name="twitter4j-core" />
+    <orderEntry type="module" module-name="android-ColorPickerPreference" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>

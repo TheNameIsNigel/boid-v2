@@ -9,6 +9,7 @@ import android.view.View;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.ProfileActivity;
 import com.afollestad.twitter.ui.SearchActivity;
+import com.afollestad.twitter.ui.theming.ThemedActivity;
 
 /**
  * @author Aidan Follestad (afollestad)
@@ -18,10 +19,13 @@ public class BoidSpan extends ClickableSpan {
     public BoidSpan(Context context, String value) {
         mContext = context;
         mValue = value;
+        mThemeColor = ThemedActivity.getAccentColor(context);
+        if (mThemeColor == -1) mThemeColor = context.getResources().getColor(android.R.color.holo_blue_dark);
     }
 
     private final Context mContext;
     private final String mValue;
+    private int mThemeColor;
 
     @Override
     public void onClick(View widget) {
@@ -42,5 +46,6 @@ public class BoidSpan extends ClickableSpan {
     public void updateDrawState(TextPaint ds) {
         super.updateDrawState(ds);
         ds.setUnderlineText(false);
+        ds.setColor(mThemeColor);
     }
 }

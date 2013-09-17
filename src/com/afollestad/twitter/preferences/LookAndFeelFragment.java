@@ -22,13 +22,6 @@ public class LookAndFeelFragment extends PreferenceFragment {
         return getResources().getStringArray(R.array.theme_names)[theme];
     }
 
-    private String getThemeColorName() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int index = Integer.parseInt(prefs.getString("theme_color", "0"));
-        if (index == 0) return getString(R.string.theme_color_desc);
-        return getResources().getStringArray(R.array.color_entries)[index];
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +38,21 @@ public class LookAndFeelFragment extends PreferenceFragment {
             }
         });
 
-        ListPreference color = (ListPreference) findPreference("theme_color");
-        color.setSummary(getThemeColorName());
-        color.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        findPreference("use_theme_color").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                preference.setSummary(getThemeColorName());
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
                 getActivity().recreate();
                 return true;
             }
         });
+
+//        Preference color = findPreference("theme_color");
+//        color.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//            @Override
+//            public boolean onPreferenceChange(Preference preference, Object o) {
+//                getActivity().recreate();
+//                return true;
+//            }
+//        });
     }
 }

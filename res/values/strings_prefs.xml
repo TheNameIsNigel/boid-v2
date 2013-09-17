@@ -81,14 +81,19 @@
     </string-array>
     <string-array name="color_literals" translatable="false">
         <item>0</item>
-        <item>#000000</item>
-        <item>#2D2D2D</item>
-        <item>#0099CC</item>
-        <item>#9933CC</item>
-        <item>#669900</item>
-        <item>#FF8800</item>
-        <item>#CC0000</item>
+        <item>000000</item>
+        <item>2D2D2D</item>
+        <item>0099CC</item>
+        <item>AA66CC</item>
+        <item>669900</item>
+        <item>FF8800</item>
+        <item>FF4444</item>
     </string-array>
+
+    <string name="use_theme_color">Use Theme Color</string>
+    <string name="use_theme_color_desc">Toggle whether or not a custom theme color will be used for the action bar and
+        accents.
+    </string>
 
     <string name="display_realname">Show real names</string>
     <string name="display_realname_desc">Display user\'s full names in feeds as opposed to their screen name.</string>

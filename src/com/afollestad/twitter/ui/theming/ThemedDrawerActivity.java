@@ -16,6 +16,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
 
     private int mTheme;
     private int mAbColor;
+    private boolean mUseColor;
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -30,6 +31,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
         mAbColor = ThemedActivity.getAccentColor(this);
         if (mAbColor != -1)
             getActionBar().setBackgroundDrawable(new ColorDrawable(mAbColor));
+        mUseColor = ThemedActivity.shouldUseThemeColor(this);
         super.onCreate(savedInstanceState);
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
     }
@@ -37,7 +39,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ThemedActivity.shouldRecreate(this, mTheme, mAbColor)) recreate();
+        if (ThemedActivity.shouldRecreate(this, mTheme, mAbColor, mUseColor)) recreate();
     }
 
     @Override
