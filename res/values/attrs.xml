@@ -9,12 +9,13 @@
     <attr name="headerTextColor" format="color"/>
 
     <attr name="boid_button" format="reference"/>
+    <attr name="retweetIndicator" format="reference"/>
+    <attr name="favoritedIndicator" format="reference"/>
+    <attr name="replyIndicator" format="reference"/>
 
     <attr name="composeIcon" format="reference"/>
     <attr name="sendIcon" format="reference"/>
     <attr name="refreshIcon" format="reference"/>
-    <attr name="retweetIndicator" format="reference"/>
-    <attr name="favoritedIndicator" format="reference"/>
     <attr name="sendButton" format="reference"/>
 
     <attr name="addIcon" format="reference"/>

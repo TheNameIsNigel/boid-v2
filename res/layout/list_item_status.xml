@@ -82,7 +82,7 @@
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView android:layout_width="@dimen/indicator_icon"
                            android:layout_height="@dimen/indicator_icon"
-                           android:src="?replyIcon"
+                           android:src="?replyIndicator"
                            android:layout_marginRight="3dp"/>
 
                 <com.afollestad.silk.views.text.SilkTextView android:id="@+id/inReplyTo"

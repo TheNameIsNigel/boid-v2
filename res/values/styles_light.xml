@@ -19,14 +19,15 @@
         <item name="headerTextColor">@android:color/holo_blue_light</item>
 
         <item name="boid_button">@drawable/boid_button_light</item>
+        <item name="retweetIndicator">@drawable/ic_retweet_dark</item>
+        <item name="favoritedIndicator">@drawable/ic_favorited_dark</item>
+        <item name="replyIndicator">@drawable/ic_reply_dark</item>
 
         <item name="addIcon">@drawable/ic_add_dark</item>
         <item name="composeIcon">@drawable/ic_compose_dark</item>
         <item name="sendIcon">@drawable/ic_send_dark</item>
         <item name="refreshIcon">@drawable/ic_refresh_dark</item>
         <item name="sendButton">@drawable/send_button_dark</item>
-        <item name="retweetIndicator">@drawable/ic_retweet_dark</item>
-        <item name="favoritedIndicator">@drawable/ic_favorited_dark</item>
 
         <item name="replyIcon">@drawable/ic_reply_dark</item>
         <item name="replyAllIcon">@drawable/ic_reply_all_dark</item>

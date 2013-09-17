@@ -3,6 +3,8 @@ package com.afollestad.twitter.ui.theming;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.afollestad.twitter.R;
@@ -16,23 +18,28 @@ import com.afollestad.twitter.R;
 public class ThemedActivity extends Activity {
 
     private int mTheme;
+    private int mAbColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = getBoidTheme(this);
         setTheme(mTheme);
+        mAbColor = getAccentColor(this);
+        if (mAbColor != -1)
+            getActionBar().setBackgroundDrawable(new ColorDrawable(mAbColor));
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (shouldRecreate(this, mTheme)) recreate();
+        if (shouldRecreate(this, mTheme, mAbColor)) recreate();
     }
 
-    public static boolean shouldRecreate(Context context, int mTheme) {
+    public static boolean shouldRecreate(Context context, int mTheme, int mAbColor) {
         int currentTheme = getBoidTheme(context);
-        return currentTheme != mTheme;
+        int currentColor = getAccentColor(context);
+        return currentTheme != mTheme || currentColor != mAbColor;
     }
 
     public static int getBoidTheme(Context context) {
@@ -50,5 +57,13 @@ public class ThemedActivity extends Activity {
             case 4:
                 return R.style.Theme_Boidlight_DarkAB;
         }
+    }
+
+    public static int getAccentColor(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int index = Integer.parseInt(prefs.getString("theme_color", "0"));
+        if (index == 0) return -1;
+        String color = context.getResources().getStringArray(R.array.color_literals)[index];
+        return Color.parseColor(color);
     }
 }

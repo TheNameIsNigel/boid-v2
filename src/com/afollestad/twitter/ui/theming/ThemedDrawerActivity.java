@@ -1,5 +1,6 @@
 package com.afollestad.twitter.ui.theming;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import com.afollestad.silk.activities.SilkDrawerActivity;
 import com.afollestad.twitter.R;
@@ -14,6 +15,7 @@ import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshAttacher;
 public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
 
     private int mTheme;
+    private int mAbColor;
 
     private PullToRefreshAttacher mPullToRefreshAttacher;
 
@@ -25,6 +27,9 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     public void onCreate(Bundle savedInstanceState) {
         mTheme = ThemedActivity.getBoidTheme(this);
         setTheme(mTheme);
+        mAbColor = ThemedActivity.getAccentColor(this);
+        if (mAbColor != -1)
+            getActionBar().setBackgroundDrawable(new ColorDrawable(mAbColor));
         super.onCreate(savedInstanceState);
         mPullToRefreshAttacher = PullToRefreshAttacher.get(this);
     }
@@ -32,7 +37,7 @@ public abstract class ThemedDrawerActivity extends SilkDrawerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ThemedActivity.shouldRecreate(this, mTheme)) recreate();
+        if (ThemedActivity.shouldRecreate(this, mTheme, mAbColor)) recreate();
     }
 
     @Override

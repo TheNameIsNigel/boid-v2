@@ -33,11 +33,19 @@
 
     <!-- Look and feel preference category -->
 
-    <string name="theme">Theme</string>
-    <string name="theme_desc">The overall look and feel of Boid.</string>
+    <string name="theming">Theming</string>
+    <string name="display">Display</string>
+
+    <string name="base_theme">Base Theme</string>
+    <string name="base_theme_desc">The overall look and feel of Boid.</string>
+
+    <string name="theme_color">Theme Color</string>
+    <string name="theme_color_desc">The action bar and accent color of Boid\'s theme. Every base theme has a default
+        color.
+    </string>
 
     <string-array name="theme_names">
-        <item>Gray (Default)</item>
+        <item>Gray</item>
         <item>Dark</item>
         <item>Pure black</item>
         <item>Light</item>
@@ -49,6 +57,37 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+    </string-array>
+
+    <string-array name="color_entries">
+        <item>Theme Default</item>
+        <item>Black</item>
+        <item>Gray</item>
+        <item>Blue</item>
+        <item>Purple</item>
+        <item>Green</item>
+        <item>Orange</item>
+        <item>Red</item>
+    </string-array>
+    <string-array name="color_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="color_literals" translatable="false">
+        <item>0</item>
+        <item>#000000</item>
+        <item>#2D2D2D</item>
+        <item>#0099CC</item>
+        <item>#9933CC</item>
+        <item>#669900</item>
+        <item>#FF8800</item>
+        <item>#CC0000</item>
     </string-array>
 
     <string name="display_realname">Show real names</string>

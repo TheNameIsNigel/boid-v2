@@ -1,5 +1,6 @@
 package com.afollestad.twitter.ui.theming;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
@@ -11,18 +12,22 @@ import android.preference.PreferenceActivity;
 public class ThemedPreferenceActivity extends PreferenceActivity {
 
     private int mTheme;
+    private int mAbColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTheme = ThemedActivity.getBoidTheme(this);
         setTheme(mTheme);
+        mAbColor = ThemedActivity.getAccentColor(this);
+        if (mAbColor != -1)
+            getActionBar().setBackgroundDrawable(new ColorDrawable(mAbColor));
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (ThemedActivity.shouldRecreate(this, mTheme))
+        if (ThemedActivity.shouldRecreate(this, mTheme, mAbColor))
             recreate();
     }
 }
