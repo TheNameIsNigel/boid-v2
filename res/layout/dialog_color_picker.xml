@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <HorizontalScrollView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@android:color/holo_blue_dark" android:tag="#0099CC"
+                  android:onClick="onPresetClicked"/>
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@android:color/holo_purple" android:tag="#9933CC"
+                  android:onClick="onPresetClicked"/>
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@android:color/holo_green_dark" android:tag="#669900"
+                  android:onClick="onPresetClicked"/>
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@android:color/holo_orange_dark" android:tag="#FF8800"
+                  android:onClick="onPresetClicked"/>
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@android:color/holo_red_dark" android:tag="#CC0000"
+                  android:onClick="onPresetClicked"/>
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@android:color/black" android:tag="#000000"
+                  android:onClick="onPresetClicked"/>
+
+            <View android:layout_width="48dp" android:layout_height="48dp"
+                  android:background="@color/gray_ab" android:tag="#2d2d2d"
+                  android:onClick="onPresetClicked"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <com.larswerkman.colorpicker.ColorPicker
+            android:id="@+id/picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:showDividers="middle"
+                  android:divider="?android:dividerVertical">
+
+        <Button android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/cancel"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_weight="1"/>
+
+        <Button android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/ok"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</LinearLayout>

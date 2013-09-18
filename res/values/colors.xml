@@ -20,6 +20,7 @@
     <color name="transparent_black">#9F000000</color>
     <color name="shadow_color">#7F000000</color>
 
+    <color name="gray_ab">#2d2d2d</color>
     <color name="gray_window">#303030</color>
 
     <color name="emoji_divider_color">#1A000000</color>

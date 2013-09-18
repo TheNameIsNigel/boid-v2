@@ -46,7 +46,7 @@ public class ThemedActivity extends Activity {
         int currentTheme = getBoidTheme(context);
         int currentColor = getAccentColor(context);
         boolean useColor = shouldUseThemeColor(context);
-        return currentTheme != mTheme || currentColor != mAbColor || useColor != mUseColor;
+        return currentTheme != mTheme || (mAbColor != -1 && currentColor != mAbColor) || useColor != mUseColor;
     }
 
     public static int getBoidTheme(Context context) {

@@ -17,12 +17,10 @@
                             android:defaultValue="false"
                             android:persistent="true"/>
 
-        <net.margaritov.preference.colorpicker.ColorPickerPreference android:key="theme_color"
-                                                                     android:title="@string/theme_color"
-                                                                     android:summary="@string/theme_color_desc"
-                                                                     android:entries="@array/color_entries"
-                                                                     android:entryValues="@array/color_values"
-                                                                     android:dependency="use_theme_color"/>
+        <Preference android:key="theme_color"
+                    android:title="@string/theme_color"
+                    android:summary="@string/theme_color_desc"
+                    android:dependency="use_theme_color"/>
 
     </PreferenceCategory>
 

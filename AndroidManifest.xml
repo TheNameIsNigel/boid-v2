@@ -68,6 +68,10 @@
 
         <activity android:name=".ui.ProfileActivity" android:configChanges="screenSize|orientation|keyboardHidden"/>
 
+        <activity android:name=".preferences.ColorPickerDialog"
+                  android:configChanges="screenSize|orientation|keyboardHidden"
+                  android:label="@string/theme_color" android:theme="@android:style/Theme.Holo.Dialog"/>
+
         <activity android:name=".ui.ProfileFollowingActivity"
                   android:configChanges="screenSize|orientation|keyboardHidden"/>
 

@@ -1,5 +1,6 @@
 package com.afollestad.twitter.preferences;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -14,6 +15,8 @@ import com.afollestad.twitter.R;
  * @author Aidan Follestad (afollestad)
  */
 public class LookAndFeelFragment extends PreferenceFragment {
+
+    private final static int COLOR_PICKER = 100;
 
     private String getThemeName() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -46,7 +49,14 @@ public class LookAndFeelFragment extends PreferenceFragment {
             }
         });
 
-//        Preference color = findPreference("theme_color");
+        Preference color = findPreference("theme_color");
+        color.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(getActivity(), ColorPickerDialog.class));
+                return true;
+            }
+        });
 //        color.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 //            @Override
 //            public boolean onPreferenceChange(Preference preference, Object o) {
@@ -54,5 +64,13 @@ public class LookAndFeelFragment extends PreferenceFragment {
 //                return true;
 //            }
 //        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COLOR_PICKER) {
+            getActivity().recreate();
+        }
     }
 }
