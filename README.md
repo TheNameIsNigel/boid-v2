@@ -5,6 +5,6 @@ Dependencies
 3. ActionBar-PullToRefresh (https://github.com/chrisbanes/ActionBar-PullToRefresh)
 4. Android-AppMsg (https://github.com/johnkil/Android-AppMsg)
 5. PagerSlidingTabStrip (https://github.com/astuetz/PagerSlidingTabStrip)
-6. android-ColorPickerPreference (https://github.com/afollestad/android-ColorPickerPreference)
+6. HoloColorPicker (https://github.com/LarsWerkman/HoloColorPicker)
 
 For `Silk` and `twitter4j-silk`, the README files will tell you how to setup them up.
