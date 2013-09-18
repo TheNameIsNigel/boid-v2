@@ -10,6 +10,8 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_boidlight</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_boidlight</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Boidlight</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:colorBackground">@android:color/white</item>
 
         <item name="inputFrameBackground">@android:color/white</item>
         <item name="usernameTextColor">@android:color/black</item>
