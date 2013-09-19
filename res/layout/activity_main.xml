@@ -24,7 +24,7 @@
 
         <ListView android:id="@+id/favorites_list"
                   android:layout_width="match_parent"
-                  android:layout_height="fill_parent"/>
+                  android:layout_height="match_parent"/>
 
         <com.afollestad.silk.views.text.SilkTextView android:id="@+id/favoritesEmpty"
                                                      android:layout_width="match_parent"
@@ -33,7 +33,8 @@
                                                      android:textSize="@dimen/usernameText"
                                                      android:layout_marginLeft="5dp"
                                                      android:layout_marginRight="5dp"
-                                                     android:text="@string/no_favorite_users"/>
+                                                     android:text="@string/no_favorite_users"
+                                                     android:textColor="?contentTextColor"/>
 
     </LinearLayout>
 
