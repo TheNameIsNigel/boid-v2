@@ -132,4 +132,6 @@
     <string name="emoji_places">Places</string>
     <string name="emoji_symbols">Symbols</string>
 
+    <string name="no_favorite_users">No favorite users</string>
+
 </resources>

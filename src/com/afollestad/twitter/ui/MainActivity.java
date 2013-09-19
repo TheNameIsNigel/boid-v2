@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.SearchSuggestionsProvider;
+import com.afollestad.twitter.adapters.DrawerFavoriteAdapter;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
@@ -78,6 +79,12 @@ public class MainActivity extends ThemedDrawerActivity {
         t.start();
     }
 
+    private void loadFavorites() {
+        ListView favoritesList = (ListView) findViewById(R.id.favorites_list);
+        favoritesList.setEmptyView(findViewById(R.id.favoritesEmpty));
+        favoritesList.setAdapter(new DrawerFavoriteAdapter(this));
+    }
+
     @Override
     public int getDrawerShadowRes() {
         return R.drawable.drawer_shadow;
@@ -95,7 +102,10 @@ public class MainActivity extends ThemedDrawerActivity {
 
     @Override
     public int getOpenedTextRes() {
-        return R.string.columns;
+        if (getDrawerLayout().isDrawerOpen(Gravity.LEFT))
+            return R.string.columns;
+        return R.string.favorites;
+
     }
 
     @Override
@@ -144,6 +154,7 @@ public class MainActivity extends ThemedDrawerActivity {
                 prefs.edit().remove("recent_fragment_main").commit();
             }
         }
+        loadFavorites();
     }
 
     private void invalidateColumns() {
@@ -178,9 +189,10 @@ public class MainActivity extends ThemedDrawerActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean drawerOpen = getDrawerLayout().isDrawerOpen(Gravity.START);
+        boolean drawerOpen = isDrawerOpen();
         if (drawerOpen) {
             getMenuInflater().inflate(R.menu.activity_main_draweropen, menu);
+            menu.findItem(R.id.edit_columns).setVisible(getDrawerLayout().isDrawerOpen(Gravity.LEFT));
         } else {
             getMenuInflater().inflate(R.menu.activity_main, menu);
             menu.findItem(R.id.compose_dm).setVisible(mPager.getCurrentItem() == 2);
