@@ -81,7 +81,7 @@ abstract class StateListFragment<ItemType extends SilkComparable<ItemType>> exte
         getPrefs().edit().putString(getCacheName(), position + ":" + top).commit();
     }
 
-    final void saveScrollPos() {
+    protected final void saveScrollPos() {
         int mSavedIndex = getListView().getFirstVisiblePosition();
         View v = getListView().getChildAt(0);
         int mSavedFromTop = (v == null) ? 0 : v.getTop();

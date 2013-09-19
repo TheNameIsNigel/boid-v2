@@ -23,6 +23,23 @@ import java.util.List;
 public class ConversationsFragment extends BoidListFragment<ConversationAdapter.Conversation> {
 
     @Override
+    protected List<ConversationAdapter.Conversation> onUpdateItems(List<ConversationAdapter.Conversation> results, boolean paginated) {
+        if (mShouldRestoreScroll)
+            saveScrollPos();
+        if (results != null) {
+            if (paginated) {
+                List<ConversationAdapter.Conversation> items = getAdapter().getItems();
+                items.addAll(results);
+                return items;
+            } else {
+                // Messages refresh all at once in the current implementation
+                return results;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public String getCacheName() {
         return new Column(ConversationAdapter.Conversation.class, Column.MESSAGES).toString();
     }
