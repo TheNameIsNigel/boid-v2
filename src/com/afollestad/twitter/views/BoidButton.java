@@ -42,7 +42,8 @@ public class BoidButton extends Button {
 
     private StateListDrawable createBackground() {
         int color = ThemedActivity.getAccentColor(getContext());
-        if (color == -1) color = getResources().getColor(android.R.color.holo_blue_dark);
+        if (color == -1 || color == getResources().getColor(android.R.color.black) || color == getResources().getColor(R.color.gray_ab))
+            color = getResources().getColor(android.R.color.holo_blue_dark);
         int colorAlpha = adjustAlpha(color, 0.7f);
         StateListDrawable mIcon = new StateListDrawable();
         mIcon.addState(StateSet.WILD_CARD, new ColorDrawable(color));

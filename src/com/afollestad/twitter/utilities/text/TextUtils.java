@@ -95,9 +95,8 @@ public class TextUtils {
     private static Pattern pattern;
 
     public static boolean hasEmoji(String text) {
-        if (pattern == null) {
+        if (pattern == null)
             pattern = Pattern.compile("\u00a9|\u00ae|[\u203c-\u3299]|[\uD83C\uDC04-\uD83C\uDFf0]|[\uD83D\uDC00-\uD83D\uDEc5]");
-        }
         return pattern.matcher(text).find();
     }
 }

@@ -38,6 +38,13 @@ public class ColorPickerDialog extends ThemedDialog implements com.larswerkman.c
                 finish();
             }
         });
+
+        int color = PreferenceManager.getDefaultSharedPreferences(ColorPickerDialog.this).getInt("theme_color", -1);
+        if (color != -1) {
+            picker.setColor(color);
+            picker.setOldCenterColor(color);
+            picker.setNewCenterColor(color);
+        }
     }
 
     @Override

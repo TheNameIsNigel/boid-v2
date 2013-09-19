@@ -20,7 +20,8 @@ public class BoidSpan extends ClickableSpan {
         mContext = context;
         mValue = value;
         mThemeColor = ThemedActivity.getAccentColor(context);
-        if (mThemeColor == -1) mThemeColor = context.getResources().getColor(android.R.color.holo_blue_dark);
+        if (mThemeColor == -1 || mThemeColor == context.getResources().getColor(android.R.color.black) || mThemeColor == context.getResources().getColor(R.color.gray_ab))
+            mThemeColor = context.getResources().getColor(android.R.color.holo_blue_dark);
     }
 
     private final Context mContext;

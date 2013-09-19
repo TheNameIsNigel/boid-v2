@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.adapters.SearchPagerAdapter;
 import com.afollestad.twitter.ui.theming.ThemedPtrActivity;
+import com.afollestad.twitter.utilities.Utils;
 
 /**
  * @author Aidan Follestad (afollestad)
