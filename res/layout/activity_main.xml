@@ -16,26 +16,4 @@
               android:layout_gravity="left"
               android:choiceMode="singleChoice"/>
 
-    <!--  Right navigation drawer  -->
-    <LinearLayout android:layout_width="@dimen/drawer_width"
-                  android:layout_height="match_parent"
-                  android:background="?navDrawerBackground"
-                  android:layout_gravity="right">
-
-        <ListView android:id="@+id/favorites_list"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"/>
-
-        <com.afollestad.silk.views.text.SilkTextView android:id="@+id/favoritesEmpty"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent"
-                                                     android:gravity="center"
-                                                     android:textSize="@dimen/usernameText"
-                                                     android:layout_marginLeft="5dp"
-                                                     android:layout_marginRight="5dp"
-                                                     android:text="@string/no_favorite_users"
-                                                     android:textColor="?contentTextColor"/>
-
-    </LinearLayout>
-
 </android.support.v4.widget.DrawerLayout>

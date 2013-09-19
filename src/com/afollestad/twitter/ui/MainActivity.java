@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.afollestad.twitter.BoidApp;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.SearchSuggestionsProvider;
-import com.afollestad.twitter.adapters.DrawerFavoriteAdapter;
 import com.afollestad.twitter.adapters.DrawerItemAdapter;
 import com.afollestad.twitter.adapters.MainPagerAdapter;
 import com.afollestad.twitter.fragments.base.BoidListFragment;
@@ -77,12 +76,6 @@ public class MainActivity extends ThemedDrawerActivity {
         });
         t.setPriority(Thread.MAX_PRIORITY);
         t.start();
-    }
-
-    private void loadFavorites() {
-        ListView favoritesList = (ListView) findViewById(R.id.favorites_list);
-        favoritesList.setEmptyView(findViewById(R.id.favoritesEmpty));
-        favoritesList.setAdapter(new DrawerFavoriteAdapter(this));
     }
 
     @Override
@@ -154,7 +147,6 @@ public class MainActivity extends ThemedDrawerActivity {
                 prefs.edit().remove("recent_fragment_main").commit();
             }
         }
-        loadFavorites();
     }
 
     private void invalidateColumns() {
