@@ -94,7 +94,8 @@ public class ComposeActivity extends ThemedLocationActivity {
         // Other actions
         MenuItem emoji = menu.findItem(R.id.emoji);
         emoji.setIcon(isEmojiShowing ? R.drawable.ic_emoji_keyboard_showing : Utils.resolveThemeAttr(this, R.attr.emojiKeyboard));
-        menu.findItem(R.id.send).setEnabled(invalidateTweetButton());
+        MenuItem send = menu.findItem(R.id.send);
+        invalidateTweetButton(send);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -179,7 +180,12 @@ public class ComposeActivity extends ThemedLocationActivity {
 
     private void setupInput() {
         final CounterEditText input = (CounterEditText) findViewById(R.id.input);
-        input.setCounterView((TextView) findViewById(R.id.counter));
+        input.setUpdateListener(new CounterEditText.UpdateListener() {
+            @Override
+            public void onUpdate() {
+                invalidateOptionsMenu();
+            }
+        });
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -241,9 +247,11 @@ public class ComposeActivity extends ThemedLocationActivity {
         finish();
     }
 
-    private boolean invalidateTweetButton() {
-        EditText input = (EditText) findViewById(R.id.input);
-        return input.getText().toString().trim().length() <= 140 && (!input.getText().toString().trim().isEmpty() || mCurrentCapturePath != null || mCurrentGalleryPath != null);
+    private void invalidateTweetButton(MenuItem send) {
+        CounterEditText input = (CounterEditText) findViewById(R.id.input);
+        send.setEnabled(!input.isOverLimit() && (!input.getText().toString().trim().isEmpty() ||
+                mCurrentCapturePath != null || mCurrentGalleryPath != null));
+        send.setTitle(getString(R.string.tweet) + " (" + input.getCounter() + ")");
     }
 
     // Emoji keyboard methods

@@ -18,6 +18,10 @@ import com.afollestad.twitter.utilities.text.TextUtils;
  */
 public class CounterEditText extends SilkEditText {
 
+    public static interface UpdateListener {
+        public void onUpdate();
+    }
+
     public CounterEditText(Context context) {
         super(context);
         initialize();
@@ -37,7 +41,9 @@ public class CounterEditText extends SilkEditText {
         a.recycle();
     }
 
-    private TextView counterView;
+    private UpdateListener mListener;
+    private int mCounter;
+    private boolean mOverLimit;
 
     private int errorTextColor;
     private int contentTextColor;
@@ -52,19 +58,25 @@ public class CounterEditText extends SilkEditText {
         updateCounter();
     }
 
-    public void setCounterView(TextView view) {
-        this.counterView = view;
-    }
-
-    public void setHasMedia(boolean hasMedia) {
+    public final void setHasMedia(boolean hasMedia) {
         this.hasMedia = hasMedia;
         updateCounter();
     }
 
-    private void updateCounter() {
-        if (counterView == null) return;
-        int textLength = getText().toString().trim().length();
+    public final void setUpdateListener(UpdateListener listener) {
+        mListener = listener;
+    }
 
+    public final int getCounter() {
+        return mCounter;
+    }
+
+    public final boolean isOverLimit() {
+        return mOverLimit;
+    }
+
+    private void updateCounter() {
+        int textLength = getText().toString().trim().length();
         BoidApp.Config config = BoidApp.get(getContext()).getConfig();
         if (hasMedia) {
             if (textLength > 0) {
@@ -81,14 +93,8 @@ public class CounterEditText extends SilkEditText {
             }
             textLength -= shortDiff;
         }
-
-        boolean overLimit = false;
-        if (textLength > CHARACTER_LIMIT) {
-            overLimit = true;
-            textLength = 0 - (textLength - CHARACTER_LIMIT);
-        }
-
-        counterView.setTextColor(overLimit ? errorTextColor : contentTextColor);
-        counterView.setText(textLength + "");
+        mOverLimit = textLength > CHARACTER_LIMIT;
+        mCounter = CHARACTER_LIMIT - textLength;
+        if (mListener != null) mListener.onUpdate();
     }
 }
