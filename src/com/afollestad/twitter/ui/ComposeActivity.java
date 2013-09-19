@@ -445,6 +445,10 @@ public class ComposeActivity extends ThemedLocationActivity {
             }
             invalidateAttachment();
             return;
+        } else if (contentUri.toString().startsWith("file:///")) {
+            mCurrentGalleryPath = contentUri.getPath();
+            invalidateAttachment();
+            return;
         }
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
