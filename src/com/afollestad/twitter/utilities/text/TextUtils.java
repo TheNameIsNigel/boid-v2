@@ -1,15 +1,11 @@
 package com.afollestad.twitter.utilities.text;
 
-import android.app.Activity;
 import android.content.Context;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.widget.TextView;
 import com.afollestad.twitter.BoidApp;
-import com.afollestad.twitter.R;
 import twitter4j.*;
 
 import java.util.regex.Matcher;
@@ -97,11 +93,11 @@ public class TextUtils {
     }
 
     private static Pattern pattern;
+
     public static boolean hasEmoji(String text) {
         if (pattern == null) {
             pattern = Pattern.compile("\u00a9|\u00ae|[\u203c-\u3299]|[\uD83C\uDC04-\uD83C\uDFf0]|[\uD83D\uDC00-\uD83D\uDEc5]");
         }
-
         return pattern.matcher(text).find();
     }
 }
