@@ -11,32 +11,12 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Android 4.3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="ActionBar-Ptr" />
-    <orderEntry type="module" module-name="Android-AppMsg" />
-    <orderEntry type="module" module-name="Silk" />
-    <orderEntry type="module" module-name="PagerSlidingTabStrip" />
-    <orderEntry type="module" module-name="twitter4j-core" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Silk/library/libs/android-support-v13.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/google-play-services.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="google-play-services" level="project" />
     <orderEntry type="module" module-name="HoloColorPicker" />
+    <orderEntry type="module" module-name="PagerSlidingTabStrip" />
+    <orderEntry type="module" module-name="Silk" />
   </component>
 </module>
 
