@@ -6,12 +6,12 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import com.afollestad.twitter.R;
 import com.afollestad.twitter.ui.theming.ThemedDialog;
-import com.larswerkman.colorpicker.ColorPicker;
+import com.larswerkman.holocolorpicker.ColorPicker;
 
 /**
  * @author Aidan Follestad (afollestad)
  */
-public class ColorPickerDialog extends ThemedDialog implements com.larswerkman.colorpicker.ColorPicker.OnColorChangedListener {
+public class ColorPickerDialog extends ThemedDialog implements com.larswerkman.holocolorpicker.ColorPicker.OnColorChangedListener {
 
     private ColorPicker picker;
 
